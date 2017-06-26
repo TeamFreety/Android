@@ -11,14 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Transaction;
-import com.google.firebase.database.ValueEventListener;
+
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.view.firebase.chat.data.ChatData;
 import com.sopt.freety.freety.view.firebase.chat.data.ChatListFirebaseData;
@@ -27,8 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.sopt.freety.freety.view.firebase.chat.ChatListActivity.ME;
-
+/*
 public class ChatActivity extends AppCompatActivity {
 
     @BindView(R.id.chat_list_view) ListView listView;
@@ -53,7 +45,7 @@ public class ChatActivity extends AppCompatActivity {
         listView.setAdapter(chatDataAdapter);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         databaseReference.child("messages").orderByChild("roomId").equalTo(roomId).addChildEventListener(new ChildEventListener() {  // message는 child의 이벤트를 수신합니다.
-            @Override
+            @Override`
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 ChatData chatData = dataSnapshot.getValue(ChatData.class);  // chatData를 가져오고
                 chatDataAdapter.add(chatData.getSenderId() + ": " + chatData.getMessage());  // adapter에 추가합니다.
@@ -114,3 +106,4 @@ public class ChatActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(editText.getWindowToken(),0);
     }
 }
+*/
