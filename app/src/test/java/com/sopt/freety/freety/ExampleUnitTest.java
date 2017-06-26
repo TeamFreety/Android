@@ -1,4 +1,4 @@
-package fretty.sopt.com.freety;
+package com.sopt.freety.freety;
 
 import org.junit.Test;
 
