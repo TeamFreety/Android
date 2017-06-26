@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +32,7 @@ import retrofit2.Response;
  * Created by KYJ on 2017-06-26.
  */
 
-public class JoinEmailActivity extends AppCompatActivity{
+public class JoinEmailActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener{
 
     @BindView(R.id.cancelBtn) Button cancelBtn;
     @BindView(R.id.submitBtn) Button submitBtn;
@@ -39,22 +40,25 @@ public class JoinEmailActivity extends AppCompatActivity{
     @BindView(R.id.pwdEditText) EditText pwdEdit;
     @BindView(R.id.nameEditText) EditText nameEdit;
     @BindView(R.id.ageEditText) EditText ageEdit;
-    @BindView(R.id.checkbox1) CheckBox checkbox1;
-    @BindView(R.id.checkbox2) CheckBox checkbox2;
-    @BindView(R.id.checkbox3) CheckBox checkbox3;
-    @BindView(R.id.checkbox4) CheckBox checkbox4;
-    @BindView(R.id.checkbox5) CheckBox checkbox5;
-    @BindView(R.id.checkbox6) CheckBox checkbox6;
-    @BindView(R.id.checkbox7) CheckBox checkbox7;
-    @BindView(R.id.checkbox8) CheckBox checkbox8;
-    @BindView(R.id.checkbox9) CheckBox checkbox9;
     @BindView(R.id.belongNameEditText) EditText belongNameEdit;
 
     ConstraintLayout designerLayout;
+    public String belongStr ="";
+    public String careerStr ="";
+    CheckBox checkBox1;
+    CheckBox checkBox2;
+    CheckBox checkBox3;
+    CheckBox checkBox4;
+    CheckBox checkBox5;
+    CheckBox checkBox6;
+    CheckBox checkBox7;
+    CheckBox checkBox8;
+    CheckBox checkBox9;
 
     @BindView(R.id.belongTextView) TextView belongTextView;
     @BindView(R.id.belongNameTextView) TextView belongNameTextView;
     @BindView(R.id.careerTextView) TextView careerTextView;
+
 
     NetworkService service;
     private ProgressDialog mProgressDialog;
@@ -66,6 +70,25 @@ public class JoinEmailActivity extends AppCompatActivity{
         setContentView(R.layout.activity_join_email);
 
         designerLayout = (ConstraintLayout)findViewById(R.id.designerLayout);
+        checkBox1 = (CheckBox)findViewById(R.id.checkbox1);
+        checkBox2 = (CheckBox)findViewById(R.id.checkbox2);
+        checkBox3 = (CheckBox)findViewById(R.id.checkbox3);
+        checkBox4 = (CheckBox)findViewById(R.id.checkbox4);
+        checkBox5 = (CheckBox)findViewById(R.id.checkbox5);
+        checkBox6 = (CheckBox)findViewById(R.id.checkbox6);
+        checkBox7 = (CheckBox)findViewById(R.id.checkbox7);
+        checkBox8 = (CheckBox)findViewById(R.id.checkbox8);
+        checkBox9 = (CheckBox)findViewById(R.id.checkbox9);
+
+        checkBox1.setOnCheckedChangeListener(JoinEmailActivity.this);
+        checkBox2.setOnCheckedChangeListener(JoinEmailActivity.this);
+        checkBox3.setOnCheckedChangeListener(JoinEmailActivity.this);
+        checkBox4.setOnCheckedChangeListener(JoinEmailActivity.this);
+        checkBox5.setOnCheckedChangeListener(JoinEmailActivity.this);
+        checkBox6.setOnCheckedChangeListener(JoinEmailActivity.this);
+        checkBox7.setOnCheckedChangeListener(JoinEmailActivity.this);
+        checkBox8.setOnCheckedChangeListener(JoinEmailActivity.this);
+        checkBox9.setOnCheckedChangeListener(JoinEmailActivity.this);
 
         Intent intent = getIntent();
         boolean i = intent.getBooleanExtra("case", false);
@@ -103,7 +126,7 @@ public class JoinEmailActivity extends AppCompatActivity{
     }
 
     public void join(View v) {
-        if(emailEdit.length() == 0 || pwdEdit.length() == 0 || nameEdit.length() ==0 || ageEdit.length() == 0 || belongNameEdit.length() == 0 ){
+        if(emailEdit.length() == 0 || pwdEdit.length() == 0 || nameEdit.length() ==0 || ageEdit.length() == 0 ){
             Toast.makeText(getApplicationContext(),"모든 항목을 기입해주세요.", Toast.LENGTH_SHORT).show();
         }
         else{
@@ -114,13 +137,13 @@ public class JoinEmailActivity extends AppCompatActivity{
             RequestBody pwd = RequestBody.create(MediaType.parse("multipart/form-data"), pwdEdit.getText().toString());
             RequestBody name = RequestBody.create(MediaType.parse("multipart/form-data"), nameEdit.getText().toString());
             RequestBody age = RequestBody.create(MediaType.parse("multipart/form-data"), ageEdit.getText().toString());
-            //RequestBody belong = RequestBody.create(MediaType.parse("multipart/form-data"), belongEdit.getText().toString());
+            RequestBody belong = RequestBody.create(MediaType.parse("multipart/form-data"), belongStr);
             RequestBody belongName = RequestBody.create(MediaType.parse("multipart/form-data"), belongNameEdit.getText().toString());
-            //RequestBody career = RequestBody.create(MediaType.parse("multipart/form-data"), careerEdit.getText().toString());
+            RequestBody career = RequestBody.create(MediaType.parse("multipart/form-data"), careerStr);
 
 
 
-            Call<JoinResult> requestPersonData = service.registerPersonData(email, pwd, name, age, belongName);
+            Call<JoinResult> requestPersonData = service.registerPersonData(email, pwd, name, age, belong, belongName, career);
             requestPersonData.enqueue(new Callback<JoinResult>() {
                 @Override
                 public void onResponse(Call<JoinResult> call, Response<JoinResult> response) {
@@ -145,5 +168,76 @@ public class JoinEmailActivity extends AppCompatActivity{
                 }
             });
         }
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+        //if문 순서 때문에 2선택 후 3 선택하면 두번째 if문에서 걸려 값이 변하지 않음
+
+        while (true) {
+
+            if (checkBox1.isChecked()) {
+                checkBox2.setChecked(false);
+                checkBox3.setChecked(false);
+                checkBox4.setChecked(false);
+                checkBox5.setChecked(false);
+                belongStr = checkBox1.getText().toString();
+            }
+
+            if (checkBox2.isChecked()) {
+                checkBox1.setChecked(false);
+                checkBox3.setChecked(false);
+                checkBox4.setChecked(false);
+                checkBox5.setChecked(false);
+                belongStr = checkBox2.getText().toString();
+            }
+            if (checkBox3.isChecked()) {
+                checkBox2.setChecked(false);
+                checkBox1.setChecked(false);
+                checkBox4.setChecked(false);
+                checkBox5.setChecked(false);
+                belongStr = checkBox3.getText().toString();
+            }
+            if (checkBox4.isChecked()) {
+                checkBox2.setChecked(false);
+                checkBox3.setChecked(false);
+                checkBox1.setChecked(false);
+                checkBox5.setChecked(false);
+                belongStr = checkBox4.getText().toString();
+            }
+            if (checkBox5.isChecked()) {
+                checkBox2.setChecked(false);
+                checkBox3.setChecked(false);
+                checkBox4.setChecked(false);
+                checkBox1.setChecked(false);
+                belongStr = checkBox5.getText().toString();
+            }
+            if (checkBox6.isChecked()) {
+                checkBox7.setChecked(false);
+                checkBox8.setChecked(false);
+                checkBox9.setChecked(false);
+                careerStr = checkBox6.getText().toString();
+            }
+            if (checkBox7.isChecked()) {
+                checkBox6.setChecked(false);
+                checkBox8.setChecked(false);
+                checkBox9.setChecked(false);
+                careerStr = checkBox7.getText().toString();
+            }
+            if (checkBox8.isChecked()) {
+                checkBox7.setChecked(false);
+                checkBox6.setChecked(false);
+                checkBox9.setChecked(false);
+                careerStr = checkBox8.getText().toString();
+            }
+            if (checkBox9.isChecked()) {
+                checkBox7.setChecked(false);
+                checkBox8.setChecked(false);
+                checkBox6.setChecked(false);
+                careerStr = checkBox9.getText().toString();
+            }
+        }
+
     }
 }
