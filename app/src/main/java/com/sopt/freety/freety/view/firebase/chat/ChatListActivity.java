@@ -12,12 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.adapter.RecyclerViewOnItemClickListener;
 import com.sopt.freety.freety.view.firebase.chat.adapter.ChatListAdapter;
@@ -29,7 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+/*
 public class ChatListActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.chat_list_recycler_view)
@@ -130,3 +124,4 @@ public class ChatListActivity extends AppCompatActivity implements SwipeRefreshL
         refreshLayout.setRefreshing(false);
     }
 }
+*/
