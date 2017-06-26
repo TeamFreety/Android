@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.view.main.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,7 +71,7 @@ public class LoginActivity extends AppCompatActivity{
 
 
 
-                Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent);
 
         }
