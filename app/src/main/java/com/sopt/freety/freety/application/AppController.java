@@ -1,8 +1,8 @@
-package fretty.sopt.com.freety.application;
+package com.sopt.freety.freety.application;
 
 import android.app.Application;
 
-import fretty.sopt.com.freety.network.NetworkService;
+import com.sopt.freety.freety.network.NetworkService;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -24,7 +24,6 @@ public class AppController extends Application {
         if (networkService == null) {
             networkService = buildNetworkService();
         }
-
         return networkService;
     }
 

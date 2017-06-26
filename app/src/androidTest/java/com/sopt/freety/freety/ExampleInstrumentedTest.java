@@ -1,4 +1,4 @@
-package fretty.sopt.com.freety;
+package com.sopt.freety.freety;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
