@@ -13,6 +13,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".view.firebase.chat.ChatActivity" />
         <activity android:name=".view.firebase.chat.ChatListActivity" />
+        <activity android:name=".view.login.JoinDesignerActivity"/>
+        <activity android:name=".view.login.JoinModelActivity"/>
         <activity android:name=".view.mypage.MyPageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
