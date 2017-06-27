@@ -2,17 +2,21 @@ package com.sopt.freety.freety.view.my_page;
 
 
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.util.ViewPagerEx;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageViewPagerAdapter;
 
 import butterknife.BindView;
@@ -32,7 +36,13 @@ public class MyPageFragment extends Fragment{
     TabLayout tabLayout;
 
     @BindView(R.id.my_page_view_pager)
-    ViewPager viewPager;
+    ViewPagerEx viewPager;
+
+    @BindView(R.id.my_page_app_bar)
+    AppBarLayout appBarLayout;
+
+    @BindView(R.id.my_page_collaspsing_relative_layout)
+    RelativeLayout collapsingRelativeLayout;
 
     public MyPageFragment() {
 
@@ -66,8 +76,18 @@ public class MyPageFragment extends Fragment{
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         PagerAdapter pagerAdapter = new MyPageViewPagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapter);
+        viewPager.setOffscreenPageLimit(2);
         viewPager.setCurrentItem(0);
+
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                collapsingRelativeLayout.setAlpha(1.0f - Math.abs(verticalOffset / (float)
+                        appBarLayout.getTotalScrollRange()));
+            }
+        });
 
         return view;
     }
+
 }

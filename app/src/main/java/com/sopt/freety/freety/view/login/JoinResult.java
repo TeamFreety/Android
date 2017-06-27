@@ -6,5 +6,6 @@ package com.sopt.freety.freety.view.login;
 
 public class JoinResult {
 
+
     String message;
 }
