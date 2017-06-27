@@ -1,25 +1,59 @@
 package com.sopt.freety.freety.view.search;
 
+
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.util.ItemOffsetDecoration;
+import com.sopt.freety.freety.view.search.adapter.SearchRecyclerAdapter;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
- * Created by USER on 2017-06-26.
+ * Created by cmslab on 6/26/17.
  */
 
 public class SearchFragment extends Fragment {
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
+
+
+    @BindView(R.id.btn_search_detail) Button btnSearchDetail;
+    @BindView(R.id.btn_search_distance) Button btnSearchDistance;
+    @BindView(R.id.btn_search_recent) Button btnSearchRecent;
+    @BindView(R.id.rv_search) RecyclerView recyclerView;
+    private SearchRecyclerAdapter adapter;
+    private GridLayoutManager gridLayoutManager;
+
+
+    public SearchFragment() {
+
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_search, container, false);
+        ButterKnife.bind(this, view);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.search_image_offset));
+        gridLayoutManager = new GridLayoutManager(getContext(), 2);
+
+
+
+
+
+
+
+
+
+        return view;
     }
 }
