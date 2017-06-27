@@ -70,7 +70,7 @@ public class ChatActivity extends AppCompatActivity {
     public void onSendBtnClick() {
         final String receiverId = getIntent().getStringExtra("otherId");
         final ChatData chatData = new ChatData(roomId, ME, receiverId,
-                editText.getText().toString(), "1:00");
+                editText.getAddressText().toString(), "1:00");
         databaseReference.child("messages").push().setValue(chatData);
         final DatabaseReference otherChatListDataRef = databaseReference.child("rooms")
                 .orderByChild("myId")

@@ -3,14 +3,19 @@ package com.sopt.freety.freety.view.my_page;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.util.ItemOffsetDecoration;
+import com.sopt.freety.freety.util.ViewPagerEx;
+import com.sopt.freety.freety.view.my_page.adapter.MyPagePostRecyclerAdapter;
+import com.sopt.freety.freety.view.my_page.data.MyPagePostData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,14 +23,23 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.support.v7.widget.RecyclerView.SCROLL_STATE_DRAGGING;
+import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
+
 /**
  * Created by cmslab on 6/26/17.
  */
 
 public class MyPagePostFragment extends Fragment {
 
-    @BindView(R.id.my_page_style_career_list_view)
-    ListView listView;
+
+    @BindView(R.id.my_page_post_recycler_view)
+    RecyclerView recyclerView;
+
+    private ViewPagerEx viewPager;
+
+    private GridLayoutManager layoutManager;
+    private MyPagePostRecyclerAdapter adapter;
 
     public MyPagePostFragment() {
     }
@@ -33,17 +47,45 @@ public class MyPagePostFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_my_page_style_header, container, false);
+        viewPager = (ViewPagerEx) container;
+        View view = inflater.inflate(R.layout.fragment_my_page_post, container, false);
         ButterKnife.bind(this, view);
 
-        List<String> itemData = new ArrayList<>();
-        itemData.add("-퍼스널 펌 & 컬러 전문 (5년)");
-        itemData.add("-성형 디자인 전문(13년) PANAN본사헤드디렉터");
-
-        ListAdapter adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, itemData);
-        listView.setAdapter(adapter);
-
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.my_page_post_offset));
+        layoutManager = new GridLayoutManager(getContext(), 2);
+        final List<MyPagePostData> mockDataList = new ArrayList<>();
+        for (int i = 0; i < 11; i++) {
+            mockDataList.add(MyPagePostData.getMockData());
+        }
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new MyPagePostRecyclerAdapter(mockDataList);
+        recyclerView.setAdapter(adapter);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                switch(newState) {
+                    case SCROLL_STATE_DRAGGING:
+                        viewPager.setPagingEnabled(false);
+                        break;
+                    case SCROLL_STATE_IDLE:
+                        viewPager.setPagingEnabled(true);
+                        break;
+                }
+            }
+        });
         return view;
+    }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (!isVisibleToUser) {
+            //Log.i("MyPagePostFragment", "setUserVisibleHint: ok");
+            if (recyclerView != null) {
+                recyclerView.getLayoutManager().scrollToPosition(0);
+            }
+        }
     }
 }
