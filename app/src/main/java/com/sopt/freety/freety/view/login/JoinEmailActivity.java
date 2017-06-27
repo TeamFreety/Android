@@ -54,6 +54,8 @@ public class JoinEmailActivity extends AppCompatActivity implements CompoundButt
     CheckBox checkBox7;
     CheckBox checkBox8;
     CheckBox checkBox9;
+    int check1=0;
+    int check2=0;
 
     @BindView(R.id.belongTextView) TextView belongTextView;
     @BindView(R.id.belongNameTextView) TextView belongNameTextView;
@@ -70,6 +72,7 @@ public class JoinEmailActivity extends AppCompatActivity implements CompoundButt
         setContentView(R.layout.activity_join_email);
 
         designerLayout = (ConstraintLayout)findViewById(R.id.designerLayout);
+
         checkBox1 = (CheckBox)findViewById(R.id.checkbox1);
         checkBox2 = (CheckBox)findViewById(R.id.checkbox2);
         checkBox3 = (CheckBox)findViewById(R.id.checkbox3);
@@ -175,69 +178,94 @@ public class JoinEmailActivity extends AppCompatActivity implements CompoundButt
 
         //if문 순서 때문에 2선택 후 3 선택하면 두번째 if문에서 걸려 값이 변하지 않음
 
-        while (true) {
-
             if (checkBox1.isChecked()) {
-                checkBox2.setChecked(false);
-                checkBox3.setChecked(false);
-                checkBox4.setChecked(false);
-                checkBox5.setChecked(false);
-                belongStr = checkBox1.getText().toString();
+                if(check1!=1) {
+                    checkBox2.setChecked(false);
+                    checkBox3.setChecked(false);
+                    checkBox4.setChecked(false);
+                    checkBox5.setChecked(false);
+                    belongStr = checkBox1.getText().toString();
+                    check1=1;
+                }
             }
 
             if (checkBox2.isChecked()) {
-                checkBox1.setChecked(false);
-                checkBox3.setChecked(false);
-                checkBox4.setChecked(false);
-                checkBox5.setChecked(false);
-                belongStr = checkBox2.getText().toString();
+                if(check1!=1) {
+                    checkBox1.setChecked(false);
+                    checkBox3.setChecked(false);
+                    checkBox4.setChecked(false);
+                    checkBox5.setChecked(false);
+                    belongStr = checkBox2.getText().toString();
+                    check1=1;
+                }
             }
             if (checkBox3.isChecked()) {
-                checkBox2.setChecked(false);
-                checkBox1.setChecked(false);
-                checkBox4.setChecked(false);
-                checkBox5.setChecked(false);
-                belongStr = checkBox3.getText().toString();
+                if(check1!=1) {
+                    checkBox2.setChecked(false);
+                    checkBox1.setChecked(false);
+                    checkBox4.setChecked(false);
+                    checkBox5.setChecked(false);
+                    belongStr = checkBox3.getText().toString();
+                    check1=1;
+                }
             }
             if (checkBox4.isChecked()) {
-                checkBox2.setChecked(false);
-                checkBox3.setChecked(false);
-                checkBox1.setChecked(false);
-                checkBox5.setChecked(false);
-                belongStr = checkBox4.getText().toString();
+                if(check1!=1) {
+                    checkBox2.setChecked(false);
+                    checkBox3.setChecked(false);
+                    checkBox1.setChecked(false);
+                    checkBox5.setChecked(false);
+                    belongStr = checkBox4.getText().toString();
+                    check1=1;
+                }
             }
             if (checkBox5.isChecked()) {
-                checkBox2.setChecked(false);
-                checkBox3.setChecked(false);
-                checkBox4.setChecked(false);
-                checkBox1.setChecked(false);
-                belongStr = checkBox5.getText().toString();
+                if(check1!=1) {
+                    checkBox2.setChecked(false);
+                    checkBox3.setChecked(false);
+                    checkBox4.setChecked(false);
+                    checkBox1.setChecked(false);
+                    belongStr = checkBox5.getText().toString();
+                    check1=1;
+                }
             }
             if (checkBox6.isChecked()) {
-                checkBox7.setChecked(false);
-                checkBox8.setChecked(false);
-                checkBox9.setChecked(false);
-                careerStr = checkBox6.getText().toString();
+                if(check2!=1) {
+                    checkBox7.setChecked(false);
+                    checkBox8.setChecked(false);
+                    checkBox9.setChecked(false);
+                    careerStr = checkBox6.getText().toString();
+                    check2=1;
+                }
             }
             if (checkBox7.isChecked()) {
-                checkBox6.setChecked(false);
-                checkBox8.setChecked(false);
-                checkBox9.setChecked(false);
-                careerStr = checkBox7.getText().toString();
+                if(check2!=1) {
+                    checkBox6.setChecked(false);
+                    checkBox8.setChecked(false);
+                    checkBox9.setChecked(false);
+                    careerStr = checkBox7.getText().toString();
+                    check2=1;
+                }
             }
             if (checkBox8.isChecked()) {
-                checkBox7.setChecked(false);
-                checkBox6.setChecked(false);
-                checkBox9.setChecked(false);
-                careerStr = checkBox8.getText().toString();
+                if(check2!=1) {
+                    checkBox7.setChecked(false);
+                    checkBox6.setChecked(false);
+                    checkBox9.setChecked(false);
+                    careerStr = checkBox8.getText().toString();
+                    check2=1;
+                }
             }
             if (checkBox9.isChecked()) {
-                checkBox7.setChecked(false);
-                checkBox8.setChecked(false);
-                checkBox6.setChecked(false);
-                careerStr = checkBox9.getText().toString();
+                if(check2!=1) {
+                    checkBox7.setChecked(false);
+                    checkBox8.setChecked(false);
+                    checkBox6.setChecked(false);
+                    careerStr = checkBox9.getText().toString();
+                    check2=1;
+                }
             }
-        }
+
 
     }
 }
