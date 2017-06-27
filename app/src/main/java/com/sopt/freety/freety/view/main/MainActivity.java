@@ -2,7 +2,6 @@ package com.sopt.freety.freety.view.main;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,11 +12,10 @@ import android.widget.FrameLayout;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.sopt.freety.freety.R;
-import com.sopt.freety.freety.util.BottomNavigationViewHelper;
 import com.sopt.freety.freety.view.fragment1.Fragment1;
 import com.sopt.freety.freety.view.fragment2.Fragment2;
 import com.sopt.freety.freety.view.fragment3.Fragment3;
-import com.sopt.freety.freety.view.fragment4.Fragment4;
+import com.sopt.freety.freety.view.my_page.MyPageFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                         replaceFragment(new Fragment3(), new Bundle(), "recruit");
                         break;
                     case R.id.action_my_page:
-                        replaceFragment(new Fragment4(), new Bundle(), "my_page");
+                        replaceFragment(new MyPageFragment(), new Bundle(), "my_page");
                         break;
                 }
                 return true;
