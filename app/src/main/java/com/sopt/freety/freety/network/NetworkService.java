@@ -21,9 +21,9 @@ public interface NetworkService {
                                         @Part("pwd") RequestBody pwd,
                                         @Part("name") RequestBody name,
                                         @Part("age") RequestBody age,
-
-                                        @Part("belongName") RequestBody belongName
-                                       );
+                                        @Part("belong") RequestBody belong,
+                                        @Part("belongName") RequestBody belongName,
+                                        @Part("career") RequestBody career);
 
 
 }
