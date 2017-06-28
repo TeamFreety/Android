@@ -16,7 +16,8 @@
             android:layout_width="70dp"
             android:layout_height="match_parent"
             android:text="찾기"
-            android:textSize="20sp"
+            android:textColor="#111111"
+            android:textSize="18sp"
             android:gravity="center"/>
 
     </RelativeLayout>
@@ -50,10 +51,10 @@
 
             >
             <Button
-                android:id="@+id/btn_search_distance"
+                android:id="@+id/btn_search_recent"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:text="거리순"
+                android:text="최신순"
                 android:textSize="10sp"/>
         </RelativeLayout>
         <RelativeLayout
@@ -62,18 +63,24 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true">
             <Button
-                android:id="@+id/btn_search_recent"
+                android:id="@+id/btn_search_distance"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:text="최신순"
+                android:text="거리순"
                 android:textSize="10sp"/>
         </RelativeLayout>
 
     </RelativeLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_search"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:clipToPadding="false"
+        android:padding="@dimen/my_page_post_offset"
         android:layout_width="match_parent"
-        android:layout_height="450dp">
+        android:layout_height="match_parent"
+        android:overScrollMode="never">
 
     </android.support.v7.widget.RecyclerView>
 
