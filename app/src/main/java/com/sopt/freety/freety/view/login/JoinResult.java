@@ -1,9 +1,11 @@
 package com.sopt.freety.freety.view.login;
 
 /**
- * Created by KYJ on 2017-06-26.
+ * Created by USER on 2017-06-27.
  */
 
 public class JoinResult {
+
+
     String message;
 }
