@@ -2,88 +2,524 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.sopt.freety.freety.view.search.DetailSearchActivity">
 
-  <RelativeLayout
-      android:layout_width="match_parent"
-      android:layout_height="40dp"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp">
 
-      >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="#111111"
+            android:textSize="18sp"
+            android:text="상세검색"
+            />
 
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:gravity="center"
-          android:layout_centerVertical="true"
-          android:layout_centerHorizontal="true"
-          android:textColor="#111111"
-          android:textSize="18sp"
-          android:text="상세검색"
-          />
+        <Button
+            android:id="@+id/btn_detail_cancel"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:background="@color/cardview_light_background"
+            android:text="X"/>
 
-      <Button
-          android:id="@+id/btn_detail_cancel"
-          android:layout_width="50dp"
-          android:layout_height="match_parent"
-          android:layout_alignParentEnd="true"
-          android:background="@color/cardview_light_background"
-          android:text="X"/>
-
-  </RelativeLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="0dp">
+
         <RelativeLayout
-            android:id="@+id/rl1"
+            android:id="@+id/rl_sort"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="시술유형"
+                android:layout_marginLeft="15dp"
                 android:layout_marginTop="7dp"
-                android:layout_marginLeft="15dp"/>
+                android:text="시술유형" />
         </RelativeLayout>
+
         <RelativeLayout
-            android:id="@+id/rl2"
+            android:id="@+id/rl_sort_content"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rl1">
+            android:layout_below="@+id/rl_sort">
+
             <CheckBox
                 android:id="@+id/checkbtn_sort_perm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="펌"/>
+                android:text="펌" />
+
             <CheckBox
                 android:id="@+id/checkbtn_sort_dye"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/checkbtn_sort_perm"
-                android:text="염색"/>
+                android:text="염색" />
+
             <CheckBox
                 android:id="@+id/checkbtn_sort_cut"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/checkbtn_sort_dye"
                 android:layout_marginLeft="10dp"
-                android:text="커트"/>
+                android:layout_toRightOf="@+id/checkbtn_sort_dye"
+                android:text="커트" />
+
             <CheckBox
                 android:id="@+id/checkbtn_sort_etc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/checkbtn_sort_cut"
                 android:layout_marginLeft="10dp"
-                android:text="기타"/>
+                android:layout_toRightOf="@+id/checkbtn_sort_cut"
+                android:text="기타" />
         </RelativeLayout>
     </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <RelativeLayout
+            android:id="@+id/rl_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="7dp"
+                android:text="날짜" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_date_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_date"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="5dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btn_detail_2017_start"
+                android:layout_width="55dp"
+                android:layout_height="30dp"
+                android:background="@drawable/layout_btn_shape_circle"
+                android:text="2017년"
+                android:textSize="13dp" />
+
+            <Spinner
+                android:id="@+id/spinner_month_start"
+                android:layout_width="55dp"
+                android:layout_height="30dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3dp"
+                android:layout_toRightOf="@+id/btn_detail_2017_start"
+                android:background="@drawable/layout_btn_shape_circle"
+                android:entries="@array/month"></Spinner>
+
+            <Spinner
+                android:id="@+id/spinner_day_start"
+                android:layout_width="55dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="3dp"
+                android:layout_toRightOf="@+id/spinner_month_start"
+                android:background="@drawable/layout_btn_shape_circle"></Spinner>
+
+            <TextView
+                android:id="@+id/text_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/spinner_day_start"
+                android:text="~" />
+
+            <Button
+                android:id="@+id/btn_detail_2017_end"
+                android:layout_width="55dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="3dp"
+                android:layout_toRightOf="@+id/text_detail"
+                android:background="@drawable/layout_btn_shape_circle"
+                android:text="2017년"
+                android:textSize="13dp" />
+
+            <Spinner
+                android:id="@+id/spinner_month_end"
+                android:layout_width="55dp"
+                android:layout_height="30dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3dp"
+                android:layout_toRightOf="@+id/btn_detail_2017_end"
+                android:background="@drawable/layout_btn_shape_circle"
+                android:entries="@array/month"></Spinner>
+
+            <Spinner
+                android:id="@+id/spinner_day_end"
+                android:layout_width="55dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="3dp"
+                android:layout_toRightOf="@+id/spinner_month_end"
+                android:background="@drawable/layout_btn_shape_circle"></Spinner>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <RelativeLayout
+            android:id="@+id/rl_local"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="지역"
+                android:layout_marginTop="7dp"
+                android:layout_marginLeft="15dp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_local_content_firstrow"
+            android:layout_below="@+id/rl_local"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btn_detail_local_default"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="무관"
+                android:background="@drawable/layout_btn_shape_circle"
+                />
+            <Button
+                android:id="@+id/btn_detail_local_1"
+                android:layout_toRightOf="@+id/btn_detail_local_default"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="1"
+                android:background="@drawable/layout_btn_shape_circle"
+                />
+            <Button
+                android:id="@+id/btn_detail_local_2"
+                android:layout_toRightOf="@+id/btn_detail_local_1"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="2"
+                android:background="@drawable/layout_btn_shape_circle"
+                />
+            <Button
+                android:id="@+id/btn_detail_local_3"
+                android:layout_toRightOf="@+id/btn_detail_local_2"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="3"
+                android:background="@drawable/layout_btn_shape_circle"
+                />
+            <Button
+                android:id="@+id/btn_detail_local_4"
+                android:layout_toRightOf="@+id/btn_detail_local_3"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="4"
+                android:background="@drawable/layout_btn_shape_circle"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_local_content_secondrow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_below="@+id/rl_local_content_firstrow"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <Button
+                android:id="@+id/btn_detail_local_5"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="5"
+                android:background="@drawable/layout_btn_shape_circle"
+                />
+            <Button
+                android:id="@+id/btn_detail_local_6"
+                android:layout_toRightOf="@+id/btn_detail_local_5"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="6"
+                android:background="@drawable/layout_btn_shape_circle"
+                />
+            <Button
+                android:id="@+id/btn_detail_local_7"
+                android:layout_toRightOf="@+id/btn_detail_local_6"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="7"
+                android:background="@drawable/layout_btn_shape_circle"
+                />
+            <Button
+                android:id="@+id/btn_detail_local_8"
+                android:layout_toRightOf="@+id/btn_detail_local_7"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="8"
+                android:background="@drawable/layout_btn_shape_circle"
+                />
+            <Button
+                android:id="@+id/btn_detail_local_9"
+                android:layout_toRightOf="@+id/btn_detail_local_8"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="9"
+                android:background="@drawable/layout_btn_shape_circle"
+                />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_local_content_thirdrow"
+            android:layout_below="@+id/rl_local_content_secondrow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btn_detail_local_10"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="10"
+                android:background="@drawable/layout_btn_shape_circle"
+                />
+            <Button
+                android:id="@+id/btn_detail_local_11"
+                android:layout_toRightOf="@+id/btn_detail_local_10"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="11"
+                android:background="@drawable/layout_btn_shape_circle"
+                />
+            <Button
+                android:id="@+id/btn_detail_local_12"
+                android:layout_toRightOf="@+id/btn_detail_local_11"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="12"
+                android:background="@drawable/layout_btn_shape_circle"
+                />
+            <Button
+                android:id="@+id/btn_detail_local_13"
+                android:layout_toRightOf="@+id/btn_detail_local_12"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="13"
+                android:background="@drawable/layout_btn_shape_circle"
+                />
+            <Button
+                android:id="@+id/btn_detail_local_14"
+                android:layout_toRightOf="@+id/btn_detail_local_13"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="14"
+                android:background="@drawable/layout_btn_shape_circle"
+                />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_local_content_fourthrow"
+            android:layout_below="@+id/rl_local_content_thirdrow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btn_detail_local_15"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="15"
+                android:background="@drawable/layout_btn_shape_circle"
+                />
+            <Button
+                android:id="@+id/btn_detail_local_16"
+                android:layout_toRightOf="@+id/btn_detail_local_15"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="16"
+                android:background="@drawable/layout_btn_shape_circle"
+                />
+            <Button
+                android:id="@+id/btn_detail_local_17"
+                android:layout_toRightOf="@+id/btn_detail_local_16"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="17"
+                android:background="@drawable/layout_btn_shape_circle"
+                />
+            <Button
+                android:id="@+id/btn_detail_local_18"
+                android:layout_toRightOf="@+id/btn_detail_local_17"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="18"
+                android:background="@drawable/layout_btn_shape_circle"
+                />
+            <Button
+                android:id="@+id/btn_detail_local_19"
+                android:layout_toRightOf="@+id/btn_detail_local_18"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="19"
+                android:background="@drawable/layout_btn_shape_circle"
+                />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+        <RelativeLayout
+            android:id="@+id/rl_cost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="가격"
+                android:layout_marginTop="7dp"
+                android:layout_marginLeft="15dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_below="@+id/rl_cost"
+            android:id="@+id/rl_cost_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <com.appyvet.rangebar.RangeBar
+                xmlns:custom="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/rangebar"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                custom:tickStart="0"
+                custom:tickInterval="1000"
+                custom:tickEnd="300000"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5">
+
+        <RelativeLayout
+            android:id="@+id/rl_career"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="7dp"
+                android:text="경력" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_career_content"
+            android:layout_below="@id/rl_career"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <CheckBox
+                android:id="@+id/checkbtn_career_default"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:text="무관" />
+
+            <CheckBox
+                android:id="@+id/checkbtn_career_under_1year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_toRightOf="@+id/checkbtn_career_default"
+                android:text="1년 이하" />
+
+            <CheckBox
+                android:id="@+id/checkbtn_career_1to3year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_toRightOf="@+id/checkbtn_career_under_1year"
+                android:text="1~3년" />
+
+            <CheckBox
+                android:id="@+id/checkbtn_career_3to5year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_toRightOf="@+id/checkbtn_career_1to3year"
+                android:text="3~5년" />
+
+            <CheckBox
+                android:id="@+id/checkbtn_career_over_5year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_toRightOf="@+id/checkbtn_career_3to5year"
+                android:text="5년 이상" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btn_detail_filter_adapt"
+            android:layout_width="200dp"
+            android:layout_height="25dp"
+            android:text="필터 적용"
+            android:background="@drawable/layout_btn_shape_rectangle"/>
+    </RelativeLayout>
+
 
 </LinearLayout>
