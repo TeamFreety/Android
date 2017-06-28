@@ -12,9 +12,9 @@ import android.widget.FrameLayout;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.sopt.freety.freety.R;
-import com.sopt.freety.freety.view.fragment1.Fragment1;
 import com.sopt.freety.freety.view.fragment2.Fragment2;
 import com.sopt.freety.freety.view.fragment3.Fragment3;
+import com.sopt.freety.freety.view.home.HomeFragment;
 import com.sopt.freety.freety.view.my_page.MyPageFragment;
 
 import butterknife.BindView;
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()) {
                     case R.id.action_home:
-                        replaceFragment(new Fragment1(), new Bundle(), "home");
+                        replaceFragment(new HomeFragment(), new Bundle(), "home");
                         break;
                     case R.id.action_search:
                         replaceFragment(new Fragment2(), new Bundle(), "search");
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         if (savedInstanceState == null) {
-            initFragment(new Fragment1(), new Bundle(), "first");
+            initFragment(new HomeFragment(), new Bundle(), "first");
         }
 
     }

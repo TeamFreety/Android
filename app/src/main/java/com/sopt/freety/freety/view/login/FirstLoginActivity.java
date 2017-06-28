@@ -52,11 +52,6 @@ public class FirstLoginActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        Button skipBtn = (Button)findViewById(R.id.skipBtn);
-        Button emailBtn = (Button)findViewById(R.id.emailBtn);
-        TextView joinTextView = (TextView)findViewById(R.id.joinTextView);
-
-
         LoginButton facebookBtn = (LoginButton) findViewById(R.id.facebookBtn);
         facebookBtn.setReadPermissions(Arrays.asList("public_profile", "email"));
         facebookBtn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
