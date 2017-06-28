@@ -71,16 +71,6 @@ public class HomeFragment extends Fragment{
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(4);
         viewPager.setCurrentItem(0);
-
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                collapsingRelativeLayout.setAlpha(1.0f - Math.abs(verticalOffset / (float)
-                        appBarLayout.getTotalScrollRange()));
-            }
-        });
-
-
         return view;
     }
 }

@@ -10,12 +10,12 @@ import java.util.Random;
 
 public class SearchBodyData {
 
-    private int img_search_hair;
+    private int resource;
     private String address;
     private String style;
 
-       public int getImg_search_hair() {
-        return img_search_hair;
+    public int getResource() {
+        return resource;
     }
 
     public String getAddress() {
