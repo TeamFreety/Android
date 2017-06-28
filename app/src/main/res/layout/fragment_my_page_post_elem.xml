@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:gravity="center">
 
-    <com.sopt.freety.freety.util.ImageView34
+    <com.sopt.freety.freety.util.custom.ImageView34
         android:id="@+id/my_page_post_image"
         android:src="@drawable/freety_logo"
         android:layout_width="match_parent"

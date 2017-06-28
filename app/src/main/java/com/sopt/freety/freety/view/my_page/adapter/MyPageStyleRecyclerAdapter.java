@@ -22,7 +22,7 @@ import java.util.List;
 
 public class MyPageStyleRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final int BASE_HEADER_HEIGHT = 50;
+    private static final int BASE_HEADER_HEIGHT = 60;
     public static int TYPE_HEADER = 0;
     private List<String> careerList;
     private List<MyPageStylebodyData> myPageStylebodyDataList;
@@ -56,7 +56,7 @@ public class MyPageStyleRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
 
             MyPageStyleHeaderHolder castedHolder = (MyPageStyleHeaderHolder) holder;
             castedHolder.getCareerListView().setAdapter(listAdapter);
-            castedHolder.getCareerListView().getLayoutParams().height = BASE_HEADER_HEIGHT + 30 * careerList.size();
+            castedHolder.getCareerListView().getLayoutParams().height = BASE_HEADER_HEIGHT + 40 * careerList.size();
             castedHolder.getCareerListView().requestLayout();
             //TODO: implement pop up to edit text
         } else {

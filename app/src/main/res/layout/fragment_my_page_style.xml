@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
+    <com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView
         android:id="@+id/my_page_style_recyeler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,6 +14,6 @@
         tools:listitem= "@layout/fragment_my_page_style_body"
         android:overScrollMode="never">
 
-    </android.support.v7.widget.RecyclerView>
+    </com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView>
 
 </LinearLayout>

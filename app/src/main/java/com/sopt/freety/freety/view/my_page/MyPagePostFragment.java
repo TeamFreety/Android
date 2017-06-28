@@ -3,17 +3,16 @@ package com.sopt.freety.freety.view.my_page;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.sopt.freety.freety.R;
-import com.sopt.freety.freety.util.ItemOffsetDecoration;
-import com.sopt.freety.freety.util.ViewPagerEx;
+import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
+import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
+import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.view.my_page.adapter.MyPagePostRecyclerAdapter;
 import com.sopt.freety.freety.view.my_page.data.MyPagePostData;
 
@@ -34,7 +33,7 @@ public class MyPagePostFragment extends Fragment {
 
 
     @BindView(R.id.my_page_post_recycler_view)
-    RecyclerView recyclerView;
+    ScrollFeedbackRecyclerView recyclerView;
 
     private ViewPagerEx viewPager;
 
@@ -53,6 +52,7 @@ public class MyPagePostFragment extends Fragment {
 
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.my_page_post_offset));
+        recyclerView.attachCallbacks(getParentFragment());
         layoutManager = new GridLayoutManager(getContext(), 2);
         final List<MyPagePostData> mockDataList = new ArrayList<>();
         for (int i = 0; i < 11; i++) {

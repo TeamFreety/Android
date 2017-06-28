@@ -1,4 +1,4 @@
-package com.sopt.freety.freety.util;
+package com.sopt.freety.freety.util.custom;
 
 import android.content.Context;
 import android.os.Build;

@@ -17,16 +17,15 @@
             android:value="@string/facebook_app_id"/>
         <activity android:name=".view.login.JoinActivity"></activity>
         <activity android:name=".view.login.LoginActivity"></activity>
-        <activity android:name=".view.login.FirstLoginActivity">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
+        <activity android:name=".view.login.FirstLoginActivity"></activity>
 
         <activity android:name=".view.login.JoinEmailActivity"></activity>
-        <activity android:name=".view.mypage.MyPageActivity"></activity>
         <activity android:name=".view.main.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
 
