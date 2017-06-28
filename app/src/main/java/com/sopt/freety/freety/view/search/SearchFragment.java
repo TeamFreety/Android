@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.sopt.freety.freety.R;
-import com.sopt.freety.freety.util.ItemOffsetDecoration;
+import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
 import com.sopt.freety.freety.view.search.adapter.SearchRecyclerAdapter;
 import com.sopt.freety.freety.view.search.data.SearchBodyData;
 

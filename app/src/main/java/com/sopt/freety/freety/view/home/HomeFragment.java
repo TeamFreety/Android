@@ -11,12 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.sopt.freety.freety.R;
-import com.sopt.freety.freety.util.ViewPagerEx;
+import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.view.home.adapter.HomeViewPagerAdapter;
-import com.sopt.freety.freety.view.my_page.adapter.MyPageViewPagerAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
