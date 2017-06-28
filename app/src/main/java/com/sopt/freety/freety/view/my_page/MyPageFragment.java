@@ -6,9 +6,8 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -16,7 +15,8 @@ import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
-import com.sopt.freety.freety.util.ViewPagerEx;
+import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
+import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageViewPagerAdapter;
 
 import butterknife.BindView;
@@ -27,7 +27,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
  * Created by cmslab on 6/26/17.
  */
 
-public class MyPageFragment extends Fragment{
+public class MyPageFragment extends Fragment implements ScrollFeedbackRecyclerView.Callbacks{
 
     @BindView(R.id.my_page_profile)
     ImageView profileImage;
@@ -43,6 +43,9 @@ public class MyPageFragment extends Fragment{
 
     @BindView(R.id.my_page_collaspsing_relative_layout)
     RelativeLayout collapsingRelativeLayout;
+
+    @BindView(R.id.my_page_hide_toolbar)
+    Toolbar toolbar;
 
     public MyPageFragment() {
 
@@ -90,4 +93,15 @@ public class MyPageFragment extends Fragment{
         return view;
     }
 
+    @Override
+    public boolean isAppBarCollapsed() {
+        final int appBarVisibleHeight = (int) (appBarLayout.getY() + appBarLayout.getHeight());
+        final int toolbarHeight = toolbar.getHeight();
+        return (appBarVisibleHeight >= toolbarHeight && appBarVisibleHeight <= toolbarHeight + 25);
+    }
+
+    @Override
+    public void setExpanded(boolean expanded) {
+        appBarLayout.setExpanded(expanded, true);
+    }
 }

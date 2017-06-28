@@ -1,4 +1,4 @@
-package com.sopt.freety.freety.util;
+package com.sopt.freety.freety.util.custom;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
