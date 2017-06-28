@@ -81,7 +81,7 @@ public class MyPageReviewRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
     }
 
     private static int getStarType(int index, float score) {
-        int numFullStar = (int)score;
+        final int numFullStar = (int)score;
         float revision = score - numFullStar;
         if (index <= numFullStar - 1) {
             return R.drawable.star;

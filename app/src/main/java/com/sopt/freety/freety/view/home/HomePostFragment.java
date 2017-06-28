@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sopt.freety.freety.R;
-import com.sopt.freety.freety.util.ItemOffsetDecoration;
-import com.sopt.freety.freety.util.ViewPagerEx;
+import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
+import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.view.my_page.adapter.MyPagePostRecyclerAdapter;
 import com.sopt.freety.freety.view.my_page.data.MyPagePostData;
 

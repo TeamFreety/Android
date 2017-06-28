@@ -8,6 +8,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Layout;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -54,10 +55,9 @@ public class JoinEmailActivity extends AppCompatActivity {
     @BindView(R.id.checkbox8) CheckBox checkBox8;
     @BindView(R.id.checkbox9) CheckBox checkBox9;
 
-
-    ConstraintLayout designerLayout;
-    public String belongStr ="";
-    public String careerStr ="";
+    private ConstraintLayout designerLayout;
+    private String belongStr ="";
+    private String careerStr ="";
 
     List<CompoundButton> buttonList = new ArrayList<>();
     List<CompoundButton> buttonList2 = new ArrayList<>();
@@ -92,10 +92,7 @@ public class JoinEmailActivity extends AppCompatActivity {
         mProgressDialog.setCancelable(false);
         mProgressDialog.setMessage("회원 가입 중...");
         mProgressDialog.setIndeterminate(true);
-
-
     }
-
 
     @OnClick({R.id.submitBtn,R.id.cancelBtn})
     public void onButtonClick(View view){

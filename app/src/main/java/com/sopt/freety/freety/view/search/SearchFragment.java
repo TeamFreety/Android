@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.sopt.freety.freety.R;
-import com.sopt.freety.freety.util.ItemOffsetDecoration;
+import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
 import com.sopt.freety.freety.view.search.adapter.SearchRecyclerAdapter;
 import com.sopt.freety.freety.view.search.data.SearchBodyData;
 
@@ -27,13 +27,14 @@ import butterknife.ButterKnife;
 
 public class SearchFragment extends Fragment {
 
-    @BindView(R.id.btn_search_detail) Button btnSearchDetail;
-    @BindView(R.id.btn_search_distance) Button btnSearchDistance;
-    @BindView(R.id.btn_search_recent) Button btnSearchRecent;
+    @BindView(R.id.btn_search_detail) Button detailSearchBtn;
+    @BindView(R.id.btn_search_distance) Button distanceSearchBtn;
+    @BindView(R.id.btn_search_recent) Button recentSearchBtn;
     @BindView(R.id.rv_search) RecyclerView recyclerView;
+
     private SearchRecyclerAdapter adapter;
     private GridLayoutManager gridLayoutManager;
-    ArrayList<SearchBodyData> searchBodyDatas;
+    private ArrayList<SearchBodyData> searchBodyDatas;
 
 
     public SearchFragment() {
@@ -58,16 +59,6 @@ public class SearchFragment extends Fragment {
 
         adapter = new SearchRecyclerAdapter(mockDataList);
         recyclerView.setAdapter(adapter);
-
-
-
-
-
-
-
-
-
-
         return view;
     }
 }

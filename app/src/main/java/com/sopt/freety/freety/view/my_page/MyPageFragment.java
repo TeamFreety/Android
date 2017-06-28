@@ -47,6 +47,8 @@ public class MyPageFragment extends Fragment implements ScrollFeedbackRecyclerVi
     @BindView(R.id.my_page_hide_toolbar)
     Toolbar toolbar;
 
+    private static final float OPACITIY_FACTOR = 1.8f;
+
     public MyPageFragment() {
 
     }
@@ -85,8 +87,8 @@ public class MyPageFragment extends Fragment implements ScrollFeedbackRecyclerVi
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                collapsingRelativeLayout.setAlpha(1.0f - Math.abs(verticalOffset / (float)
-                        appBarLayout.getTotalScrollRange()));
+                collapsingRelativeLayout.setAlpha(Math.max(1.0f - (OPACITIY_FACTOR * Math.abs(verticalOffset / (float)
+                        appBarLayout.getTotalScrollRange())), 0));
             }
         });
 

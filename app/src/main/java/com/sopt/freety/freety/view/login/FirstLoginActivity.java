@@ -89,7 +89,7 @@ public class FirstLoginActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.emailBtn,R.id.skipBtn,R.id.joinTextView})
+    @OnClick({R.id.emailBtn, R.id.skipBtn, R.id.joinTextView})
     public void onClick(View view){
         switch(view.getId()){
             case R.id.emailBtn:
