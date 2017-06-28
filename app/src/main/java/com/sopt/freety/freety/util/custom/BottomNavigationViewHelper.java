@@ -1,4 +1,4 @@
-package com.sopt.freety.freety.util;
+package com.sopt.freety.freety.util.custom;
 
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;

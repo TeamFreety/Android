@@ -5,15 +5,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.LoginFilter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.sopt.freety.freety.R;
-import com.sopt.freety.freety.util.ItemOffsetDecoration;
-import com.sopt.freety.freety.util.ViewPagerEx;
+import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
+import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
+import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageStyleRecyclerAdapter;
 import com.sopt.freety.freety.view.my_page.data.MyPageStyleHeaderData;
 import com.sopt.freety.freety.view.my_page.data.MyPageStylebodyData;
@@ -35,7 +34,7 @@ import static com.sopt.freety.freety.view.my_page.adapter.MyPageStyleRecyclerAda
 public class MyPageStyleFragment extends Fragment {
 
     @BindView(R.id.my_page_style_recyeler_view)
-    RecyclerView recyclerView;
+    ScrollFeedbackRecyclerView recyclerView;
     private GridLayoutManager layoutManager;
     private MyPageStyleRecyclerAdapter adapter;
     private ViewPagerEx viewPager;
@@ -51,6 +50,7 @@ public class MyPageStyleFragment extends Fragment {
         viewPager = (ViewPagerEx) container;
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.my_page_style_offset));
+        recyclerView.attachCallbacks(getParentFragment());
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {

@@ -106,6 +106,7 @@
 
             </RelativeLayout>
             <android.support.v7.widget.Toolbar
+                android:id="@+id/my_page_hide_toolbar"
                 android:layout_width="match_parent"
                 app:layout_collapseMode="pin"
                 android:layout_height="50dp">
@@ -123,13 +124,13 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <com.sopt.freety.freety.util.ViewPagerEx
+    <com.sopt.freety.freety.util.custom.ViewPagerEx
         android:id="@+id/my_page_view_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    </com.sopt.freety.freety.util.ViewPagerEx>
+    </com.sopt.freety.freety.util.custom.ViewPagerEx>
 
     </android.support.design.widget.CoordinatorLayout>
 </LinearLayout>

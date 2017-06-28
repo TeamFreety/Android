@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="my_page_style_offset">2dp</dimen>
+    <dimen name="search_image_offset">2dp</dimen>
     <dimen name="my_page_post_offset">6dp</dimen>
+
 </resources>
