@@ -3,4 +3,9 @@
     <color name="colorPrimary">#676767</color>
     <color name="colorPrimaryDark">#111111</color>
     <color name="colorAccent">#ffffff</color>
+
+    <color name="checkBoxCheckedColor">#222222</color>
+    <color name="checkBoxUncheckedColor">#676767</color>
+    <color name="checkBoxBackground">#ffffff</color>
+
 </resources>

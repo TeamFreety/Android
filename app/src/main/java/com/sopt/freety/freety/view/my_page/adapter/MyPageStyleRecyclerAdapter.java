@@ -10,6 +10,7 @@ import android.widget.ListAdapter;
 
 import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.util.helper.ListViewSizeHelper;
 import com.sopt.freety.freety.view.my_page.adapter.holder.MyPageStyleBodyHolder;
 import com.sopt.freety.freety.view.my_page.adapter.holder.MyPageStyleHeaderHolder;
 import com.sopt.freety.freety.view.my_page.data.MyPageStylebodyData;
@@ -56,6 +57,7 @@ public class MyPageStyleRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
 
             MyPageStyleHeaderHolder castedHolder = (MyPageStyleHeaderHolder) holder;
             castedHolder.getCareerListView().setAdapter(listAdapter);
+            //ListViewSizeHelper.setListViewHeightBasedOnChildren(castedHolder.getCareerListView());
             castedHolder.getCareerListView().getLayoutParams().height = BASE_HEADER_HEIGHT + 40 * careerList.size();
             castedHolder.getCareerListView().requestLayout();
             //TODO: implement pop up to edit text
