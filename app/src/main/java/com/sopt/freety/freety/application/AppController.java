@@ -2,6 +2,7 @@ package com.sopt.freety.freety.application;
 
 import android.app.Application;
 
+import com.sopt.freety.freety.network.MapNetworkService;
 import com.sopt.freety.freety.network.NetworkService;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -15,6 +16,7 @@ public class AppController extends Application {
 
     private static AppController instance;
     private NetworkService networkService;
+    private MapNetworkService mapNetworkService;
 
     public static AppController getInstance() {
         return instance;
@@ -25,6 +27,14 @@ public class AppController extends Application {
             networkService = buildNetworkService();
         }
         return networkService;
+    }
+
+    public MapNetworkService getMapNetworkService() {
+        if (mapNetworkService == null) {
+            mapNetworkService = buildMapNetworkService();
+        }
+
+        return mapNetworkService;
     }
 
     @Override
@@ -42,4 +52,13 @@ public class AppController extends Application {
 
         return retrofit.create(NetworkService.class);
     };
+
+    private MapNetworkService buildMapNetworkService() {
+        final Retrofit.Builder builder = new Retrofit.Builder();
+        Retrofit retrofit = builder
+                .baseUrl(MapNetworkService.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        return retrofit.create(MapNetworkService.class);
+    }
 }
