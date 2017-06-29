@@ -14,36 +14,42 @@
             android:id="@+id/chat_list_elem_image"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:layout_margin="20dp"/>
+            android:scaleType="centerCrop"
+            android:layout_marginLeft="17dp"
+            android:layout_marginStart="17dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
         <TextView
             android:id="@+id/chat_list_elem_name"
-            android:text="hihihi"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/chat_list_elem_image"
-            android:layout_toRightOf="@+id/chat_list_elem_image"
-            android:layout_toEndOf="@+id/chat_list_elem_image"
             android:layout_marginLeft="25dp"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/chat_list_elem_image"
+            android:layout_toRightOf="@+id/chat_list_elem_image"
+            android:text="hihihi" />
 
         <TextView
             android:id="@+id/chat_list_elem_last"
-            android:text="hey I'm too overwhelemed!! shit!!"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/chat_list_elem_image"
             android:layout_alignLeft="@+id/chat_list_elem_name"
-            android:layout_alignStart="@+id/chat_list_elem_name" />
+            android:layout_alignStart="@+id/chat_list_elem_name"
+            android:text="hey I'm too overwhelemed!! shit!!" />
 
         <TextView
             android:id="@+id/chat_list_elem_date"
-            android:text="4:23"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/chat_list_elem_image"
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
-            android:layout_alignTop="@+id/chat_list_elem_image" />
+            android:text="4:23" />
     </RelativeLayout>
 </android.support.v7.widget.CardView>

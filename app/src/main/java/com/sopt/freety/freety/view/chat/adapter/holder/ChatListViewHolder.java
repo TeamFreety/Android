@@ -1,4 +1,4 @@
-package com.sopt.freety.freety.view.firebase.chat.adapter.holder;
+package com.sopt.freety.freety.view.chat.adapter.holder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

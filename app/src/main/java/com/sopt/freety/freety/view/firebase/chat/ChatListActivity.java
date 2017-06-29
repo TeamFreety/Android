@@ -1,28 +1,5 @@
 package com.sopt.freety.freety.view.firebase.chat;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
-
-import com.sopt.freety.freety.R;
-import com.sopt.freety.freety.adapter.RecyclerViewOnItemClickListener;
-import com.sopt.freety.freety.view.firebase.chat.adapter.ChatListAdapter;
-import com.sopt.freety.freety.view.firebase.chat.data.ChatListData;
-import com.sopt.freety.freety.view.firebase.chat.data.ChatListFirebaseData;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 /*
 public class ChatListActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 

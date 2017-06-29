@@ -12,8 +12,8 @@ import android.widget.FrameLayout;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.view.chat.ChatListFragment;
 import com.sopt.freety.freety.view.search.SearchFragment;
-import com.sopt.freety.freety.view.fragment3.Fragment3;
 import com.sopt.freety.freety.view.home.HomeFragment;
 import com.sopt.freety.freety.view.my_page.MyPageFragment;
 
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                         replaceFragment(new SearchFragment(), new Bundle(), "search");
                         break;
                     case R.id.action_recruit:
-                        replaceFragment(new Fragment3(), new Bundle(), "recruit");
+                        replaceFragment(new ChatListFragment(), new Bundle(), "recruit");
                         break;
                     case R.id.action_my_page:
                         replaceFragment(new MyPageFragment(), new Bundle(), "my_page");
