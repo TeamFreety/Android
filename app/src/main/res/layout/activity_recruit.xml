@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:overScrollMode="never"
+    tools:context="com.sopt.freety.freety.view.recruit.RecruitActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            android:id="@+id/my_page_toolbar">
+
+            <Button
+                android:id="@+id/recruit_back_btn"
+                android:text="back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="구인글"
+                android:textColor="#111111"
+                android:textSize="18sp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/recruit_top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="300dp">
+
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/recruit_image_view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="250dp">
+
+            </android.support.v4.view.ViewPager>
+
+            <LinearLayout
+                android:id="@+id/recruit_profile_container"
+                android:layout_alignParentBottom="true"
+                android:layout_width="100dp"
+                android:cropToPadding="false"
+                android:layout_height="100dp" >
+
+                <ImageView
+                    android:id="@+id/recruit_profile"
+                    android:src="@drawable/chat_list_elem"
+                    android:scaleType="centerCrop"
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+                </LinearLayout>
+
+            <TextView
+                android:id="@+id/recruit_sub_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="2dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="20dp"
+                android:text="김준회 / 언프리티살롱"
+                android:background="#ffffff"
+                android:layout_toRightOf="@+id/recruit_profile_container"
+                android:layout_alignParentBottom="true" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="205dp"
+                android:layout_marginBottom="5dp"
+                android:layout_above="@+id/recruit_sub_title"
+                android:layout_toRightOf="@+id/recruit_profile_container">
+
+                <TextView
+                    android:id="@+id/recruit_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:text="파마 해드립니다."
+                    android:textColor="#ffffff"
+                    android:layout_alignParentBottom="true"
+                    android:textSize="22sp"/>
+
+                <ToggleButton
+                    android:id="@+id/recruit_pick_btn"
+                    android:background="@drawable/empty_star"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="bottom"
+                    android:textOff=""
+                    android:textOn=""
+                    android:layout_marginRight="11dp"
+                    android:layout_marginEnd="11dp"
+                    android:layout_alignBottom="@+id/recruit_pick_number"
+                    android:layout_toLeftOf="@+id/recruit_pick_number"
+                    android:layout_toStartOf="@+id/recruit_pick_number" />
+
+                <TextView
+                    android:id="@+id/recruit_pick_number"
+                    android:text="21"
+                    android:textSize="18sp"
+                    android:layout_toLeftOf="@+id/recruit_letter_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true" />
+
+                <Button
+                    android:id="@+id/recruit_letter_btn"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="50dp"
+                    android:layout_height="25dp"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#efefef"
+            android:orientation="vertical">
+
+            <View
+                android:background="#777777"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:textColor="#232323"
+                android:text="시술정보"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:padding="15dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:orientation="vertical"
+                android:background="#ffffff">
+
+                <TextView
+                    android:text="시술 유형"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="horizontal">
+
+                    <android.support.v7.widget.AppCompatCheckBox
+                        android:id="@+id/recruit_type_check1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="#000000"
+                        android:text="펌"/>
+
+
+                    <android.support.v7.widget.AppCompatCheckBox
+                        android:id="@+id/recruit_type_check2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="#000000"
+                        android:text="염색"/>
+
+                    <android.support.v7.widget.AppCompatCheckBox
+                        android:id="@+id/recruit_type_check3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="#000000"
+                        android:text="커트"/>
+
+                    <android.support.v7.widget.AppCompatCheckBox
+                        android:id="@+id/recruit_type_check4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="#000000"
+                        android:text="기타"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:text="시술 날짜"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"/>
+
+                <TextView
+                    android:id="@+id/recruit_date"
+                    android:text="2017년 7월 8일 오후 3시"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="시술 가격"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"/>
+
+                <TextView
+                    android:id="@+id/recruit_cost"
+                    android:text="30000원"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:padding="15dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:orientation="vertical"
+                android:background="#ffffff">
+
+                <TextView
+                    android:text="시술 내역"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"/>
+
+                <ListView
+                    android:id="@+id/recruit_makeup_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </ListView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:padding="15dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:orientation="vertical"
+                android:background="#ffffff">
+
+                <fragment
+                    android:id="@+id/recruit_map"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    class="com.google.android.gms.maps.MapFragment"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:background="@drawable/empty_star"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/recruit_address"
+                        android:text="서울 동작구 상도로"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/recruit_location"
+                    android:text="병진채은헤어"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

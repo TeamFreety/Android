@@ -1,9 +1,12 @@
 package com.sopt.freety.freety.network;
 
+import android.Manifest;
+
 import com.sopt.freety.freety.view.login.JoinResult;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -14,7 +17,6 @@ import retrofit2.http.Part;
 
 public interface NetworkService {
 
-
     @Multipart
     @POST("/")
     Call<JoinResult> registerPersonData(@Part("email") RequestBody email,
@@ -24,6 +26,5 @@ public interface NetworkService {
                                         @Part("belong") RequestBody belong,
                                         @Part("belongName") RequestBody belongName,
                                         @Part("career") RequestBody career);
-
 
 }

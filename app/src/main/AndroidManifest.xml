@@ -3,32 +3,34 @@
     package="com.sopt.freety.freety">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <meta-data
         android:name="com.kakao.sdk.AppKey"
         android:value="a29b0c382e62e3254d83b719a8675548" />
 
     <application
+        android:name=".application.AppController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
-        <activity android:name=".view.login.JoinActivity"></activity>
-        <activity android:name=".view.login.LoginActivity"></activity>
-        <activity android:name=".view.login.FirstLoginActivity"></activity>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCzezaEEraT_PEJt4VxBY5MtEGLqWrNF4U" />
 
-        <activity android:name=".view.login.JoinEmailActivity"></activity>
-        <activity android:name=".view.main.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".view.login.JoinActivity" />
+        <activity android:name=".view.login.LoginActivity" />
+        <activity android:name=".view.login.FirstLoginActivity" />
+        <activity android:name=".view.login.JoinEmailActivity" />
+        <activity android:name=".view.main.MainActivity" >
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-          </activity>
+        </activity>
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -45,7 +47,16 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.search.DetailSearchActivity"></activity>
+        <activity android:name=".view.search.DetailSearchActivity" />
+        <activity android:name=".view.recruit.RecruitActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+        <activity android:name=".view.recruit.MapPopupActivity" android:theme="@style/Dialog"/>
     </application>
 
 </manifest>
