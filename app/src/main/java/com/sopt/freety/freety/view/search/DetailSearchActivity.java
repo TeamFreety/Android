@@ -56,6 +56,10 @@ public class DetailSearchActivity extends AppCompatActivity {
     @BindView(R.id.btn_detail_filter_adapt)
     Button filterAdaptDetailBtn;
 
+    RangeBar rangebar;
+
+
+
     ArrayAdapter<CharSequence> adapter;
 
 
@@ -80,6 +84,7 @@ public class DetailSearchActivity extends AppCompatActivity {
             }
         });
 
+        rangebar = (RangeBar) findViewById(R.id.rangebar);
         rangebar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
             @Override
             public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex,
