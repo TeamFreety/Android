@@ -38,9 +38,11 @@
             android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
+
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <android.support.design.widget.AppBarLayout
             android:id="@+id/my_page_app_bar"
             android:layout_width="match_parent"
