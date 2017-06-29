@@ -2,16 +2,16 @@ package com.sopt.freety.freety.view.search;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import com.appyvet.rangebar.IRangeBarFormatter;
-import com.appyvet.rangebar.RangeBar;
+import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
+import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener;
+import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.sopt.freety.freety.R;
 
 import butterknife.BindView;
@@ -56,11 +56,14 @@ public class DetailSearchActivity extends AppCompatActivity {
     @BindView(R.id.btn_detail_filter_adapt)
     Button filterAdaptDetailBtn;
 
-    RangeBar rangebar;
+    private CrystalRangeSeekbar rangeSeekbar;
+    private TextView tvMin, tvMax;
 
 
 
-    ArrayAdapter<CharSequence> adapter;
+
+
+
 
 
     @Override
@@ -69,36 +72,44 @@ public class DetailSearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_search);
 
         ButterKnife.bind(this);
-        adapter = ArrayAdapter.createFromResource(this, R.array.month, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        monthStartSpinner.setAdapter(adapter);
-        monthStartSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        detailCancelBtn.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getBaseContext(), parent.getItemIdAtPosition(position)+"is selected", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+            public void onClick(View v) {
+                finish();
             }
         });
 
-        rangebar = (RangeBar) findViewById(R.id.rangebar);
-        rangebar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+
+
+
+        // get seekbar from view
+        final CrystalRangeSeekbar rangeSeekbar = (CrystalRangeSeekbar)findViewById(R.id.rangeSeekbar);
+
+        // get min and max text view
+        final TextView tvMin = (TextView)findViewById(R.id.textMin1);
+        final TextView tvMax = (TextView)findViewById(R.id.textMax1);
+
+        // set listener
+        rangeSeekbar.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
             @Override
-            public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex,
-                                              int rightPinIndex,
-                                              String leftPinValue, String rightPinValue) {
+            public void valueChanged(Number minValue, Number maxValue) {
+                tvMin.setText(String.valueOf(minValue));
+                tvMax.setText(String.valueOf(maxValue));
             }
         });
-        rangebar.setFormatter(new IRangeBarFormatter() {
+
+        // set final value listener
+        rangeSeekbar.setOnRangeSeekbarFinalValueListener(new OnRangeSeekbarFinalValueListener() {
             @Override
-            public String format(String s) {
-                // Transform the String s here then return s
-                return null;
+            public void finalValue(Number minValue, Number maxValue) {
+                Log.d("CRS=>", String.valueOf(minValue) + " : " + String.valueOf(maxValue));
             }
         });
+
 
     }
-}
+
+
+
+    }
+
