@@ -58,15 +58,52 @@
                 android:paddingBottom="25dp"
                 app:layout_collapseMode="parallax">
 
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/home_contents_view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true">
+
+
+                    <ImageView
+                        android:id="@+id/page_mark_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom = "true"
+                        android:layout_marginLeft="150dp"/>
+                    <ImageView
+                        android:id="@+id/page_mark_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/page_mark_1"/>
+                    <ImageView
+                        android:id="@+id/page_mark_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/page_mark_2"/>
+                    <ImageView
+                        android:id="@+id/page_mark_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/page_mark_3"/>
+                    <ImageView
+                        android:id="@+id/page_mark_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/page_mark_4"/>
+
+                </android.support.v4.view.ViewPager>
 
             </RelativeLayout>
             <android.support.v7.widget.Toolbar
+                android:id="@+id/home_hide_toolbar"
                 android:layout_width="match_parent"
                 app:layout_collapseMode="pin"
-                android:layout_height="50dp">
+                android:layout_height="48dp">
             </android.support.v7.widget.Toolbar>
             <android.support.design.widget.TabLayout
                 android:id="@+id/home_tab"
+                android:background="#ffffff"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_collapseMode="pin"
