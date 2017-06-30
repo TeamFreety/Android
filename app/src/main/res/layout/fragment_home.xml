@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
+    android:background="@color/colorAccent"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,8 +12,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="38dp"
         android:layout_marginBottom="8dp"
+        android:background="@color/colorAccent"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -21,13 +24,11 @@
         app:layout_constraintVertical_bias="0.0"
         android:id="@+id/home_toolbar">
 
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Freety"
-            android:textColor="#111111"
-            android:textSize="18sp"
+            android:src="@drawable/logo"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
 
@@ -48,27 +49,52 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipChildren="false"
-            android:minHeight="40dp"
+            android:minHeight="38dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <RelativeLayout
                 android:id="@+id/home_collaspsing_relative_layout"
                 android:layout_width="match_parent"
-                android:layout_height="205dp"
-                android:paddingBottom="25dp"
+                android:layout_height="247dp"
                 app:layout_collapseMode="parallax">
 
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/home_contents_view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="55dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true">
+
+                </android.support.v4.view.ViewPager>
+                <com.viewpagerindicator.CirclePageIndicator
+                    android:id="@+id/indicator"
+                    android:padding="10dip"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="50dp"
+                    android:layout_centerHorizontal="true"
+                    />
 
             </RelativeLayout>
             <android.support.v7.widget.Toolbar
+                android:id="@+id/home_hide_toolbar"
                 android:layout_width="match_parent"
                 app:layout_collapseMode="pin"
                 android:layout_height="50dp">
             </android.support.v7.widget.Toolbar>
             <android.support.design.widget.TabLayout
                 android:id="@+id/home_tab"
+                app:tabTextColor="@color/tabUnselectedColor"
+                app:tabSelectedTextColor="@color/colorBlack"
+                app:tabIndicatorColor="@color/colorBlack"
+                app:tabIndicatorHeight="5dp"
+                android:background="#ffffff"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 app:layout_collapseMode="pin"
                 android:layout_gravity="bottom">
 
