@@ -1,10 +1,12 @@
 package com.sopt.freety.freety.view.my_page.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.view.my_page.adapter.holder.MyPagePostHolder;
 import com.sopt.freety.freety.view.my_page.data.MyPagePostData;
@@ -17,10 +19,12 @@ import java.util.List;
 
 public class MyPagePostRecyclerAdapter extends RecyclerView.Adapter<MyPagePostHolder> {
 
+    private final Context context;
     private List<MyPagePostData> myPagePostDataList;
 
-    public MyPagePostRecyclerAdapter(final List<MyPagePostData> myPagePostDataList) {
+    public MyPagePostRecyclerAdapter(final Context context, final List<MyPagePostData> myPagePostDataList) {
         this.myPagePostDataList = myPagePostDataList;
+        this.context = context;
     }
 
     @Override
@@ -32,7 +36,7 @@ public class MyPagePostRecyclerAdapter extends RecyclerView.Adapter<MyPagePostHo
 
     @Override
     public void onBindViewHolder(MyPagePostHolder holder, int position) {
-        holder.getPostImage().setImageResource(myPagePostDataList.get(position).getMockSource());
+        Glide.with(context).load(myPagePostDataList.get(position).getMockSource()).override(164,187).centerCrop().thumbnail(0.001f).into(holder.getPostImage());
         holder.getAddressText().setText(myPagePostDataList.get(position).getMockAddress());
         holder.getStyleText().setText(myPagePostDataList.get(position).getMockStyle());
     }

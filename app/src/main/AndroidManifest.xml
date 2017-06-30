@@ -54,13 +54,24 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.search.DetailSearchActivity" />
-        <activity android:name=".view.recruit.RecruitActivity">
-
+        <activity android:name=".view.recruit.RecruitActivity" >
         </activity>
         <activity
             android:name=".view.recruit.MapPopupActivity"
             android:theme="@style/Dialog" />
+        <activity android:name=".view.login.ModelSNSSignUpActivity" />
+        <activity android:name=".view.login.DesignerSNSSignUpActivity">
+        </activity>
+        <activity android:name=".view.login.DesignerEmailSignUpActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+        <activity android:name=".view.recruit.RecruitActivity">
+        </activity>
+
+        <activity
+            android:name=".view.recruit.MapPopupActivity"
+            android:theme="@style/Dialog" />
         <activity android:name=".view.wirte.WriteActivity"></activity>
+
     </application>
 
 </manifest>
