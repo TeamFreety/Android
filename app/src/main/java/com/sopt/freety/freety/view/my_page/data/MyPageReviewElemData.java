@@ -70,7 +70,7 @@ public class MyPageReviewElemData {
             case 1:
                 return R.drawable.chat_list_elem;
             case 2:
-                return R.drawable.freety_logo;
+                return R.drawable.freety_logo_black;
         }
         return 0;
     }
