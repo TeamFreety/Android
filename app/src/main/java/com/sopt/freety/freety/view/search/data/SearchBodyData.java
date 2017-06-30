@@ -28,7 +28,7 @@ public class SearchBodyData {
 
     public static int getMockSources() {
         Random random = new Random();
-        return random.nextInt() % 2 == 0 ? R.drawable.chat_list_elem : R.drawable.freety_logo;
+        return random.nextInt() % 2 == 0 ? R.drawable.chat_list_elem : R.drawable.freety_logo_black;
     }
 
     public static SearchBodyData getMockDatas() {

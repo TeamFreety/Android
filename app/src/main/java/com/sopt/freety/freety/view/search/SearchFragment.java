@@ -1,6 +1,7 @@
 package com.sopt.freety.freety.view.search;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -46,8 +47,17 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         ButterKnife.bind(this, view);
 
+        detailSearchBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), DetailSearchActivity.class);
+                getActivity().startActivity(intent);
+
+            }
+        });
+
         recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.my_page_post_offset));
+        recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.search_image_offset));
 
         gridLayoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
