@@ -1,5 +1,6 @@
 package com.sopt.freety.freety.view.home;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,8 @@ import android.view.ViewGroup;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
+import com.sopt.freety.freety.view.home.adapter.HomePostRecyclerAdapter;
+import com.sopt.freety.freety.view.home.data.HomePostData;
 import com.sopt.freety.freety.view.my_page.adapter.MyPagePostRecyclerAdapter;
 import com.sopt.freety.freety.view.my_page.data.MyPagePostData;
 
@@ -37,7 +40,7 @@ public class HomePostFragment extends Fragment {
     private ViewPagerEx viewPager;
 
     private GridLayoutManager layoutManager;
-    private MyPagePostRecyclerAdapter adapter;
+    private HomePostRecyclerAdapter adapter;
 
     public HomePostFragment() {
     }
@@ -52,12 +55,12 @@ public class HomePostFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.my_page_post_offset));
         layoutManager = new GridLayoutManager(getContext(), 2);
-        final List<MyPagePostData> mockDataList = new ArrayList<>();
-        for (int i = 0; i < 13; i++) {
-            mockDataList.add(MyPagePostData.getMockData());
+        final List<HomePostData> mockDataList = new ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            mockDataList.add(HomePostData.getMockData());
         }
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new MyPagePostRecyclerAdapter(mockDataList);
+        adapter = new HomePostRecyclerAdapter((Activity)getContext(),mockDataList);
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

@@ -59,7 +59,7 @@ public class MyPagePostFragment extends Fragment {
             mockDataList.add(MyPagePostData.getMockData());
         }
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new MyPagePostRecyclerAdapter(mockDataList);
+        adapter = new MyPagePostRecyclerAdapter(getContext(),mockDataList);
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

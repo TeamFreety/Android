@@ -4,6 +4,11 @@
     <color name="colorPrimaryDark">#111111</color>
     <color name="colorAccent">#ffffff</color>
 
+    <color name="colorBlack">#000000</color>
+    <color name="tabUnselectedColor">#969696</color>
+    <color name="borderColor">#C3C3C3</color>
+    <color name="postStyleColor">#909090</color>
+
     <color name="checkBoxCheckedColor">#222222</color>
     <color name="checkBoxUncheckedColor">#676767</color>
     <color name="checkBoxBackground">#ffffff</color>

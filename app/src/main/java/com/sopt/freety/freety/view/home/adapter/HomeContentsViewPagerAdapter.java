@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class HomeContentsViewPagerAdapter extends PagerAdapter {
         imageMockList.add(R.drawable.empty_star);
         imageMockList.add(R.drawable.half_star);
         imageMockList.add(R.drawable.star);
+
     }
 
     @Override
@@ -46,7 +48,8 @@ public class HomeContentsViewPagerAdapter extends PagerAdapter {
 
         View viewItem = inflater.inflate(R.layout.fragment_home_contents, container, false);
         ImageView imageView = (ImageView) viewItem.findViewById(R.id.home_contents_image_view);
-        imageView.setImageResource(imageMockList.get(realPos));
+        Glide.with(context).load(imageMockList.get(realPos)).override(164,187).centerCrop().thumbnail(0.001f).into(imageView);
+
         ((ViewPager)container).addView(viewItem);
 
         return viewItem;

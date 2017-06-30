@@ -57,7 +57,7 @@ public class SearchFragment extends Fragment {
             mockDataList.add(SearchBodyData.getMockDatas());
         }
 
-        adapter = new SearchRecyclerAdapter(mockDataList);
+        adapter = new SearchRecyclerAdapter(getContext(), mockDataList);
         recyclerView.setAdapter(adapter);
         return view;
     }
