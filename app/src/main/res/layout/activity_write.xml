@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.sopt.freety.freety.view.wirte.WriteActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="글쓰기"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="#111111"
+            android:textSize="18sp"/>
+
+        <Button
+            android:id="@+id/btn_wirte_cancel"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:background="@color/cardview_light_background"
+            android:text="X"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/text_write_sort"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:text="시술 유형"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="#111111"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_toRightOf="@+id/text_write_sort">
+
+            <CheckBox
+                android:id="@+id/checkbtn_write_sort_perm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="펌"/>
+            <CheckBox
+                android:id="@+id/checkbtn_write_sort_dye"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/checkbtn_write_sort_perm"
+                android:text="염색"/>
+            <CheckBox
+                android:id="@+id/checkbtn_write_sort_cut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/checkbtn_write_sort_dye"
+                android:layout_marginLeft="10dp"
+                android:text="커트"/>
+            <CheckBox
+                android:id="@+id/checkbtn_write_sort_etc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/checkbtn_write_sort_cut"
+                android:layout_marginLeft="10dp"
+                android:text="기타"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+    <TextView
+        android:id="@+id/text_write_date"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:text="시술 날짜"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textColor="#111111"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_toRightOf="@+id/text_write_date">
+
+
+
+    </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>
