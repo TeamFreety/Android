@@ -12,7 +12,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class AppController extends Application {
-    private static final String baseURL = "http";
 
     private static AppController instance;
     private NetworkService networkService;
@@ -46,7 +45,7 @@ public class AppController extends Application {
     private NetworkService buildNetworkService() {
         final Retrofit.Builder builder = new Retrofit.Builder();
         Retrofit retrofit = builder
-                .baseUrl(baseURL)
+                .baseUrl(NetworkService.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
