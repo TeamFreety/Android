@@ -155,6 +155,6 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
             public void run() {
                 handler.post(Update);
             }
-        }, 5000, 5000);
+        }, 400, 3000);
     }
 }

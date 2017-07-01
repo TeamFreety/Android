@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
+    <com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView
         android:id="@+id/home_post_recycler_view"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="10dp"
@@ -15,6 +15,6 @@
         android:padding="@dimen/my_page_post_offset"
         android:overScrollMode="never">
 
-    </android.support.v7.widget.RecyclerView>
+    </com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView>
 
 </LinearLayout>

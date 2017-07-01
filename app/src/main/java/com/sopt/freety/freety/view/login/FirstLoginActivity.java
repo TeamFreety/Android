@@ -1,5 +1,6 @@
 package com.sopt.freety.freety.view.login;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +19,19 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.kakao.auth.AuthType;
+import com.kakao.auth.ErrorCode;
+import com.kakao.auth.ISessionCallback;
+import com.kakao.auth.Session;
+import com.kakao.network.ErrorResult;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
+import com.kakao.usermgmt.callback.MeResponseCallback;
+import com.kakao.usermgmt.response.model.UserProfile;
+import com.kakao.util.exception.KakaoException;
+import com.kakao.util.helper.log.Logger;
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.util.custom.KakaoLoginButton;
 import com.sopt.freety.freety.view.main.MainActivity;
 
 import org.json.JSONObject;
@@ -36,6 +49,10 @@ import butterknife.OnClick;
 public class FirstLoginActivity extends AppCompatActivity {
 
     private CallbackManager callbackManager;
+    private SessionCallback callback;
+
+    private String userId;
+    private String userName;
 
     // view
     private Button facebookBtn;
@@ -44,45 +61,33 @@ public class FirstLoginActivity extends AppCompatActivity {
     private Button skipBtn;
     private TextView joinTextView;*/
 
+
+
+private int rId;
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_first_login);
+
+      //  int rId = getResources().getIdentifier("kakao_layout", );
+
+
+        UserManagement.requestLogout(new LogoutResponseCallback() {
+            @Override
+            public void onCompleteLogout() {
+                //로그아웃 성공 후
+            }
+        });
+
+        //callback = new SessionCallback();
+       // Session.getCurrentSession().addCallback(callback);
         callbackManager = CallbackManager.Factory.create();
 
         ButterKnife.bind(this);
 
         facebookBtn = (Button)findViewById(R.id.facebookBtn);
-
-       // facebookBtn.setReadPermissions(Arrays.asList("public_profile", "email"));
-      /*  facebookBtn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                GraphRequest graphRequest = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(JSONObject object, GraphResponse response) {
-                        Log.v("result",object.toString());
-                    }
-                });
-
-                Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,email,gender,birthday");
-                graphRequest.setParameters(parameters);
-                graphRequest.executeAsync();
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Log.e("LoginErr",error.toString());
-            }
-        });*/
-
         facebookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,26 +121,94 @@ public class FirstLoginActivity extends AppCompatActivity {
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //간편로그인시 호출 ,없으면 간편로그인시 로그인 성공화면으로 넘어가지 않음
+        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
+            return;
+        }
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
+    private class SessionCallback implements ISessionCallback {
 
-    @OnClick({R.id.emailBtn, R.id.skipBtn, R.id.joinTextView})
+        @Override
+        public void onSessionOpened() {
+
+            UserManagement.requestMe(new MeResponseCallback() {
+
+                @Override
+                public void onFailure(ErrorResult errorResult) {
+                    String message = "failed to get user info. msg=" + errorResult;
+                    Logger.d(message);
+
+                    ErrorCode result = ErrorCode.valueOf(errorResult.getErrorCode());
+                    if (result == ErrorCode.CLIENT_ERROR_CODE) {
+                        finish();
+                    } else {
+                        //redirectMainActivity();
+                    }
+                }
+
+                @Override
+                public void onSessionClosed(ErrorResult errorResult) {
+                }
+
+                @Override
+                public void onNotSignedUp() {
+                }
+
+                @Override
+                public void onSuccess(UserProfile userProfile) {
+                    //로그인에 성공하면 로그인한 사용자의 일련번호, 닉네임, 이미지url등을 리턴합니다.
+                    //사용자 ID는 보안상의 문제로 제공하지 않고 일련번호는 제공합니다.
+                    userId = String.valueOf(userProfile.getId());
+                    userName = userProfile.getNickname();
+
+                    Log.e("UserProfile", userProfile.toString());
+                    Intent intent = new Intent(FirstLoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+
+        }
+
+        @Override
+        public void onSessionOpenFailed(KakaoException exception) {
+            Log.e("err", ""+exception);
+        }
+    }
+
+
+        @OnClick({R.id.emailBtn, R.id.kakaoBtn, R.id.skipBtn, R.id.joinTextView})
     public void onClick(View view){
         switch(view.getId()){
             case R.id.emailBtn:
                 Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.kakaoBtn:
+               // new KakaoLoginButton(FirstLoginActivity).call();
+                isKakaoLogin();
+                /*Intent intent2 = new Intent(getApplicationContext(),LoginActivity.class);
+                startActivity(intent2);*/
+                break;
             case R.id.skipBtn:
-                Intent intent2 = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(intent2);
+                Intent intent3 = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent3);
                 break;
             case R.id.joinTextView:
-                Intent intent3 = new Intent(getApplicationContext(),JoinActivity.class);
-                startActivity(intent3);
+                Intent intent4 = new Intent(getApplicationContext(),JoinActivity.class);
+                startActivity(intent4);
                 break;
         }
     }
+
+    private void isKakaoLogin(){
+        callback = new SessionCallback();
+        com.kakao.auth.Session.getCurrentSession().addCallback(callback);
+        com.kakao.auth.Session.getCurrentSession().checkAndImplicitOpen();
+        com.kakao.auth.Session.getCurrentSession().open(AuthType.KAKAO_TALK,FirstLoginActivity.this);
+    }
+
 }
