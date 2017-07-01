@@ -54,11 +54,7 @@
         <activity
             android:name=".view.recruit.MapPopupActivity"
             android:theme="@style/Dialog">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity android:name=".view.login.ModelSNSSignUpActivity" />
@@ -66,12 +62,16 @@
         <activity
             android:name=".view.login.DesignerEmailSignUpActivity"
             android:windowSoftInputMode="adjustPan|adjustResize" >
-
         </activity>
-        <activity android:name=".view.login.DesignerEmailSignUpActivity"
-            android:windowSoftInputMode="adjustPan|adjustResize"/>
         <activity android:name=".view.login.ModelEmailSignUpActivity"/>
-        <activity android:name=".view.wirte.WriteActivity"/>
+        <activity android:name=".view.wirte.WriteActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

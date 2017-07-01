@@ -3,6 +3,8 @@ package com.sopt.freety.freety.view.wirte;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -11,11 +13,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.view.property.ScreenClickable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class WriteActivity extends AppCompatActivity {
+public class WriteActivity extends AppCompatActivity implements ScreenClickable {
 
     @BindView(R.id.btn_wirte_cancel)
     Button writeCancelBtn;
@@ -66,9 +69,9 @@ public class WriteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_write);
         ButterKnife.bind(this);
-
         writeCancelBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -76,5 +79,12 @@ public class WriteActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onScreenClick(View v) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(writeTitleEdit.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(writeContentEdit.getWindowToken(), 0);
     }
 }
