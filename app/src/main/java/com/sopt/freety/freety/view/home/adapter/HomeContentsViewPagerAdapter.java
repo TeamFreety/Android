@@ -23,11 +23,13 @@ public class HomeContentsViewPagerAdapter extends PagerAdapter {
 
     private final static int PAGE_COUNT = 5;
     private Context context;
+    private int tabCount;
     private List<String> imageURLList;
     private List<Integer> imageMockList = new ArrayList<>();
 
-    public HomeContentsViewPagerAdapter(Context context, List<String> imageURLList) {
+    public HomeContentsViewPagerAdapter(Context context, int tabCount, List<String> imageURLList) {
         this.context = context;
+        this.tabCount = tabCount;
         this.imageURLList = imageURLList;
         this.imageMockList = new ArrayList<>();
 
@@ -58,8 +60,13 @@ public class HomeContentsViewPagerAdapter extends PagerAdapter {
     @Override
     public int getCount() {
         // TODO Auto-generated method stub
-        return Integer.MAX_VALUE;
+        return 1000;
     }
+
+    public int getRealCount() {
+        return tabCount;
+    }
+
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
