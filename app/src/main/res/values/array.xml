@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="belong">
+        <item>고등학생</item>
+        <item>대학생</item>
+        <item>일반인(학원)</item>
+    </string-array>
+
+    <string-array name="career">
+        <item>6개월 미만</item>
+        <item>6개월 이상~1년 미만</item>
+        <item>1년 이상~2년 미만</item>
+        <item>2년 이상~5년 미만</item>
+        <item>5년 이상</item>
+    </string-array>
+
+</resources>
