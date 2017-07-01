@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
 
-    android:background="@color/colorAccent"
+    android:background="#ffffff"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="38dp"
         android:layout_marginBottom="8dp"
-        android:background="@color/colorAccent"
+        android:background="#ffffff"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -23,23 +23,23 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         android:id="@+id/home_toolbar">
-
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/logo"
+            android:src="@drawable/freety_logo_black"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
-
     </RelativeLayout>
+
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/home_app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="247dp"
         android:clipChildren="false"
         android:fitsSystemWindows="true"
         android:background="@android:color/transparent">
@@ -49,27 +49,29 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipChildren="false"
-            android:minHeight="38dp"
+            android:minHeight="45dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <RelativeLayout
                 android:id="@+id/home_collaspsing_relative_layout"
                 android:layout_width="match_parent"
-                android:layout_height="247dp"
-                app:layout_collapseMode="parallax">
+                android:layout_height="202dp"
+                app:layout_collapseMode="parallax"
+                android:orientation="vertical">
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/home_contents_view_pager"
                     android:layout_width="match_parent"
-                    android:layout_height="240dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginBottom="55dp"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true">
 
+
                 </android.support.v4.view.ViewPager>
-                <com.viewpagerindicator.CirclePageIndicator
+
+                <!--<com.viewpagerindicator.CirclePageIndicator
                     android:id="@+id/indicator"
                     android:padding="10dip"
                     android:layout_height="wrap_content"
@@ -77,7 +79,16 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="50dp"
                     android:layout_centerHorizontal="true"
-                    />
+                    />-->
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/indicatorTab"
+                    android:layout_width="match_parent"
+                    android:layout_height="37dp"
+                    android:layout_alignParentBottom="true"
+                    app:tabBackground="@drawable/dot_selector"
+                    app:tabGravity="center"
+                    app:tabIndicatorHeight="0dp" />
 
             </RelativeLayout>
             <android.support.v7.widget.Toolbar

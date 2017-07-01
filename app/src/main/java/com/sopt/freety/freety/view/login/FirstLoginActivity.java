@@ -15,6 +15,7 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.sopt.freety.freety.R;
@@ -39,9 +40,9 @@ public class FirstLoginActivity extends AppCompatActivity {
     // view
     private Button facebookBtn;
     private Button kakaoBtn;
-    private Button emailBtn;
+/*    private Button emailBtn;
     private Button skipBtn;
-    private TextView joinTextView;
+    private TextView joinTextView;*/
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -52,9 +53,10 @@ public class FirstLoginActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        LoginButton facebookBtn = (LoginButton) findViewById(R.id.facebookBtn);
-        facebookBtn.setReadPermissions(Arrays.asList("public_profile", "email"));
-        facebookBtn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        facebookBtn = (Button)findViewById(R.id.facebookBtn);
+
+       // facebookBtn.setReadPermissions(Arrays.asList("public_profile", "email"));
+      /*  facebookBtn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 GraphRequest graphRequest = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
@@ -79,7 +81,37 @@ public class FirstLoginActivity extends AppCompatActivity {
             public void onError(FacebookException error) {
                 Log.e("LoginErr",error.toString());
             }
+        });*/
+
+        facebookBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //LoginManager - 요청된 읽기 또는 게시 권한으로 로그인 절차를 시작합니다.
+                LoginManager.getInstance().logInWithReadPermissions(FirstLoginActivity.this,
+                        Arrays.asList("public_profile", "email"));
+                LoginManager.getInstance().registerCallback(callbackManager,
+                        new FacebookCallback<LoginResult>() {
+                            @Override
+                            public void onSuccess(LoginResult loginResult) {
+                                Log.e("onSuccess", "onSuccess");
+                                Intent intent = new Intent(FirstLoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+
+                            @Override
+                            public void onCancel() {
+                                Log.e("onCancel", "onCancel");
+                            }
+
+                            @Override
+                            public void onError(FacebookException exception) {
+                                Log.e("onError", "onError " + exception.getLocalizedMessage());
+                            }
+                        });
+            }
         });
+
 
     }
     @Override
