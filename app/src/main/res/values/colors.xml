@@ -8,7 +8,7 @@
     <color name="tabUnselectedColor">#969696</color>
     <color name="borderColor">#C3C3C3</color>
     <color name="postStyleColor">#909090</color>
-
+//안들어간부분있음
     <color name="checkBoxCheckedColor">#222222</color>
     <color name="checkBoxUncheckedColor">#676767</color>
     <color name="checkBoxBackground">#ffffff</color>
