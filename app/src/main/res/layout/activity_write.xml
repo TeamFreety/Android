@@ -118,7 +118,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/layout_btn_shape_circle"
+                android:background="@drawable/layout_detailsearch_btn_shape_circle"
                 android:text="2017년"
                 android:textAlignment="center"
                 android:textSize="13dp" />
@@ -131,7 +131,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="3dp"
                 android:layout_toRightOf="@+id/btn_write_2017"
-                android:background="@drawable/layout_btn_shape_circle"
+                android:background="@drawable/layout_detailsearch_btn_shape_circle"
                 android:entries="@array/month"
                 android:textAlignment="textEnd"></Spinner>
 
@@ -143,7 +143,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="3dp"
                 android:layout_toRightOf="@+id/spinner_write_month"
-                android:background="@drawable/layout_btn_shape_circle"
+                android:background="@drawable/layout_detailsearch_btn_shape_circle"
                 android:entries="@array/day"
                 android:textAlignment="textEnd"></Spinner>
 
@@ -155,7 +155,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="3dp"
                 android:layout_toRightOf="@+id/spinner_write_day"
-                android:background="@drawable/layout_btn_shape_circle"
+                android:background="@drawable/layout_detailsearch_btn_shape_circle"
                 android:entries="@array/time"
                 android:textAlignment="textEnd"></Spinner>
 
@@ -192,7 +192,7 @@
                 android:id="@+id/btn_write_search_map"
                 android:layout_width="60dp"
                 android:layout_height="25dp"
-                android:background="@drawable/layout_btn_shape_circle"
+                android:background="@drawable/layout_detailsearch_btn_shape_circle"
                 android:text="지도검색"
                 android:textAlignment="center"
                 android:textSize="13dp"
@@ -206,7 +206,7 @@
                 android:text="주소"
                 android:paddingTop="5dp"
                 android:paddingLeft="10dp"
-                android:background="@drawable/layout_btn_shape_circle"
+                android:background="@drawable/layout_detailsearch_btn_shape_circle"
                 android:layout_below="@+id/btn_write_search_map"/>
 
         </RelativeLayout>

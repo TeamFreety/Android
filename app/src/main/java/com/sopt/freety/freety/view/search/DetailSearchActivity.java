@@ -21,14 +21,7 @@ public class DetailSearchActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_detail_cancel)
     Button detailCancelBtn;
-    @BindView(R.id.checkbtn_sort_perm)
-    CheckBox sortPermCheckBtn;
-    @BindView(R.id.checkbtn_sort_dye)
-    CheckBox sortDyeCheckBtn;
-    @BindView(R.id.checkbtn_sort_cut)
-    CheckBox sortCutCheckBtn;
-    @BindView(R.id.checkbtn_sort_etc)
-    CheckBox sortEtcCheckBtn;
+
     @BindView(R.id.btn_detail_2017_start)
     Button detail2017StartBtn;
     @BindView(R.id.spinner_detail_month_start)
