@@ -23,6 +23,7 @@ import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.network.NetworkService;
 import com.sopt.freety.freety.util.Consts;
 import com.sopt.freety.freety.util.util.FormatChecker;
+import com.sopt.freety.freety.view.login.data.DuplicateData;
 import com.sopt.freety.freety.view.login.data.SignUpData;
 import com.sopt.freety.freety.view.login.data.SignUpResultData;
 import com.sopt.freety.freety.view.main.MainActivity;
@@ -160,7 +161,7 @@ public class DesignerEmailSignUpActivity extends AppCompatActivity implements Lo
                     .setMemberCareer(careerSelectedText.getText().toString())
                     .build();
 
-            final Call<SignUpResultData> requestSignUpData = networkService.registerPersonData(signUpData);
+            final Call<SignUpResultData> requestSignUpData = networkService.registerDesignerData(signUpData);
             requestSignUpData.enqueue(new Callback<SignUpResultData>() {
                 @Override
                 public void onResponse(Call<SignUpResultData> call, Response<SignUpResultData> response) {
@@ -249,14 +250,28 @@ public class DesignerEmailSignUpActivity extends AppCompatActivity implements Lo
 
     @OnClick(R.id.sign_up_email_designer_address_rep_btn)
     public void onRepititionCheck() {
-        //TODO: networking inplement this.
-        if (true) {
-            emailAlertText.setText("이메일이 중복됩니다. 다시 입력해주세요.");
-            isAddressRepititionPassed = true;
-        } else {
-            emailAlertText.setText("");
-            isAddressRepititionPassed = false;
-        }
+        Call<DuplicateData> requestDuplicate = networkService.checkDuplicate(emailEditText.getText().toString());
+        requestDuplicate.enqueue(new Callback<DuplicateData>() {
+            @Override
+            public void onResponse(Call<DuplicateData> call, Response<DuplicateData> response) {
+                if (response.isSuccessful()) {
+                    if (response.body().getMessage().equals("duplicated")) {
+                        emailAlertText.setText("이메일이 중복됩니다. 다시 입력해주세요.");
+                        isAddressRepititionPassed = false;
+                    } else if (response.body().getMessage().equals("no duplication")) {
+                        emailAlertText.setText("사용가능한 이메일입니다.");
+                        isAddressRepititionPassed = true;
+                    } else {
+                        throw new RuntimeException("unexpected message");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DuplicateData> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override

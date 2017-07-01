@@ -34,8 +34,11 @@
         </intent-filter>
         </activity>
         <activity android:name=".view.login.JoinEmailActivity" />
+
         <activity android:name=".view.main.MainActivity" >
+
         </activity>
+
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -53,17 +56,28 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.search.DetailSearchActivity" />
-        <activity android:name=".view.recruit.RecruitActivity" >
+        <activity android:name=".view.recruit.RecruitActivity">
+
         </activity>
         <activity
             android:name=".view.recruit.MapPopupActivity"
-            android:theme="@style/Dialog" />
-        <activity android:name=".view.login.ModelSNSSignUpActivity" />
-        <activity android:name=".view.login.DesignerSNSSignUpActivity">
+            android:theme="@style/Dialog">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".view.login.DesignerEmailSignUpActivity"
-            android:windowSoftInputMode="adjustPan|adjustResize">
-            </activity>
+
+        <activity android:name=".view.login.ModelSNSSignUpActivity" />
+        <activity android:name=".view.login.DesignerSNSSignUpActivity"></activity>
+        <activity
+            android:name=".view.login.DesignerEmailSignUpActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize" >
+
+        </activity>
+        <activity android:name=".view.login.ModelEmailSignUpActivity"/>
+        <activity android:name=".view.wirte.WriteActivity"/>
 
     </application>
 
