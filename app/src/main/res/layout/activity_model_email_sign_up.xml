@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sopt.freety.freety.view.login.DesignerSNSSignUpActivity"
+    android:orientation="vertical"
     android:onClick="onScreenClick"
-    android:orientation="vertical">
-
+    tools:context="com.sopt.freety.freety.view.login.ModelEmailSignUpActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,9 +15,9 @@
 
 
         <ImageButton
-            android:layout_width="wrap_content"
             android:background="@null"
             android:src="@drawable/back_button"
+            android:layout_width="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_height="match_parent" />
 
@@ -53,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_alignParentBottom="true"
-            android:background="@color/borderColor"/>
+            android:background="#e3e5e6"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -61,8 +60,111 @@
         android:background="#ffffff"
         android:layout_height="43dp">
 
+        <EditText
+            android:id="@+id/sign_up_email_model_email"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginRight="22dp"
+            android:layout_marginLeft="22dp"
+            android:background="@android:color/transparent"
+            android:text=""
+            android:textSize="13sp"
+            android:inputType="text"
+            android:hint="@string/emaiL_address_hint"
+            android:layout_toLeftOf="@+id/sign_up_email_model_address_rep_btn"
+            android:layout_centerInParent="true"/>
+
+        <Button
+            android:id="@+id/sign_up_email_model_address_rep_btn"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:text="중복확인"
+            android:textColor="#ffffff"
+            android:textSize="11sp"
+            android:background="@drawable/repitition_btn"
+            android:layout_width="65dp"
+            android:layout_height="25dp" />
+
         <TextView
-            android:id="@+id/sign_up_sns_designer_name_text"
+            android:id="@+id/sign_up_email_model_email_alert"
+            android:textSize="8sp"
+            android:text=""
+            android:textColor="#ff0000"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="2dp"
+            android:textAlignment="center" android:layout_width="200dp"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="22dp"
+        android:layout_marginRight="22dp"
+        android:background="#e3e5e6"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="#ffffff"
+        android:layout_height="43dp">
+
+        <EditText
+            android:id="@+id/sign_up_email_model_password"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginRight="22dp"
+            android:layout_marginLeft="22dp"
+            android:background="@android:color/transparent"
+            android:text=""
+            android:textSize="13sp"
+            android:inputType="textPassword"
+            android:hint="@string/emaiL_password_hint"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="22dp"
+        android:layout_marginRight="22dp"
+        android:background="#e3e5e6"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="#ffffff"
+        android:layout_height="43dp">
+
+        <EditText
+            android:id="@+id/sign_up_email_model_password_rep"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginRight="22dp"
+            android:layout_marginLeft="22dp"
+            android:background="@android:color/transparent"
+            android:text=""
+            android:textSize="13sp"
+            android:inputType="textPassword"
+            android:hint="@string/emaiL_password_rep_hint"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="22dp"
+        android:layout_marginRight="22dp"
+        android:background="#e3e5e6"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="#ffffff"
+        android:layout_height="43dp">
+
+        <TextView
+            android:id="@+id/sign_up_email_model_name_text"
             android:text="이름"
             android:textSize="13sp"
             android:layout_marginLeft="22dp"
@@ -71,7 +173,7 @@
             android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/sign_up_sns_designer_name_edit"
+            android:id="@+id/sign_up_email_model_name_edit"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginRight="22dp"
@@ -81,7 +183,7 @@
             android:inputType="text"
             android:hint="이름을 입력해주세요"
             android:layout_centerInParent="true"
-            android:layout_toRightOf="@+id/sign_up_sns_designer_name_text" />
+            android:layout_toRightOf="@+id/sign_up_email_model_name_text" />
 
     </RelativeLayout>
 
@@ -92,14 +194,13 @@
         android:layout_marginRight="22dp"
         android:background="#e3e5e6"/>
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:background="#ffffff"
         android:layout_height="43dp">
 
         <TextView
-            android:id="@+id/sign_up_sns_designer_age_text"
+            android:id="@+id/sign_up_email_model_age_text"
             android:text="나이"
             android:textSize="13sp"
             android:layout_marginLeft="22dp"
@@ -108,7 +209,7 @@
             android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/sign_up_sns_designer_age_edit"
+            android:id="@+id/sign_up_email_model_age_edit"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginRight="22dp"
@@ -118,165 +219,14 @@
             android:inputType="number"
             android:hint="나이를 입력해주세요"
             android:layout_centerInParent="true"
-            android:layout_toRightOf="@+id/sign_up_sns_designer_age_text" />
+            android:layout_toRightOf="@+id/sign_up_email_model_age_text" />
 
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginLeft="22dp"
-        android:layout_marginRight="22dp"
         android:background="#e3e5e6"/>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:background="#ffffff"
-        android:layout_height="43dp">
-
-        <TextView
-            android:id="@+id/sign_up_sns_designer_belong_text"
-            android:text="소속"
-            android:textSize="13sp"
-            android:layout_marginLeft="22dp"
-            android:layout_width="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/sign_up_sns_designer_belong_selected"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="22dp"
-            android:layout_marginLeft="26dp"
-            android:background="@android:color/transparent"
-            android:textSize="13sp"
-            android:inputType="number"
-            android:hint="소속을 골라주세요."
-            android:layout_alignBaseline="@+id/sign_up_sns_designer_belong_text"
-            android:layout_toRightOf="@+id/sign_up_sns_designer_belong_text" />
-
-        <ImageButton
-            android:id="@+id/sign_up_sns_designer_belong_btn"
-            android:src="@drawable/triangle"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="21dp"
-            android:background="@null"
-            android:layout_width="24dp"
-            android:layout_height="24dp" />
-
-        <Spinner
-            android:id="@+id/sign_up_sns_designer_belong_spinner"
-            android:layout_marginLeft="26dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:visibility="invisible"
-            android:background="#00ffffff"
-            android:spinnerMode="dropdown"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_toLeftOf="@+id/sign_up_sns_designer_belong_btn"
-            android:layout_toRightOf="@+id/sign_up_sns_designer_belong_text" />
-
-
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="22dp"
-        android:layout_marginRight="22dp"
-        android:background="#e3e5e6"/>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:background="#ffffff"
-        android:layout_height="43dp">
-
-        <TextView
-            android:id="@+id/sign_up_sns_designer_belong_name_text"
-            android:text="소속명"
-            android:textSize="13sp"
-            android:layout_marginLeft="22dp"
-            android:layout_width="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/sign_up_sns_designer_belong_name_edit"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginRight="22dp"
-            android:layout_marginLeft="14dp"
-            android:background="@android:color/transparent"
-            android:textSize="13sp"
-            android:inputType="text"
-            android:hint="본인 소속 학원이나 미용실 이름을 입력하세요."
-            android:layout_centerInParent="true"
-            android:layout_toRightOf="@+id/sign_up_sns_designer_belong_name_text" />
-
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="22dp"
-        android:layout_marginRight="22dp"
-        android:background="#e3e5e6"/>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:background="#ffffff"
-        android:layout_height="43dp">
-
-        <TextView
-            android:id="@+id/sign_up_sns_designer_career_text"
-            android:text="경력"
-            android:textSize="13sp"
-            android:layout_marginLeft="22dp"
-            android:layout_width="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/sign_up_sns_designer_career_selected"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="22dp"
-            android:layout_marginLeft="26dp"
-            android:background="@android:color/transparent"
-            android:textSize="13sp"
-            android:inputType="number"
-            android:hint="경력을 입력해주세요."
-            android:layout_alignBaseline="@+id/sign_up_sns_designer_career_text"
-            android:layout_toRightOf="@+id/sign_up_sns_designer_career_text" />
-
-        <ImageButton
-            android:id="@+id/sign_up_sns_designer_career_btn"
-            android:src="@drawable/triangle"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="21dp"
-            android:background="@null"
-            android:layout_width="24dp"
-            android:layout_height="24dp" />
-
-        <Spinner
-            android:id="@+id/sign_up_sns_designer_career_spinner"
-            android:layout_marginRight="22dp"
-            android:layout_marginLeft="26dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:visibility="invisible"
-            android:spinnerMode="dropdown"
-            android:background="#00ffffff"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_toLeftOf="@+id/sign_up_sns_designer_career_btn"
-            android:layout_toRightOf="@+id/sign_up_sns_designer_career_text" />
-
-    </RelativeLayout>
 
     <RelativeLayout
         android:background="#f1f1f1"
@@ -290,7 +240,7 @@
             android:background="#e3e5e6"/>
 
         <LinearLayout
-            android:id="@+id/sign_up_sns_designer_auth_layout"
+            android:id="@+id/sign_up_email_model_auth_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="22dp"
@@ -300,7 +250,7 @@
             android:orientation="horizontal">
 
             <android.support.v7.widget.AppCompatCheckBox
-                android:id="@+id/sign_up_sns_designer_auth_checkbox1"
+                android:id="@+id/sign_up_email_model_auth_checkbox1"
                 android:layout_width="110dp"
                 android:layout_height="17dp"
                 android:textSize="10dp"
@@ -319,11 +269,11 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="22dp"
             android:layout_marginTop="8dp"
-            android:layout_below="@+id/sign_up_sns_designer_auth_layout"
+            android:layout_below="@+id/sign_up_email_model_auth_layout"
             android:orientation="horizontal">
 
             <android.support.v7.widget.AppCompatCheckBox
-                android:id="@+id/sign_up_sns_designer_auth_checkbox2"
+                android:id="@+id/sign_up_email_model_auth_checkbox2"
                 android:layout_width="154dp"
                 android:layout_height="17dp"
                 android:textSize="10dp"
@@ -346,7 +296,7 @@
         android:background="#e3e5e6"/>
 
     <TextView
-        android:id="@+id/sign_up_sns_designer_finish_btn"
+        android:id="@+id/sign_up_email_model_finish_btn"
         android:text="회원가입완료"
         android:textColor="#5D5D5D"
         android:background="#b7b7b7"
@@ -355,4 +305,3 @@
         android:gravity="center"/>
 
 </LinearLayout>
-
