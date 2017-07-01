@@ -9,12 +9,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,46 +35,30 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DesignerEmailSignUpActivity extends AppCompatActivity implements LoginInterface {
+public class ModelEmailSignUpActivity extends AppCompatActivity implements LoginInterface {
 
-
-    @BindView(R.id.sign_up_email_designer_email)
+    @BindView(R.id.sign_up_email_model_email)
     EditText emailEditText;
 
-    @BindView(R.id.sign_up_email_designer_email_alert)
+    @BindView(R.id.sign_up_email_model_email_alert)
     TextView emailAlertText;
 
-    @BindView(R.id.sign_up_email_designer_password)
+    @BindView(R.id.sign_up_email_model_password)
     EditText passwordEditText;
 
-    @BindView(R.id.sign_up_email_designer_password_rep)
+    @BindView(R.id.sign_up_email_model_password_rep)
     EditText passwordRepEditText;
 
-    @BindView(R.id.sign_up_email_designer_name_edit)
+    @BindView(R.id.sign_up_email_model_name_edit)
     EditText nameEditText;
 
-    @BindView(R.id.sign_up_email_designer_age_edit)
+    @BindView(R.id.sign_up_email_model_age_edit)
     EditText ageEditText;
 
-    @BindView(R.id.sign_up_email_designer_belong_spinner)
-    Spinner belongSpinner;
-
-    @BindView(R.id.sign_up_email_designer_belong_selected)
-    TextView belongSelectedText;
-
-    @BindView(R.id.sign_up_email_designer_belong_name_edit)
-    EditText belongNameEditText;
-
-    @BindView(R.id.sign_up_email_designer_career_spinner)
-    Spinner careerSpinner;
-
-    @BindView(R.id.sign_up_email_designer_career_selected)
-    TextView careerSelectedText;
-
-    @BindViews({R.id.sign_up_email_designer_auth_checkbox1, R.id.sign_up_email_designer_auth_checkbox2})
+    @BindViews({R.id.sign_up_email_model_auth_checkbox1, R.id.sign_up_email_model_auth_checkbox2})
     List<CheckBox> checkBoxList;
 
-    @BindView(R.id.sign_up_email_designer_finish_btn)
+    @BindView(R.id.sign_up_email_model_finish_btn)
     TextView finishBtn;
 
     private boolean isAddressRepititionPassed;
@@ -90,12 +71,10 @@ public class DesignerEmailSignUpActivity extends AppCompatActivity implements Lo
             getWindow().setStatusBarColor(Color.parseColor("#f1f1f1"));
         }
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        setContentView(R.layout.activity_designer_email_sign_up);
+        setContentView(R.layout.activity_model_email_sign_up);
         ButterKnife.bind(this);
         networkService = AppController.getInstance().getNetworkService();
         initCheckBoxList();
-        initSpinner(belongSpinner, R.array.belong, true);
-        initSpinner(careerSpinner, R.array.career, false);
         finishBtn.setClickable(false);
         isAddressRepititionPassed = false;
     }
@@ -126,42 +105,15 @@ public class DesignerEmailSignUpActivity extends AppCompatActivity implements Lo
         }
     }
 
-    private void initSpinner(final Spinner spinner, int resources, final boolean isBelong) {
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, resources,
-                android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(R.layout.spiner_layout);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (isBelong) {
-                    String belong = (String)parent.getItemAtPosition(position);
-                    belongSelectedText.setText(belong);
-                } else {
-                    String career = (String)parent.getItemAtPosition(position);
-                    careerSelectedText.setText(career);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-
-    }
-
-    @OnClick(R.id.sign_up_email_designer_finish_btn)
+    @OnClick(R.id.sign_up_email_model_finish_btn)
     public void onFinishBtn() {
         if (isClearFormat()) {
             final SignUpData signUpData = new SignUpData.Builder(nameEditText.getText().toString(), Integer.parseInt(ageEditText.getText().toString()))
                     .setMemberEmail(emailEditText.getText().toString())
                     .setMemberPassword(passwordEditText.getText().toString())
-                    .setMemberBelong(belongSelectedText.getText().toString())
-                    .setMemberBelongName(belongNameEditText.getText().toString())
-                    .setMemberCareer(careerSelectedText.getText().toString())
                     .build();
 
-            final Call<SignUpResultData> requestSignUpData = networkService.registerDesignerData(signUpData);
+            final Call<SignUpResultData> requestSignUpData = networkService.registerModelData(signUpData);
             requestSignUpData.enqueue(new Callback<SignUpResultData>() {
                 @Override
                 public void onResponse(Call<SignUpResultData> call, Response<SignUpResultData> response) {
@@ -174,9 +126,9 @@ public class DesignerEmailSignUpActivity extends AppCompatActivity implements Lo
                             editor.putString(Consts.PREF_POSITION, resultData.getPosition());
                             editor.apply();
                             editor.commit();
-                            startActivity(new Intent(DesignerEmailSignUpActivity.this, MainActivity.class));
+                            startActivity(new Intent(ModelEmailSignUpActivity.this, MainActivity.class));
                         } else {
-                            Toast.makeText(DesignerEmailSignUpActivity.this, "메세지 내용이 뭔가 실패", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ModelEmailSignUpActivity.this, "메세지 내용이 뭔가 실패", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -187,16 +139,6 @@ public class DesignerEmailSignUpActivity extends AppCompatActivity implements Lo
                 }
             });
         }
-    }
-
-    @OnClick(R.id.sign_up_email_designer_belong_btn)
-    public void onBelongBtn() {
-        belongSpinner.performClick();
-    }
-
-    @OnClick(R.id.sign_up_email_designer_career_btn)
-    public void onCareerBtn() {
-        careerSpinner.performClick();
     }
 
     private boolean isClearFormat() {
@@ -230,11 +172,6 @@ public class DesignerEmailSignUpActivity extends AppCompatActivity implements Lo
             return false;
         }
 
-        // 소속 및 경력 선택 여부
-        if (belongSelectedText.getText().toString().length() == 0|| careerSelectedText.getText().toString().length() == 0) {
-            Toast.makeText(this, "소속 및 경력을 정확히 입력하였는지 확인하세요.", Toast.LENGTH_SHORT).show();
-            return false;
-        }
         return true;
     }
 
@@ -242,14 +179,14 @@ public class DesignerEmailSignUpActivity extends AppCompatActivity implements Lo
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(ageEditText.getWindowToken(), 0);
         imm.hideSoftInputFromWindow(nameEditText.getWindowToken(), 0);
-        imm.hideSoftInputFromWindow(belongNameEditText.getWindowToken(), 0);
         imm.hideSoftInputFromWindow(emailEditText.getWindowToken(), 0);
         imm.hideSoftInputFromWindow(passwordEditText.getWindowToken(), 0);
         imm.hideSoftInputFromWindow(passwordRepEditText.getWindowToken(), 0);
     }
 
-    @OnClick(R.id.sign_up_email_designer_address_rep_btn)
+    @OnClick(R.id.sign_up_email_model_address_rep_btn)
     public void onRepititionCheck() {
+
         Call<DuplicateData> requestDuplicate = networkService.checkDuplicate(emailEditText.getText().toString());
         requestDuplicate.enqueue(new Callback<DuplicateData>() {
             @Override

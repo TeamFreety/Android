@@ -6,15 +6,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Layout;
 import android.util.Log;
-import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sopt.freety.freety.R;
@@ -148,7 +145,7 @@ public class JoinEmailActivity extends AppCompatActivity {
 
 
 
-            Call<JoinResult> requestPersonData = service.registerPersonData(email, pwd, name, age, belong, belongName, career);
+            Call<JoinResult> requestPersonData = service.registerDesignerData(email, pwd, name, age, belong, belongName, career);
             requestPersonData.enqueue(new Callback<JoinResult>() {
                 @Override
                 public void onResponse(Call<JoinResult> call, Response<JoinResult> response) {
