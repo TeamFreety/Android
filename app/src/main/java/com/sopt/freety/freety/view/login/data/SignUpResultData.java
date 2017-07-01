@@ -9,7 +9,7 @@ public class SignUpResultData {
     private String message;
     private String position;
     private String method;
-    private String memberToken;
+    private String member_token;
 
     public String getMessage() {
         return message;
@@ -24,6 +24,6 @@ public class SignUpResultData {
     }
 
     public String getMemberToken() {
-        return memberToken;
+        return member_token;
     }
 }
