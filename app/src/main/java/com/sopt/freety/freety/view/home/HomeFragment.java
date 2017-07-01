@@ -1,7 +1,6 @@
 package com.sopt.freety.freety.view.home;
 
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
@@ -10,27 +9,23 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.view.home.adapter.HomeContentsViewPagerAdapter;
 import com.sopt.freety.freety.view.home.adapter.HomeViewPagerAdapter;
-import com.viewpagerindicator.CirclePageIndicator;
-import com.viewpagerindicator.PageIndicator;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -40,7 +35,7 @@ import butterknife.ButterKnife;
 
 public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView.Callbacks{
 
-    private int CURRENT_PAGE = 5000;
+    private int currPageCount = 100;
     private int PRE_PAGE;
     private final static int PAGE_COUNT = 5;
     private Timer swipeTimer;
@@ -62,9 +57,10 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
 
     @BindView(R.id.home_contents_view_pager) ViewPager contentsViewPager;
 
-    @BindView(R.id.indicator)
-    CirclePageIndicator indicator;
+   /* @BindView(R.id.indicator)
+    CirclePageIndicator indicator;*/
 
+   @BindView(R.id.indicatorTab) TabLayout indicatorTab;
 
     public HomeFragment() {
 
@@ -102,38 +98,30 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
         viewPager.setCurrentItem(0);
 
         // contents view pager
+        for (int count = 0; count < PAGE_COUNT; count++) {
+            indicatorTab.addTab(indicatorTab.newTab());
+        }
+        startTimer();
 
-
-
-
-
-        final HomeContentsViewPagerAdapter homeContentsViewPagerAdapter = new HomeContentsViewPagerAdapter(getActivity(), Collections.<String>emptyList());
+        final HomeContentsViewPagerAdapter homeContentsViewPagerAdapter = new HomeContentsViewPagerAdapter(getActivity(),indicatorTab.getTabCount(), Collections.<String>emptyList());
         contentsViewPager.setAdapter(homeContentsViewPagerAdapter);
-        contentsViewPager.setCurrentItem(CURRENT_PAGE);
-       // indicator.findViewById(R.id.indicator);
-        //indicator.setViewPager(contentsViewPager);
-
-       // contentsViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
-        final Handler handler = new Handler();
-        final Runnable Update = new Runnable() {
-            public void run() {
-               /*if (CURRENT_PAGE == PAGE_COUNT) {
-                    CURRENT_PAGE = 0;
-                }*/
-                contentsViewPager.setCurrentItem(CURRENT_PAGE++, true);
-                //PRE_PAGE = CURRENT_PAGE-1;
-            }
-        };
-
-        swipeTimer = new Timer();
-        swipeTimer.schedule(new TimerTask() {
-
+        contentsViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void run() {
-                handler.post(Update);
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
-        }, 500, 5000);
+            @Override
+            public void onPageSelected(int position) {
+                Log.i("HomeFragment", "onPageSelected: ");
+                currPageCount = position;
+                int realPos = position % 5;
+                TabLayout.Tab currIndicator = indicatorTab.getTabAt(realPos);
+                currIndicator.select();
+                startTimer();
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
         return view;
     }
 
@@ -147,4 +135,26 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
 
     @Override
     public void setExpanded(boolean expanded) { appBarLayout.setExpanded(expanded, true); }
+
+    private void startTimer() {
+        final Handler handler = new Handler();
+        final Runnable Update = new Runnable() {
+            public void run() {
+                contentsViewPager.setCurrentItem(currPageCount + 1, true);
+            }
+        };
+        if (swipeTimer != null) {
+            swipeTimer.cancel();
+            swipeTimer.purge();
+        }
+
+        swipeTimer = new Timer();
+
+        swipeTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(Update);
+            }
+        }, 5000, 5000);
+    }
 }

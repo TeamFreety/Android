@@ -12,7 +12,7 @@
     <application
         android:name=".application.AppController"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_icon_doongle_01"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -26,9 +26,17 @@
 
         <activity android:name=".view.login.JoinActivity" />
         <activity android:name=".view.login.LoginActivity" />
-        <activity android:name=".view.login.FirstLoginActivity" />
+        <activity android:name=".view.login.FirstLoginActivity" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <activity android:name=".view.login.JoinEmailActivity" />
-        <activity android:name=".view.main.MainActivity">
+
+        <activity android:name=".view.main.MainActivity" >
+
         </activity>
 
         <activity
@@ -68,10 +76,9 @@
             android:windowSoftInputMode="adjustPan|adjustResize" >
 
         </activity>
-        <activity android:name=".view.login.DesignerEmailSignUpActivity"
-            android:windowSoftInputMode="adjustPan|adjustResize"/>
         <activity android:name=".view.login.ModelEmailSignUpActivity"/>
         <activity android:name=".view.wirte.WriteActivity"/>
+
     </application>
 
 </manifest>

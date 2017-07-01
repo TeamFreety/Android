@@ -6,7 +6,7 @@
 
     <color name="colorBlack">#000000</color>
     <color name="tabUnselectedColor">#969696</color>
-    <color name="imageBorderColor">#C3C3C3</color>
+    <color name="itemBorderColor">#C3C3C3</color>
     <color name="postStyleColor">#909090</color>
 
     <color name="checkBoxCheckedColor">#222222</color>
@@ -16,4 +16,4 @@
     <color name="baseColor">#f1f1f1</color>
     <color name="recruitTextColor">#7D7D7D</color>
 
-</resources>
+    </resources>
