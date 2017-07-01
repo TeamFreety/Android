@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context="com.sopt.freety.freety.view.search.DetailSearchActivity">
 
     <RelativeLayout
@@ -42,573 +44,626 @@
         android:background="@drawable/drop_shadow"/>
 
     <ScrollView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="95dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/img_search_scissor"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
-            android:src="@drawable/search_scissor"
-            android:layout_marginTop="18dp"
-            android:layout_marginLeft="16dp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="95dp"
+            android:background="#ffffff">
+
+            <ImageView
+                android:id="@+id/img_search_scissor"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="18dp"
+                android:src="@drawable/search_scissor" />
 
             <TextView
-                android:layout_toRightOf="@+id/img_search_scissor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
                 android:layout_marginLeft="8dp"
-                android:text="시술 유형" />
-
-
+                android:layout_marginTop="18dp"
+                android:layout_toRightOf="@+id/img_search_scissor"
+                android:text="시술 유형"
+                android:textColor="#7D7D7D"
+                android:textSize="13sp" />
 
 
             <Button
                 android:id="@+id/btn_sort_perm"
                 android:layout_width="66dp"
-                android:layout_below="@+id/img_search_scissor"
-                android:layout_marginTop="18dp"
                 android:layout_height="32dp"
+                android:layout_below="@+id/img_search_scissor"
                 android:layout_marginLeft="31dp"
-                android:textSize="11sp"
-                android:textColor="#95989A"
+                android:layout_marginTop="18dp"
                 android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:text="펌" />
+                android:text="펌"
+                android:textColor="#95989A"
+                android:textSize="11sp" />
 
             <Button
                 android:id="@+id/btn_sort_dye"
                 android:layout_width="66dp"
                 android:layout_height="32dp"
+                android:layout_alignBottom="@+id/btn_sort_perm"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/btn_sort_perm"
-                android:textSize="11sp"
-                android:textColor="#95989A"
                 android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:layout_alignBottom="@+id/btn_sort_perm"
-                android:text="염색" />
+                android:text="염색"
+                android:textColor="#95989A"
+                android:textSize="11sp" />
 
             <Button
                 android:id="@+id/btn_sort_cut"
                 android:layout_width="66dp"
                 android:layout_height="32dp"
-                android:layout_marginLeft="10dp"
-                android:textColor="#95989A"
-                android:textSize="11sp"
-                android:layout_toRightOf="@id/btn_sort_dye"
                 android:layout_alignBottom="@+id/btn_sort_perm"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/btn_sort_dye"
                 android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:text="커트" />
+                android:text="커트"
+                android:textColor="#95989A"
+                android:textSize="11sp" />
 
             <Button
                 android:id="@+id/btn_sort_etc"
                 android:layout_width="66dp"
                 android:layout_height="32dp"
-                android:layout_marginLeft="10dp"
-                android:textColor="#95989A"
-                android:textSize="11sp"
-                android:layout_toRightOf="@id/btn_sort_cut"
                 android:layout_alignBottom="@+id/btn_sort_perm"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/btn_sort_cut"
                 android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:text="기타" />
+                android:text="기타"
+                android:textColor="#95989A"
+                android:textSize="11sp" />
 
-
-    </RelativeLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/borderColor"/>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="146dp">
-
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="7dp"
-                android:text="날짜" />
-
-
-        <RelativeLayout
-            android:id="@+id/rl_date_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rl_date"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="5dp"
-            android:gravity="center">
-
-            <Button
-                android:id="@+id/btn_detail_2017_start"
-                android:layout_width="55dp"
-                android:layout_height="30dp"
-                android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:text="2017년"
-                android:textAlignment="center"
-                android:textSize="13dp" />
-
-            <Spinner
-                android:id="@+id/spinner_detail_month_start"
-                android:layout_width="55dp"
-                android:layout_height="30dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="2dp"
-                android:layout_toRightOf="@+id/btn_detail_2017_start"
-                android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:entries="@array/month"
-                android:textAlignment="textEnd"></Spinner>
-
-            <Spinner
-                android:id="@+id/spinner_detail_day_start"
-                android:layout_width="55dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="2dp"
-                android:layout_toRightOf="@+id/spinner_detail_month_start"
-                android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:entries="@array/day"
-                android:textAlignment="textEnd"></Spinner>
-
-            <TextView
-                android:id="@+id/text_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/spinner_detail_day_start"
-                android:text="~" />
-
-            <Button
-                android:id="@+id/btn_detail_2017_end"
-                android:layout_width="55dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="2dp"
-                android:layout_toRightOf="@+id/text_detail"
-                android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:text="2017년"
-                android:textAlignment="center"
-                android:textSize="13dp" />
-
-            <Spinner
-                android:id="@+id/spinner_detail_month_end"
-                android:layout_width="55dp"
-                android:layout_height="30dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="2dp"
-                android:layout_toRightOf="@+id/btn_detail_2017_end"
-                android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:entries="@array/month"
-                android:textAlignment="textEnd"></Spinner>
-
-            <Spinner
-                android:id="@+id/spinner_detail_day_end"
-                android:layout_width="55dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="2dp"
-                android:layout_toRightOf="@+id/spinner_detail_month_end"
-                android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:entries="@array/day"
-                android:textAlignment="textEnd"></Spinner>
 
         </RelativeLayout>
 
         <View
-            android:layout_width="match_parent"
+            android:layout_width="334dp"
             android:layout_height="1dp"
-            android:background="@color/borderColor" />
+            android:layout_gravity="center"
+            android:background="@color/borderSearchColor" />
 
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/rl_local"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp">
+            android:layout_height="146dp"
+            android:background="#ffffff">
+
+            <ImageView
+                android:id="@+id/img_search_date"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="18dp"
+                android:src="@drawable/search_date" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="7dp"
-                android:text="지역" />
-        </LinearLayout>
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_toRightOf="@+id/img_search_date"
+                android:text="시술 날짜"
+                android:textColor="#7D7D7D"
+                android:textSize="13sp" />
+       <LinearLayout
+           android:id="@+id/ll_start_day"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/img_search_date"
+           android:layout_marginTop="13dp"
+           android:layout_marginLeft="52dp"
+           android:gravity="center_vertical"
+           >
+            <TextView
+                android:id="@+id/text_detail_search_start_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="시작일"
+                android:textColor="#7D7D7D"
+                android:textSize="13sp" />
 
+            <EditText
+                android:id="@+id/edit_search_start_day"
+                android:layout_width="175dp"
+                android:layout_height="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_toRightOf="@+id/text_detail_search_start_day"
+                android:drawableRight="@drawable/search_spinner_arrow"
+                android:paddingRight="10dp"
+                android:background="@drawable/layout_detailsearch_datepicker_shape"/>
+       </LinearLayout>
+
+            <ImageView
+                android:id="@+id/img_search_dots"
+                android:layout_below="@+id/ll_start_day"
+                android:layout_marginLeft="67dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/search_dot"
+                android:layout_width="6dp"
+                android:layout_height="24dp" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_end_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/img_search_dots"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="52dp"
+                android:gravity="center_vertical"
+                >
+                <TextView
+                    android:id="@+id/text_detail_search_end_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="종료일"
+                    android:textColor="#7D7D7D"
+                    android:textSize="13sp" />
+
+                <EditText
+                    android:id="@+id/edit_search_end_day"
+                    android:layout_width="175dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_toRightOf="@+id/text_detail_search_end_day"
+                    android:drawableRight="@drawable/search_spinner_arrow"
+                    android:paddingRight="10dp"
+                    android:background="@drawable/layout_detailsearch_datepicker_shape"/>
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="334dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:background="@color/borderSearchColor" />
+
+
+
+    
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="242dp"
+        android:background="#ffffff">
+
+        <ImageView
+            android:id="@+id/img_search_location"
+            android:layout_width="18dp"
+            android:layout_height="14dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="18dp"
+            android:src="@drawable/search_marker"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/img_search_location"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
+                android:text="지역" />
+        
         <LinearLayout
-            android:id="@+id/rl_local_content_firstrow"
-            android:layout_width="300dp"
+            android:layout_below="@+id/img_search_location"
+            android:layout_marginTop="18dp"
+            android:layout_marginLeft="16dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
+            android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_local_content_firstrow"
+            android:layout_width="318dp"
+            android:layout_height="30dp">
 
             <Button
-                android:id="@+id/btn_detail_local_default"
-                android:layout_width="50dp"
+                android:id="@+id/btn_detail_location_none"
+                android:layout_width="55dp"
                 android:layout_height="30dp"
                 android:background="@drawable/layout_detailsearch_btn_shape_circle"
                 android:text="무관"
                 android:textSize="10sp" />
 
             <Button
-                android:id="@+id/btn_detail_local_gangnam_two"
+                android:id="@+id/btn_detail_location_near"
                 android:layout_width="55dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/btn_detail_local_default"
+                android:layout_marginLeft="7dp"
+                android:layout_toRightOf="@+id/btn_detail_location_none"
+                android:background="@drawable/layout_detailsearch_btn_shape_circle"
+                android:text="내주변"
+                android:textSize="10sp" />
+
+            <Button
+                android:id="@+id/btn_detail_location_gangnam"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="7dp"
+                android:layout_toRightOf="@+id/btn_detail_location_near"
                 android:background="@drawable/layout_detailsearch_btn_shape_circle"
                 android:text="강남/논현"
                 android:textSize="10sp" />
 
             <Button
-                android:id="@+id/btn_detail_local_hongdae_three"
-                android:layout_width="75dp"
+                android:id="@+id/btn_detail_location_hongdae"
+                android:layout_width="60dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/btn_detail_local_gangnam_two"
+                android:layout_marginLeft="7dp"
+                android:layout_toRightOf="@+id/btn_detail_location_gangnam"
                 android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:text="홍대/합정/마포"
+                android:text="홍대/합정"
                 android:textSize="10sp" />
 
             <Button
-                android:id="@+id/btn_detail_local_gundae_two"
-                android:layout_width="55dp"
+                android:id="@+id/btn_detail_location_gundae"
+                android:layout_width="60dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/btn_detail_local_hongdae_three"
                 android:background="@drawable/layout_detailsearch_btn_shape_circle"
+                android:layout_marginLeft="7dp"
+                android:layout_toRightOf="@+id/btn_detail_location_hongdae"
                 android:text="건대/광진"
                 android:textSize="10sp" />
+        </RelativeLayout>
 
-
-        </LinearLayout>
-
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/rl_local_content_secondrow"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
+            android:layout_marginTop="10dp"
+            android:layout_width="318dp"
+            android:layout_height="30dp">
 
             <Button
-                android:id="@+id/btn_detail_local_garosu_two"
-                android:layout_width="80dp"
+                android:id="@+id/btn_detail_location_kyodae"
+                android:layout_width="60dp"
                 android:layout_height="30dp"
-                android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:text="가로수길/압구정"
-                android:textSize="10sp" />
-
-            <Button
-                android:id="@+id/btn_detail_local_bundang_three"
-                android:layout_width="75dp"
-                android:layout_height="30dp"
-                android:layout_toRightOf="@id/btn_detail_local_garosu_two"
-                android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:text="분당/판교/용인"
-                android:textSize="10sp" />
-
-            <Button
-                android:id="@+id/btn_detail_local_myungdong_two"
-                android:layout_width="55dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/btn_detail_local_mockdong_four"
-                android:layout_weight="1"
-                android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:text="명동/종로"
-                android:textSize="10sp" />
-
-            <Button
-                android:id="@+id/btn_detail_local_kyodae_two"
-                android:layout_width="50dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/btn_detail_local_bundang_three"
                 android:background="@drawable/layout_detailsearch_btn_shape_circle"
                 android:text="교대/서초"
                 android:textSize="10sp" />
 
             <Button
-                android:id="@+id/btn_detail_local_songpa_two"
-                android:layout_width="55dp"
+                android:id="@+id/btn_detail_location_myungdong"
+                android:layout_width="60dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/btn_detail_local_kyodae_two"
+                android:layout_marginLeft="7dp"
+                android:layout_toRightOf="@id/btn_detail_location_kyodae"
                 android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:text="송파/강동"
-                android:textSize="10sp" />
-
-
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_local_content_thirdrow"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
-
-            <Button
-                android:id="@+id/btn_detail_local_mockdong_four"
-                android:layout_width="105dp"
-                android:layout_height="30dp"
-                android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:text="목동/영등포/강서/김포"
+                android:text="명동/종로"
                 android:textSize="10sp" />
 
             <Button
-                android:id="@+id/btn_detail_local_yangjae_three"
-                android:layout_width="75dp"
+                android:id="@+id/btn_detail_location_boondang"
+                android:layout_width="88dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="7dp"
+                android:layout_toRightOf="@id/btn_detail_location_myungdong"
                 android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:text="양재/도곡/대치"
+                android:text="분당/판교/용인"
                 android:textSize="10sp" />
+
+            <Button
+                android:id="@+id/btn_detail_location_garosu"
+                android:layout_width="88dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@+id/btn_detail_location_boondang"
+                android:background="@drawable/layout_detailsearch_btn_shape_circle"
+                android:text="가로수길/압구정"
+                android:textSize="10sp" />
+
 
 
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/rl_local_content_fourthrow"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
+        <RelativeLayout
+            android:id="@+id/rl_local_content_thirdrow"
+            android:layout_marginTop="10dp"
+            android:layout_width="318dp"
+            android:layout_height="30dp">
 
             <Button
-                android:id="@+id/btn_detail_local_sungsin_two"
-                android:layout_width="75dp"
+                android:id="@+id/btn_detail_location_yangjae"
+                android:layout_width="88dp"
                 android:layout_height="30dp"
                 android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:text="성신여대/대학로"
+                android:text="양재/도곡/대치"
                 android:textSize="10sp" />
 
             <Button
-                android:id="@+id/btn_detail_local_edae_two"
-                android:layout_width="55dp"
+                android:id="@+id/btn_detail_location_edae"
+                android:layout_width="60dp"
                 android:layout_height="30dp"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/btn_detail_local_sungsin_two"
+                android:layout_marginLeft="7dp"
                 android:background="@drawable/layout_detailsearch_btn_shape_circle"
+                android:layout_toRightOf="@+id/btn_detail_location_yangjae"
                 android:text="이대/신촌"
                 android:textSize="10sp" />
 
             <Button
-                android:id="@+id/btn_detail_local_nowon_two"
-                android:layout_width="55dp"
+                android:id="@+id/btn_detail_location_nowon"
+                android:layout_width="60dp"
                 android:layout_height="30dp"
-                android:layout_toRightOf="@id/btn_detail_local_edae_two"
+                android:layout_marginLeft="7dp"
                 android:background="@drawable/layout_detailsearch_btn_shape_circle"
+                android:layout_toRightOf="@+id/btn_detail_location_edae"
                 android:text="노원/강북"
                 android:textSize="10sp" />
 
             <Button
-                android:id="@+id/btn_detail_local_ilsan_two"
-                android:layout_width="55dp"
+                android:id="@+id/btn_detail_location_sungshin"
+                android:layout_width="88dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/btn_detail_local_nowon_two"
+                android:layout_marginLeft="7dp"
+                android:layout_toRightOf="@+id/btn_detail_location_nowon"
+                android:background="@drawable/layout_detailsearch_btn_shape_circle"
+                android:text="성신여대/대학로"
+                android:textSize="10sp" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="318dp"
+            android:layout_height="30dp">
+
+            <Button
+                android:id="@+id/btn_detail_location_ilsan"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
                 android:background="@drawable/layout_detailsearch_btn_shape_circle"
                 android:text="일산/은평"
                 android:textSize="10sp" />
 
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/rl_local_content_fifthrow"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
-
             <Button
-                android:id="@+id/btn_detail_local_bucheon"
-                android:layout_width="55dp"
+                android:id="@+id/btn_detail_location_bucheon"
+                android:layout_width="60dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="7dp"
+                android:layout_toRightOf="@+id/btn_detail_location_ilsan"
                 android:background="@drawable/layout_detailsearch_btn_shape_circle"
                 android:text="부천/인천"
                 android:textSize="10sp" />
 
             <Button
-                android:id="@+id/btn_detail_local_anyang_three"
-                android:layout_width="75dp"
+                android:id="@+id/btn_detail_location_guro"
+                android:layout_width="88dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/btn_detail_local_bucheon"
+                android:layout_marginLeft="7dp"
+                android:layout_toRightOf="@+id/btn_detail_location_bucheon"
                 android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:text="안양/군포/안산"
+                android:text="구로/금천/광명"
                 android:textSize="10sp" />
 
             <Button
-                android:id="@+id/btn_detail_local_kyungki_one"
-                android:layout_width="50dp"
+                android:id="@+id/btn_detail_location_jamsil"
+                android:layout_width="88dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@id/btn_detail_local_anyang_three"
+                android:layout_marginLeft="7dp"
+                android:layout_toRightOf="@+id/btn_detail_location_guro"
                 android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:text="경기도"
+                android:text="잠실/송파/강동"
                 android:textSize="10sp" />
 
-            <Button
-                android:id="@+id/btn_detail_local_etc"
-                android:layout_width="50dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@id/btn_detail_local_kyungki_one"
-                android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:text="기타"
-                android:textSize="10sp" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/borderColor" />
-
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
-
-        <RelativeLayout
-            android:id="@+id/rl_cost"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipChildren="false"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="7dp"
-                android:text="가격" />
         </RelativeLayout>
 
-            <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
-                android:id="@+id/rangeSeekbar"
-                android:layout_marginTop="40dp"
-                android:layout_centerHorizontal="true"
-                android:layout_width="340dp"
-                android:layout_height="wrap_content"
-                app:corner_radius="10"
-                app:steps="1000"
-                app:min_value="0"
-                app:max_value="300000"
-                />
-        <TextView
-            android:id="@+id/textMin1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:layout_below="@id/rangeSeekbar"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="10dp"
-            android:textSize="16dp"
-            android:textColor="#000"/>
+        <RelativeLayout
+            android:layout_width="318dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp">
 
-        <TextView
-            android:id="@+id/textMax1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="300000"
-            android:layout_below="@id/rangeSeekbar"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
-            android:textSize="16dp"
-            android:textColor="#000"
-            android:layout_alignParentRight="true"/>
+            <Button
+                android:id="@+id/btn_detail_location_mockdong"
+                android:layout_width="88dp"
+                android:layout_height="30dp"
+                android:background="@drawable/layout_detailsearch_btn_shape_circle"
+                android:text="목동/강서/김포"
+                android:textSize="10sp" />
 
-<RelativeLayout
-    android:layout_below="@+id/textMax1"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/borderColor"/>
-</RelativeLayout>
+            <Button
+            android:id="@+id/btn_detail_location_anyang"
+            android:layout_width="88dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="7dp"
+            android:layout_toRightOf="@id/btn_detail_location_mockdong"
+            android:background="@drawable/layout_detailsearch_btn_shape_circle"
+            android:text="안양/군포/안산"
+            android:textSize="10sp" />
+
+            <Button
+                android:id="@+id/btn_detail_location_kyunggi"
+                android:layout_width="75dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="7dp"
+                android:layout_toRightOf="@id/btn_detail_location_anyang"
+                android:background="@drawable/layout_detailsearch_btn_shape_circle"
+                android:text="경기도 전체"
+                android:textSize="10sp" />
+
+            <Button
+                android:id="@+id/btn_detail_location_etc"
+                android:layout_width="48dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="7dp"
+                android:layout_toRightOf="@id/btn_detail_location_kyunggi"
+                android:background="@drawable/layout_detailsearch_btn_shape_circle"
+                android:text="기타"
+                android:textSize="10sp"/>
+
+        </RelativeLayout>
+        </LinearLayout>
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:background="#ffffff"/>
+        <View
+            android:layout_width="334dp"
+            android:layout_height="1dp"
+            android:background="@color/borderSearchColor"/>
 
         <RelativeLayout
-            android:id="@+id/rl_career"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="105dp"
+            android:background="#ffffff">
+
+            <ImageView
+                android:id="@+id/img_search_cost"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="18dp"
+                android:src="@drawable/search_price" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="7dp"
-                android:text="경력" />
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_toRightOf="@+id/img_search_cost"
+                android:text="시술 가격" />
+
+
+            <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+                android:id="@+id/rangeSeekbar"
+                android:layout_width="270dp"
+                android:layout_height="30dp"
+                android:layout_below="@+id/img_search_cost"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                app:corner_radius="10"
+                app:left_thumb_image="@drawable/search_slider"
+                app:max_value="300000"
+                app:min_value="0"
+                app:right_thumb_image="@drawable/search_slider"
+                app:steps="1000" />
+
+            <TextView
+                android:id="@+id/textMin1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rangeSeekbar"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="9dp"
+                android:text="0"
+                android:textColor="#95989A"
+                android:textSize="9dp" />
+
+
+            <TextView
+                android:id="@+id/textMax1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/rangeSeekbar"
+                android:layout_marginRight="33dp"
+                android:layout_marginTop="9dp"
+                android:text="300000"
+                android:textColor="#95989A"
+                android:textSize="9dp" />
         </RelativeLayout>
+
+        <View
+            android:layout_gravity="center"
+            android:layout_width="334dp"
+            android:layout_height="1dp"
+            android:background="@color/borderSearchColor" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#ffffff">
+
+        <ImageView
+            android:id="@+id/img_search_career"
+            android:layout_width="12dp"
+            android:layout_height="15dp"
+            android:src="@drawable/search_experience"
+            android:layout_marginTop="18dp"
+            android:layout_marginLeft="17dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/img_search_career"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="10dp"
+                android:text="시술 경력"
+                android:textSize="13sp"
+                android:textColor="#7D7D7D"/>
+
 
         <RelativeLayout
             android:id="@+id/rl_career_content"
-            android:layout_below="@id/rl_career"
+            android:layout_below="@id/img_search_career"
+            android:layout_marginTop="18dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center">
 
             <CheckBox
                 android:id="@+id/checkbtn_career_default"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="무관" />
+                android:layout_width="50dp"
+                android:layout_height="15dp"
+                android:text="무관"
+                android:textSize="9sp"
+                android:textColor="#95989A"
+                android:layout_centerVertical="true"
+                />
 
             <CheckBox
                 android:id="@+id/checkbtn_career_under_1year"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="75dp"
+                android:layout_height="15dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="6dp"
                 android:layout_toRightOf="@+id/checkbtn_career_default"
+                android:textSize="6sp"
+                android:textColor="#95989A"
                 android:text="1년 이하" />
 
             <CheckBox
                 android:id="@+id/checkbtn_career_1to3year"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="59dp"
+                android:layout_height="15dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="6dp"
                 android:layout_toRightOf="@+id/checkbtn_career_under_1year"
+                android:textSize="8sp"
+                android:textColor="#95989A"
                 android:text="1~3년" />
 
             <CheckBox
                 android:id="@+id/checkbtn_career_3to5year"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="59dp"
+                android:layout_height="15dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="6dp"
+                android:textSize="9sp"
+                android:textColor="#95989A"
                 android:layout_toRightOf="@+id/checkbtn_career_1to3year"
                 android:text="3~5년" />
 
             <CheckBox
                 android:id="@+id/checkbtn_career_over_5year"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="75dp"
+                android:layout_height="15dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="6dp"
+                android:textSize="9sp"
+                android:textColor="#95989A"
                 android:layout_toRightOf="@+id/checkbtn_career_3to5year"
                 android:text="5년 이상" />
         </RelativeLayout>
@@ -617,15 +672,16 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:gravity="center">
 
         <Button
             android:id="@+id/btn_detail_filter_adapt"
-            android:layout_width="200dp"
-            android:layout_height="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:text="필터 적용"
-            android:background="@drawable/layout_btn_shape_rectangle"/>
+            android:textSize="14sp"
+            android:textColor="#5D5D5D"
+            android:background="#B1F5E4"/>
     </RelativeLayout>
         </LinearLayout>
     </ScrollView>

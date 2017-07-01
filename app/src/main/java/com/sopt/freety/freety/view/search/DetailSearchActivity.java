@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.Spinner;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
@@ -20,22 +20,9 @@ import butterknife.ButterKnife;
 public class DetailSearchActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_detail_cancel)
-    Button detailCancelBtn;
+    ImageButton detailCancelBtn;
 
-    @BindView(R.id.btn_detail_2017_start)
-    Button detail2017StartBtn;
-    @BindView(R.id.spinner_detail_month_start)
-    Spinner monthStartSpinner;
-    @BindView(R.id.spinner_detail_day_start)
-    Spinner dayStartSpinner;
-    @BindView(R.id.btn_detail_2017_end)
-    Button detail2017EndBtn;
-    @BindView(R.id.spinner_detail_month_end)
-    Spinner monthEndSpinner;
-    @BindView(R.id.spinner_detail_day_end)
-    Spinner dayEndSpinner;
-    @BindView(R.id.btn_detail_local_default)
-    Button localDefaultDetailBtn;
+
     @BindView(R.id.checkbtn_career_default)
     CheckBox careerDefaultCheckBtn;
     @BindView(R.id.checkbtn_career_under_1year)
