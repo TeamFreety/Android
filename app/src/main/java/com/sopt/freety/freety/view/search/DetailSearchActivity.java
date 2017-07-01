@@ -31,15 +31,15 @@ public class DetailSearchActivity extends AppCompatActivity {
     CheckBox sortEtcCheckBtn;
     @BindView(R.id.btn_detail_2017_start)
     Button detail2017StartBtn;
-    @BindView(R.id.spinner_month_start)
+    @BindView(R.id.spinner_detail_month_start)
     Spinner monthStartSpinner;
-    @BindView(R.id.spinner_day_start)
+    @BindView(R.id.spinner_detail_day_start)
     Spinner dayStartSpinner;
     @BindView(R.id.btn_detail_2017_end)
     Button detail2017EndBtn;
-    @BindView(R.id.spinner_month_end)
+    @BindView(R.id.spinner_detail_month_end)
     Spinner monthEndSpinner;
-    @BindView(R.id.spinner_day_end)
+    @BindView(R.id.spinner_detail_day_end)
     Spinner dayEndSpinner;
     @BindView(R.id.btn_detail_local_default)
     Button localDefaultDetailBtn;
