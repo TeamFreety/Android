@@ -27,4 +27,6 @@ public class PostDetailRequestData {
     public String getMember_token() {
         return member_token;
     }
+
+
 }
