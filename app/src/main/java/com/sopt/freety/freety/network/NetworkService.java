@@ -6,6 +6,8 @@ import com.sopt.freety.freety.view.login.JoinResult;
 import com.sopt.freety.freety.view.login.data.DuplicateData;
 import com.sopt.freety.freety.view.login.data.SignUpData;
 import com.sopt.freety.freety.view.login.data.SignUpResultData;
+import com.sopt.freety.freety.view.recruit.data.PickRequestData;
+import com.sopt.freety.freety.view.recruit.data.PickResultData;
 import com.sopt.freety.freety.view.recruit.data.PostDetailResultData;
 
 import okhttp3.RequestBody;
@@ -48,5 +50,8 @@ public interface NetworkService {
 
     @GET("/postDetail/{postId}")
     Call<PostDetailResultData> getPostDetailData(@Header("member_token") String token, @Path("postId") int postId);
+
+    @POST("/pick")
+    Call<PickResultData> pick(@Header("member_token") String token, @Body PickRequestData data);
 
 }

@@ -19,18 +19,19 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.network.NetworkService;
+import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.helper.ImageSwicherHelper;
 import com.sopt.freety.freety.view.recruit.adapter.RecruitViewPagerAdapter;
+import com.sopt.freety.freety.view.recruit.data.PickRequestData;
+import com.sopt.freety.freety.view.recruit.data.PickResultData;
 import com.sopt.freety.freety.view.recruit.data.PostDetailRequestData;
 import com.sopt.freety.freety.view.recruit.data.PostDetailResultData;
 
 import java.text.ParseException;
-import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -76,15 +77,41 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
     @OnClick(R.id.recruit_pick_btn)
     public void onPickBtnClick(ToggleButton toggleBtn) {
 
-        if (toggleBtn.isChecked()) {
+        int currPickNumber = Integer.parseInt(pickBtn.getText().toString());
+        final boolean isChecked = toggleBtn.isChecked();
+        if (isChecked) {
             ImageSwicherHelper.doChangeAnimation(this, pickHeartImage,
                     R.anim.heart_fade_out, R.anim.heart_fade_in, R.drawable.recruit_heart_gradient_single);
-            toggleBtn.setText("22");
+            pickBtn.setText(String.valueOf(currPickNumber - 1));
+
         } else {
             ImageSwicherHelper.doChangeAnimation(this, pickHeartImage,
                     R.anim.heart_fade_out, R.anim.heart_fade_in, R.drawable.recruit_heart_empty_single);
-            toggleBtn.setText("21");
+            pickBtn.setText(String.valueOf(currPickNumber + 1));
         }
+
+        int postId = getIntent().getIntExtra("postId", 0);
+        Call<PickResultData> pickResultDataCall = networkService.pick(SharedAccessor.getToken(RecruitActivity.this), new PickRequestData(postId, isChecked));
+        pickResultDataCall.enqueue(new Callback<PickResultData>() {
+            @Override
+            public void onResponse(Call<PickResultData> call, Response<PickResultData> response) {
+                if (response.isSuccessful()) {
+                    String resultMsg = response.body().getResult();
+                    if (isChecked) {
+                        if (!resultMsg.equals("unpick success")) {
+                            throw new RuntimeException("unexpected result");
+                        }
+                    } else {
+                        if (!resultMsg.equals("pick success")) {
+                            throw new RuntimeException("unexpected result");
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<PickResultData> call, Throwable t) {
+            }
+        });
     }
 
     @BindView(R.id.recruit_letter_btn)
@@ -146,8 +173,10 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
                     hairInfoText.setText(result.getContent());
                     addressText.setText(result.getAddress());
                     belongNameText.setText(result.getWriterBelongName());
+
                 }
             }
+
 
             @Override
             public void onFailure(Call<PostDetailResultData> call, Throwable t) {

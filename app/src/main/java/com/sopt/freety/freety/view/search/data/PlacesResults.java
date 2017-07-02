@@ -23,7 +23,7 @@ public class PlacesResults {
         }
 
         public String getFormattedAddress() {
-            return formatted_address;
+            return formatted_address.substring(5);
         }
 
         public double getLat() {
