@@ -16,23 +16,23 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:textColor="#000000"
-            android:textSize="17sp"
+            android:layout_centerVertical="true"
+            android:gravity="center"
             android:text="상세검색"
-            />
+            android:textColor="#000000"
+            android:textSize="17sp" />
 
         <ImageButton
             android:id="@+id/btn_detail_cancel"
             android:layout_width="17dp"
             android:layout_height="17dp"
-            android:src="@drawable/search_cancel"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"/>
+            android:layout_marginRight="15dp"
+            android:background="@null"
+            android:src="@drawable/search_cancel" />
 
     </RelativeLayout>
 
@@ -82,7 +82,7 @@
                     android:layout_below="@+id/img_search_scissor"
                     android:layout_marginLeft="31dp"
                     android:layout_marginTop="18dp"
-                    android:background="@drawable/layout_detailsearch_btn_shape_circle"
+                    android:background="@drawable/hair_type_btn_unselected"
                     android:text="펌"
                     android:textColor="#95989A"
                     android:textSize="11sp" />
@@ -94,7 +94,7 @@
                     android:layout_alignBottom="@+id/btn_sort_perm"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/btn_sort_perm"
-                    android:background="@drawable/layout_detailsearch_btn_shape_circle"
+                    android:background="@drawable/hair_type_btn_unselected"
                     android:text="염색"
                     android:textColor="#95989A"
                     android:textSize="11sp" />
@@ -106,7 +106,7 @@
                     android:layout_alignBottom="@+id/btn_sort_perm"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/btn_sort_dye"
-                    android:background="@drawable/layout_detailsearch_btn_shape_circle"
+                    android:background="@drawable/hair_type_btn_unselected"
                     android:text="커트"
                     android:textColor="#95989A"
                     android:textSize="11sp" />
@@ -118,7 +118,7 @@
                     android:layout_alignBottom="@+id/btn_sort_perm"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/btn_sort_cut"
-                    android:background="@drawable/layout_detailsearch_btn_shape_circle"
+                    android:background="@drawable/hair_type_btn_unselected"
                     android:text="기타"
                     android:textColor="#95989A"
                     android:textSize="11sp" />
@@ -174,14 +174,16 @@
 
                     <TextView
                         android:id="@+id/text_search_start_day"
-                        android:layout_width="175dp"
+                        android:layout_width="185dp"
                         android:layout_height="24dp"
                         android:layout_marginLeft="24dp"
                         android:layout_toRightOf="@+id/text_detail_search_start_day"
                         android:background="@drawable/layout_detailsearch_datepicker_shape"
                         android:cursorVisible="false"
+                        android:textSize="13sp"
                         android:drawableRight="@drawable/search_spinner_arrow"
-                        android:paddingRight="10dp" />
+                        android:paddingRight="10dp"
+                        android:textAlignment="center" />
                 </LinearLayout>
 
                 <ImageView
@@ -213,9 +215,11 @@
 
                     <TextView
                         android:id="@+id/text_search_end_day"
-                        android:layout_width="175dp"
+                        android:layout_width="185dp"
                         android:layout_height="24dp"
                         android:layout_marginLeft="24dp"
+                        android:textAlignment="center"
+                        android:textSize="13sp"
                         android:layout_toRightOf="@+id/text_detail_search_end_day"
                         android:background="@drawable/layout_detailsearch_datepicker_shape"
                         android:cursorVisible="false"

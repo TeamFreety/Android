@@ -139,6 +139,5 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         data.getStringExtra("address");
-        mapTextList
     }
 }

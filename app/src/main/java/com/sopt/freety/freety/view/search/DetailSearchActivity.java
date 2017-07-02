@@ -1,9 +1,14 @@
 package com.sopt.freety.freety.view.search;
 
+import android.app.DatePickerDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -13,9 +18,13 @@ import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.util.util.Triple;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.BindViews;
@@ -24,6 +33,42 @@ import butterknife.OnClick;
 
 public class DetailSearchActivity extends AppCompatActivity {
 
+
+    @OnClick({R.id.btn_sort_perm, R.id.btn_sort_dye, R.id.btn_sort_cut, R.id.btn_sort_etc})
+    public void onHairTypeClick(Button button) {
+        String hairTypeString = button.getText().toString();
+        if (hairTypeSet.contains(hairTypeString)) {
+            hairTypeSet.remove(hairTypeString);
+            button.setTextColor(Color.parseColor("#95989A"));
+            button.setBackgroundResource(R.drawable.hair_type_btn_unselected);
+        } else {
+            hairTypeSet.add(hairTypeString);
+            button.setTextColor(Color.WHITE);
+            button.setBackgroundResource(R.drawable.hair_type_btn_selected);
+        }
+    }
+
+    @BindView(R.id.text_search_start_day)
+    TextView textSearchStartDay;
+
+    @OnClick(R.id.text_search_start_day)
+    public void onDateBtn() {
+        new DatePickerDialog(DetailSearchActivity.this, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    @BindView(R.id.text_search_end_day)
+    TextView textSearchEndDay;
+
+    @OnClick(R.id.text_search_end_day)
+    public void onDateEndBtn() {
+        new DatePickerDialog(DetailSearchActivity.this, dateEndSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+
+    private GregorianCalendar calendar = new GregorianCalendar();
+    private Set<String> hairTypeSet = new HashSet<>();
     @BindView(R.id.btn_detail_cancel)
     ImageButton detailCancelBtn;
     @BindView(R.id.btn_detail_location_none)
@@ -69,6 +114,33 @@ public class DetailSearchActivity extends AppCompatActivity {
     @BindView(R.id.btn_detail_location_etc)
     ImageButton btnDetailLocationEtc;
 
+    @BindView(R.id.checkbtn_career_default)
+    CheckBox checkboxCareerDefault;
+
+    @BindView(R.id.checkbtn_career_under_1year)
+    CheckBox checkboxCareerUnder1year;
+
+    @BindView(R.id.checkbtn_career_1to3year)
+    CheckBox checkboxCareer1to3year;
+
+    @BindView(R.id.checkbtn_career_3to5year)
+    CheckBox checkboxCareer3to5year;
+
+    @BindView(R.id.checkbtn_career_over_5year)
+    CheckBox checkboxCareer5to5year;
+
+    @BindViews({R.id.checkbtn_career_default, R.id.checkbtn_career_under_1year,
+            R.id.checkbtn_career_1to3year, R.id.checkbtn_career_3to5year, R.id.checkbtn_career_over_5year})
+    List<CheckBox> careerCheckboxList;
+
+    @OnClick({R.id.checkbtn_career_default, R.id.checkbtn_career_under_1year,
+            R.id.checkbtn_career_1to3year, R.id.checkbtn_career_3to5year, R.id.checkbtn_career_over_5year})
+    public void onCheckedBoxClicked(CheckBox checkBox) {
+        for (CheckBox box : careerCheckboxList) {
+            box.setChecked(false);
+        }
+        checkBox.setChecked(true);
+    }
 
 
 
@@ -80,17 +152,14 @@ public class DetailSearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_search);
-
         ButterKnife.bind(this);
+
         detailCancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
-
-
 
 
         // get seekbar from view
@@ -120,6 +189,27 @@ public class DetailSearchActivity extends AppCompatActivity {
 
     }
 
+    private DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            textSearchStartDay.setText(String.format("%d년 %d월 %d일", year, month + 1, dayOfMonth));
+        }
+    };
+
+    private DatePickerDialog.OnDateSetListener dateEndSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            textSearchEndDay.setText(String.format("%d년 %d월 %d일", year, month + 1, dayOfMonth));
+        }
+    };
+
+
+
+
+
+
+
+
     Map<Integer, Triple<Integer, Integer, Boolean>> locationBtnMap = initLocationBtnMap();
     @BindViews({R.id.btn_detail_location_none, R.id.btn_detail_location_near,
             R.id.btn_detail_location_gangnam, R.id.btn_detail_location_hongdae,
@@ -133,6 +223,8 @@ public class DetailSearchActivity extends AppCompatActivity {
             R.id.btn_detail_location_anyang, R.id.btn_detail_location_kyunggi, R.id.btn_detail_location_etc})
     List<ImageButton> locationBtnList;
 
+
+
     @OnClick({R.id.btn_detail_location_none, R.id.btn_detail_location_near,
             R.id.btn_detail_location_gangnam, R.id.btn_detail_location_hongdae,
             R.id.btn_detail_location_gundae, R.id.btn_detail_location_kyodae,
@@ -143,17 +235,18 @@ public class DetailSearchActivity extends AppCompatActivity {
             R.id.btn_detail_location_bucheon, R.id.btn_detail_location_guro,
             R.id.btn_detail_location_jamsil, R.id.btn_detail_location_mockdong,
             R.id.btn_detail_location_anyang, R.id.btn_detail_location_kyunggi, R.id.btn_detail_location_etc})
+
+
+
     public void onViewClicked(ImageButton imageButton) {
         for (ImageButton button : locationBtnList) {
             int btnId = button.getId();
-            Log.i("Detail", "onViewClicked: " + locationBtnMap.get(btnId).getFirst());
             button.setImageResource(locationBtnMap.get(btnId).getFirst());
             locationBtnMap.get(btnId).setThird(false);
         }
 
         int selectedBtnId = imageButton.getId();
         if (locationBtnMap.get(selectedBtnId).getThird()) {
-
             imageButton.setImageResource(locationBtnMap.get(selectedBtnId).getFirst());
             locationBtnMap.get(selectedBtnId).setThird(false);
         } else {
