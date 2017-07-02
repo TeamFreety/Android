@@ -9,6 +9,7 @@
     android:focusableInTouchMode="true"
     android:orientation="vertical"
 
+
     tools:context="com.sopt.freety.freety.view.wirte.WriteActivity">
 
     <RelativeLayout
@@ -28,400 +29,410 @@
             android:id="@+id/btn_wirte_cancel"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
             android:background="@color/cardview_light_background"
-            android:text="X"/>
+            android:text="X"
+            android:layout_alignParentRight="true" />
     </RelativeLayout>
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/text_write_sort"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:text="시술 유형"
-            android:gravity="center"
-            android:textSize="15sp"
-            android:textColor="#111111"/>
-
-        <RelativeLayout
-            android:layout_marginLeft="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:layout_toRightOf="@+id/text_write_sort">
-
-            <CheckBox
-                android:id="@+id/checkbtn_write_sort_perm"
-                android:layout_alignParentLeft="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="펌"/>
-            <CheckBox
-                android:id="@+id/checkbtn_write_sort_dye"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/checkbtn_write_sort_perm"
-                android:text="염색"/>
-            <CheckBox
-                android:id="@+id/checkbtn_write_sort_cut"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/checkbtn_write_sort_dye"
-                android:layout_marginLeft="10dp"
-                android:text="커트"/>
-            <CheckBox
-                android:id="@+id/checkbtn_write_sort_etc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/checkbtn_write_sort_cut"
-                android:layout_marginLeft="10dp"
-                android:text="기타"/>
-
-        </RelativeLayout>
-
-
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/borderColor"/>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="35dp">
-
-        <TextView
-            android:id="@+id/text_write_date"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:gravity="center"
-            android:text="시술 날짜"
-            android:textColor="#111111"
-            android:textSize="15sp" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@+id/text_write_date">
-
-            <Button
-                android:id="@+id/btn_write_2017"
-                android:layout_width="55dp"
-                android:layout_height="30dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:text="2017년"
-                android:textAlignment="center"
-                android:textSize="13dp" />
-
-            <Spinner
-                android:id="@+id/spinner_write_month"
-                android:layout_width="55dp"
-                android:layout_height="30dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="3dp"
-                android:layout_toRightOf="@+id/btn_write_2017"
-                android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:entries="@array/month"
-                android:textAlignment="textEnd"></Spinner>
-
-            <Spinner
-                android:id="@+id/spinner_write_day"
-                android:layout_width="55dp"
-                android:layout_height="30dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="3dp"
-                android:layout_toRightOf="@+id/spinner_write_month"
-                android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:entries="@array/day"
-                android:textAlignment="textEnd"></Spinner>
-
-            <Spinner
-                android:id="@+id/spinner_write_time"
-                android:layout_width="55dp"
-                android:layout_height="30dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="3dp"
-                android:layout_toRightOf="@+id/spinner_write_day"
-                android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:entries="@array/time"
-                android:textAlignment="textEnd"></Spinner>
-
-        </RelativeLayout>
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/borderColor"/>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="65dp">
-        <TextView
-            android:id="@+id/text_write_location"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:gravity="center"
-            android:text="시술 장소"
-            android:textColor="#111111"
-            android:textSize="15sp"/>
-
-        <RelativeLayout
-            android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@+id/text_write_location"
-            android:gravity="center_vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-
-            <Button
-                android:id="@+id/btn_write_search_map"
-                android:layout_width="60dp"
-                android:layout_height="25dp"
-                android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:text="지도검색"
-                android:textAlignment="center"
-                android:textSize="13dp"
-                />
-
-            <TextView
-                android:id="@+id/text_write_location_result"
-                android:layout_marginTop="5dp"
-                android:layout_width="220dp"
-                android:layout_height="25dp"
-                android:text="주소"
-                android:paddingTop="5dp"
-                android:paddingLeft="10dp"
-                android:background="@drawable/layout_detailsearch_btn_shape_circle"
-                android:layout_below="@+id/btn_write_search_map"/>
-
-        </RelativeLayout>
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/borderColor"/>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="35dp">
-
-        <TextView
-            android:id="@+id/text_write_cost"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:gravity="center"
-            android:text="시술 가격"
-            android:textColor="#111111"
-            android:textSize="15sp"
-            />
-
-        <RelativeLayout
-            android:layout_toRightOf="@+id/text_write_cost"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:gravity="center_vertical">
-
-            <EditText
-                android:id="@+id/edit_write_cost"
-                android:layout_width="100dp"
-                android:layout_height="25dp"
-                android:background="@drawable/layout_btn_shape_rectangle"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-        </RelativeLayout>
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/borderColor"/>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="125dp">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-        <TextView
-            android:layout_marginTop="5dp"
-            android:id="@+id/text_write_image_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:gravity="center"
-            android:text="사진 첨부"
-            android:textColor="#111111"
-            android:textSize="15sp"
-             />
-
-        <Button
-            android:id="@+id/btn_write_image_add"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="20dp"
-            android:text="+"
-            android:background="@drawable/layout_btn_shape_rectangle"
-            android:layout_alignBottom="@+id/text_write_image_add"/>
-
-</RelativeLayout>
         <LinearLayout
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center">
-
-        <ImageView
-            android:id="@+id/img_write_selected_first"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/layout_btn_shape_rectangle"/>
-
-            <ImageView
-                android:id="@+id/img_write_selected_second"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/img_write_selected_first"
-
-                android:background="@drawable/layout_btn_shape_rectangle" />
-
-            <ImageView
-                android:id="@+id/img_write_selected_third"
-                android:layout_toRightOf="@+id/img_write_selected_second"
-                android:layout_marginLeft="10dp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-
-                android:background="@drawable/layout_btn_shape_rectangle"/>
-
-            <ImageView
-                android:id="@+id/img_write_selected_fourth"
-                android:layout_toRightOf="@+id/img_write_selected_third"
-                android:layout_marginLeft="10dp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-
-                android:background="@drawable/layout_btn_shape_rectangle"/>
-
-            <ImageView
-                android:id="@+id/img_write_selected_fifth"
-                android:layout_toRightOf="@+id/img_write_selected_fourth"
-                android:layout_marginLeft="10dp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-
-                android:background="@drawable/layout_btn_shape_rectangle"/>
-        </LinearLayout>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:layout_marginBottom="5dp"
-            android:text="첫 번째 사진이 대표사진으로 등록됩니다"
-            android:textSize="12sp"/>
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/borderColor"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:gravity="center_vertical">
-
-        <EditText
-            android:id="@+id/edit_write_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:hint="제목(시술명)"
-            android:background="#00000000"
-            android:textSize="12sp"/>
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/borderColor"
-        android:layout_marginBottom="5dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/layout_btn_shape_rectangle"
-            android:scrollbarAlwaysDrawVerticalTrack="true"
-            android:scrollbarFadeDuration="0">
+            android:onClick="onScreenClick"
+            android:orientation="vertical">
 
 
-            <!-- 어떤 Layout을 사용해도 상관없음 -->
-            <!-- 스크롤 바를 위한 공간 확보용 paddingRight="5px" 주목 -->
-
-
-            <EditText
-                android:id="@+id/edit_write_content"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
-                android:layout_marginTop="10dp"
-                android:background="#00000000"
-                android:gravity="top"
-                android:paddingLeft="5px"
-                android:paddingRight="5px"
-                android:hint="   내용을 입력하세요"
-                android:textSize="12sp" />
+                android:layout_height="40dp">
 
-        </ScrollView>
+                <TextView
+                    android:id="@+id/text_write_sort"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:text="시술 유형"
+                    android:gravity="center"
+                    android:textSize="15sp"
+                    android:textColor="#111111"/>
 
-    </LinearLayout>
+                <RelativeLayout
+                    android:layout_marginLeft="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_toRightOf="@+id/text_write_sort">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.3"
-        android:gravity="center">
+                    <CheckBox
+                        android:id="@+id/checkbtn_write_sort_perm"
+                        android:layout_alignParentLeft="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="펌"/>
+                    <CheckBox
+                        android:id="@+id/checkbtn_write_sort_dye"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/checkbtn_write_sort_perm"
+                        android:text="염색"/>
+                    <CheckBox
+                        android:id="@+id/checkbtn_write_sort_cut"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/checkbtn_write_sort_dye"
+                        android:layout_marginLeft="10dp"
+                        android:text="커트"/>
+                    <CheckBox
+                        android:id="@+id/checkbtn_write_sort_etc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/checkbtn_write_sort_cut"
+                        android:layout_marginLeft="10dp"
+                        android:text="기타"/>
 
-        <Button
-            android:id="@+id/btn_write_register"
-            android:layout_width="200dp"
-            android:layout_height="25dp"
-            android:text="필터 적용"
-            android:background="@drawable/layout_btn_shape_rectangle"/>
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/borderColor"/>
 
 
-    </LinearLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="35dp">
+
+                <TextView
+                    android:id="@+id/text_write_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center"
+                    android:text="시술 날짜"
+                    android:textColor="#111111"
+                    android:textSize="15sp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:layout_toRightOf="@+id/text_write_date">
+
+                    <Button
+                        android:id="@+id/btn_write_2017"
+                        android:layout_width="55dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:text="2017년"
+                        android:textAlignment="center"
+                        android:textSize="13dp" />
+
+                    <Spinner
+                        android:id="@+id/spinner_write_month"
+                        android:layout_width="55dp"
+                        android:layout_height="30dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="3dp"
+                        android:layout_toRightOf="@+id/btn_write_2017"
+                        android:entries="@array/month"
+                        android:textAlignment="textEnd"></Spinner>
+
+                    <Spinner
+                        android:id="@+id/spinner_write_day"
+                        android:layout_width="55dp"
+                        android:layout_height="30dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="3dp"
+                        android:layout_toRightOf="@+id/spinner_write_month"
+                        android:entries="@array/day"
+                        android:textAlignment="textEnd"></Spinner>
+
+                    <Spinner
+                        android:id="@+id/spinner_write_time"
+                        android:layout_width="55dp"
+                        android:layout_height="30dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="3dp"
+                        android:layout_toRightOf="@+id/spinner_write_day"
+                        android:entries="@array/time"
+                        android:textAlignment="textEnd"></Spinner>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/borderColor"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="65dp">
+                <TextView
+                    android:id="@+id/text_write_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center"
+                    android:text="시술 장소"
+                    android:textColor="#111111"
+                    android:textSize="15sp"/>
+
+                <RelativeLayout
+                    android:layout_marginLeft="15dp"
+                    android:layout_toRightOf="@+id/text_write_location"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    >
+
+                    <Button
+                        android:id="@+id/btn_write_search_map"
+                        android:layout_width="60dp"
+                        android:layout_height="25dp"
+                        android:text="지도검색"
+                        android:textAlignment="center"
+                        android:textSize="13dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/text_write_location_result"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="220dp"
+                        android:layout_height="25dp"
+                        android:text="주소"
+                        android:paddingTop="5dp"
+                        android:paddingLeft="10dp"
+                        android:layout_below="@+id/btn_write_search_map"/>
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/borderColor"/>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="35dp">
+
+                <TextView
+                    android:id="@+id/text_write_cost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center"
+                    android:text="시술 가격"
+                    android:textColor="#111111"
+                    android:textSize="15sp"
+                    />
+
+                <RelativeLayout
+                    android:layout_toRightOf="@+id/text_write_cost"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center_vertical">
+
+                    <EditText
+                        android:id="@+id/edit_write_cost"
+                        android:layout_width="100dp"
+                        android:layout_height="25dp"
+                        android:background="@drawable/layout_btn_shape_rectangle"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+
+
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/borderColor"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="125dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/text_write_image_add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:gravity="center"
+                        android:text="사진 첨부"
+                        android:textColor="#111111"
+                        android:textSize="15sp"
+                        />
+
+                    <Button
+                        android:id="@+id/btn_write_image_add"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="20dp"
+                        android:text="+"
+                        android:background="@drawable/layout_btn_shape_rectangle"
+                        android:layout_alignBottom="@+id/text_write_image_add"/>
+
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/img_write_selected_first"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/layout_btn_shape_rectangle"/>
+
+                    <ImageView
+                        android:id="@+id/img_write_selected_second"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/img_write_selected_first"
+
+                        android:background="@drawable/layout_btn_shape_rectangle" />
+
+                    <ImageView
+                        android:id="@+id/img_write_selected_third"
+                        android:layout_toRightOf="@+id/img_write_selected_second"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+
+                        android:background="@drawable/layout_btn_shape_rectangle"/>
+
+                    <ImageView
+                        android:id="@+id/img_write_selected_fourth"
+                        android:layout_toRightOf="@+id/img_write_selected_third"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+
+                        android:background="@drawable/layout_btn_shape_rectangle"/>
+
+                    <ImageView
+                        android:id="@+id/img_write_selected_fifth"
+                        android:layout_toRightOf="@+id/img_write_selected_fourth"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+
+                        android:background="@drawable/layout_btn_shape_rectangle"/>
+                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="첫 번째 사진이 대표사진으로 등록됩니다"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/borderColor"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center_vertical">
+
+                <EditText
+                    android:id="@+id/edit_write_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:hint="제목(시술명)"
+                    android:background="#00000000"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/borderColor"
+                android:layout_marginBottom="5dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+
+                <EditText
+                    android:id="@+id/edit_write_content"
+                    android:layout_width="match_parent"
+                    android:minHeight="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="#00000000"
+                    android:gravity="top"
+                    android:paddingLeft="5px"
+                    android:paddingRight="5px"
+                    android:hint="   내용을 입력하세요"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btn_write_register"
+                    android:layout_width="200dp"
+                    android:layout_height="25dp"
+                    android:text="필터 적용"
+                    android:background="@drawable/layout_btn_shape_rectangle"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
 
 </LinearLayout> 

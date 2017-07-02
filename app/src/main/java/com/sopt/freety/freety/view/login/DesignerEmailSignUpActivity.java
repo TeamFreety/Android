@@ -27,6 +27,7 @@ import com.sopt.freety.freety.view.login.data.DuplicateData;
 import com.sopt.freety.freety.view.login.data.SignUpData;
 import com.sopt.freety.freety.view.login.data.SignUpResultData;
 import com.sopt.freety.freety.view.main.MainActivity;
+import com.sopt.freety.freety.view.property.ScreenClickable;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DesignerEmailSignUpActivity extends AppCompatActivity implements LoginInterface {
+public class DesignerEmailSignUpActivity extends AppCompatActivity implements LoginInterface , ScreenClickable{
 
 
     @BindView(R.id.sign_up_email_designer_email)
@@ -238,6 +239,7 @@ public class DesignerEmailSignUpActivity extends AppCompatActivity implements Lo
         return true;
     }
 
+    @Override
     public void onScreenClick(View v) {
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(ageEditText.getWindowToken(), 0);
