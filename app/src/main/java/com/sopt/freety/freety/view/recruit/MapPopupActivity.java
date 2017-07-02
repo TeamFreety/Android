@@ -1,6 +1,7 @@
 package com.sopt.freety.freety.view.recruit;
 
 import android.Manifest;
+import android.content.Intent;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,8 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -25,11 +28,12 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.network.MapNetworkService;
-import com.sopt.freety.freety.util.permission.PermissionUtil;
-import com.sopt.freety.freety.view.recruit.data.PlacesResults;
+import com.sopt.freety.freety.view.search.data.PlacesResults;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +50,9 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
         GoogleApiClient.ConnectionCallbacks,
         LocationListener {
 
+    public static final int RESULT_SUCCESS = 0;
+    public static final int RESULT_FAIL = -1;
+
     private static final String CAMERA_POSITION = "camera_position";
     private static final String LOCATION = "location";
     private static final int DEFAULT_ZOOM = 15;
@@ -53,20 +60,52 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
     private static final String TAG = "MapPopupActivity";
     private GoogleApiClient googleApiClient;
     private GoogleMap googleMap;
-    private boolean locationPermissionGranted;
-    private LocationRequest locationRequest;
     private Location currentLocation;
     private CameraPosition cameraPosition;
     private MapNetworkService mapNetworkService;
+    private boolean isPermissionGranted = false;
+
+    @SuppressWarnings("MissingPermission")
+    private PermissionListener permissionListener = new PermissionListener() {
+        @Override
+        public void onPermissionGranted() {
+            Log.i(TAG, "onPermissionGranted: good");
+            isPermissionGranted = true;
+            MapFragment mapFragment =
+                    (MapFragment) getFragmentManager().findFragmentById(R.id.recruit_popup_map);
+            mapFragment.getMapAsync(MapPopupActivity.this);
+        }
+
+        @Override
+        public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+            Log.i(TAG, "onPermissionGranted: denied");
+            isPermissionGranted = false;
+            MapFragment mapFragment =
+                    (MapFragment) getFragmentManager().findFragmentById(R.id.recruit_popup_map);
+            mapFragment.getMapAsync(MapPopupActivity.this);
+        }
+    };
 
     private ArrayAdapter listAdapter;
     private List<PlacesResults.PlaceResult> placeResults;
+    private Intent resultIntent;
     @BindView(R.id.recruit_popup_list)
     ListView searchListView;
 
     @BindView(R.id.recruit_popup_edit)
-    EditText editText;
+    EditText searchEditText;
 
+    @OnClick(R.id.recruit_popup_register)
+    public void onRegister() {
+        setResult(RESULT_SUCCESS, resultIntent);
+        finish();
+    }
+
+    @OnClick(R.id.recruit_popup_exit)
+    public void onExit() {
+        setResult(RESULT_FAIL);
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,23 +128,18 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
         searchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (placeResults.size() == 0) {
+                    return;
+                }
                 PlacesResults.PlaceResult selectedPlace = placeResults.get(position);
                 moveCameraToLatLng(selectedPlace.getLat(), selectedPlace.getLng(), selectedPlace.getName());
+                resultIntent = new Intent();
+                resultIntent.putExtra("address", selectedPlace.getFormattedAddress());
+                resultIntent.putExtra("lat", selectedPlace.getLat());
+                resultIntent.putExtra("lng", selectedPlace.getLng());
             }
         });
 
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        locationPermissionGranted = false;
-        if (requestCode == PermissionUtil.REQUEST_LOCATION) {
-            if (PermissionUtil.verifyPermission(grantResults)) {
-                locationPermissionGranted = true;
-            } else {
-            }
-        }
-        updateLocationUI();
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -117,28 +151,44 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
                     .addApi(LocationServices.API)
                     .build();
         }
-        createLocationRequest();
-    }
-
-    @SuppressWarnings("MissingPermission")
-    private void getDeviceLocation() {
-        if (PermissionUtil.checkPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-            locationPermissionGranted = true;
-            currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-            LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
-        } else {
-            PermissionUtil.requestFineLocationPermissions(this);
-        }
     }
 
     @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        getDevicePermission();
+    }
+
+    private void getDevicePermission() {
+        new TedPermission(this)
+                .setPermissionListener(permissionListener)
+                .setRationaleConfirmText("확인")
+                .setRationaleMessage("\"Freety\"의 다음 작업을 허용하시겠습니까? 이 기기의 위치에 액세스하기")
+                .setDeniedMessage("거부하시면 볼수 없는데...")
+                .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+                .check();
+    }
+
+    @Override
+    @SuppressWarnings("MissingPermission")
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
+
+        if (isPermissionGranted) {
+            currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+            LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, getLocationRequest(), this);
+            googleMap.setMyLocationEnabled(true);
+            googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+        } else {
+            googleMap.setMyLocationEnabled(false);
+            googleMap.getUiSettings().setMyLocationButtonEnabled(false);
+        }
+
         if (cameraPosition != null) {
             googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         } else if (currentLocation != null) {
             LatLng currentLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, DEFAULT_ZOOM));
+            cameraPosition = googleMap.getCameraPosition();
             googleMap.addMarker(new MarkerOptions().position(currentLatLng).title("현재 위치"));
         } else {
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, DEFAULT_ZOOM));
@@ -152,26 +202,20 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
         googleMap.addMarker(new MarkerOptions().position(currentLatLng).title(locationName).snippet("이 곳을 확인하세요."));
     }
 
-    @OnClick(R.id.recruit_popup_exit)
-    void onExit() {
-        finish();
-    }
-
     @OnClick(R.id.recruit_popup_search)
     void onSearch() {
-        final String searchText = editText.getText().toString();
+        final String searchText = searchEditText.getText().toString();
         Log.i(TAG, "onSearch: searchText is : " + searchText);
         final Call<PlacesResults> requestPlacesResults = mapNetworkService.getLocationResults(searchText);
         requestPlacesResults.enqueue(new Callback<PlacesResults>() {
             @Override
             public void onResponse(Call<PlacesResults> call, Response<PlacesResults> response) {
                 if (response.isSuccessful()) {
-                    Log.i(TAG, "onResponse: " + response.raw().toString());
                     List<String> resultList = new ArrayList<>();
                     placeResults = response.body().getResults();
                     for (int index = 0; index < placeResults.size(); index++) {
                         PlacesResults.PlaceResult result = placeResults.get(index);
-                        resultList.add(result.getName() + " / " + result.getFormattedAddress());
+                        resultList.add(result.getFormattedAddress());
                         if (index >= 10) {
                             break;
                         }
@@ -191,6 +235,8 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
 
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(searchEditText.getWindowToken(), 0);
     }
 
     @Override
@@ -204,16 +250,7 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        getDeviceLocation();
-        MapFragment mapFragment =
-                (MapFragment) getFragmentManager().findFragmentById(R.id.recruit_popup_map);
-        mapFragment.getMapAsync(this);
-    }
-
-    @Override
     public void onConnectionSuspended(int i) {
-
     }
 
     @Override
@@ -240,32 +277,20 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     protected void onResume() {
-        if (googleApiClient.isConnected()) {
-            getDeviceLocation();
-        }
         super.onResume();
     }
 
-    @SuppressWarnings("MissingPermission")
-    private void updateLocationUI() {
-        if (googleMap == null) {
-            return;
-        }
-
-        if (locationPermissionGranted) {
-            googleMap.setMyLocationEnabled(true);
-            googleMap.getUiSettings().setMyLocationButtonEnabled(true);
-        } else {
-            googleMap.setMyLocationEnabled(false);
-            googleMap.getUiSettings().setMyLocationButtonEnabled(false);
-        }
-
+    private LocationRequest getLocationRequest() {
+        LocationRequest request = new LocationRequest();
+        request.setInterval(10000);
+        request.setFastestInterval(5000);
+        request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        return request;
     }
 
-    private void createLocationRequest() {
-        locationRequest = new LocationRequest();
-        locationRequest.setInterval(10000);
-        locationRequest.setFastestInterval(5000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    public void onScreenClick(View v) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(searchEditText.getWindowToken(), 0);
     }
+
 }

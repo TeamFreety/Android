@@ -1,6 +1,6 @@
 package com.sopt.freety.freety.network;
 
-import com.sopt.freety.freety.view.recruit.data.PlacesResults;
+import com.sopt.freety.freety.view.search.data.PlacesResults;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -15,6 +15,6 @@ public interface MapNetworkService {
     String BASE_URL = "https://maps.googleapis.com";
     String API_KEY = "AIzaSyCzezaEEraT_PEJt4VxBY5MtEGLqWrNF4U";
 
-    @GET("/maps/api/place/textsearch/json?key=" + API_KEY)
+    @GET("/maps/api/place/textsearch/json?key=" + API_KEY + "&language=ko")
     Call<PlacesResults> getLocationResults(@Query("query") String query);
 }
