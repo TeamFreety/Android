@@ -1,6 +1,7 @@
 package com.sopt.freety.freety.view.recruit;
 
 import android.Manifest;
+import android.content.Intent;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -48,6 +50,9 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
         GoogleApiClient.ConnectionCallbacks,
         LocationListener {
 
+    public static final int RESULT_SUCCESS = 0;
+    public static final int RESULT_FAIL = -1;
+
     private static final String CAMERA_POSITION = "camera_position";
     private static final String LOCATION = "location";
     private static final int DEFAULT_ZOOM = 15;
@@ -83,11 +88,24 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
 
     private ArrayAdapter listAdapter;
     private List<PlacesResults.PlaceResult> placeResults;
+    private Intent resultIntent;
     @BindView(R.id.recruit_popup_list)
     ListView searchListView;
 
     @BindView(R.id.recruit_popup_edit)
     EditText searchEditText;
+
+    @OnClick(R.id.recruit_popup_register)
+    public void onRegister() {
+        setResult(RESULT_SUCCESS, resultIntent);
+        finish();
+    }
+
+    @OnClick(R.id.recruit_popup_exit)
+    public void onExit() {
+        setResult(RESULT_FAIL);
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,8 +128,15 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
         searchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (placeResults.size() == 0) {
+                    return;
+                }
                 PlacesResults.PlaceResult selectedPlace = placeResults.get(position);
                 moveCameraToLatLng(selectedPlace.getLat(), selectedPlace.getLng(), selectedPlace.getName());
+                resultIntent = new Intent();
+                resultIntent.putExtra("address", selectedPlace.getFormattedAddress());
+                resultIntent.putExtra("lat", selectedPlace.getLat());
+                resultIntent.putExtra("lng", selectedPlace.getLng());
             }
         });
 
@@ -177,11 +202,6 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
         googleMap.addMarker(new MarkerOptions().position(currentLatLng).title(locationName).snippet("이 곳을 확인하세요."));
     }
 
-    @OnClick(R.id.recruit_popup_exit)
-    void onExit() {
-        finish();
-    }
-
     @OnClick(R.id.recruit_popup_search)
     void onSearch() {
         final String searchText = searchEditText.getText().toString();
@@ -191,12 +211,11 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
             @Override
             public void onResponse(Call<PlacesResults> call, Response<PlacesResults> response) {
                 if (response.isSuccessful()) {
-                    Log.i(TAG, "onResponse: " + response.raw().toString());
                     List<String> resultList = new ArrayList<>();
                     placeResults = response.body().getResults();
                     for (int index = 0; index < placeResults.size(); index++) {
                         PlacesResults.PlaceResult result = placeResults.get(index);
-                        resultList.add(result.getName() + " / " + result.getFormattedAddress());
+                        resultList.add(result.getFormattedAddress());
                         if (index >= 10) {
                             break;
                         }
@@ -230,10 +249,8 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
 
     }
 
-
     @Override
     public void onConnectionSuspended(int i) {
-
     }
 
     @Override
@@ -260,10 +277,6 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     protected void onResume() {
-        /*
-        if (googleApiClient.isConnected()) {
-            getDevicePermission();
-        }*/
         super.onResume();
     }
 
