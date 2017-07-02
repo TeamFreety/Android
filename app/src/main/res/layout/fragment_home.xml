@@ -84,10 +84,14 @@
                 <android.support.design.widget.TabLayout
                     android:id="@+id/indicatorTab"
                     android:layout_width="match_parent"
-                    android:layout_height="37dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_height="8dp"
+                    android:layout_marginBottom="13dp"
                     android:layout_alignParentBottom="true"
                     app:tabBackground="@drawable/dot_selector"
                     app:tabGravity="center"
+                    app:tabPaddingStart="10dp"
+                    app:tabPaddingEnd="10dp"
                     app:tabIndicatorHeight="0dp" />
 
             </RelativeLayout>

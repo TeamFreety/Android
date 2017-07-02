@@ -1,6 +1,7 @@
 package com.sopt.freety.freety.view.login;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -99,6 +101,7 @@ private int rId;
                             @Override
                             public void onSuccess(LoginResult loginResult) {
                                 Log.e("onSuccess", "onSuccess");
+                                Toast.makeText(getApplicationContext(),"facebook success",Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(FirstLoginActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
@@ -165,6 +168,7 @@ private int rId;
                     userName = userProfile.getNickname();
 
                     Log.e("UserProfile", userProfile.toString());
+                    Toast.makeText(getApplicationContext(),userId,Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(FirstLoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
