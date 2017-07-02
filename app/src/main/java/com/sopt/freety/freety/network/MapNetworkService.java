@@ -1,6 +1,6 @@
 package com.sopt.freety.freety.network;
 
-import com.sopt.freety.freety.view.recruit.data.PlacesResults;
+import com.sopt.freety.freety.view.search.data.PlacesResults;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

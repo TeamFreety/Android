@@ -13,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -32,7 +31,7 @@ import com.gun0912.tedpermission.TedPermission;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.network.MapNetworkService;
-import com.sopt.freety.freety.view.recruit.data.PlacesResults;
+import com.sopt.freety.freety.view.search.data.PlacesResults;
 
 import java.util.ArrayList;
 import java.util.List;

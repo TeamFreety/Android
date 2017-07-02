@@ -16,5 +16,8 @@
     <color name="borderSearchColor">#EFEFEF</color>
     <color name="baseColor">#f1f1f1</color>
     <color name="recruitTextColor">#7D7D7D</color>
+    <color name="subTitleColor">#7D7D7D</color>
+
+    <color name="emeraldColor">#B1F5E4</color>
 
     </resources>
