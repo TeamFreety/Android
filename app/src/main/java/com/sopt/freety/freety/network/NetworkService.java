@@ -6,14 +6,17 @@ import com.sopt.freety.freety.view.login.JoinResult;
 import com.sopt.freety.freety.view.login.data.DuplicateData;
 import com.sopt.freety.freety.view.login.data.SignUpData;
 import com.sopt.freety.freety.view.login.data.SignUpResultData;
+import com.sopt.freety.freety.view.recruit.data.PostDetailResultData;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -42,5 +45,8 @@ public interface NetworkService {
 
     @GET("/duplicateCheck")
     Call<DuplicateData> checkDuplicate(@Query("tempEmail") String email);
+
+    @GET("/postDetail/{postId}")
+    Call<PostDetailResultData> getPostDetailData(@Header("member_token") String token, @Path("postId") int postId);
 
 }
