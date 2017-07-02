@@ -179,6 +179,7 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         isPopup = false;
         if (requestCode == MAP_POPUP_CODE) {
             if (resultCode == MapPopupActivity.RESULT_SUCCESS) {
@@ -208,5 +209,6 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
                 }
             }
         }
+
     }
 }

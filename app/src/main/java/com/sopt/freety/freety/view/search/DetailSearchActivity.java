@@ -1,78 +1,160 @@
 package com.sopt.freety.freety.view.search;
 
+import android.app.DatePickerDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.Spinner;
+import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.util.util.Triple;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class DetailSearchActivity extends AppCompatActivity {
 
+
+    @OnClick({R.id.btn_sort_perm, R.id.btn_sort_dye, R.id.btn_sort_cut, R.id.btn_sort_etc})
+    public void onHairTypeClick(Button button) {
+        String hairTypeString = button.getText().toString();
+        if (hairTypeSet.contains(hairTypeString)) {
+            hairTypeSet.remove(hairTypeString);
+            button.setTextColor(Color.parseColor("#95989A"));
+            button.setBackgroundResource(R.drawable.hair_type_btn_unselected);
+        } else {
+            hairTypeSet.add(hairTypeString);
+            button.setTextColor(Color.WHITE);
+            button.setBackgroundResource(R.drawable.hair_type_btn_selected);
+        }
+    }
+
+    @BindView(R.id.text_search_start_day)
+    TextView textSearchStartDay;
+
+    @OnClick(R.id.text_search_start_day)
+    public void onDateBtn() {
+        new DatePickerDialog(DetailSearchActivity.this, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    @BindView(R.id.text_search_end_day)
+    TextView textSearchEndDay;
+
+    @OnClick(R.id.text_search_end_day)
+    public void onDateEndBtn() {
+        new DatePickerDialog(DetailSearchActivity.this, dateEndSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+
+    private GregorianCalendar calendar = new GregorianCalendar();
+    private Set<String> hairTypeSet = new HashSet<>();
     @BindView(R.id.btn_detail_cancel)
-    Button detailCancelBtn;
-    @BindView(R.id.checkbtn_sort_perm)
-    CheckBox sortPermCheckBtn;
-    @BindView(R.id.checkbtn_sort_dye)
-    CheckBox sortDyeCheckBtn;
-    @BindView(R.id.checkbtn_sort_cut)
-    CheckBox sortCutCheckBtn;
-    @BindView(R.id.checkbtn_sort_etc)
-    CheckBox sortEtcCheckBtn;
-    @BindView(R.id.btn_detail_2017_start)
-    Button detail2017StartBtn;
-    @BindView(R.id.spinner_detail_month_start)
-    Spinner monthStartSpinner;
-    @BindView(R.id.spinner_detail_day_start)
-    Spinner dayStartSpinner;
-    @BindView(R.id.btn_detail_2017_end)
-    Button detail2017EndBtn;
-    @BindView(R.id.spinner_detail_month_end)
-    Spinner monthEndSpinner;
-    @BindView(R.id.spinner_detail_day_end)
-    Spinner dayEndSpinner;
-    @BindView(R.id.btn_detail_local_default)
-    Button localDefaultDetailBtn;
+    ImageButton detailCancelBtn;
+    @BindView(R.id.btn_detail_location_none)
+    ImageButton btnDetailLocationNone;
+    @BindView(R.id.btn_detail_location_near)
+    ImageButton btnDetailLocationNear;
+    @BindView(R.id.btn_detail_location_gangnam)
+    ImageButton btnDetailLocationGangnam;
+    @BindView(R.id.btn_detail_location_hongdae)
+    ImageButton btnDetailLocationHongdae;
+    @BindView(R.id.btn_detail_location_gundae)
+    ImageButton btnDetailLocationGundae;
+    @BindView(R.id.btn_detail_location_kyodae)
+    ImageButton btnDetailLocationKyodae;
+    @BindView(R.id.btn_detail_location_myungdong)
+    ImageButton btnDetailLocationMyungdong;
+    @BindView(R.id.btn_detail_location_boondang)
+    ImageButton btnDetailLocationBoondang;
+    @BindView(R.id.btn_detail_location_garosu)
+    ImageButton btnDetailLocationGarosu;
+    @BindView(R.id.btn_detail_location_yangjae)
+    ImageButton btnDetailLocationYangjae;
+    @BindView(R.id.btn_detail_location_edae)
+    ImageButton btnDetailLocationEdae;
+    @BindView(R.id.btn_detail_location_nowon)
+    ImageButton btnDetailLocationNowon;
+    @BindView(R.id.btn_detail_location_sungshin)
+    ImageButton btnDetailLocationSungshin;
+    @BindView(R.id.btn_detail_location_ilsan)
+    ImageButton btnDetailLocationIlsan;
+    @BindView(R.id.btn_detail_location_bucheon)
+    ImageButton btnDetailLocationBucheon;
+    @BindView(R.id.btn_detail_location_guro)
+    ImageButton btnDetailLocationGuro;
+    @BindView(R.id.btn_detail_location_jamsil)
+    ImageButton btnDetailLocationJamsil;
+    @BindView(R.id.btn_detail_location_mockdong)
+    ImageButton btnDetailLocationMockdong;
+    @BindView(R.id.btn_detail_location_anyang)
+    ImageButton btnDetailLocationAnyang;
+    @BindView(R.id.btn_detail_location_kyunggi)
+    ImageButton btnDetailLocationKyunggi;
+    @BindView(R.id.btn_detail_location_etc)
+    ImageButton btnDetailLocationEtc;
+
     @BindView(R.id.checkbtn_career_default)
-    CheckBox careerDefaultCheckBtn;
+    CheckBox checkboxCareerDefault;
+
     @BindView(R.id.checkbtn_career_under_1year)
-    CheckBox careerUnder1yearCheckBtn;
+    CheckBox checkboxCareerUnder1year;
+
     @BindView(R.id.checkbtn_career_1to3year)
-    CheckBox career1to3yearCheckBtn;
+    CheckBox checkboxCareer1to3year;
+
     @BindView(R.id.checkbtn_career_3to5year)
-    CheckBox career3to5yearCheckBtn;
+    CheckBox checkboxCareer3to5year;
+
     @BindView(R.id.checkbtn_career_over_5year)
-    CheckBox careerOver5yearCheckBtn;
-    @BindView(R.id.btn_detail_filter_adapt)
-    Button filterAdaptDetailBtn;
+    CheckBox checkboxCareer5to5year;
+
+    @BindViews({R.id.checkbtn_career_default, R.id.checkbtn_career_under_1year,
+            R.id.checkbtn_career_1to3year, R.id.checkbtn_career_3to5year, R.id.checkbtn_career_over_5year})
+    List<CheckBox> careerCheckboxList;
+
+    @OnClick({R.id.checkbtn_career_default, R.id.checkbtn_career_under_1year,
+            R.id.checkbtn_career_1to3year, R.id.checkbtn_career_3to5year, R.id.checkbtn_career_over_5year})
+    public void onCheckedBoxClicked(CheckBox checkBox) {
+        for (CheckBox box : careerCheckboxList) {
+            box.setChecked(false);
+        }
+        checkBox.setChecked(true);
+    }
+
+
 
     private CrystalRangeSeekbar rangeSeekbar;
     private TextView tvMin, tvMax;
-
-
-
-
-
-
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_search);
-
         ButterKnife.bind(this);
-        detailCancelBtn.setOnClickListener(new View.OnClickListener(){
+
+        detailCancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -80,14 +162,12 @@ public class DetailSearchActivity extends AppCompatActivity {
         });
 
 
-
-
         // get seekbar from view
-        final CrystalRangeSeekbar rangeSeekbar = (CrystalRangeSeekbar)findViewById(R.id.rangeSeekbar);
+        final CrystalRangeSeekbar rangeSeekbar = (CrystalRangeSeekbar) findViewById(R.id.rangeSeekbar);
 
         // get min and max text view
-        final TextView tvMin = (TextView)findViewById(R.id.textMin1);
-        final TextView tvMax = (TextView)findViewById(R.id.textMax1);
+        final TextView tvMin = (TextView) findViewById(R.id.textMin1);
+        final TextView tvMax = (TextView) findViewById(R.id.textMax1);
 
         // set listener
         rangeSeekbar.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
@@ -109,7 +189,96 @@ public class DetailSearchActivity extends AppCompatActivity {
 
     }
 
+    private DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            textSearchStartDay.setText(String.format("%d년 %d월 %d일", year, month + 1, dayOfMonth));
+        }
+    };
+
+    private DatePickerDialog.OnDateSetListener dateEndSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            textSearchEndDay.setText(String.format("%d년 %d월 %d일", year, month + 1, dayOfMonth));
+        }
+    };
 
 
+
+
+
+
+
+
+    Map<Integer, Triple<Integer, Integer, Boolean>> locationBtnMap = initLocationBtnMap();
+    @BindViews({R.id.btn_detail_location_none, R.id.btn_detail_location_near,
+            R.id.btn_detail_location_gangnam, R.id.btn_detail_location_hongdae,
+            R.id.btn_detail_location_gundae, R.id.btn_detail_location_kyodae,
+            R.id.btn_detail_location_myungdong, R.id.btn_detail_location_boondang,
+            R.id.btn_detail_location_garosu, R.id.btn_detail_location_yangjae,
+            R.id.btn_detail_location_edae, R.id.btn_detail_location_nowon,
+            R.id.btn_detail_location_sungshin, R.id.btn_detail_location_ilsan,
+            R.id.btn_detail_location_bucheon, R.id.btn_detail_location_guro,
+            R.id.btn_detail_location_jamsil, R.id.btn_detail_location_mockdong,
+            R.id.btn_detail_location_anyang, R.id.btn_detail_location_kyunggi, R.id.btn_detail_location_etc})
+    List<ImageButton> locationBtnList;
+
+
+
+    @OnClick({R.id.btn_detail_location_none, R.id.btn_detail_location_near,
+            R.id.btn_detail_location_gangnam, R.id.btn_detail_location_hongdae,
+            R.id.btn_detail_location_gundae, R.id.btn_detail_location_kyodae,
+            R.id.btn_detail_location_myungdong, R.id.btn_detail_location_boondang,
+            R.id.btn_detail_location_garosu, R.id.btn_detail_location_yangjae,
+            R.id.btn_detail_location_edae, R.id.btn_detail_location_nowon,
+            R.id.btn_detail_location_sungshin, R.id.btn_detail_location_ilsan,
+            R.id.btn_detail_location_bucheon, R.id.btn_detail_location_guro,
+            R.id.btn_detail_location_jamsil, R.id.btn_detail_location_mockdong,
+            R.id.btn_detail_location_anyang, R.id.btn_detail_location_kyunggi, R.id.btn_detail_location_etc})
+
+
+
+    public void onViewClicked(ImageButton imageButton) {
+        for (ImageButton button : locationBtnList) {
+            int btnId = button.getId();
+            button.setImageResource(locationBtnMap.get(btnId).getFirst());
+            locationBtnMap.get(btnId).setThird(false);
+        }
+
+        int selectedBtnId = imageButton.getId();
+        if (locationBtnMap.get(selectedBtnId).getThird()) {
+            imageButton.setImageResource(locationBtnMap.get(selectedBtnId).getFirst());
+            locationBtnMap.get(selectedBtnId).setThird(false);
+        } else {
+            imageButton.setImageResource(locationBtnMap.get(selectedBtnId).getSecond());
+            locationBtnMap.get(selectedBtnId).setThird(true);
+        }
     }
+
+    private Map<Integer, Triple<Integer, Integer, Boolean>> initLocationBtnMap() {
+        Map<Integer, Triple<Integer, Integer, Boolean>> map = new HashMap<>();
+        map.put(R.id.btn_detail_location_none, Triple.of(R.drawable.search_none, R.drawable.search_onclick_none, false));
+        map.put(R.id.btn_detail_location_near, Triple.of(R.drawable.search_near, R.drawable.search_onclick_near, false));
+        map.put(R.id.btn_detail_location_gangnam, Triple.of(R.drawable.search_gananam, R.drawable.search_onclick_gangnam, false));
+        map.put(R.id.btn_detail_location_hongdae, Triple.of(R.drawable.search_hongdae, R.drawable.search_onclick_hongdae, false));
+        map.put(R.id.btn_detail_location_gundae, Triple.of(R.drawable.search_gundae, R.drawable.search_onclick_gundae, false));
+        map.put(R.id.btn_detail_location_kyodae, Triple.of(R.drawable.search_kyodae, R.drawable.search_onclick_kyodae, false));
+        map.put(R.id.btn_detail_location_myungdong, Triple.of(R.drawable.search_myeongdong, R.drawable.search_onclick_myeongdong, false));
+        map.put(R.id.btn_detail_location_boondang, Triple.of(R.drawable.search_boondang, R.drawable.search_onclick_boondang, false));
+        map.put(R.id.btn_detail_location_garosu, Triple.of(R.drawable.search_garosu, R.drawable.search_onclick_garosu, false));
+        map.put(R.id.btn_detail_location_yangjae, Triple.of(R.drawable.search_yangjae, R.drawable.search_onclick_yangjae, false));
+        map.put(R.id.btn_detail_location_edae, Triple.of(R.drawable.search_edae, R.drawable.search_onclick_edae, false));
+        map.put(R.id.btn_detail_location_nowon, Triple.of(R.drawable.search_nowon, R.drawable.search_onclick_nowon, false));
+        map.put(R.id.btn_detail_location_sungshin, Triple.of(R.drawable.search_sungshin, R.drawable.search_onclick_sungshin, false));
+        map.put(R.id.btn_detail_location_ilsan, Triple.of(R.drawable.search_ilsan, R.drawable.search_onclick_ilsan, false));
+        map.put(R.id.btn_detail_location_bucheon, Triple.of(R.drawable.search_bucheon, R.drawable.search_onclick_bucheon, false));
+        map.put(R.id.btn_detail_location_guro, Triple.of(R.drawable.search_guro, R.drawable.search_onclick_guro, false));
+        map.put(R.id.btn_detail_location_jamsil, Triple.of(R.drawable.search_jamsil, R.drawable.search_onclick_jamsil, false));
+        map.put(R.id.btn_detail_location_mockdong, Triple.of(R.drawable.search_mokdong, R.drawable.search_onclick_mokdong, false));
+        map.put(R.id.btn_detail_location_anyang, Triple.of(R.drawable.search_anyang, R.drawable.search_onclick_anyang, false));
+        map.put(R.id.btn_detail_location_kyunggi, Triple.of(R.drawable.search_gyeongki, R.drawable.search_onclick_kyeongki, false));
+        map.put(R.id.btn_detail_location_etc, Triple.of(R.drawable.search_etc, R.drawable.search_onclick_etc, false));
+        return map;
+    }
+}
 

@@ -35,7 +35,11 @@
         <activity android:name=".view.login.JoinEmailActivity" />
 
         <activity android:name=".view.main.MainActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity
@@ -54,7 +58,9 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.search.DetailSearchActivity" />
+        <activity android:name=".view.search.DetailSearchActivity" >
+
+        </activity>
         <activity android:name=".view.recruit.RecruitActivity">
 
         </activity>
@@ -73,11 +79,7 @@
         <activity android:name=".view.login.ModelEmailSignUpActivity"/>
         <activity android:name=".view.wirte.WriteActivity"
             android:windowSoftInputMode="adjustPan|adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <activity android:name="com.yongbeam.y_photopicker.util.photopicker.PhotoPickerActivity"

@@ -13,6 +13,7 @@
     <color name="checkBoxUncheckedColor">#676767</color>
     <color name="checkBoxBackground">#ffffff</color>
     <color name="borderColor">#e3e5e6</color>
+    <color name="borderSearchColor">#EFEFEF</color>
     <color name="baseColor">#f1f1f1</color>
     <color name="recruitTextColor">#7D7D7D</color>
     <color name="subTitleColor">#7D7D7D</color>
