@@ -1,4 +1,4 @@
-package com.sopt.freety.freety.view.recruit.data;
+package com.sopt.freety.freety.view.search.data;
 
 import java.util.List;
 
