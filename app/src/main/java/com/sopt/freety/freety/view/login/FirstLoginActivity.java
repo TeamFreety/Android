@@ -63,7 +63,7 @@ public class FirstLoginActivity extends AppCompatActivity {
 
     // view
     private Button facebookBtn;
-    private Button kakaoBtn;
+    //private Button kakaoBtn;
 /*    private Button emailBtn;
     private Button skipBtn;
     private TextView joinTextView;*/
@@ -217,7 +217,7 @@ private int rId;
 
 
 
-    @OnClick({R.id.emailBtn, R.id.text_skip})
+    @OnClick({R.id.emailBtn, R.id.text_skip, R.id.kakaoBtn})
 
     public void onClick(View view){
         switch(view.getId()){
@@ -225,12 +225,13 @@ private int rId;
                 Intent intent = new Intent(getApplicationContext(),EmailLoginActivity.class);
                 startActivity(intent);
                 break;
-
             case R.id.text_skip:
                 Intent intent2 = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent2);
                 break;
-
+            case R.id.kakaoBtn:
+                isKakaoLogin();
+                break;
         }
     }
 
