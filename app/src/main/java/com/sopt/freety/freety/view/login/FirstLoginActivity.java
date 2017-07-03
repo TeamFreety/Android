@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,10 +18,9 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+
 import com.facebook.login.widget.LoginButton;
 import com.kakao.auth.AuthType;
 import com.kakao.auth.ErrorCode;
@@ -32,12 +33,10 @@ import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
+
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.util.custom.KakaoLoginButton;
 import com.sopt.freety.freety.view.main.MainActivity;
-
-import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.Arrays;
 
@@ -69,6 +68,8 @@ private int rId;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_first_login);
@@ -76,7 +77,9 @@ private int rId;
       //  int rId = getResources().getIdentifier("kakao_layout", );
 
 
+
         UserManagement.requestLogout(new LogoutResponseCallback() {
+
             @Override
             public void onCompleteLogout() {
                 //로그아웃 성공 후
@@ -184,27 +187,21 @@ private int rId;
     }
 
 
-        @OnClick({R.id.emailBtn, R.id.kakaoBtn, R.id.skipBtn, R.id.joinTextView})
+
+    @OnClick({R.id.emailBtn, R.id.text_skip})
+
     public void onClick(View view){
         switch(view.getId()){
             case R.id.emailBtn:
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                Intent intent = new Intent(getApplicationContext(),EmailLoginActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.kakaoBtn:
-               // new KakaoLoginButton(FirstLoginActivity).call();
-                isKakaoLogin();
-                /*Intent intent2 = new Intent(getApplicationContext(),LoginActivity.class);
-                startActivity(intent2);*/
+
+            case R.id.text_skip:
+                Intent intent2 = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent2);
                 break;
-            case R.id.skipBtn:
-                Intent intent3 = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(intent3);
-                break;
-            case R.id.joinTextView:
-                Intent intent4 = new Intent(getApplicationContext(),JoinActivity.class);
-                startActivity(intent4);
-                break;
+
         }
     }
 
