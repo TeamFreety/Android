@@ -33,7 +33,7 @@ public class HomeContentsViewPagerAdapter extends PagerAdapter {
         this.imageURLList = imageURLList;
         this.imageMockList = new ArrayList<>();
 
-        imageMockList.add(R.drawable.empty_star);
+        imageMockList.add(R.drawable.chat_list_elem);
         imageMockList.add(R.drawable.half_star);
         imageMockList.add(R.drawable.empty_star);
         imageMockList.add(R.drawable.half_star);
