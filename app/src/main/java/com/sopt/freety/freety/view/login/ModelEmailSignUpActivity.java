@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -60,6 +61,9 @@ public class ModelEmailSignUpActivity extends AppCompatActivity implements Login
 
     @BindView(R.id.sign_up_email_model_finish_btn)
     TextView finishBtn;
+
+    @BindView(R.id.sign_up_email_model_address_rep_btn)
+    Button modelAddressRepBtn;
 
     private boolean isAddressRepititionPassed;
     private NetworkService networkService;

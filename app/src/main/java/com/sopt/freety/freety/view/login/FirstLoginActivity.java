@@ -120,8 +120,8 @@ private int rId;
 
                                                // Log.v("LoginActivity", response.toString());
                                                 try {
-                                                    String userId = object.getString("email");
-                                                    String userName = object.getString("name");
+                                                    userId = object.getString("email");
+                                                    userName = object.getString("name");
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();
                                                 }
@@ -133,8 +133,11 @@ private int rId;
                                 request.setParameters(parameters);
                                 request.executeAsync();
 
-                                Toast.makeText(getApplicationContext(),"facebook success",Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(FirstLoginActivity.this, MainActivity.class);
+                                //Toast.makeText(getApplicationContext(),"facebook success",Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(FirstLoginActivity.this, JoinActivity.class);
+                                intent.putExtra("login case","facebook");
+                                intent.putExtra("userId",userId);
+                                intent.putExtra("userName",userName);
                                 startActivity(intent);
                                 finish();
                             }
@@ -201,7 +204,10 @@ private int rId;
 
                     Log.e("UserProfile", userProfile.toString());
                     Toast.makeText(getApplicationContext(),userId,Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(FirstLoginActivity.this, MainActivity.class);
+                    Intent intent = new Intent(FirstLoginActivity.this, JoinActivity.class);
+                    intent.putExtra("login case","kakao");
+                    intent.putExtra("userId",userId);
+                    intent.putExtra("userName", userName);
                     startActivity(intent);
                     finish();
                 }
@@ -223,6 +229,7 @@ private int rId;
         switch(view.getId()){
             case R.id.emailBtn:
                 Intent intent = new Intent(getApplicationContext(),EmailLoginActivity.class);
+                //intent.putExtra("login case","email");
                 startActivity(intent);
                 break;
             case R.id.text_skip:

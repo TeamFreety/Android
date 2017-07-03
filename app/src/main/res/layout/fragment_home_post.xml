@@ -6,7 +6,7 @@
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
+        <com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView
             android:id="@+id/home_post_recycler_view"
             android:layout_marginTop="30dp"
             android:layout_marginLeft="10dp"
@@ -17,7 +17,7 @@
             android:padding="@dimen/my_page_post_offset"
             android:overScrollMode="never">
 
-        </android.support.v7.widget.RecyclerView>
+        </com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabtn_home_to_top"

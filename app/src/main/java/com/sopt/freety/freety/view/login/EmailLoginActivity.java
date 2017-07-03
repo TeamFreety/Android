@@ -34,6 +34,8 @@ public class EmailLoginActivity extends AppCompatActivity{
     @BindView(R.id.edit_login_email) EditText emailEditText;
     @BindView(R.id.edit_login_pwd) EditText pwdEditText;
 
+    @BindView(R.id.text_email_login_to_sign_up) TextView textView;
+
 
 
     @Override
@@ -44,10 +46,10 @@ public class EmailLoginActivity extends AppCompatActivity{
         setContentView(R.layout.activity_email_login);
         ButterKnife.bind(this);
 
-        TextView textView = (TextView)findViewById(R.id.text_email_login_to_sign_up);
         SpannableString content = new SpannableString("이메일로 회원가입하기");
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
         textView.setText(content);
+
 
     }
 
@@ -79,6 +81,7 @@ public class EmailLoginActivity extends AppCompatActivity{
             case R.id.text_email_login_to_sign_up:
 
                 Intent intent2 = new Intent(getApplicationContext(),JoinActivity.class);
+                intent2.putExtra("login case","email");
                 startActivity(intent2);
 
                 break;
