@@ -25,6 +25,10 @@ public class JoinActivity extends AppCompatActivity {
     @BindView(R.id.modelCaseBtn) Button modelCaseBtn;
     @BindView(R.id.designerCaseBtn) Button designerCaseBtn;
 
+    private String loginCase = "";
+    private String userId = "";
+    private String userName = "";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +37,12 @@ public class JoinActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_join_case);
         ButterKnife.bind(this);
+
+        Intent intent = getIntent();
+        loginCase = intent.getStringExtra("login case");
+        userId = intent.getStringExtra("userId");
+        userName = intent.getStringExtra("userName");
+
     }
 
     @OnClick({R.id.modelCaseBtn,R.id.designerCaseBtn})
@@ -46,14 +56,28 @@ public class JoinActivity extends AppCompatActivity {
             public void onAnimationEnd(Animation animation) {
                 switch(view.getId()) {
                     case R.id.modelCaseBtn:
-                        Intent intent = new Intent(getApplicationContext(),SignUpEmailActivity.class);
-                        intent.putExtra("case", true) ;
+                        if(loginCase.equals("email")){
+                        Intent intent = new Intent(getApplicationContext(),ModelEmailSignUpActivity.class);
                         startActivity(intent);
+                        }
+                        else{
+                            Intent intent = new Intent(getApplicationContext(),ModelSNSSignUpActivity.class);
+                            intent.putExtra("userId",userId);
+                            intent.putExtra("userName",userName);
+                            startActivity(intent);
+                        }
                         break;
                     case R.id.designerCaseBtn:
-                        Intent intent2 = new Intent(getApplicationContext(),SignUpEmailActivity.class);
-                        intent2.putExtra("case", false) ;
-                        startActivity(intent2);
+                        if(loginCase.equals("email")) {
+                            Intent intent = new Intent(getApplicationContext(), DesignerEmailSignUpActivity.class);
+                            startActivity(intent);
+                        }
+                        else{
+                            Intent intent = new Intent(getApplicationContext(),DesignerSNSSignUpActivity.class);
+                            intent.putExtra("userId",userId);
+                            intent.putExtra("userName",userName);
+                            startActivity(intent);
+                        }
                         break;
                 }
             }

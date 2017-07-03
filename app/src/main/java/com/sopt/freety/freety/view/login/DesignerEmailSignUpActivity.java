@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -80,6 +81,9 @@ public class DesignerEmailSignUpActivity extends AppCompatActivity implements Lo
 
     @BindView(R.id.sign_up_email_designer_finish_btn)
     TextView finishBtn;
+
+    @BindView(R.id.sign_up_email_designer_address_rep_btn)
+    Button addressRepBtn;
 
     private boolean isAddressRepititionPassed;
     private NetworkService networkService;

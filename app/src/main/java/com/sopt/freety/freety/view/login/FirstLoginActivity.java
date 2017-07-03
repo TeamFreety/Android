@@ -18,6 +18,8 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 
@@ -38,6 +40,10 @@ import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.util.custom.KakaoLoginButton;
 import com.sopt.freety.freety.view.main.MainActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
+
 import java.util.Arrays;
 
 import butterknife.ButterKnife;
@@ -57,7 +63,7 @@ public class FirstLoginActivity extends AppCompatActivity {
 
     // view
     private Button facebookBtn;
-    private Button kakaoBtn;
+    //private Button kakaoBtn;
 /*    private Button emailBtn;
     private Button skipBtn;
     private TextView joinTextView;*/
@@ -104,8 +110,34 @@ private int rId;
                             @Override
                             public void onSuccess(LoginResult loginResult) {
                                 Log.e("onSuccess", "onSuccess");
-                                Toast.makeText(getApplicationContext(),"facebook success",Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(FirstLoginActivity.this, MainActivity.class);
+                                GraphRequest request = GraphRequest.newMeRequest(
+                                        loginResult.getAccessToken(),
+                                        new GraphRequest.GraphJSONObjectCallback() {
+                                            @Override
+                                            public void onCompleted(
+                                                    JSONObject object,
+                                                    GraphResponse response) {
+
+                                               // Log.v("LoginActivity", response.toString());
+                                                try {
+                                                    userId = object.getString("email");
+                                                    userName = object.getString("name");
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+
+                                            }
+                                        });
+                                Bundle parameters = new Bundle();
+                                parameters.putString("fields", "id,name,email,gender, birthday");
+                                request.setParameters(parameters);
+                                request.executeAsync();
+
+                                //Toast.makeText(getApplicationContext(),"facebook success",Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(FirstLoginActivity.this, JoinActivity.class);
+                                intent.putExtra("login case","facebook");
+                                intent.putExtra("userId",userId);
+                                intent.putExtra("userName",userName);
                                 startActivity(intent);
                                 finish();
                             }
@@ -172,7 +204,10 @@ private int rId;
 
                     Log.e("UserProfile", userProfile.toString());
                     Toast.makeText(getApplicationContext(),userId,Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(FirstLoginActivity.this, MainActivity.class);
+                    Intent intent = new Intent(FirstLoginActivity.this, JoinActivity.class);
+                    intent.putExtra("login case","kakao");
+                    intent.putExtra("userId",userId);
+                    intent.putExtra("userName", userName);
                     startActivity(intent);
                     finish();
                 }
@@ -188,20 +223,22 @@ private int rId;
 
 
 
-    @OnClick({R.id.emailBtn, R.id.text_skip})
+    @OnClick({R.id.emailBtn, R.id.text_skip, R.id.kakaoBtn})
 
     public void onClick(View view){
         switch(view.getId()){
             case R.id.emailBtn:
                 Intent intent = new Intent(getApplicationContext(),EmailLoginActivity.class);
+                //intent.putExtra("login case","email");
                 startActivity(intent);
                 break;
-
             case R.id.text_skip:
                 Intent intent2 = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent2);
                 break;
-
+            case R.id.kakaoBtn:
+                isKakaoLogin();
+                break;
         }
     }
 
