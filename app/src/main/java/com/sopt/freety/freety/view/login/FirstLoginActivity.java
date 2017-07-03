@@ -233,8 +233,11 @@ private int rId;
                 startActivity(intent);
                 break;
             case R.id.text_skip:
-                Intent intent2 = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(intent2);
+            Intent intent2 = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent2);
+            break;
+            case R.id.kakaoBtn:
+                isKakaoLogin();
                 break;
             case R.id.kakaoBtn:
                 isKakaoLogin();
