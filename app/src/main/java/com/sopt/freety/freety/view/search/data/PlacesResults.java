@@ -1,4 +1,4 @@
-package com.sopt.freety.freety.view.recruit.data;
+package com.sopt.freety.freety.view.search.data;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class PlacesResults {
         }
 
         public String getFormattedAddress() {
-            return formatted_address;
+            return formatted_address.substring(5);
         }
 
         public double getLat() {

@@ -17,7 +17,7 @@ import java.util.List;
  * Created by USER on 2017-06-27.
  */
 
-public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchHolder>{
+public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchHolder> {
 
     private List<SearchBodyData> searchBodyDatas;
     private final Context context;
@@ -37,7 +37,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchHolder>{
 
     @Override
     public void onBindViewHolder(SearchHolder holder, int position) {
-        Glide.with(context).load(searchBodyDatas.get(position).getMockSources()).override(164,187).centerCrop().thumbnail(0.001f).into(holder.getSearchImage());
+        Glide.with(context).load(searchBodyDatas.get(position).getMockSources()).override(164, 187).centerCrop().thumbnail(0.001f).into(holder.getSearchImage());
         holder.getSearchAddress().setText(searchBodyDatas.get(position).getMockAddresss());
         holder.getSearchStyle().setText(searchBodyDatas.get(position).getMockStyles());
 

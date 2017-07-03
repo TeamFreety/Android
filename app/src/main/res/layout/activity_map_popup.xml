@@ -6,6 +6,7 @@
     android:layout_gravity="center"
     android:orientation="vertical"
     android:padding="10dp"
+    android:onClick="onScreenClick"
     tools:context="com.sopt.freety.freety.view.recruit.MapPopupActivity">
 
     <LinearLayout

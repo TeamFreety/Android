@@ -3,6 +3,7 @@ package com.sopt.freety.freety.view.home;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,8 +17,6 @@ import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.view.home.adapter.HomePostRecyclerAdapter;
 import com.sopt.freety.freety.view.home.data.HomePostData;
-import com.sopt.freety.freety.view.my_page.adapter.MyPagePostRecyclerAdapter;
-import com.sopt.freety.freety.view.my_page.data.MyPagePostData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +33,8 @@ import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 
 public class HomePostFragment extends Fragment {
 
-
+    @BindView(R.id.fabtn_home_to_top)
+    FloatingActionButton topFabtn;
     @BindView(R.id.home_post_recycler_view)
     ScrollFeedbackRecyclerView recyclerView;
 
@@ -66,7 +66,20 @@ public class HomePostFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0 || dy < 0 && topFabtn.isShown()) {
+                   topFabtn.hide();
+                }
+            }
+
+            @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE)
+             {
+                   topFabtn.show();
+                }
                 super.onScrollStateChanged(recyclerView, newState);
                 switch(newState) {
                     case SCROLL_STATE_DRAGGING:
@@ -78,6 +91,14 @@ public class HomePostFragment extends Fragment {
                 }
             }
         });
+
+    topFabtn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            recyclerView.smoothScrollToPosition( 0);
+        }
+    });
+
         return view;
     }
 
