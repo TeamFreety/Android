@@ -5,24 +5,17 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.view.main.MainActivity;
-
-import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.Arrays;
 
@@ -46,6 +39,8 @@ public class FirstLoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_first_login);
@@ -54,6 +49,7 @@ public class FirstLoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         facebookBtn = (Button)findViewById(R.id.facebookBtn);
+
 
        // facebookBtn.setReadPermissions(Arrays.asList("public_profile", "email"));
       /*  facebookBtn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -121,20 +117,16 @@ public class FirstLoginActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.emailBtn, R.id.skipBtn, R.id.joinTextView})
+    @OnClick({R.id.emailBtn, R.id.text_skip})
     public void onClick(View view){
         switch(view.getId()){
             case R.id.emailBtn:
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                Intent intent = new Intent(getApplicationContext(),EmailLoginActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.skipBtn:
+            case R.id.text_skip:
                 Intent intent2 = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent2);
-                break;
-            case R.id.joinTextView:
-                Intent intent3 = new Intent(getApplicationContext(),JoinActivity.class);
-                startActivity(intent3);
                 break;
         }
     }

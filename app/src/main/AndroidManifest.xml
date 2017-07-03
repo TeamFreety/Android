@@ -28,18 +28,21 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCzezaEEraT_PEJt4VxBY5MtEGLqWrNF4U" />
 
-        <activity android:name=".view.login.JoinActivity" />
-        <activity android:name=".view.login.LoginActivity" />
-        <activity android:name=".view.login.FirstLoginActivity" >
-        </activity>
-        <activity android:name=".view.login.JoinEmailActivity" />
+        <activity android:name=".view.login.JoinActivity">
 
-        <activity android:name=".view.main.MainActivity" >
+            </activity>
+        <activity android:name=".view.login.EmailLoginActivity" />
+        <activity android:name=".view.login.FirstLoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".view.login.SignUpEmailActivity" />
+
+        <activity android:name=".view.main.MainActivity" >
+
         </activity>
 
         <activity

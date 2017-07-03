@@ -33,12 +33,12 @@ import retrofit2.Response;
  * Created by KYJ on 2017-06-26.
  */
 
-public class JoinEmailActivity extends AppCompatActivity {
+public class SignUpEmailActivity extends AppCompatActivity {
 
-    @BindView(R.id.cancelBtn) Button cancelBtn;
-    @BindView(R.id.submitBtn) Button submitBtn;
-    @BindView(R.id.emailEditText) EditText emailEdit;
-    @BindView(R.id.pwdEditText) EditText pwdEdit;
+    @BindView(R.id.back_btn) Button cancelBtn;
+    @BindView(R.id.submit_btn) Button submitBtn;
+    @BindView(R.id.edit_login_email) EditText emailEdit;
+    @BindView(R.id.edit_login_pwd) EditText pwdEdit;
     @BindView(R.id.nameEditText) EditText nameEdit;
     @BindView(R.id.ageEditText) EditText ageEdit;
     @BindView(R.id.belongNameEditText) EditText belongNameEdit;
@@ -85,19 +85,19 @@ public class JoinEmailActivity extends AppCompatActivity {
 
         //service = AppController.getInstance().getNetworkService();
 
-        mProgressDialog = new ProgressDialog(JoinEmailActivity.this);
+        mProgressDialog = new ProgressDialog(SignUpEmailActivity.this);
         mProgressDialog.setCancelable(false);
         mProgressDialog.setMessage("회원 가입 중...");
         mProgressDialog.setIndeterminate(true);
     }
 
-    @OnClick({R.id.submitBtn,R.id.cancelBtn})
+    @OnClick({R.id.submit_btn,R.id.back_btn})
     public void onButtonClick(View view){
         switch(view.getId()){
-            case R.id.cancelBtn:
+            case R.id.back_btn:
                 super.onBackPressed();
                 break;
-            case R.id.submitBtn:
+            case R.id.submit_btn:
                 join(view);
                 break;
         }

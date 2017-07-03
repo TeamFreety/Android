@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/sns_login_background"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="22dp"
+            android:background="@null"
+            android:src="@drawable/email_login_cancel"/>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/img_email_login_logo"
+        android:layout_width="177dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="110dp"
+        android:background="@drawable/sns_login_logo"/>
+
+    <LinearLayout
+        android:layout_width="260dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="112dp"
+        android:background="@drawable/layout_join_email_shape">
+    <EditText
+        android:id="@+id/edit_login_email"
+        android:cursorVisible="false"
+        android:drawableLeft="@drawable/email_login_user"
+        android:paddingLeft="28dp"
+        android:drawablePadding="32dp"
+        android:hint="E-mail"
+        android:textSize="11sp"
+        android:textColorHint="#95989A"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="260dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/layout_join_email_shape">
+    <EditText
+        android:id="@+id/edit_login_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cursorVisible="false"
+        android:paddingLeft="28dp"
+        android:drawablePadding="32dp"
+        android:hint="Password"
+        android:textColorHint="#95989A"
+        android:textSize="11sp"
+        android:drawableLeft="@drawable/email_login_lock"/>
+
+    </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/submit_btn"
+        android:layout_width="272dp"
+        android:layout_height="56dp"
+        android:text="GET STARTED"
+        android:textSize="11sp"
+        android:textColor="#000000"
+        android:background="@drawable/email_login_gradation_btn"
+       />
+
+
+    <TextView
+        android:id="@+id/text_email_login_to_sign_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:layout_marginTop="35dp"
+        android:background="@null"
+        android:textColor="#8EE0D6"
+        android:singleLine="true"
+        android:text="이메일로 회원가입하기" />
+
+</LinearLayout>
