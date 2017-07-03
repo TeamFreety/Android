@@ -36,6 +36,7 @@ import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.util.custom.KakaoLoginButton;
 import com.sopt.freety.freety.view.main.MainActivity;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
@@ -101,6 +102,29 @@ private int rId;
                             @Override
                             public void onSuccess(LoginResult loginResult) {
                                 Log.e("onSuccess", "onSuccess");
+                                GraphRequest request = GraphRequest.newMeRequest(
+                                        loginResult.getAccessToken(),
+                                        new GraphRequest.GraphJSONObjectCallback() {
+                                            @Override
+                                            public void onCompleted(
+                                                    JSONObject object,
+                                                    GraphResponse response) {
+
+                                               // Log.v("LoginActivity", response.toString());
+                                                try {
+                                                    String userId = object.getString("email");
+                                                    String userName = object.getString("name");
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+
+                                            }
+                                        });
+                                Bundle parameters = new Bundle();
+                                parameters.putString("fields", "id,name,email,gender, birthday");
+                                request.setParameters(parameters);
+                                request.executeAsync();
+
                                 Toast.makeText(getApplicationContext(),"facebook success",Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(FirstLoginActivity.this, MainActivity.class);
                                 startActivity(intent);
