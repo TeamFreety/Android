@@ -102,6 +102,17 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
         viewPager.setOffscreenPageLimit(4);
         viewPager.setCurrentItem(currPageCount);
 
+
+        int betweenSpace = 100;
+
+        ViewGroup slidingTabStrip = (ViewGroup) indicatorTab.getChildAt(0);
+
+        for (int i=0; i<slidingTabStrip.getChildCount()-1; i++) {
+            View v = slidingTabStrip.getChildAt(i);
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            params.rightMargin = betweenSpace;
+        }
+
         // contents view pager
         for (int count = 0; count < PAGE_COUNT; count++) {
             indicatorTabLayout.addTab(indicatorTabLayout.newTab());
@@ -126,7 +137,7 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
             }
             @Override
             public void onPageSelected(int position) {
-                Log.i("HomeFragment", "onPageSelected: ");
+               // Log.i("HomeFragment", "onPageSelected: ");
                 currPageCount = position;
                 int realPos = position % 5;
                 TabLayout.Tab currIndicator = indicatorTabLayout.getTabAt(realPos);
@@ -170,7 +181,7 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
             public void run() {
                 handler.post(Update);
             }
-        }, 5000, 5000);
+        }, 4000, 4000);
     }
 
 }

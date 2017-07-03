@@ -63,7 +63,8 @@ public class HomePostFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home_post, container, false);
         ButterKnife.bind(this, view);
         recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.my_page_post_offset));
+        recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.home_post_offset));
+        recyclerView.attachCallbacks(getParentFragment());
         layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.attachCallbacks(getParentFragment());

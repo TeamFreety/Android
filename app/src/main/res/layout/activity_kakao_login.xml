@@ -26,7 +26,7 @@
         tools:layout_editor_absoluteX="16dp" />
 
     <Button
-        android:id="@+id/cancelBtn"
+        android:id="@+id/back_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
@@ -35,7 +35,7 @@
         tools:layout_editor_absoluteY="422dp" />
 
     <Button
-        android:id="@+id/submitBtn"
+        android:id="@+id/submit_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="완료"
@@ -51,7 +51,7 @@
         app:layout_constraintGuide_percent="0.33888888" />
 
     <EditText
-        android:id="@+id/emailEditText"
+        android:id="@+id/edit_login_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="9dp"
@@ -64,7 +64,7 @@
         app:layout_constraintLeft_toLeftOf="@+id/guideline" />
 
     <EditText
-        android:id="@+id/pwdEditText"
+        android:id="@+id/edit_login_pwd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -73,7 +73,7 @@
         android:ems="10"
         android:inputType="text|textPassword"
         app:layout_constraintBottom_toBottomOf="@+id/pwdTextView"
-        app:layout_constraintLeft_toLeftOf="@+id/emailEditText"
+        app:layout_constraintLeft_toLeftOf="@+id/edit_login_email"
         app:layout_constraintTop_toTopOf="@+id/pwdTextView" />
 
 </android.support.constraint.ConstraintLayout>

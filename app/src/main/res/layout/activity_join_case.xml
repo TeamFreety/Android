@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:background="@drawable/join_background"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
 
     <Button
         android:id="@+id/modelCaseBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="실습모델" />
+        android:layout_width="260dp"
+        android:layout_height="166dp"
+        android:background="@drawable/join_model_btn"
+        android:layout_marginTop="205dp"/>
 
     <Button
         android:id="@+id/designerCaseBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="디자이너" />
-</LinearLayout>
+        android:layout_width="260dp"
+        android:layout_height="166dp"
+        android:layout_below="@+id/modelCaseBtn"
+        android:background="@drawable/join_designer_btn"
+        android:layout_marginTop="34dp"/>
+</RelativeLayout>
