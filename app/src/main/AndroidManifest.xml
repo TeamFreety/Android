@@ -31,10 +31,9 @@
 
 
         <activity android:name=".view.login.JoinActivity" />
-        <activity android:name=".view.login.LoginActivity" />
         <activity android:name=".view.login.FirstLoginActivity">
         </activity>
-        <activity android:name=".view.login.JoinEmailActivity" />
+        <activity android:name=".view.login.EmailLoginActivity" />
 
 
         <activity android:name=".view.main.MainActivity" >
@@ -47,9 +46,6 @@
         </activity>
         <activity android:name=".view.login.SignUpEmailActivity" />
 
-        <activity android:name=".view.main.MainActivity" >
-
-        </activity>
 
 
         <activity
