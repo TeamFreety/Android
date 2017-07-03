@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
+import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.view.home.adapter.HomePostRecyclerAdapter;
 import com.sopt.freety.freety.view.home.data.HomePostData;
@@ -35,7 +36,7 @@ public class HomePostFragment extends Fragment {
     @BindView(R.id.fabtn_home_to_top)
     FloatingActionButton topFabtn;
     @BindView(R.id.home_post_recycler_view)
-    RecyclerView recyclerView;
+    ScrollFeedbackRecyclerView recyclerView;
 
     private ViewPagerEx viewPager;
 
@@ -53,7 +54,8 @@ public class HomePostFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.my_page_post_offset));
+        recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.home_post_offset));
+        recyclerView.attachCallbacks(getParentFragment());
         layoutManager = new GridLayoutManager(getContext(), 2);
         final List<HomePostData> mockDataList = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
