@@ -1,6 +1,7 @@
 package com.sopt.freety.freety.view.my_page;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
@@ -10,28 +11,59 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.application.AppController;
+import com.sopt.freety.freety.data.OnlyMsgResultData;
+import com.sopt.freety.freety.network.NetworkService;
 import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
+import com.sopt.freety.freety.util.util.EditTextUtils;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageViewPagerAdapter;
+import com.sopt.freety.freety.view.my_page.data.MyPagePostData;
+import com.sopt.freety.freety.view.my_page.data.MyPageReviewData;
+import com.sopt.freety.freety.view.my_page.data.MyPageStyleBodyData;
+import com.sopt.freety.freety.view.my_page.data.MyPageStyleHeaderData;
+import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
+import com.sopt.freety.freety.view.my_page.data.network.MyPageStatusUpdateRequestData;
+import com.sopt.freety.freety.view.property.ScreenClickable;
+
+import java.text.ParseException;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
  * Created by cmslab on 6/26/17.
  */
 
-public class MyPageFragment extends Fragment implements ScrollFeedbackRecyclerView.Callbacks{
+public class MyPageFragment extends Fragment implements ScrollFeedbackRecyclerView.Callbacks, ScreenClickable{
 
     @BindView(R.id.my_page_profile)
     ImageView profileImage;
+
+    @BindView(R.id.my_page_designer_name)
+    TextView designerNameText;
+
+    @BindView(R.id.my_page_designer_status)
+    EditText designerStatusEditText;
 
     @BindView(R.id.my_page_tab)
     TabLayout tabLayout;
@@ -45,10 +77,31 @@ public class MyPageFragment extends Fragment implements ScrollFeedbackRecyclerVi
     @BindView(R.id.my_page_collaspsing_relative_layout)
     RelativeLayout collapsingRelativeLayout;
 
+    @OnClick(R.id.my_page_app_bar)
+    public void onAppbarScreenClick(View v) {
+        onScreenClick(v);
+    }
+
     @BindView(R.id.my_page_hide_toolbar)
     Toolbar toolbar;
 
-    private static final float OPACITIY_FACTOR = 1.8f;
+    @BindView(R.id.my_page_letter_btn)
+    Button letterButton;
+
+    @BindView(R.id.my_page_status_edit_btn)
+    Button statusEditButton;
+
+    @OnClick(R.id.my_page_status_edit_btn)
+    public void onClickEditBtn() {
+        EditTextUtils.setUseableEditText(designerStatusEditText, true);
+        designerStatusEditText.requestFocus();
+        InputMethodManager lManager = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        lManager.showSoftInput(designerStatusEditText, 0);
+    }
+
+    private static final float OPACITY_FACTOR = 1.8f;
+    private NetworkService networkService;
+    private MyPageDesignerGetData myPageDesignerGetData;
 
     public MyPageFragment() {
 
@@ -79,20 +132,24 @@ public class MyPageFragment extends Fragment implements ScrollFeedbackRecyclerVi
             }
         });
 
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        PagerAdapter pagerAdapter = new MyPageViewPagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.setOffscreenPageLimit(2);
-        viewPager.setCurrentItem(0);
-
+        networkService = AppController.getInstance().getNetworkService();
+        reload();
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                collapsingRelativeLayout.setAlpha(Math.max(1.0f - (OPACITIY_FACTOR * Math.abs(verticalOffset / (float)
+                collapsingRelativeLayout.setAlpha(Math.max(1.0f - (OPACITY_FACTOR * Math.abs(verticalOffset / (float)
                         appBarLayout.getTotalScrollRange())), 0));
             }
         });
 
+        if (SharedAccessor.isDesigner(getContext())) {
+            letterButton.setEnabled(false);
+            letterButton.setVisibility(View.INVISIBLE);
+        } else {
+            statusEditButton.setEnabled(false);
+            statusEditButton.setVisibility(View.INVISIBLE);
+        }
+        EditTextUtils.setUseableEditText(designerStatusEditText, false);
         return view;
     }
 
@@ -106,5 +163,71 @@ public class MyPageFragment extends Fragment implements ScrollFeedbackRecyclerVi
     @Override
     public void setExpanded(boolean expanded) {
         appBarLayout.setExpanded(expanded, true);
+    }
+
+    public List<MyPagePostData> getPostDataList() {
+        return myPageDesignerGetData.getMyPagePostDataList();
+    }
+
+    public List<MyPageStyleBodyData> getStyleBodyDataList() {
+        return myPageDesignerGetData.getMyStyleBodyDataList();
+    }
+
+    public MyPageStyleHeaderData getStyleHeaderData() {
+        return myPageDesignerGetData.getMyPageStyleHeaderData();
+    }
+
+    public MyPageReviewData getMyPageReviewData() throws ParseException {
+        return myPageDesignerGetData.getMyPageReviewData();
+    }
+
+    @Override
+    public void onScreenClick(View v) {
+        if (designerStatusEditText.isFocused()) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(designerStatusEditText.getWindowToken(), 0);
+            EditTextUtils.setUseableEditText(designerStatusEditText, false);
+            Call<OnlyMsgResultData> call = networkService.getOkMsg(SharedAccessor.getToken(getContext()),
+                    new MyPageStatusUpdateRequestData(designerStatusEditText.getText().toString()));
+            call.enqueue(new Callback<OnlyMsgResultData>() {
+                @Override
+                public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
+                    if (!response.isSuccessful() && response.body().getMessage().equals("ok")) {
+                        Toast.makeText(getContext(), "네트워크 연결이 좋지 않아 적용이 되지 않습니다.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "적용완료", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
+
+                }
+            });
+        }
+    }
+
+    private void reload() {
+        Call<MyPageDesignerGetData> call = networkService.getMyPageDesigner(SharedAccessor.getToken(getContext()));
+        call.enqueue(new Callback<MyPageDesignerGetData>() {
+            @Override
+            public void onResponse(Call<MyPageDesignerGetData> call, Response<MyPageDesignerGetData> response) {
+                if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
+                    myPageDesignerGetData = response.body();
+                    Glide.with(getContext()).load(response.body().getDesignerImageURL()).into(profileImage);
+                    designerNameText.setText(response.body().getDesignerName());
+                    designerStatusEditText.setText(response.body().getDesignerStatusMsg());
+                    viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+                    PagerAdapter pagerAdapter = new MyPageViewPagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
+                    viewPager.setAdapter(pagerAdapter);
+                    viewPager.setOffscreenPageLimit(2);
+                    viewPager.setCurrentItem(0);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MyPageDesignerGetData> call, Throwable t) {
+            }
+        });
     }
 }

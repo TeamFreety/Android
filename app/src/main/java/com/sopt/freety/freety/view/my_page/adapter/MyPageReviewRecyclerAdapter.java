@@ -1,11 +1,13 @@
 package com.sopt.freety.freety.view.my_page.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.view.my_page.adapter.holder.MyPageReviewBodyHolder;
 import com.sopt.freety.freety.view.my_page.adapter.holder.MyPageReviewHeaderHolder;
@@ -21,8 +23,10 @@ import static com.sopt.freety.freety.view.my_page.adapter.MyPageStyleRecyclerAda
 
 public class MyPageReviewRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private Context context;
     private MyPageReviewData data;
-    public MyPageReviewRecyclerAdapter(final MyPageReviewData data) {
+    public MyPageReviewRecyclerAdapter(final Context context, final MyPageReviewData data) {
+        this.context = context;
         this.data = data;
     }
 
@@ -49,23 +53,21 @@ public class MyPageReviewRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
             }
         } else {
             final MyPageReviewBodyHolder castedHolder = (MyPageReviewBodyHolder) holder;
-            final MyPageReviewElemData currentData;
-            castedHolder.getTitleTextView().setText(MyPageReviewElemData.getMockTitle());
-            castedHolder.getDateTextView().setText(MyPageReviewElemData.getMockDate());
-            castedHolder.getContentTextView().setText(MyPageReviewElemData.getMockContent());
-            castedHolder.getWriterTextView().setText(MyPageReviewElemData.getMockWriter());
-
-            int imageResource = MyPageReviewElemData.getMockResource();
-            if (imageResource != 0) {
-                castedHolder.getImageView().setImageResource(imageResource);
-            } else {
-                castedHolder.getImageView().setVisibility(GONE);
+            final MyPageReviewElemData currentData = data.getElemDataList().get(position - 1);
+            castedHolder.getTitleTextView().setText(currentData.getTitle());
+            castedHolder.getDateTextView().setText(currentData.getDate());
+            castedHolder.getContentTextView().setText(currentData.getContent());
+            castedHolder.getWriterTextView().setText(currentData.getWriter());
+            castedHolder.getScoreNumTextView().setText(String.valueOf(currentData.getScore()));
+            for (int index = 0; index < castedHolder.getScoreImageList().size(); index++) {
+                castedHolder.getScoreImageList().get(index).setImageResource(getStarType(index, currentData.getScore()));
             }
 
-            int score = MyPageReviewElemData.getMockScore();
-            castedHolder.getScoreNumTextView().setText(String.valueOf(score) + ".0");
-            for (int index = 0; index < castedHolder.getScoreImageList().size(); index++) {
-                castedHolder.getScoreImageList().get(index).setImageResource(getStarType(index, score));
+            if (currentData.getImageURL() != null) {
+                Glide.with(context).load(currentData.getImageURL()).
+                        override(200, 200).thumbnail(0.3f).into(castedHolder.getImageView());
+            } else {
+                castedHolder.getImageView().setVisibility(GONE);
             }
         }
     }

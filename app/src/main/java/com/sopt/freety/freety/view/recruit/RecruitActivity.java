@@ -4,6 +4,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,6 +39,7 @@ import retrofit2.Response;
 
 public class RecruitActivity extends AppCompatActivity implements OnMapReadyCallback {
 
+    private static final String TAG = "RecruitActivity";
     @BindView(R.id.recruit_image_view_pager)
     ViewPager imageViewPager;
 
@@ -77,17 +79,18 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
     @OnClick(R.id.recruit_pick_btn)
     public void onPickBtnClick(ToggleButton toggleBtn) {
 
-        int currPickNumber = Integer.parseInt(pickBtn.getText().toString());
+        int currPickNumber = Integer.parseInt(toggleBtn.getText().toString());
+        Log.i(TAG, "onPickBtnClick: currPickNumber " + currPickNumber);
         final boolean isChecked = toggleBtn.isChecked();
         if (isChecked) {
             ImageSwicherHelper.doChangeAnimation(this, pickHeartImage,
                     R.anim.heart_fade_out, R.anim.heart_fade_in, R.drawable.recruit_heart_gradient_single);
-            pickBtn.setText(String.valueOf(currPickNumber - 1));
+            toggleBtn.setTextOff(String.valueOf(currPickNumber - 1));
 
         } else {
             ImageSwicherHelper.doChangeAnimation(this, pickHeartImage,
                     R.anim.heart_fade_out, R.anim.heart_fade_in, R.drawable.recruit_heart_empty_single);
-            pickBtn.setText(String.valueOf(currPickNumber + 1));
+            toggleBtn.setTextOn(String.valueOf(currPickNumber + 1));
         }
 
         int postId = getIntent().getIntExtra("postId", 0);
@@ -173,7 +176,7 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
                     hairInfoText.setText(result.getContent());
                     addressText.setText(result.getAddress());
                     belongNameText.setText(result.getWriterBelongName());
-
+                    pickBtn.setEnabled(true);
                 }
             }
 

@@ -22,7 +22,7 @@ public class HomePostHolder extends RecyclerView.ViewHolder {
     TextView addressText;
 
     @BindView(R.id.home_post_style)
-    TextView styleText;
+    TextView titleText;
 
     public HomePostHolder(View itemView) {
         super(itemView);
@@ -37,7 +37,7 @@ public class HomePostHolder extends RecyclerView.ViewHolder {
         return addressText;
     }
 
-    public TextView getStyleText() {
-        return styleText;
+    public TextView getTitleText() {
+        return titleText;
     }
 }

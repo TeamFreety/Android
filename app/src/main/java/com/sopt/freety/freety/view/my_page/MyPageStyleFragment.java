@@ -15,7 +15,7 @@ import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageStyleRecyclerAdapter;
 import com.sopt.freety.freety.view.my_page.data.MyPageStyleHeaderData;
-import com.sopt.freety.freety.view.my_page.data.MyPageStylebodyData;
+import com.sopt.freety.freety.view.my_page.data.MyPageStyleBodyData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +38,7 @@ public class MyPageStyleFragment extends Fragment {
     private GridLayoutManager layoutManager;
     private MyPageStyleRecyclerAdapter adapter;
     private ViewPagerEx viewPager;
+    private MyPageFragment myPageFragment;
 
     public MyPageStyleFragment() {
     }
@@ -47,6 +48,7 @@ public class MyPageStyleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_page_style, container, false);
         ButterKnife.bind(this, view);
+        myPageFragment = (MyPageFragment) getParentFragment();
         viewPager = (ViewPagerEx) container;
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.my_page_style_offset));
@@ -65,6 +67,7 @@ public class MyPageStyleFragment extends Fragment {
                 }
             }
         });
+
         layoutManager = new GridLayoutManager(getContext(), 3);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup(){
             @Override
@@ -76,27 +79,29 @@ public class MyPageStyleFragment extends Fragment {
                 }
             }
         });
-        final List<MyPageStylebodyData> mockDatas = new ArrayList<>();
-        for (int i = 0; i < 25; i++) {
-            mockDatas.add(MyPageStylebodyData.getMockData());
-        }
+
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new MyPageStyleRecyclerAdapter(MyPageStyleHeaderData.tempCareerList, mockDatas, getContext());
+        adapter = new MyPageStyleRecyclerAdapter(getHeaderData(), getBodyData(), getContext());
         recyclerView.setAdapter(adapter);
         return view;
-
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (!isVisibleToUser) {
-            //Log.i("MyPageStyleFragment", "setUserVisibleHint: ok");
-
             if (recyclerView != null) {
                 recyclerView.getLayoutManager().scrollToPosition(0);
             }
         }
+    }
+
+    private List<MyPageStyleBodyData> getBodyData() {
+        return myPageFragment.getStyleBodyDataList();
+    }
+
+    private MyPageStyleHeaderData getHeaderData() {
+        return myPageFragment.getStyleHeaderData();
     }
 
 }

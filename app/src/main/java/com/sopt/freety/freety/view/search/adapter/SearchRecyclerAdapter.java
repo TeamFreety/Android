@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.data.PostListData;
 import com.sopt.freety.freety.view.search.adapter.holder.SearchHolder;
-import com.sopt.freety.freety.view.search.data.SearchBodyData;
 
 import java.util.List;
 
@@ -19,11 +19,11 @@ import java.util.List;
 
 public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchHolder> {
 
-    private List<SearchBodyData> searchBodyDatas;
+    private List<PostListData> postDataList;
     private final Context context;
 
-    public SearchRecyclerAdapter(final Context context, final List<SearchBodyData> searchBodyDatas) {
-        this.searchBodyDatas = searchBodyDatas;
+    public SearchRecyclerAdapter(final Context context, final List<PostListData> postListDataList) {
+        this.postDataList = postListDataList;
         this.context = context;
     }
 
@@ -37,14 +37,18 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchHolder> {
 
     @Override
     public void onBindViewHolder(SearchHolder holder, int position) {
-        Glide.with(context).load(searchBodyDatas.get(position).getMockSources()).override(164, 187).centerCrop().thumbnail(0.001f).into(holder.getSearchImage());
-        holder.getSearchAddress().setText(searchBodyDatas.get(position).getMockAddresss());
-        holder.getSearchStyle().setText(searchBodyDatas.get(position).getMockStyles());
-
+        Glide.with(context).load(postDataList.get(position).getImageURL()).override(164, 187).centerCrop().thumbnail(0.1f).into(holder.getSearchImage());
+        holder.getSearchAddress().setText(postDataList.get(position).getAddress());
+        holder.getSearchStyle().setText(postDataList.get(position).getTitle());
     }
 
     @Override
     public int getItemCount() {
-        return searchBodyDatas.size();
+        return postDataList.size();
+    }
+
+    public void updatePostListData(List<PostListData> postDataList) {
+        this.postDataList = postDataList;
+        notifyDataSetChanged();
     }
 }

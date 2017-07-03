@@ -10,10 +10,10 @@ import android.widget.ListAdapter;
 
 import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
-import com.sopt.freety.freety.util.helper.ListViewSizeHelper;
 import com.sopt.freety.freety.view.my_page.adapter.holder.MyPageStyleBodyHolder;
 import com.sopt.freety.freety.view.my_page.adapter.holder.MyPageStyleHeaderHolder;
-import com.sopt.freety.freety.view.my_page.data.MyPageStylebodyData;
+import com.sopt.freety.freety.view.my_page.data.MyPageStyleBodyData;
+import com.sopt.freety.freety.view.my_page.data.MyPageStyleHeaderData;
 
 import java.util.List;
 
@@ -25,15 +25,15 @@ public class MyPageStyleRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
 
     private static final int BASE_HEADER_HEIGHT = 60;
     public static int TYPE_HEADER = 0;
-    private List<String> careerList;
-    private List<MyPageStylebodyData> myPageStylebodyDataList;
+    private String careerString;
+    private List<MyPageStyleBodyData> myPageStyleBodyDataList;
     private Context context;
 
-    public MyPageStyleRecyclerAdapter(final List<String> careerList,
-                                      final List<MyPageStylebodyData> myPageStylebodyDataList,
+    public MyPageStyleRecyclerAdapter(final MyPageStyleHeaderData headerData,
+                                      final List<MyPageStyleBodyData> myPageStyleBodyDataList,
                                       final Context context) {
-        this.careerList = careerList;
-        this.myPageStylebodyDataList = myPageStylebodyDataList;
+        this.careerString = headerData.getCareerString();
+        this.myPageStyleBodyDataList = myPageStyleBodyDataList;
         this.context = context;
     }
 
@@ -52,14 +52,8 @@ public class MyPageStyleRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof MyPageStyleHeaderHolder) {
-            final ListAdapter listAdapter
-                    = new ArrayAdapter<>(context, R.layout.fragment_my_page_style_carrer_text, careerList);
-
             MyPageStyleHeaderHolder castedHolder = (MyPageStyleHeaderHolder) holder;
-            castedHolder.getCareerListView().setAdapter(listAdapter);
-            //ListViewSizeHelper.setListViewHeightBasedOnChildren(castedHolder.getCareerListView());
-            castedHolder.getCareerListView().getLayoutParams().height = BASE_HEADER_HEIGHT + 40 * careerList.size();
-            castedHolder.getCareerListView().requestLayout();
+            castedHolder.getCareerText().setText(careerString);
             //TODO: implement pop up to edit text
         } else {
             MyPageStyleBodyHolder castedHolder = (MyPageStyleBodyHolder) holder;
@@ -74,6 +68,6 @@ public class MyPageStyleRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public int getItemCount() {
-        return myPageStylebodyDataList.size() + 1;
+        return myPageStyleBodyDataList.size() + 1;
     }
 }

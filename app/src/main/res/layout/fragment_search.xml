@@ -51,7 +51,7 @@
 
             >
             <Button
-                android:id="@+id/btn_search_recent"
+                android:id="@+id/btn_search_latest"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:text="최신순"
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true">
             <Button
-                android:id="@+id/btn_search_distance"
+                android:id="@+id/btn_search_nearest"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:text="거리순"
