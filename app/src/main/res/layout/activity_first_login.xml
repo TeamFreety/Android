@@ -19,6 +19,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:gravity="center">
 
 
@@ -144,6 +145,7 @@
             android:textSize="10sp"
             android:layout_marginTop="70dp"
             android:textColor="#8EE0D6"/>
+
 
 
 

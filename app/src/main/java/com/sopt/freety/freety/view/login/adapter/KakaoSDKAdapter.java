@@ -1,4 +1,4 @@
-package com.sopt.freety.freety.adapter;
+package com.sopt.freety.freety.view.login.adapter;
 
 /**
  * Created by KYJ on 2017-06-27.
@@ -11,7 +11,7 @@ import com.kakao.auth.AuthType;
 import com.kakao.auth.IApplicationConfig;
 import com.kakao.auth.ISessionConfig;
 import com.kakao.auth.KakaoAdapter;
-import com.sopt.freety.freety.application.GlobalApplication;
+import com.sopt.freety.freety.application.AppController;
 
 public class KakaoSDKAdapter extends KakaoAdapter {
 
@@ -45,12 +45,12 @@ public class KakaoSDKAdapter extends KakaoAdapter {
         return new IApplicationConfig() {
             @Override
             public Activity getTopActivity() {
-                return GlobalApplication.getCurrentActivity();
+                return AppController.getCurrentActivity();
             }
 
             @Override
             public Context getApplicationContext() {
-                return GlobalApplication.getGlobalApplicationContext();
+                return AppController.getAppControllerContext();
             }
         };
     }
