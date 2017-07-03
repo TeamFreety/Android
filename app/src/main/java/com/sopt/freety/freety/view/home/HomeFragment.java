@@ -11,10 +11,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
@@ -35,10 +36,15 @@ import butterknife.ButterKnife;
 
 public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView.Callbacks{
 
-    private int currPageCount = 100;
-    private int PRE_PAGE;
+    public static class PostType {
+        public static final int NEW = 0;
+        public static final int PERM = 1;
+        public static final int DYE = 2;
+        public static final int CUT = 3;
+        public static final int ETC = 4;
+    }
+
     private final static int PAGE_COUNT = 5;
-    private Timer swipeTimer;
 
     @BindView(R.id.home_tab)
     TabLayout tabLayout;
@@ -57,10 +63,10 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
 
     @BindView(R.id.home_contents_view_pager) ViewPager contentsViewPager;
 
-   /* @BindView(R.id.indicator)
-    CirclePageIndicator indicator;*/
+    @BindView(R.id.indicatorTab) TabLayout indicatorTabLayout;
 
-   @BindView(R.id.indicatorTab) TabLayout indicatorTab;
+    private int currPageCount = 100;
+    private Timer swipeTimer;
 
     public HomeFragment() {
 
@@ -90,12 +96,11 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
-
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         PagerAdapter pagerAdapter = new HomeViewPagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(4);
-        viewPager.setCurrentItem(0);
+        viewPager.setCurrentItem(currPageCount);
 
 
         int betweenSpace = 100;
@@ -110,11 +115,21 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
 
         // contents view pager
         for (int count = 0; count < PAGE_COUNT; count++) {
-            indicatorTab.addTab(indicatorTab.newTab());
+            indicatorTabLayout.addTab(indicatorTabLayout.newTab());
         }
-        startTimer();
 
-        final HomeContentsViewPagerAdapter homeContentsViewPagerAdapter = new HomeContentsViewPagerAdapter(getActivity(),indicatorTab.getTabCount(), Collections.<String>emptyList());
+        LinearLayout tabStrip = ((LinearLayout) indicatorTabLayout.getChildAt(0));
+        for (int i = 0; i <  tabStrip.getChildCount(); i++) {
+            tabStrip.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return true;
+                }
+            });
+        }
+
+        startTimer();
+        final HomeContentsViewPagerAdapter homeContentsViewPagerAdapter = new HomeContentsViewPagerAdapter(getActivity(), indicatorTabLayout.getTabCount(), Collections.<String>emptyList());
         contentsViewPager.setAdapter(homeContentsViewPagerAdapter);
         contentsViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -125,7 +140,7 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
                // Log.i("HomeFragment", "onPageSelected: ");
                 currPageCount = position;
                 int realPos = position % 5;
-                TabLayout.Tab currIndicator = indicatorTab.getTabAt(realPos);
+                TabLayout.Tab currIndicator = indicatorTabLayout.getTabAt(realPos);
                 currIndicator.select();
                 startTimer();
             }
@@ -168,4 +183,5 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
             }
         }, 4000, 4000);
     }
+
 }

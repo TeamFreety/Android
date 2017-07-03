@@ -71,16 +71,6 @@
 
                 </android.support.v4.view.ViewPager>
 
-                <!--<com.viewpagerindicator.CirclePageIndicator
-                    android:id="@+id/indicator"
-                    android:padding="10dip"
-                    android:layout_height="wrap_content"
-                    android:layout_width="fill_parent"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="50dp"
-                    android:layout_centerHorizontal="true"
-                    />-->
-
                 <android.support.design.widget.TabLayout
                     android:id="@+id/indicatorTab"
                     android:layout_width="match_parent"

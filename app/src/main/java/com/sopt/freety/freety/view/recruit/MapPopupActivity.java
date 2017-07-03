@@ -272,6 +272,8 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
         super.onPause();
         if (googleApiClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
+            googleApiClient.stopAutoManage(this);
+            googleApiClient.disconnect();
         }
     }
 

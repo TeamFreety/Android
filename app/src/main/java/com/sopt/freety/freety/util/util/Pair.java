@@ -34,4 +34,8 @@ public class Pair<LV, RV> {
     public void setRight(RV right) {
         this.right = right;
     }
+
+    public static <LV, RV> Pair<LV, RV> of(LV left, RV right) {
+        return new Pair<>(left, right);
+    }
 }

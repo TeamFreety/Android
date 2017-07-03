@@ -30,17 +30,28 @@ public class HomeViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        HomePostFragment homePostFragment;
         switch(position) {
             case INDEX_ALL:
-                return new HomePostFragment();
+                homePostFragment = new HomePostFragment();
+                homePostFragment.initPostFragment(HomeFragment.PostType.NEW);
+                return homePostFragment;
             case INDEX_PERM:
-                return new HomePostFragment();
+                homePostFragment = new HomePostFragment();
+                homePostFragment.initPostFragment(HomeFragment.PostType.PERM);
+                return homePostFragment;
             case INDEX_DYE:
-                return new HomePostFragment();
+                homePostFragment = new HomePostFragment();
+                homePostFragment.initPostFragment(HomeFragment.PostType.DYE);
+                return homePostFragment;
             case INDEX_CUT:
-                return new HomePostFragment();
+                homePostFragment = new HomePostFragment();
+                homePostFragment.initPostFragment(HomeFragment.PostType.CUT);
+                return homePostFragment;
             case INDEX_ETC:
-                return new HomePostFragment();
+                homePostFragment = new HomePostFragment();
+                homePostFragment.initPostFragment(HomeFragment.PostType.ETC);
+                return homePostFragment;
             default:
                 throw new RuntimeException("There is unexpected position");
         }

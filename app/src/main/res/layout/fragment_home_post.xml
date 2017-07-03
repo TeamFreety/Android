@@ -16,7 +16,6 @@
             android:clipToPadding="false"
             android:padding="@dimen/my_page_post_offset"
             android:overScrollMode="never">
-
         </com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView>
 
         <android.support.design.widget.FloatingActionButton

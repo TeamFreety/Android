@@ -1,11 +1,14 @@
 package com.sopt.freety.freety.network;
 
-import android.Manifest;
-
+import com.sopt.freety.freety.data.OnlyMsgResultData;
+import com.sopt.freety.freety.data.PostListResultData;
 import com.sopt.freety.freety.view.login.JoinResult;
 import com.sopt.freety.freety.view.login.data.DuplicateData;
 import com.sopt.freety.freety.view.login.data.SignUpData;
 import com.sopt.freety.freety.view.login.data.SignUpResultData;
+import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
+import com.sopt.freety.freety.view.my_page.data.network.MyPageModelGetData;
+import com.sopt.freety.freety.view.my_page.data.network.MyPageStatusUpdateRequestData;
 import com.sopt.freety.freety.view.recruit.data.PickRequestData;
 import com.sopt.freety.freety.view.recruit.data.PickResultData;
 import com.sopt.freety.freety.view.recruit.data.PostDetailResultData;
@@ -48,10 +51,28 @@ public interface NetworkService {
     @GET("/duplicateCheck")
     Call<DuplicateData> checkDuplicate(@Query("tempEmail") String email);
 
+    @GET("/postList")
+    Call<PostListResultData> getHomePostData(@Query("sort") int type);
+
     @GET("/postDetail/{postId}")
     Call<PostDetailResultData> getPostDetailData(@Header("member_token") String token, @Path("postId") int postId);
 
     @POST("/pick")
     Call<PickResultData> pick(@Header("member_token") String token, @Body PickRequestData data);
+
+    @GET("/mypage/modelMypage")
+    Call<MyPageModelGetData> getMyPageModel(@Header("member_token") String token);
+
+    @GET("/mypage/designerMypage")
+    Call<MyPageDesignerGetData> getMyPageDesigner(@Header("member_token") String token);
+
+    @POST("/mypage/statusMsg")
+    Call<OnlyMsgResultData> getOkMsg(@Header("member_token") String token, @Body MyPageStatusUpdateRequestData data);
+
+    @GET("/search/latest")
+    Call<PostListResultData> getSearchLatestData();
+
+    @GET("/search/nearest")
+    Call<PostListResultData> getSearchNearestData(@Query("latitude") double lat, @Query("longitude") double lng);
 
 }

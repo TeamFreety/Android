@@ -17,6 +17,7 @@ import com.sopt.freety.freety.view.my_page.adapter.MyPageReviewRecyclerAdapter;
 import com.sopt.freety.freety.view.my_page.data.MyPageReviewData;
 import com.sopt.freety.freety.view.my_page.data.MyPageReviewElemData;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,6 +41,7 @@ public class MyPageReviewFragment extends Fragment {
     private LinearLayoutManager layoutManager;
     private MyPageReviewRecyclerAdapter adapter;
     private ViewPagerEx viewPager;
+    private MyPageFragment myPageFragment;
 
     public MyPageReviewFragment() {
     }
@@ -67,19 +69,15 @@ public class MyPageReviewFragment extends Fragment {
             }
         });
         layoutManager = new LinearLayoutManager(getContext());
+        myPageFragment = (MyPageFragment) getParentFragment();
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), layoutManager.getOrientation()));
-        List<MyPageReviewElemData> dataList = new ArrayList<>();
-        dataList.addAll(Arrays.asList(MyPageReviewElemData.getMockElemData(),
-                MyPageReviewElemData.getMockElemData(),
-                MyPageReviewElemData.getMockElemData(),
-                MyPageReviewElemData.getMockElemData(),
-                MyPageReviewElemData.getMockElemData(),
-                MyPageReviewElemData.getMockElemData()));
-        Random randomScore = new Random();
-        adapter = new MyPageReviewRecyclerAdapter(new MyPageReviewData(dataList, (float)Math.round(randomScore.nextFloat() * 5 * 10) / 10.0f));
+        try {
+            adapter = new MyPageReviewRecyclerAdapter(getContext(), myPageFragment.getMyPageReviewData());
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
         recyclerView.setAdapter(adapter);
         return view;
-
     }
 }

@@ -9,14 +9,13 @@ import java.util.List;
 
 public class MyPageStyleHeaderData {
 
+    private String careerString;
 
-    private List<String> careerList;
-    public static List<String> tempCareerList =
-            Arrays.asList("-퍼스널 펌 & 컬러 전문 (5년)",
-                    "-성형 디자인 전문(13년) PANAN본사헤드디렉터");
-
-    public List<String> getCareerList() {
-        return tempCareerList;
+    public MyPageStyleHeaderData(String careerString) {
+        this.careerString = careerString;
     }
 
+    public String getCareerString() {
+        return careerString;
+    }
 }

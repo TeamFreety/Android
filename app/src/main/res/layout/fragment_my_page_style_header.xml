@@ -10,7 +10,7 @@
         android:background="#cccccc">
 
         <TextView
-            android:id="@+id/my_page_style_carerr_title"
+            android:id="@+id/my_page_style_career_title"
             android:text="경력사항"
             android:layout_marginLeft="25dp"
             android:layout_width="wrap_content"
@@ -20,18 +20,18 @@
 
         <Button
             android:id="@+id/my_page_style_career_edit_btn"
-            android:layout_toRightOf="@+id/my_page_style_carerr_title"
+            android:layout_toRightOf="@+id/my_page_style_career_title"
             android:layout_width="30dp"
             android:layout_height="30dp" />
 
     </RelativeLayout>
 
-    <ListView
-        android:id="@+id/my_page_style_career_list_view"
+    <TextView
+        android:id="@+id/my_page_style_career_text"
         android:paddingLeft="15dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    </ListView>
+    </TextView>
 </LinearLayout>

@@ -5,22 +5,30 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.application.AppController;
+import com.sopt.freety.freety.network.NetworkService;
+import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.view.my_page.adapter.MyPagePostRecyclerAdapter;
 import com.sopt.freety.freety.view.my_page.data.MyPagePostData;
+import com.sopt.freety.freety.view.my_page.data.network.MyPageModelGetData;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_DRAGGING;
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
@@ -39,6 +47,8 @@ public class MyPagePostFragment extends Fragment {
 
     private GridLayoutManager layoutManager;
     private MyPagePostRecyclerAdapter adapter;
+    private NetworkService networkService;
+    private MyPageFragment myPageFragment;
 
     public MyPagePostFragment() {
     }
@@ -50,16 +60,14 @@ public class MyPagePostFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my_page_post, container, false);
         ButterKnife.bind(this, view);
 
+        myPageFragment = (MyPageFragment) getParentFragment();
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.my_page_post_offset));
         recyclerView.attachCallbacks(getParentFragment());
         layoutManager = new GridLayoutManager(getContext(), 2);
-        final List<MyPagePostData> mockDataList = new ArrayList<>();
-        for (int i = 0; i < 11; i++) {
-            mockDataList.add(MyPagePostData.getMockData());
-        }
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new MyPagePostRecyclerAdapter(getContext(),mockDataList);
+        Log.i("test", "onCreateView: " + myPageFragment.getPostDataList().size());
+        adapter = new MyPagePostRecyclerAdapter(getContext(), myPageFragment.getPostDataList());
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -75,6 +83,9 @@ public class MyPagePostFragment extends Fragment {
                 }
             }
         });
+
+        networkService = AppController.getInstance().getNetworkService();
+
         return view;
     }
 
@@ -82,7 +93,6 @@ public class MyPagePostFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (!isVisibleToUser) {
-            //Log.i("MyPagePostFragment", "setUserVisibleHint: ok");
             if (recyclerView != null) {
                 recyclerView.getLayoutManager().scrollToPosition(0);
             }

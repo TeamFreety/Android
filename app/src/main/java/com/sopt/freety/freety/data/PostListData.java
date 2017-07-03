@@ -1,4 +1,4 @@
-package com.sopt.freety.freety.view.my_page.data;
+package com.sopt.freety.freety.data;
 
 import com.sopt.freety.freety.R;
 
@@ -8,14 +8,14 @@ import java.util.Random;
  * Created by cmslab on 6/27/17.
  */
 
-public class MyPagePostData {
+public class PostListData {
 
-    private int postId;
-    private String imageURL;
-    private String address;
-    private String title;
+    public int postId;
+    public String imageURL;
+    public String address;
+    public String title;
 
-    public MyPagePostData(int postId, String imageURL, String address, String title) {
+    public PostListData(int postId, String imageURL, String address, String title) {
         this.postId = postId;
         this.imageURL = imageURL;
         this.address = address;

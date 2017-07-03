@@ -56,7 +56,6 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(chatListAdapter);
-
         refreshLayout.setOnRefreshListener(this);
         return view;
     }
