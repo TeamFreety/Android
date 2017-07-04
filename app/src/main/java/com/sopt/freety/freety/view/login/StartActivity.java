@@ -38,6 +38,11 @@ import com.kakao.util.helper.log.Logger;
 import com.sopt.freety.freety.R;
 
 import com.sopt.freety.freety.application.AppController;
+import com.sopt.freety.freety.view.login.data.LoginRequestData;
+import com.sopt.freety.freety.view.login.data.LoginResultData;
+import com.sopt.freety.freety.view.login.data.SNSLoginRequestData;
+import com.sopt.freety.freety.view.login.data.SNSLoginResultData;
+import com.sopt.freety.freety.view.main.MainActivity;
 
 
 import org.json.JSONException;
@@ -47,6 +52,9 @@ import java.util.Arrays;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by KYJ on 2017-06-27.
@@ -57,7 +65,8 @@ public class StartActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
     private SessionCallback callback;
 
-    private String userId;
+    private String fUserId;
+    private String kUserId;
     private String userName;
 
     // view
@@ -80,6 +89,8 @@ public class StartActivity extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
         ButterKnife.bind(this);
         facebookBtn = (Button)findViewById(R.id.facebookBtn);
+        fUserId="";
+        kUserId="";
         facebookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,8 +112,7 @@ public class StartActivity extends AppCompatActivity {
 
                                                // Log.v("LoginActivity", response.toString());
                                                 try {
-                                                    userId = object.getString("email");
-                                                    userName = object.getString("name");
+                                                    fUserId = object.getString("id");
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();
                                                 }
@@ -111,15 +121,45 @@ public class StartActivity extends AppCompatActivity {
                                         });
                                 Bundle parameters = new Bundle();
                                 parameters.putString("fields", "id,name,email,gender, birthday");
+                                //parameters.get("id");
                                 request.setParameters(parameters);
                                 request.executeAsync();
 
                                 //Toast.makeText(getApplicationContext(),"facebook success",Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(StartActivity.this, SelectMemberTypeActivity.class);
+                              /*  Intent intent = new Intent(StartActivity.this, SelectMemberTypeActivity.class);
                                 intent.putExtra("login case","facebook");
-                                intent.putExtra("userId",userId);
+                                intent.putExtra("userId",kUserId);
                                 intent.putExtra("userName",userName);
-                                startActivity(intent);
+                                startActivity(intent);*/
+
+                                Call<SNSLoginResultData> call = AppController.getInstance().getNetworkService().SNSlogin(new SNSLoginRequestData(fUserId, kUserId));
+                                call.enqueue(new Callback<SNSLoginResultData>() {
+                                    @Override
+                                    public void onResponse(Call<SNSLoginResultData> call, Response<SNSLoginResultData> response) {
+                                        if (response.isSuccessful()) {
+                                            if (response.body().getMessage().equals("SNS login success")) {
+                                                response.body().registerToken(StartActivity.this);
+                                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                AppController.getInstance().resetPageStack();
+                                                startActivity(intent);
+                                            } else if (response.body().getMessage().equals("no information about SNS account")) {
+                                                Toast.makeText(StartActivity.this, "Freety에 아직 SNS 계정이 등록되지 않았습니다.", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(getApplicationContext(), SelectMemberTypeActivity.class);
+                                                intent.putExtra("login case","facebook");
+                                                intent.putExtra("fUserId",fUserId);
+                                                AppController.getInstance().resetPageStack();
+                                                startActivity(intent);
+                                            }
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<SNSLoginResultData> call, Throwable t) {
+                                    }
+                                });
+
+
                                 finish();
                             }
 
@@ -179,9 +219,40 @@ public class StartActivity extends AppCompatActivity {
                 public void onSuccess(UserProfile userProfile) {
                     //로그인에 성공하면 로그인한 사용자의 일련번호, 닉네임, 이미지url등을 리턴합니다.
                     //사용자 ID는 보안상의 문제로 제공하지 않고 일련번호는 제공합니다.
-                    userId = String.valueOf(userProfile.getId());
-                    userName = userProfile.getNickname();
+                    fUserId = "";
+                    kUserId = String.valueOf(userProfile.getId());
+                    //userName = userProfile.getNickname();
 
+
+                    Call<SNSLoginResultData> call = AppController.getInstance().getNetworkService().SNSlogin(new SNSLoginRequestData(fUserId, kUserId));
+                    call.enqueue(new Callback<SNSLoginResultData>() {
+                        @Override
+                        public void onResponse(Call<SNSLoginResultData> call, Response<SNSLoginResultData> response) {
+                            if (response.isSuccessful()) {
+                                if (response.body().getMessage().equals("SNS login success")) {
+                                    response.body().registerToken(StartActivity.this);
+                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    AppController.getInstance().resetPageStack();
+                                    startActivity(intent);
+                                } else if (response.body().getMessage().equals("no information about SNS account")) {
+                                    Toast.makeText(StartActivity.this, "Freety에 아직 SNS 계정이 등록되지 않았습니다.", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(), SelectMemberTypeActivity.class);
+                                    intent.putExtra("login case","kakao");
+                                    intent.putExtra("kUserId",kUserId);
+                                    AppController.getInstance().resetPageStack();
+                                    startActivity(intent);
+                                }
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<SNSLoginResultData> call, Throwable t) {
+                        }
+                    });
+
+
+                    /*
                     Log.e("UserProfile", userProfile.toString());
                     Toast.makeText(getApplicationContext(),userId,Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(StartActivity.this, SelectMemberTypeActivity.class);
@@ -189,6 +260,7 @@ public class StartActivity extends AppCompatActivity {
                     intent.putExtra("userId",userId);
                     intent.putExtra("userName", userName);
                     startActivity(intent);
+                    */
                     finish();
                 }
             });

@@ -6,6 +6,8 @@ import com.sopt.freety.freety.view.login.JoinResult;
 import com.sopt.freety.freety.view.login.data.DuplicateData;
 import com.sopt.freety.freety.view.login.data.LoginRequestData;
 import com.sopt.freety.freety.view.login.data.LoginResultData;
+import com.sopt.freety.freety.view.login.data.SNSLoginRequestData;
+import com.sopt.freety.freety.view.login.data.SNSLoginResultData;
 import com.sopt.freety.freety.view.login.data.SignUpData;
 import com.sopt.freety.freety.view.login.data.SignUpResultData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
@@ -55,6 +57,9 @@ public interface NetworkService {
 
     @POST("/login/email")
     Call<LoginResultData> login(@Body LoginRequestData data);
+
+    @POST("/login/SNS")
+    Call<SNSLoginResultData> SNSlogin(@Body SNSLoginRequestData data);
 
     @GET("/postList")
     Call<PostListResultData> getHomePostData(@Query("sort") int type);

@@ -134,6 +134,7 @@ public class DesignerSNSSignUpActivity extends AppCompatActivity {
             Toast.makeText(this, "통과하셨습니다! 통신구현 ㄱ", Toast.LENGTH_SHORT).show();
             //TODO: 통신 부분을 구현하고 나서 startActivity()하기 전에 꼭 AppController.getInstance().resetPageStack()을 호출할 것
             // 모르겠으면 물어보기!
+
         } else {
         }
     }

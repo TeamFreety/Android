@@ -1,5 +1,7 @@
 package com.sopt.freety.freety.view.login;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
@@ -14,7 +16,11 @@ import android.widget.Toast;
 
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
+import com.sopt.freety.freety.util.Consts;
 import com.sopt.freety.freety.util.util.FormatChecker;
+import com.sopt.freety.freety.view.login.data.SignUpData;
+import com.sopt.freety.freety.view.login.data.SignUpResultData;
+import com.sopt.freety.freety.view.main.MainActivity;
 
 import java.util.List;
 
@@ -22,6 +28,9 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ModelSNSSignUpActivity extends AppCompatActivity {
 
@@ -87,6 +96,37 @@ public class ModelSNSSignUpActivity extends AppCompatActivity {
             Toast.makeText(this, "통과하셨습니다! 통신구현 ㄱ", Toast.LENGTH_SHORT).show();
             //TODO: 통신 부분을 구현하고 나서 startActivity()하기 전에 꼭 AppController.getInstance().resetPageStack()을 호출할 것
             // 모르겠으면 물어보기!
+            final SignUpData signUpData = new SignUpData.Builder(nameEditText.getText().toString(), Integer.parseInt(ageEditText.getText().toString()))
+                    .setMemberEmail(emailEditText.getText().toString())
+                    .setMemberPassword(passwordEditText.getText().toString())
+                    .build();
+
+            final Call<SignUpResultData> requestSignUpData = networkService.registerModelData(signUpData);
+            requestSignUpData.enqueue(new Callback<SignUpResultData>() {
+                @Override
+                public void onResponse(Call<SignUpResultData> call, Response<SignUpResultData> response) {
+                    if (response.isSuccessful()) {
+                        final SignUpResultData resultData = response.body();
+                        if (resultData.getMessage().equals("signup success")) {
+                            SharedPreferences pref = getSharedPreferences(Consts.PREF_KEY, MODE_PRIVATE);
+                            SharedPreferences.Editor editor = pref.edit();
+                            editor.putString(Consts.PREF_TOKEN, resultData.getMemberToken());
+                            editor.putString(Consts.PREF_POSITION, resultData.getPosition());
+                            editor.apply();
+                            editor.commit();
+                            AppController.getInstance().resetPageStack();
+                            startActivity(new Intent(ModelEmailSignUpActivity.this, MainActivity.class));
+                        } else {
+                            Toast.makeText(ModelEmailSignUpActivity.this, "메세지 내용이 뭔가 실패", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<SignUpResultData> call, Throwable t) {
+
+                }
+            });
         } else {
         }
     }

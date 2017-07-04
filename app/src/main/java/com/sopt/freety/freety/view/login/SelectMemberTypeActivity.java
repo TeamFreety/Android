@@ -29,8 +29,8 @@ public class SelectMemberTypeActivity extends AppCompatActivity {
     @BindView(R.id.designerCaseBtn) Button designerCaseBtn;
 
     private String loginCase;
-    private String userId;
-    private String userName;
+    private String kUserId;
+    private String fUserId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,8 +42,9 @@ public class SelectMemberTypeActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Intent intent = getIntent();
         loginCase = intent.getStringExtra("login case");
-        userId = intent.getStringExtra("userId");
-        userName = intent.getStringExtra("userName");
+        kUserId = intent.getStringExtra("kuserId");
+        fUserId = intent.getStringExtra("fUserId");
+
     }
 
     @OnClick({R.id.modelCaseBtn, R.id.designerCaseBtn})
@@ -62,8 +63,8 @@ public class SelectMemberTypeActivity extends AppCompatActivity {
                             intent = new Intent(getApplicationContext(), ModelEmailSignUpActivity.class);
                         } else {
                             intent = new Intent(getApplicationContext(), ModelSNSSignUpActivity.class);
-                            intent.putExtra("userId", userId);
-                            intent.putExtra("userName", userName);
+                            intent.putExtra("kUserId", kUserId);
+                            intent.putExtra("fUserId", fUserId);
                         }
                         break;
                     case R.id.designerCaseBtn:
@@ -71,8 +72,8 @@ public class SelectMemberTypeActivity extends AppCompatActivity {
                             intent = new Intent(getApplicationContext(), DesignerEmailSignUpActivity.class);
                         } else{
                             intent = new Intent(getApplicationContext(), DesignerSNSSignUpActivity.class);
-                            intent.putExtra("userId", userId);
-                            intent.putExtra("userName", userName);
+                            intent.putExtra("kUserId", kUserId);
+                            intent.putExtra("fUserId", fUserId);
                         }
                         break;
                     default:
