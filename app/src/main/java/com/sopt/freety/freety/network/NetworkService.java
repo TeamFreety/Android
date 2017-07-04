@@ -9,10 +9,16 @@ import com.sopt.freety.freety.view.login.data.SignUpResultData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageModelGetData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageStatusUpdateRequestData;
+import com.sopt.freety.freety.view.my_page.data.network.MyPhotoRequestData;
 import com.sopt.freety.freety.view.recruit.data.PickRequestData;
 import com.sopt.freety.freety.view.recruit.data.PickResultData;
 import com.sopt.freety.freety.view.recruit.data.PostDetailResultData;
+import com.sopt.freety.freety.view.recruit.data.WriteRequestData;
 
+import java.util.List;
+import java.util.Map;
+
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -21,6 +27,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -57,6 +64,10 @@ public interface NetworkService {
     @GET("/postDetail/{postId}")
     Call<PostDetailResultData> getPostDetailData(@Header("member_token") String token, @Path("postId") int postId);
 
+    @Multipart
+    @POST("/post/write")
+    Call<OnlyMsgResultData> registerPost(@Header("member_token") String token, @Body WriteRequestData data, List<RequestBody> files);
+
     @POST("/pick")
     Call<PickResultData> pick(@Header("member_token") String token, @Body PickRequestData data);
 
@@ -75,7 +86,7 @@ public interface NetworkService {
     @GET("/search/nearest")
     Call<PostListResultData> getSearchNearestData(@Query("latitude") double lat, @Query("longitude") double lng);
 
-    @GET("/search/searchDetail")
+    @GET("/searchDetail")
     Call<PostListResultData> getFilteredData(@Query("typeDye") int typeDye,
                                              @Query("typePerm") int typePerm,
                                              @Query("typeCut") int typeCut,
@@ -86,4 +97,7 @@ public interface NetworkService {
                                              @Query("least_date") String leastDate,
                                              @Query("high_date") String highDate,
                                              @Query("sigugun") String sigugun);
+
+    @POST("/mypage/myPhoto")
+    Call<OnlyMsgResultData> getOkMsgFromProfile(@Header("member_token") String token, @Body MyPhotoRequestData data);
 }

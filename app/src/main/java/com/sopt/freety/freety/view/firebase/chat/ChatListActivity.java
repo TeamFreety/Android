@@ -11,9 +11,9 @@ public class ChatListActivity extends AppCompatActivity implements SwipeRefreshL
 
     public static final String ME = "junhoeKim";
 
-    private List<ChatListData> chatListDatas;
+    private List<LetterListData> chatListDatas;
     private LinearLayoutManager layoutManager;
-    private ChatListAdapter adapter;
+    private LetterListAdapter adapter;
     private final DatabaseReference roomsReference = FirebaseDatabase.getInstance().getReference()
             .child("rooms");
 
@@ -29,7 +29,7 @@ public class ChatListActivity extends AppCompatActivity implements SwipeRefreshL
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         chatListDatas = new ArrayList<>();
-        adapter = new ChatListAdapter(chatListDatas);
+        adapter = new LetterListAdapter(chatListDatas);
         final String me = "junhoeKim";
         final String other = "donghyunyou";
         Query showListQuery = roomsReference.orderByChild("myId").equalTo(me);
@@ -39,10 +39,10 @@ public class ChatListActivity extends AppCompatActivity implements SwipeRefreshL
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot chatListDataSnapShot : dataSnapshot.getChildren()) {
                     ChatListFirebaseData data = chatListDataSnapShot.getValue(ChatListFirebaseData.class);
-                    Log.i("ChatListData", "data myId : " + data.getMyId() + ", data otherId : " + data.getOtherId()
+                    Log.i("LetterListData", "data myId : " + data.getMyId() + ", data otherId : " + data.getOtherId()
                             + String.valueOf(data.getIsNew()));
                     if (data.getMyId().equals(ME)) {
-                        chatListDatas.add(new ChatListData(data.getRoomId(), R.drawable.chat_list_elem,
+                        chatListDatas.add(new LetterListData(data.getRoomId(), R.drawable.chat_list_elem,
                                 data.getIsNew(),
                                 "junhoe",
                                 "4:23",
@@ -54,7 +54,7 @@ public class ChatListActivity extends AppCompatActivity implements SwipeRefreshL
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.i("ChatListData", "the read failed" + databaseError.getMessage());
+                Log.i("LetterListData", "the read failed" + databaseError.getMessage());
             }
         });
 
@@ -64,7 +64,7 @@ public class ChatListActivity extends AppCompatActivity implements SwipeRefreshL
             @Override
             public void onItemClick(View v, int position) {
                 Intent toChatActivityIntent = new Intent(getApplicationContext(), ChatActivity.class);
-                ChatListData chatListData = chatListDatas.get(position);
+                LetterListData chatListData = chatListDatas.get(position);
                 toChatActivityIntent.putExtra("roomId", chatListData.getRoomId());
                 toChatActivityIntent.putExtra("otherId", chatListData.getOtherId());
                 startActivity(toChatActivityIntent);

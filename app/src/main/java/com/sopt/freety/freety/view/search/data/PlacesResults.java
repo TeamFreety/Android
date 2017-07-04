@@ -23,7 +23,11 @@ public class PlacesResults {
         }
 
         public String getFormattedAddress() {
-            return formatted_address.substring(5);
+            if (formatted_address.length() > 6) {
+                return formatted_address.substring(5);
+            } else {
+                return formatted_address;
+            }
         }
 
         public double getLat() {

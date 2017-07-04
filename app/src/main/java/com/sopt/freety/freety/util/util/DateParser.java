@@ -1,5 +1,7 @@
 package com.sopt.freety.freety.util.util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -8,7 +10,7 @@ import java.util.Date;
 
 import java.util.concurrent.TimeUnit;
 
-public class TimeStampFormatter {
+public class DateParser {
 
     /**
      * For use with java.util.Date
@@ -34,6 +36,18 @@ public class TimeStampFormatter {
         }
 
         return String.format("%d.%d.%d", timestamp.getYear(), timestamp.getMonth(), timestamp.getDay());
+    }
+
+    public static Date from(String date) throws ParseException {
+        Date parsedDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(date);
+        return parsedDate;
+    }
+
+    public static String toYearMonthDay(String date) throws ParseException {
+        DateParser timeStampFormatter = new DateParser();
+        Date parsedDate = DateParser.from(date);
+        String formatted = timeStampFormatter.format(parsedDate);
+        return formatted;
     }
 
     private long getMillisFromNow(Date commentedAt) {

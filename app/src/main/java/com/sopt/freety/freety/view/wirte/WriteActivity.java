@@ -2,16 +2,18 @@ package com.sopt.freety.freety.view.wirte;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
-import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -22,16 +24,19 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.view.property.ScreenClickable;
 import com.sopt.freety.freety.view.recruit.MapPopupActivity;
 import com.yongbeam.y_photopicker.util.photopicker.PhotoPickerActivity;
 import com.yongbeam.y_photopicker.util.photopicker.utils.YPhotoPickerIntent;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -43,11 +48,15 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class WriteActivity extends AppCompatActivity implements ScreenClickable {
 
     public static final int MAP_POPUP_CODE = 1234;
     public static final int PICTURE_CODE = 4321;
+    private static final String TAG = "WriteActivity";
 
     private PermissionListener permissionListener = new PermissionListener() {
         @Override
@@ -55,7 +64,7 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
             YPhotoPickerIntent intent = new YPhotoPickerIntent(WriteActivity.this);
             intent.setMaxSelectCount(5);
             intent.setSelectCheckBox(true);
-            intent.setMaxGrideItemCount(0);
+            intent.setMaxGrideItemCount(3);
             startActivityForResult(intent, PICTURE_CODE);
         }
 
@@ -126,14 +135,27 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
     @BindView(R.id.btn_write_register)
     Button writeRegisterBtn;
 
+    @OnClick(R.id.btn_write_register)
+    public void onRegisterBtn() {
+        if (imageBodyList.size() <= 0) {
+            Toast.makeText(this, "사진을 한 장 이상 등록해주세요.", Toast.LENGTH_SHORT).show();
+        } else {
+        }
+    }
+
+    @BindView(R.id.write_content_counter_text)
+    TextView contentCounterText;
+
     @OnClick(R.id.btn_write_back)
     public void onBackBtn() {
-        finish();
+        onBackPressed();
     }
 
     private Set<String> hairTypeSet = new HashSet<>();
     private GregorianCalendar calendar = new GregorianCalendar();
     private boolean isPopup;
+    private ProgressDialog progressDialog;
+    private List<MultipartBody.Part> imageBodyList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +164,24 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
         setContentView(R.layout.activity_write);
         ButterKnife.bind(this);
         isPopup = false;
+        writeContentEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                contentCounterText.setText(String.format("%d/300", s.length()));
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        progressDialog = new ProgressDialog(WriteActivity.this);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("업로드 중...");
+        progressDialog.setIndeterminate(true);
     }
 
     @Override
@@ -179,7 +219,7 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        super.onActivityResult(requestCode, resultCode, data);
         isPopup = false;
         if (requestCode == MAP_POPUP_CODE) {
             if (resultCode == MapPopupActivity.RESULT_SUCCESS) {
@@ -203,12 +243,29 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
                     for (int i = 0; i < writeSelectedImageList.size(); i++) {
                         writeSelectedImageList.get(i).setImageResource(0);
                     }
+                    imageBodyList.clear();
                     for (int i = 0; i < photos.size(); i++) {
+                        Log.i(TAG, "onActivityResult: " + photos.get(i));
+                        File file = new File(photos.get(i));
+                        RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);
+                        MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), fileBody);
+                        imageBodyList.add(body);
                         Glide.with(WriteActivity.this).load(photos.get(i)).override(100, 100).thumbnail(0.3f).into(writeSelectedImageList.get(i));
                     }
                 }
             }
         }
+    }
 
+    @Override
+    public void onBackPressed() {
+        int result = AppController.getInstance().popPageStack();
+        if (result == 0) {
+            Toast.makeText(this, "한 번 더 터치하시면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show();
+        }  else if (result < 0) {
+            ActivityCompat.finishAffinity(this);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

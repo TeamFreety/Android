@@ -74,6 +74,7 @@ public class HomePostFragment extends Fragment {
             @Override
             public void onItemClick(View v, int position) {
                 Intent postDetailIntent = new Intent(getContext(), RecruitActivity.class);
+                postDetailIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 postDetailIntent.putExtra("postId", adapter.getPostDataList().get(position).getPostId());
                 AppController.getInstance().pushPageStack();
                 startActivity(postDetailIntent);

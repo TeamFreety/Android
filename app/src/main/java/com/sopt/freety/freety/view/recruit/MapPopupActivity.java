@@ -1,6 +1,7 @@
 package com.sopt.freety.freety.view.recruit;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.support.annotation.NonNull;
@@ -8,11 +9,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -50,8 +52,8 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
         GoogleApiClient.ConnectionCallbacks,
         LocationListener {
 
-    public static final int RESULT_SUCCESS = 0;
-    public static final int RESULT_FAIL = -1;
+    public static final int RESULT_SUCCESS = 200;
+    public static final int RESULT_FAIL = 500;
 
     private static final String CAMERA_POSITION = "camera_position";
     private static final String LOCATION = "location";
@@ -116,6 +118,9 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
             cameraPosition = savedInstanceState.getParcelable(CAMERA_POSITION);
         }
         setContentView(R.layout.activity_map_popup);
+        Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        getWindow().getAttributes().width = (int)(0.9f * display.getWidth());
+        getWindow().getAttributes().height = (int)(0.9f * display.getHeight());
         ButterKnife.bind(this);
         mapNetworkService = AppController.getInstance().getMapNetworkService();
         buildGoogleApiClient();
@@ -215,7 +220,7 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
                     placeResults = response.body().getResults();
                     for (int index = 0; index < placeResults.size(); index++) {
                         PlacesResults.PlaceResult result = placeResults.get(index);
-                        resultList.add(result.getFormattedAddress());
+                        resultList.add(result.getFormattedAddress() + " " + result.getName());
                         if (index >= 10) {
                             break;
                         }
