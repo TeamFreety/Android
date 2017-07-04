@@ -26,6 +26,7 @@ import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.data.OnlyMsgResultData;
 import com.sopt.freety.freety.network.NetworkService;
 import com.sopt.freety.freety.util.SharedAccessor;
+
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.util.util.EditTextUtils;
@@ -111,6 +112,7 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         final View view = inflater.inflate(R.layout.fragment_designer_my_page, container, false);
         ButterKnife.bind(this, view);
         Glide.with(this).load(R.drawable.chat_list_elem)

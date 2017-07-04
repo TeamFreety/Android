@@ -1,5 +1,6 @@
 package com.sopt.freety.freety.view.main;
 
+
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -12,12 +13,14 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.Toast;
-
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.view.chat.ChatListFragment;
 import com.sopt.freety.freety.view.my_page.MyPageDesignerFragment;
+
+import com.sopt.freety.freety.view.my_page.MyPageModelFragment;
 import com.sopt.freety.freety.view.search.SearchFragment;
 import com.sopt.freety.freety.view.home.HomeFragment;
 
@@ -55,7 +58,11 @@ public class MainActivity extends AppCompatActivity {
                         replaceFragment(new ChatListFragment(), new Bundle(), "recruit");
                         break;
                     case R.id.action_my_page:
-                        replaceFragment(new MyPageDesignerFragment(), new Bundle(), "my_page");
+
+                        if (SharedAccessor.isDesigner(MainActivity.this))
+                            replaceFragment(new MyPageDesignerFragment(), new Bundle(), "my_page_designer");
+                        else
+                            replaceFragment(new MyPageModelFragment(), new Bundle(), "my_page_model");
                         break;
                 }
                 AppController.getInstance().pushPageStack();

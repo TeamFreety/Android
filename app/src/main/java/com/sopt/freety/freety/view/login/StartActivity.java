@@ -210,7 +210,9 @@ public class StartActivity extends AppCompatActivity {
                 startActivity(intent);
                 overridePendingTransition(R.anim.screen_slide_up, R.anim.screen_slide_stop);
                 break;
-
+            case R.id.kakaoBtn:
+                isKakaoLogin();
+                break;
         }
     }
 

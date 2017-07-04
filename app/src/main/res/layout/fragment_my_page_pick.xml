@@ -6,13 +6,14 @@
 
     <com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView
         android:id="@+id/my_page_pick_list_recycler_view"
-        android:layout_marginTop="20dp"
+
+        android:layout_marginTop="30dp"
+        android:padding="@dimen/my_page_post_offset"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:padding="@dimen/my_page_post_offset"
         android:overScrollMode="never">
 
     </com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView>

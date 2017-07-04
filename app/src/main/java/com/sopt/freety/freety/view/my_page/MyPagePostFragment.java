@@ -31,7 +31,7 @@ import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 public class MyPagePostFragment extends Fragment {
 
 
-    @BindView(R.id.my_page_post_recycler_view)
+    @BindView(R.id.my_page_pick_list_recycler_view)
     ScrollFeedbackRecyclerView recyclerView;
 
     private ViewPagerEx viewPager;
@@ -39,7 +39,9 @@ public class MyPagePostFragment extends Fragment {
     private GridLayoutManager layoutManager;
     private MyPagePostRecyclerAdapter adapter;
     private NetworkService networkService;
+
     private MyPageDesignerFragment myPageFragment;
+
 
     public MyPagePostFragment() {
     }
@@ -50,6 +52,7 @@ public class MyPagePostFragment extends Fragment {
         viewPager = (ViewPagerEx) container;
         View view = inflater.inflate(R.layout.fragment_my_page_post, container, false);
         ButterKnife.bind(this, view);
+
 
         myPageFragment = (MyPageDesignerFragment) getParentFragment();
         recyclerView.setHasFixedSize(true);

@@ -35,7 +35,9 @@ public class MyPageReviewFragment extends Fragment {
     private LinearLayoutManager layoutManager;
     private MyPageReviewRecyclerAdapter adapter;
     private ViewPagerEx viewPager;
+
     private MyPageDesignerFragment myPageFragment;
+
 
     public MyPageReviewFragment() {
     }
@@ -63,7 +65,9 @@ public class MyPageReviewFragment extends Fragment {
             }
         });
         layoutManager = new LinearLayoutManager(getContext());
+
         myPageFragment = (MyPageDesignerFragment) getParentFragment();
+
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), layoutManager.getOrientation()));
         try {
