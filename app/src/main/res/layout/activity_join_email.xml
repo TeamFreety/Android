@@ -49,7 +49,7 @@
 
 
     <Button
-        android:id="@+id/back_btn"
+        android:id="@+id/email_login_back_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"

@@ -22,7 +22,7 @@ public class MyPagePostHolder extends RecyclerView.ViewHolder {
     TextView addressText;
 
     @BindView(R.id.my_page_post_style)
-    TextView styleText;
+    TextView titleText;
 
     public MyPagePostHolder(View itemView) {
         super(itemView);
@@ -37,7 +37,7 @@ public class MyPagePostHolder extends RecyclerView.ViewHolder {
         return addressText;
     }
 
-    public TextView getStyleText() {
-        return styleText;
+    public TextView getTitleText() {
+        return titleText;
     }
 }

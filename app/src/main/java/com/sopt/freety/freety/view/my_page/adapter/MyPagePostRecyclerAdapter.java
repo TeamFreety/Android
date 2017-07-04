@@ -36,9 +36,9 @@ public class MyPagePostRecyclerAdapter extends RecyclerView.Adapter<MyPagePostHo
 
     @Override
     public void onBindViewHolder(MyPagePostHolder holder, int position) {
-        Glide.with(context).load(myPagePostDataList.get(position).getMockSource()).override(164,187).centerCrop().thumbnail(0.001f).into(holder.getPostImage());
-        holder.getAddressText().setText(myPagePostDataList.get(position).getMockAddress());
-        holder.getStyleText().setText(myPagePostDataList.get(position).getMockStyle());
+        Glide.with(context).load(myPagePostDataList.get(position).getImageURL()).override(164,187).centerCrop().thumbnail(0.001f).into(holder.getPostImage());
+        holder.getAddressText().setText(myPagePostDataList.get(position).getAddress());
+        holder.getTitleText().setText(myPagePostDataList.get(position).getTitle());
     }
 
     @Override

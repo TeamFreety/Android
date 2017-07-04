@@ -1,17 +1,16 @@
 package com.sopt.freety.freety.view.login;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
-import android.widget.ImageView;
-import android.widget.TextView;
+
+
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -23,7 +22,8 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 
-import com.facebook.login.widget.LoginButton;
+
+
 import com.kakao.auth.AuthType;
 import com.kakao.auth.ErrorCode;
 import com.kakao.auth.ISessionCallback;
@@ -35,14 +35,13 @@ import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
-
 import com.sopt.freety.freety.R;
-import com.sopt.freety.freety.util.custom.KakaoLoginButton;
-import com.sopt.freety.freety.view.main.MainActivity;
+
+import com.sopt.freety.freety.application.AppController;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.Arrays;
 
@@ -53,7 +52,7 @@ import butterknife.OnClick;
  * Created by KYJ on 2017-06-27.
  */
 
-public class FirstLoginActivity extends AppCompatActivity {
+public class StartActivity extends AppCompatActivity {
 
     private CallbackManager callbackManager;
     private SessionCallback callback;
@@ -63,14 +62,6 @@ public class FirstLoginActivity extends AppCompatActivity {
 
     // view
     private Button facebookBtn;
-    //private Button kakaoBtn;
-/*    private Button emailBtn;
-    private Button skipBtn;
-    private TextView joinTextView;*/
-
-
-
-private int rId;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -79,11 +70,6 @@ private int rId;
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_first_login);
-
-      //  int rId = getResources().getIdentifier("kakao_layout", );
-
-
-
         UserManagement.requestLogout(new LogoutResponseCallback() {
 
             @Override
@@ -91,19 +77,14 @@ private int rId;
                 //로그아웃 성공 후
             }
         });
-
-        //callback = new SessionCallback();
-       // Session.getCurrentSession().addCallback(callback);
         callbackManager = CallbackManager.Factory.create();
-
         ButterKnife.bind(this);
-
         facebookBtn = (Button)findViewById(R.id.facebookBtn);
         facebookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //LoginManager - 요청된 읽기 또는 게시 권한으로 로그인 절차를 시작합니다.
-                LoginManager.getInstance().logInWithReadPermissions(FirstLoginActivity.this,
+                LoginManager.getInstance().logInWithReadPermissions(StartActivity.this,
                         Arrays.asList("public_profile", "email"));
                 LoginManager.getInstance().registerCallback(callbackManager,
                         new FacebookCallback<LoginResult>() {
@@ -134,7 +115,7 @@ private int rId;
                                 request.executeAsync();
 
                                 //Toast.makeText(getApplicationContext(),"facebook success",Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(FirstLoginActivity.this, JoinActivity.class);
+                                Intent intent = new Intent(StartActivity.this, SelectMemberTypeActivity.class);
                                 intent.putExtra("login case","facebook");
                                 intent.putExtra("userId",userId);
                                 intent.putExtra("userName",userName);
@@ -154,7 +135,6 @@ private int rId;
                         });
             }
         });
-
 
     }
     @Override
@@ -204,7 +184,7 @@ private int rId;
 
                     Log.e("UserProfile", userProfile.toString());
                     Toast.makeText(getApplicationContext(),userId,Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(FirstLoginActivity.this, JoinActivity.class);
+                    Intent intent = new Intent(StartActivity.this, SelectMemberTypeActivity.class);
                     intent.putExtra("login case","kakao");
                     intent.putExtra("userId",userId);
                     intent.putExtra("userName", userName);
@@ -221,21 +201,15 @@ private int rId;
         }
     }
 
-
-
-    @OnClick({R.id.emailBtn, R.id.text_skip, R.id.kakaoBtn})
-
+    @OnClick({R.id.emailBtn, R.id.kakaoBtn})
     public void onClick(View view){
         switch(view.getId()){
             case R.id.emailBtn:
-                Intent intent = new Intent(getApplicationContext(),EmailLoginActivity.class);
-                //intent.putExtra("login case","email");
+                Intent intent = new Intent(getApplicationContext(), EmailLoginActivity.class);
+                AppController.getInstance().pushPageStack();
                 startActivity(intent);
+                overridePendingTransition(R.anim.screen_slide_up, R.anim.screen_slide_stop);
                 break;
-            case R.id.text_skip:
-            Intent intent2 = new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(intent2);
-            break;
             case R.id.kakaoBtn:
                 isKakaoLogin();
                 break;
@@ -246,7 +220,18 @@ private int rId;
         callback = new SessionCallback();
         com.kakao.auth.Session.getCurrentSession().addCallback(callback);
         com.kakao.auth.Session.getCurrentSession().checkAndImplicitOpen();
-        com.kakao.auth.Session.getCurrentSession().open(AuthType.KAKAO_TALK,FirstLoginActivity.this);
+        com.kakao.auth.Session.getCurrentSession().open(AuthType.KAKAO_TALK,StartActivity.this);
     }
 
+    @Override
+    public void onBackPressed() {
+        int result = AppController.getInstance().popPageStack();
+        if (result == 0) {
+            Toast.makeText(this, "한 번 더 터치하시면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show();
+        }  else if (result < 0) {
+            ActivityCompat.finishAffinity(this);
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

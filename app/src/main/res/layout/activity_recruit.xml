@@ -20,6 +20,7 @@
             android:id="@+id/my_page_toolbar">
 
             <ImageButton
+                android:id="@+id/recruit_back_btn"
                 android:background="@null"
                 android:src="@drawable/back_button"
                 android:layout_width="wrap_content"
@@ -78,15 +79,13 @@
                     android:textColor="#95989A"
                     android:textSize="11sp"/>
 
-                <ToggleButton
+                <Button
                     android:id="@+id/recruit_pick_btn"
                     android:background="@drawable/recruit_line_single"
                     android:layout_width="60dp"
                     android:layout_height="30dp"
                     android:paddingLeft="25dp"
                     android:textSize="12sp"
-                    android:textOff="21"
-                    android:textOn="21"
                     android:layout_marginRight="11dp"
                     android:layout_marginEnd="11dp"
                     android:layout_marginTop="10dp"
@@ -126,7 +125,6 @@
 
             <ImageView
                 android:id="@+id/recruit_profile"
-                android:src="@drawable/chat_list_elem"
                 android:scaleType="centerCrop"
                 android:layout_marginLeft="21dp"
                 android:layout_alignParentBottom="true"

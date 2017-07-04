@@ -10,16 +10,23 @@ import java.util.Random;
 
 public class MyPageReviewElemData {
 
-    public MyPageReviewElemData() {
-
-    }
-
     private String title;
     private String date;
     private String content;
     private String imageURL;
-    private int score;
+    private float score;
     private String writer;
+
+    public MyPageReviewElemData(String title, String date,
+                                String content, String imageURL,
+                                float score, String writer) {
+        this.title = title;
+        this.date = date;
+        this.content = content;
+        this.imageURL = imageURL;
+        this.score = score;
+        this.writer = writer;
+    }
 
     public String getTitle() {
         return title;
@@ -33,49 +40,15 @@ public class MyPageReviewElemData {
         return content;
     }
 
-    public int getScore() {
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public float getScore() {
         return score;
     }
 
     public String getWriter() {
         return writer;
-    }
-
-    public static String getMockTitle() {
-        return "매직셋팅";
-    }
-
-    public static String getMockDate() {
-        return "2017.06.23";
-    }
-
-    public static String getMockContent() {
-        return "하 정말 원하던 디자인이 나와버렸어요!! good!";
-    }
-
-    public static int getMockScore() {
-        return 4;
-    }
-
-    public static String getMockWriter() {
-        return "김민주";
-    }
-
-    public static int getMockResource() {
-        Random random = new Random();
-        int caseNum = random.nextInt() % 3;
-        switch (caseNum) {
-            case 0:
-                return 0;
-            case 1:
-                return R.drawable.chat_list_elem;
-            case 2:
-                return R.drawable.freety_logo_black;
-        }
-        return 0;
-    }
-
-    public static MyPageReviewElemData getMockElemData() {
-        return new MyPageReviewElemData();
     }
 }

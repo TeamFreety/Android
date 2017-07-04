@@ -15,6 +15,7 @@
 
 
         <ImageButton
+            android:id="@+id/sign_up_email_designer_back_btn"
             android:background="@null"
             android:src="@drawable/back_button"
             android:layout_width="wrap_content"

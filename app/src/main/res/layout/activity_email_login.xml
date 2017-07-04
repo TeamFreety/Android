@@ -2,12 +2,11 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/sns_login_background"
+    android:background="@drawable/email_login_background"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:onClick="onScreenClick"
     android:gravity="center_horizontal">
 
     <RelativeLayout
@@ -15,7 +14,7 @@
         android:layout_height="wrap_content">
 
         <ImageButton
-            android:id="@+id/back_btn"
+            android:id="@+id/email_login_back_btn"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_alignParentRight="true"
@@ -27,52 +26,61 @@
     </RelativeLayout>
 
     <ImageView
-        android:id="@+id/img_email_login_logo"
-        android:layout_width="177dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="110dp"
-        android:background="@drawable/sns_login_logo"/>
+        android:id="@+id/img_first_login_logo"
+        android:layout_width="193dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="90dp"
+        android:background="@drawable/email_login_logo"/>
 
     <LinearLayout
+        android:id="@+id/edit_login_email_layout"
         android:layout_width="260dp"
         android:layout_height="70dp"
         android:layout_marginTop="112dp"
         android:background="@drawable/layout_join_email_shape">
-    <EditText
-        android:id="@+id/edit_login_email"
-        android:cursorVisible="false"
-        android:drawableLeft="@drawable/email_login_user"
-        android:paddingLeft="28dp"
-        android:drawablePadding="32dp"
-        android:hint="E-mail"
-        android:textSize="11sp"
-        android:textColorHint="#95989A"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+
+        <EditText
+            android:id="@+id/edit_login_email"
+            android:cursorVisible="false"
+            android:drawableLeft="@drawable/email_login_user"
+            android:paddingLeft="28dp"
+            android:singleLine="true"
+            android:drawablePadding="32dp"
+            android:maxLength="40"
+            android:hint="E-mail"
+            android:textSize="11sp"
+            android:textColorHint="#95989A"
+            android:background="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/edit_login_pwd_layout"
         android:layout_width="260dp"
         android:layout_height="70dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/layout_join_email_shape">
-    <EditText
-        android:id="@+id/edit_login_pwd"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:cursorVisible="false"
-        android:paddingLeft="28dp"
-        android:drawablePadding="32dp"
-        android:hint="Password"
-        android:textColorHint="#95989A"
-        android:textSize="11sp"
-        android:drawableLeft="@drawable/email_login_lock"/>
+
+        <EditText
+            android:id="@+id/edit_login_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:singleLine="true"
+            android:maxLength="20"
+            android:cursorVisible="false"
+            android:paddingLeft="28dp"
+            android:drawablePadding="32dp"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:textCursorDrawable="@null"
+            android:textColorHint="#95989A"
+            android:background="#ffffff"
+            android:textSize="11sp"
+            android:drawableLeft="@drawable/email_login_lock"/>
 
     </LinearLayout>
-
-
 
     <Button
         android:id="@+id/submit_btn"
@@ -80,9 +88,9 @@
         android:layout_height="56dp"
         android:text="GET STARTED"
         android:textSize="11sp"
+        android:layout_marginTop="25dp"
         android:textColor="#000000"
-        android:background="@drawable/email_login_gradation_btn"
-       />
+        android:background="@drawable/email_login_gradation_btn" />
 
 
     <TextView
