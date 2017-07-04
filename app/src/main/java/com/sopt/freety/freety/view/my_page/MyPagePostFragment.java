@@ -13,22 +13,13 @@ import android.view.ViewGroup;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.network.NetworkService;
-import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.view.my_page.adapter.MyPagePostRecyclerAdapter;
-import com.sopt.freety.freety.view.my_page.data.MyPagePostData;
-import com.sopt.freety.freety.view.my_page.data.network.MyPageModelGetData;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_DRAGGING;
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
@@ -40,7 +31,7 @@ import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 public class MyPagePostFragment extends Fragment {
 
 
-    @BindView(R.id.my_page_post_recycler_view)
+    @BindView(R.id.my_page_pick_list_recycler_view)
     ScrollFeedbackRecyclerView recyclerView;
 
     private ViewPagerEx viewPager;
@@ -48,7 +39,9 @@ public class MyPagePostFragment extends Fragment {
     private GridLayoutManager layoutManager;
     private MyPagePostRecyclerAdapter adapter;
     private NetworkService networkService;
-    private MyPageFragment myPageFragment;
+
+    private MyPageDesignerFragment myPageFragment;
+
 
     public MyPagePostFragment() {
     }
@@ -60,7 +53,8 @@ public class MyPagePostFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my_page_post, container, false);
         ButterKnife.bind(this, view);
 
-        myPageFragment = (MyPageFragment) getParentFragment();
+
+        myPageFragment = (MyPageDesignerFragment) getParentFragment();
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.my_page_post_offset));
         recyclerView.attachCallbacks(getParentFragment());

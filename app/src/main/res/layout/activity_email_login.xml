@@ -29,7 +29,7 @@
         android:id="@+id/img_first_login_logo"
         android:layout_width="193dp"
         android:layout_height="64dp"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="90dp"
         android:background="@drawable/email_login_logo"/>
 
     <LinearLayout
@@ -88,6 +88,7 @@
         android:layout_height="56dp"
         android:text="GET STARTED"
         android:textSize="11sp"
+        android:layout_marginTop="25dp"
         android:textColor="#000000"
         android:background="@drawable/email_login_gradation_btn" />
 

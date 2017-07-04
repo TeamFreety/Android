@@ -24,7 +24,7 @@ public class SharedAccessor {
         if (type.equals("")) {
             throw new RuntimeException("Position is not set yet");
         }
-        return true;
+        return type.equals("designer");
     }
 
     public static String getImageURL(Context context) {

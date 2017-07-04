@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView
+        android:id="@+id/my_page_pick_list_recycler_view"
+
+        android:layout_marginTop="30dp"
+        android:padding="@dimen/my_page_post_offset"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:overScrollMode="never">
+
+    </com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView>
+
+</LinearLayout>
