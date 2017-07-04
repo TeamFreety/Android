@@ -107,18 +107,18 @@
 
             </android.support.v7.widget.RecyclerView>
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fabtn_search_to_write"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|center_horizontal"
-                android:layout_margin="@dimen/floating_btn_offset"
-                android:src="@android:drawable/ic_dialog_email"
-                app:layout_anchor="@+id/rv_search"
-                app:layout_anchorGravity="bottom|right" />
 
         </android.support.design.widget.CoordinatorLayout>
 
     </LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabtn_search_to_write"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_margin="@dimen/floating_btn_offset"
+        android:src="@android:drawable/ic_dialog_email"
+        app:layout_anchor="@+id/rv_search"
+        app:layout_anchorGravity="bottom|right" />
 
 </LinearLayout>

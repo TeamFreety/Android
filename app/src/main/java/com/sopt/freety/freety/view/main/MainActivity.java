@@ -1,5 +1,6 @@
 package com.sopt.freety.freety.view.main;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -30,6 +31,8 @@ import java.security.NoSuchAlgorithmException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.sopt.freety.freety.view.search.SearchFragment.DETAIL_SEARCH_CODE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -103,4 +106,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == DETAIL_SEARCH_CODE) {
+            SearchFragment searchFragment = (SearchFragment) getSupportFragmentManager().findFragmentByTag("search");
+            searchFragment.onActivityResult(requestCode, 0, data);
+        }
+    }
 }

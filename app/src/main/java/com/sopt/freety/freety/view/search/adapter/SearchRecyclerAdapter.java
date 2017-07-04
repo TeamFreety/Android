@@ -51,4 +51,8 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchHolder> {
         this.postDataList = postDataList;
         notifyDataSetChanged();
     }
+
+    public List<PostListData> getPostDataList() {
+        return postDataList;
+    }
 }

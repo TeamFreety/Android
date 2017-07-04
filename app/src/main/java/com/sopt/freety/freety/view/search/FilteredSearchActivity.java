@@ -1,6 +1,7 @@
 package com.sopt.freety.freety.view.search;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -19,6 +20,7 @@ import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListen
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
+import com.sopt.freety.freety.data.PostListResultData;
 import com.sopt.freety.freety.util.util.Triple;
 
 import java.util.Calendar;
@@ -33,10 +35,13 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
 
 public class FilteredSearchActivity extends AppCompatActivity {
 
 
+    private static final String[] hairType = new String[] {"펌", "염색", "커트", "기타"};
+    private static final String TAG = "FilteredSearchActivity";
     @OnClick({R.id.btn_sort_perm, R.id.btn_sort_dye, R.id.btn_sort_cut, R.id.btn_sort_etc})
     public void onHairTypeClick(Button button) {
         String hairTypeString = button.getText().toString();
@@ -69,25 +74,13 @@ public class FilteredSearchActivity extends AppCompatActivity {
                 calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
+    @BindView(R.id.rangeSeekbar)
+    CrystalRangeSeekbar rangeSeekbar;
+
     @OnClick(R.id.btn_detail_cancel)
     public void onBackBtn() {
         onBackPressed();
     }
-
-    @BindView(R.id.checkbtn_career_default)
-    CheckBox checkboxCareerDefault;
-
-    @BindView(R.id.checkbtn_career_under_1year)
-    CheckBox checkboxCareerUnder1year;
-
-    @BindView(R.id.checkbtn_career_1to3year)
-    CheckBox checkboxCareer1to3year;
-
-    @BindView(R.id.checkbtn_career_3to5year)
-    CheckBox checkboxCareer3to5year;
-
-    @BindView(R.id.checkbtn_career_over_5year)
-    CheckBox checkboxCareer5to5year;
 
     @BindViews({R.id.checkbtn_career_default, R.id.checkbtn_career_under_1year,
             R.id.checkbtn_career_1to3year, R.id.checkbtn_career_3to5year, R.id.checkbtn_career_over_5year})
@@ -102,6 +95,39 @@ public class FilteredSearchActivity extends AppCompatActivity {
         checkBox.setChecked(true);
     }
 
+    @OnClick(R.id.btn_detail_filter_adapt)
+    public void onAdaptBtn() {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("typeDye", hairTypeSet.contains(hairType[0]) ? 1 : 0);
+        resultIntent.putExtra("typePerm", hairTypeSet.contains(hairType[1]) ? 1 : 0);
+        resultIntent.putExtra("typeCut", hairTypeSet.contains(hairType[2]) ? 1 : 0);
+        resultIntent.putExtra("typeEct", hairTypeSet.contains(hairType[3]) ? 1 : 0);
+        resultIntent.putExtra("least_price", rangeSeekbar.getSelectedMinValue().intValue());
+        resultIntent.putExtra("high_price", rangeSeekbar.getSelectedMaxValue().intValue());
+        int checkedIndex = 0;
+        for (int i = 0; i < careerCheckboxList.size(); i++) {
+            if (careerCheckboxList.get(i).isChecked()) {
+                checkedIndex = i;
+            }
+        }
+        resultIntent.putExtra("career", checkedIndex);
+
+        resultIntent.putExtra("least_date", "2000-01-01");
+        resultIntent.putExtra("high_date", "2020-01-01");
+        resultIntent.putExtra("least_date", textSearchStartDay.getText());
+        resultIntent.putExtra("high_date", textSearchEndDay.getText());
+        String sigugun = "";
+        for (Button imageButton : locationBtnList) {
+            if (locationBtnMap.get(imageButton.getId()).getThird()) {
+                sigugun = imageButton.getText().toString();
+            }
+        }
+        Log.i(TAG, "onAdaptBtn: " + sigugun);
+        resultIntent.putExtra("sigugun", sigugun);
+        setResult(0, resultIntent);
+        finish();
+    }
+
     private GregorianCalendar calendar = new GregorianCalendar();
     private Set<String> hairTypeSet = new HashSet<>();
 
@@ -110,9 +136,6 @@ public class FilteredSearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_search);
         ButterKnife.bind(this);
-
-        // get seekbar from view
-        final CrystalRangeSeekbar rangeSeekbar = (CrystalRangeSeekbar) findViewById(R.id.rangeSeekbar);
 
         // get min and max text view
         final TextView tvMin = (TextView) findViewById(R.id.textMin1);
@@ -134,20 +157,19 @@ public class FilteredSearchActivity extends AppCompatActivity {
                 Log.d("CRS=>", String.valueOf(minValue) + " : " + String.valueOf(maxValue));
             }
         });
-
     }
 
     private DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            textSearchStartDay.setText(String.format("%d년 %d월 %d일", year, month + 1, dayOfMonth));
+            textSearchStartDay.setText(String.format("%d-%d-%d", year, month + 1, dayOfMonth));
         }
     };
 
     private DatePickerDialog.OnDateSetListener dateEndSetListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            textSearchEndDay.setText(String.format("%d년 %d월 %d일", year, month + 1, dayOfMonth));
+            textSearchEndDay.setText(String.format("%d-%d-%d", year, month + 1, dayOfMonth));
         }
     };
 
@@ -162,7 +184,7 @@ public class FilteredSearchActivity extends AppCompatActivity {
             R.id.btn_detail_location_bucheon, R.id.btn_detail_location_guro,
             R.id.btn_detail_location_jamsil, R.id.btn_detail_location_mockdong,
             R.id.btn_detail_location_anyang, R.id.btn_detail_location_kyunggi, R.id.btn_detail_location_etc})
-    List<ImageButton> locationBtnList;
+    List<Button> locationBtnList;
 
     @OnClick({R.id.btn_detail_location_none, R.id.btn_detail_location_near,
             R.id.btn_detail_location_gangnam, R.id.btn_detail_location_hongdae,
@@ -174,19 +196,19 @@ public class FilteredSearchActivity extends AppCompatActivity {
             R.id.btn_detail_location_bucheon, R.id.btn_detail_location_guro,
             R.id.btn_detail_location_jamsil, R.id.btn_detail_location_mockdong,
             R.id.btn_detail_location_anyang, R.id.btn_detail_location_kyunggi, R.id.btn_detail_location_etc})
-    public void onViewClicked(ImageButton imageButton) {
-        for (ImageButton button : locationBtnList) {
+    public void onViewClicked(Button imageButton) {
+        for (Button button : locationBtnList) {
             int btnId = button.getId();
-            button.setImageResource(locationBtnMap.get(btnId).getFirst());
+            button.setBackgroundResource(locationBtnMap.get(btnId).getFirst());
             locationBtnMap.get(btnId).setThird(false);
         }
 
         int selectedBtnId = imageButton.getId();
         if (locationBtnMap.get(selectedBtnId).getThird()) {
-            imageButton.setImageResource(locationBtnMap.get(selectedBtnId).getFirst());
+            imageButton.setBackgroundResource(locationBtnMap.get(selectedBtnId).getFirst());
             locationBtnMap.get(selectedBtnId).setThird(false);
         } else {
-            imageButton.setImageResource(locationBtnMap.get(selectedBtnId).getSecond());
+            imageButton.setBackgroundResource(locationBtnMap.get(selectedBtnId).getSecond());
             locationBtnMap.get(selectedBtnId).setThird(true);
         }
     }

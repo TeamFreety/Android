@@ -124,7 +124,6 @@
                     android:textColor="#95989A"
                     android:textSize="11sp" />
 
-
             </RelativeLayout>
 
             <View
@@ -274,57 +273,58 @@
                         android:layout_width="318dp"
                         android:layout_height="30dp">
 
-                        <ImageButton
+                        <Button
                             android:id="@+id/btn_detail_location_none"
                             android:layout_width="55dp"
                             android:layout_height="30dp"
-                            android:background="@null"
+                            android:background="@drawable/search_none"
                             android:src="@drawable/search_none"
+                            android:textColor="#00000000"
                             android:text="무관"
                             android:textSize="10sp" />
 
-                        <ImageButton
+                        <Button
                             android:id="@+id/btn_detail_location_near"
                             android:layout_width="55dp"
                             android:layout_height="30dp"
                             android:layout_marginLeft="7dp"
                             android:layout_toRightOf="@+id/btn_detail_location_none"
-                            android:background="@null"
-                            android:src="@drawable/search_near"
+                            android:background="@drawable/search_near"
+                            android:textColor="#00000000"
                             android:text="내주변"
                             android:textSize="10sp" />
 
-                        <ImageButton
+                        <Button
                             android:id="@+id/btn_detail_location_gangnam"
                             android:layout_width="60dp"
                             android:layout_height="30dp"
                             android:layout_marginLeft="7dp"
                             android:layout_toRightOf="@+id/btn_detail_location_near"
-                            android:background="@null"
-                            android:src="@drawable/search_gananam"
+                            android:background="@drawable/search_gananam"
                             android:text="강남/논현"
+                            android:textColor="#00000000"
                             android:textSize="10sp" />
 
-                        <ImageButton
+                        <Button
                             android:id="@+id/btn_detail_location_hongdae"
                             android:layout_width="60dp"
                             android:layout_height="30dp"
                             android:layout_marginLeft="7dp"
                             android:layout_toRightOf="@+id/btn_detail_location_gangnam"
-                            android:background="@null"
-                            android:src="@drawable/search_hongdae"
+                            android:background="@drawable/search_hongdae"
                             android:text="홍대/합정"
+                            android:textColor="#00000000"
                             android:textSize="10sp" />
 
-                        <ImageButton
+                        <Button
                             android:id="@+id/btn_detail_location_gundae"
                             android:layout_width="60dp"
                             android:layout_height="30dp"
                             android:layout_marginLeft="7dp"
                             android:layout_toRightOf="@+id/btn_detail_location_hongdae"
-                            android:background="@null"
-                            android:src="@drawable/search_gundae"
+                            android:background="@drawable/search_gundae"
                             android:text="건대/광진"
+                            android:textColor="#00000000"
                             android:textSize="10sp" />
                     </RelativeLayout>
 
@@ -334,48 +334,47 @@
                         android:layout_height="30dp"
                         android:layout_marginTop="10dp">
 
-                        <ImageButton
+                        <Button
                             android:id="@+id/btn_detail_location_kyodae"
                             android:layout_width="60dp"
                             android:layout_height="30dp"
-                            android:background="@null"
-                            android:src="@drawable/search_kyodae"
+                            android:background="@drawable/search_kyodae"
+                            android:textColor="#00000000"
                             android:text="교대/서초"
                             android:textSize="10sp" />
 
-                        <ImageButton
+                        <Button
                             android:id="@+id/btn_detail_location_myungdong"
                             android:layout_width="60dp"
                             android:layout_height="30dp"
                             android:layout_marginLeft="7dp"
                             android:layout_toRightOf="@id/btn_detail_location_kyodae"
-                            android:background="@null"
-                            android:src="@drawable/search_myeongdong"
+                            android:background="@drawable/search_myeongdong"
+                            android:textColor="#00000000"
                             android:text="명동/종로"
                             android:textSize="10sp" />
 
-                        <ImageButton
+                        <Button
                             android:id="@+id/btn_detail_location_boondang"
                             android:layout_width="88dp"
                             android:layout_height="30dp"
                             android:layout_marginLeft="7dp"
                             android:layout_toRightOf="@id/btn_detail_location_myungdong"
-                            android:background="@null"
-                            android:src="@drawable/search_boondang"
+                            android:textColor="#00000000"
+                            android:background="@drawable/search_boondang"
                             android:text="분당/판교/용인"
                             android:textSize="10sp" />
 
-                        <ImageButton
+                        <Button
                             android:id="@+id/btn_detail_location_garosu"
                             android:layout_width="88dp"
                             android:layout_height="30dp"
                             android:layout_marginLeft="8dp"
                             android:layout_toRightOf="@+id/btn_detail_location_boondang"
-                            android:background="@null"
-                            android:src="@drawable/search_garosu"
+                            android:textColor="#00000000"
+                            android:background="@drawable/search_garosu"
                             android:text="가로수길/압구정"
                             android:textSize="10sp" />
-
 
                     </RelativeLayout>
 
@@ -385,45 +384,45 @@
                         android:layout_height="30dp"
                         android:layout_marginTop="10dp">
 
-                        <ImageButton
+                        <Button
                             android:id="@+id/btn_detail_location_yangjae"
                             android:layout_width="88dp"
                             android:layout_height="30dp"
-                            android:background="@null"
-                            android:src="@drawable/search_yangjae"
+                            android:background="@drawable/search_yangjae"
+                            android:textColor="#00000000"
                             android:text="양재/도곡/대치"
                             android:textSize="10sp" />
 
-                        <ImageButton
+                        <Button
                             android:id="@+id/btn_detail_location_edae"
                             android:layout_width="60dp"
                             android:layout_height="30dp"
                             android:layout_marginLeft="7dp"
                             android:layout_toRightOf="@+id/btn_detail_location_yangjae"
-                            android:background="@null"
-                            android:src="@drawable/search_edae"
+                            android:background="@drawable/search_edae"
+                            android:textColor="#00000000"
                             android:text="이대/신촌"
                             android:textSize="10sp" />
 
-                        <ImageButton
+                        <Button
                             android:id="@+id/btn_detail_location_nowon"
                             android:layout_width="60dp"
                             android:layout_height="30dp"
                             android:layout_marginLeft="7dp"
                             android:layout_toRightOf="@+id/btn_detail_location_edae"
-                            android:background="@null"
-                            android:src="@drawable/search_nowon"
+                            android:background="@drawable/search_nowon"
+                            android:textColor="#00000000"
                             android:text="노원/강북"
                             android:textSize="10sp" />
 
-                        <ImageButton
+                        <Button
                             android:id="@+id/btn_detail_location_sungshin"
                             android:layout_width="88dp"
                             android:layout_height="30dp"
                             android:layout_marginLeft="7dp"
                             android:layout_toRightOf="@+id/btn_detail_location_nowon"
-                            android:background="@null"
-                            android:src="@drawable/search_sungshin"
+                            android:background="@drawable/search_sungshin"
+                            android:textColor="#00000000"
                             android:text="성신여대/대학로"
                             android:textSize="10sp" />
                     </RelativeLayout>
@@ -434,45 +433,45 @@
                         android:layout_height="30dp"
                         android:layout_marginTop="10dp">
 
-                        <ImageButton
+                        <Button
                             android:id="@+id/btn_detail_location_ilsan"
                             android:layout_width="60dp"
                             android:layout_height="30dp"
-                            android:background="@null"
-                            android:src="@drawable/search_ilsan"
+                            android:background="@drawable/search_ilsan"
+                            android:textColor="#00000000"
                             android:text="일산/은평"
                             android:textSize="10sp" />
 
-                        <ImageButton
+                        <Button
                             android:id="@+id/btn_detail_location_bucheon"
                             android:layout_width="60dp"
                             android:layout_height="30dp"
                             android:layout_marginLeft="7dp"
                             android:layout_toRightOf="@+id/btn_detail_location_ilsan"
-                            android:background="@null"
-                            android:src="@drawable/search_bucheon"
+                            android:background="@drawable/search_bucheon"
+                            android:textColor="#00000000"
                             android:text="부천/인천"
                             android:textSize="10sp" />
 
-                        <ImageButton
+                        <Button
                             android:id="@+id/btn_detail_location_guro"
                             android:layout_width="88dp"
                             android:layout_height="30dp"
                             android:layout_marginLeft="7dp"
                             android:layout_toRightOf="@+id/btn_detail_location_bucheon"
-                            android:background="@null"
-                            android:src="@drawable/search_guro"
+                            android:background="@drawable/search_guro"
+                            android:textColor="#00000000"
                             android:text="구로/금천/광명"
                             android:textSize="10sp" />
 
-                        <ImageButton
+                        <Button
                             android:id="@+id/btn_detail_location_jamsil"
                             android:layout_width="88dp"
                             android:layout_height="30dp"
                             android:layout_marginLeft="7dp"
                             android:layout_toRightOf="@+id/btn_detail_location_guro"
-                            android:background="@null"
-                            android:src="@drawable/search_jamsil"
+                            android:textColor="#00000000"
+                            android:background="@drawable/search_jamsil"
                             android:text="잠실/송파/강동"
                             android:textSize="10sp" />
 
@@ -483,45 +482,45 @@
                         android:layout_height="30dp"
                         android:layout_marginTop="10dp">
 
-                        <ImageButton
+                        <Button
                             android:id="@+id/btn_detail_location_mockdong"
                             android:layout_width="88dp"
                             android:layout_height="30dp"
-                            android:background="@null"
-                            android:src="@drawable/search_mokdong"
+                            android:textColor="#00000000"
+                            android:background="@drawable/search_mokdong"
                             android:text="목동/강서/김포"
                             android:textSize="10sp" />
 
-                        <ImageButton
+                        <Button
                             android:id="@+id/btn_detail_location_anyang"
                             android:layout_width="88dp"
                             android:layout_height="30dp"
                             android:layout_marginLeft="6dp"
                             android:layout_toRightOf="@id/btn_detail_location_mockdong"
-                            android:background="@null"
-                            android:src="@drawable/search_anyang"
+                            android:background="@drawable/search_anyang"
+                            android:textColor="#00000000"
                             android:text="안양/군포/안산"
                             android:textSize="10sp" />
 
-                        <ImageButton
+                        <Button
                             android:id="@+id/btn_detail_location_kyunggi"
                             android:layout_width="75dp"
                             android:layout_height="30dp"
                             android:layout_marginLeft="6dp"
                             android:layout_toRightOf="@id/btn_detail_location_anyang"
-                            android:background="@null"
-                            android:src="@drawable/search_gyeongki"
+                            android:background="@drawable/search_gyeongki"
+                            android:textColor="#00000000"
                             android:text="경기도 전체"
                             android:textSize="10sp" />
 
-                        <ImageButton
+                        <Button
                             android:id="@+id/btn_detail_location_etc"
                             android:layout_width="50dp"
                             android:layout_height="30dp"
                             android:layout_marginLeft="6dp"
                             android:layout_toRightOf="@id/btn_detail_location_kyunggi"
-                            android:background="@null"
-                            android:src="@drawable/search_etc"
+                            android:background="@drawable/search_etc"
+                            android:textColor="#00000000"
                             android:text="기타"
                             android:textSize="10sp" />
 

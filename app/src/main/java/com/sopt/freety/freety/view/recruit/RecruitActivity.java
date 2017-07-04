@@ -35,6 +35,7 @@ import java.text.ParseException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -55,7 +56,7 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
     TextView profileNameText;
 
     @BindView(R.id.recruit_pick_btn)
-    ToggleButton pickBtn;
+    Button pickBtn;
 
     @BindView(R.id.recruit_hair_type)
     TextView hairTypeText;
@@ -79,42 +80,45 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
     TextView belongNameText;
 
     @OnClick(R.id.recruit_pick_btn)
-    public void onPickBtnClick(ToggleButton toggleBtn) {
+    public void onPickBtnClick(Button button) {
 
-        final boolean isChecked = toggleBtn.isChecked();
-        if (isChecked) {
-            int currPickNumber = Integer.parseInt(toggleBtn.getTextOn().toString());
-            ImageSwicherHelper.doChangeAnimation(this, pickHeartImage,
-                    R.anim.heart_fade_out, R.anim.heart_fade_in, R.drawable.recruit_heart_gradient_single);
-            toggleBtn.setTextOff(String.valueOf(currPickNumber - 1));
-
-        } else {
-            int currPickNumber = Integer.parseInt(toggleBtn.getTextOff().toString());
+        if (isPicked) {
+            int currPickNumber = Integer.parseInt(button.getText().toString());
             ImageSwicherHelper.doChangeAnimation(this, pickHeartImage,
                     R.anim.heart_fade_out, R.anim.heart_fade_in, R.drawable.recruit_heart_empty_single);
-            toggleBtn.setTextOn(String.valueOf(currPickNumber + 1));
+            button.setText(String.valueOf(currPickNumber - 1));
+
+        } else {
+            int currPickNumber = Integer.parseInt(button.getText().toString());
+            ImageSwicherHelper.doChangeAnimation(this, pickHeartImage,
+                    R.anim.heart_fade_out, R.anim.heart_fade_in, R.drawable.recruit_heart_gradient_single);
+            button.setText(String.valueOf(currPickNumber + 1));
         }
 
         int postId = getIntent().getIntExtra("postId", 0);
-        Call<PickResultData> pickResultDataCall = networkService.pick(SharedAccessor.getToken(RecruitActivity.this), new PickRequestData(postId, isChecked));
+        Call<PickResultData> pickResultDataCall = networkService.pick(SharedAccessor.getToken(RecruitActivity.this), new PickRequestData(postId, isPicked));
         pickResultDataCall.enqueue(new Callback<PickResultData>() {
             @Override
             public void onResponse(Call<PickResultData> call, Response<PickResultData> response) {
                 if (response.isSuccessful()) {
                     String resultMsg = response.body().getResult();
-                    if (isChecked) {
+                    Log.i(TAG, "onResponse: " + resultMsg);
+                    if (isPicked) {
                         if (!resultMsg.equals("unpick success")) {
                             throw new RuntimeException("unexpected result");
                         }
+                        isPicked = !isPicked;
                     } else {
                         if (!resultMsg.equals("pick success")) {
                             throw new RuntimeException("unexpected result");
                         }
+                        isPicked = !isPicked;
                     }
                 }
             }
             @Override
             public void onFailure(Call<PickResultData> call, Throwable t) {
+                Log.i(TAG, "onResponse: " + "on failed");
             }
         });
     }
@@ -135,14 +139,16 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
     private NetworkService networkService;
     private LatLng latLng;
 
+    /**
+     * This is boolean value for {@link #pickBtn}
+     */
+    private boolean isPicked;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recruit);
         ButterKnife.bind(this);
-
-        final MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.recruit_map);
-        mapFragment.getMapAsync(this);
         networkService = AppController.getInstance().getNetworkService();
         initRecruitInfo();
     }
@@ -152,14 +158,15 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
         if (latLng == null) {
             return;
         }
+
         googleMap.addMarker(new MarkerOptions().position(latLng));
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
         googleMap.getUiSettings().setAllGesturesEnabled(false);
     }
 
     private void initRecruitInfo() {
-        PostDetailRequestData data = new PostDetailRequestData(this, getIntent().getIntExtra("postId", 0));
-        Call<PostDetailResultData> requestData = networkService.getPostDetailData(data.getMember_token(), data.getPostId());
+        PostDetailRequestData data = new PostDetailRequestData(getIntent().getIntExtra("postId", 0));
+        Call<PostDetailResultData> requestData = networkService.getPostDetailData(SharedAccessor.getToken(RecruitActivity.this), data.getPostId());
         requestData.enqueue(new Callback<PostDetailResultData>() {
             @Override
             public void onResponse(Call<PostDetailResultData> call, Response<PostDetailResultData> response) {
@@ -168,12 +175,20 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
                     final PagerAdapter adapter = new RecruitViewPagerAdapter(RecruitActivity.this, result.getImageList());
                     imageViewPager.setAdapter(adapter);
                     imageViewPager.setCurrentItem(1000);
-                    Glide.with(RecruitActivity.this).load(result.getWriterImageURL()).thumbnail(0.3f).into(profileImage);
+                    Glide.with(RecruitActivity.this).load(result.getWriterImageURL()).thumbnail(0.3f)
+                            .bitmapTransform(new CropCircleTransformation(RecruitActivity.this)).into(profileImage);
                     profileTitleText.setText(result.getTitle());
                     profileNameText.setText(result.getWriterName());
-                    pickBtn.setText(String.valueOf(result.getPickCount()));
                     if (result.isPicked()) {
-                        pickBtn.setChecked(true);
+                        isPicked = true;
+                        Log.i(TAG, "onResponse: " + result.isPicked());
+                        pickBtn.setText(String.valueOf(result.getPickCount()));
+                        pickHeartImage.setImageResource(R.drawable.recruit_heart_gradient_single);
+                    } else {
+                        isPicked = false;
+                        Log.i(TAG, "onResponse: " + result.getPickCount());
+                        pickBtn.setText(String.valueOf(result.getPickCount()));
+                        pickHeartImage.setImageResource(R.drawable.recruit_heart_empty_single);
                     }
 
                     hairTypeText.setText(result.getHairType());
@@ -187,7 +202,9 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
                     hairInfoText.setText(result.getContent());
                     addressText.setText(result.getAddress());
                     belongNameText.setText(result.getWriterBelongName());
-                    pickBtn.setEnabled(true);
+
+                    final MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.recruit_map);
+                    mapFragment.getMapAsync(RecruitActivity.this);
                 }
             }
 

@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -23,11 +24,13 @@ import com.google.android.gms.location.LocationServices;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.adapter.RecyclerViewOnItemClickListener;
 import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.data.PostListData;
 import com.sopt.freety.freety.data.PostListResultData;
 import com.sopt.freety.freety.network.NetworkService;
 import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
+import com.sopt.freety.freety.view.recruit.RecruitActivity;
 import com.sopt.freety.freety.view.search.adapter.SearchRecyclerAdapter;
 import com.sopt.freety.freety.view.wirte.WriteActivity;
 
@@ -127,13 +130,29 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
 
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE)
-                {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     mFloatingActionButton.show();
                 }
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
+
+        mRecyclerView.addOnItemTouchListener(new RecyclerViewOnItemClickListener(getContext(), mRecyclerView,
+                new RecyclerViewOnItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int position) {
+                        Intent postDetailIntent = new Intent(getContext(), RecruitActivity.class);
+                        postDetailIntent.putExtra("postId", adapter.getPostDataList().get(position).getPostId());
+                        AppController.getInstance().pushPageStack();
+                        startActivity(postDetailIntent);
+                    }
+
+            @Override
+            public void onItemLongClick(View v, int position) {
+
+            }
+        }));
+
         if (googleApiClient == null) {
             googleApiClient = buildGoogleApiClient();
         }
@@ -143,26 +162,33 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
         return view;
     }
 
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == DETAIL_SEARCH_CODE) {
-            /*
-            Call<PostListResultData> call = networkService.getFilteredData();
+            Call<PostListResultData> call = networkService.getFilteredData(data.getIntExtra("typeDye", 0),
+                    data.getIntExtra("typePerm", 0),
+                    data.getIntExtra("typeCut", 0),
+                    data.getIntExtra("typeEct", 0),
+                    data.getIntExtra("least_price", 0),
+                    data.getIntExtra("high_price", 300000),
+                    data.getIntExtra("career", 0),
+                    data.getStringExtra("least_date"),
+                    data.getStringExtra("high_date"),
+                    data.getStringExtra("sigugun"));
             call.enqueue(new Callback<PostListResultData>() {
                 @Override
                 public void onResponse(Call<PostListResultData> call, Response<PostListResultData> response) {
-                    if (response.isSuccessful() && response.body().getMessage().equals("")) {
+                    if (response.isSuccessful() && response.body().getMessage().equals("successfully load NEAREST post list data")) {
                         Log.i("SearchFragment", "onResponse: " + response.body().getPostList().size());
                         adapter.updatePostListData(response.body().getPostList());
+                    } else {
+                        Toast.makeText(getActivity(), "응답은 잘 왔지만 메세지가 안맞음.", Toast.LENGTH_SHORT).show();
                     }
                 }
-
                 @Override
                 public void onFailure(Call<PostListResultData> call, Throwable t) {
-
+                    Toast.makeText(getActivity(), "데이터 로딩 실패.", Toast.LENGTH_SHORT).show();
                 }
             });
-            */
         }
     }
 

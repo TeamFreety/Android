@@ -75,6 +75,15 @@ public interface NetworkService {
     @GET("/search/nearest")
     Call<PostListResultData> getSearchNearestData(@Query("latitude") double lat, @Query("longitude") double lng);
 
-    @GET("/search/")
-    Call<PostListResultData> getFilteredData();
+    @GET("/search/searchDetail")
+    Call<PostListResultData> getFilteredData(@Query("typeDye") int typeDye,
+                                             @Query("typePerm") int typePerm,
+                                             @Query("typeCut") int typeCut,
+                                             @Query("typeEct") int typeEtc,
+                                             @Query("least_price") int leastPrice,
+                                             @Query("high_price") int highPrice,
+                                             @Query("career") int careerType,
+                                             @Query("least_date") String leastDate,
+                                             @Query("high_date") String highDate,
+                                             @Query("sigugun") String sigugun);
 }

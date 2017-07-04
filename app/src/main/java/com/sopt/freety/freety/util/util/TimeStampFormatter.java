@@ -32,15 +32,8 @@ public class TimeStampFormatter {
         if (weeksFromNow < 1) {
             return formatDays(daysFromNow);
         }
-        long monthsFromNow = TimeUnit.MILLISECONDS.toDays(millisFromNow) / 30;
-        if (monthsFromNow < 1) {
-            return formatWeeks(weeksFromNow);
-        }
-        long yearsFromNow = TimeUnit.MILLISECONDS.toDays(millisFromNow) / 365;
-        if (yearsFromNow < 1) {
-            return formatMonths(monthsFromNow);
-        }
-        return formatYears(yearsFromNow);
+
+        return String.format("%d.%d.%d", timestamp.getYear(), timestamp.getMonth(), timestamp.getDay());
     }
 
     private long getMillisFromNow(Date commentedAt) {
@@ -61,15 +54,4 @@ public class TimeStampFormatter {
         return days + "일 전";
     }
 
-    private String formatWeeks(long weeks) {
-        return weeks + "주 전";
-    }
-
-    private String formatMonths(long months) {
-        return months + "달 전";
-    }
-
-    private String formatYears(long years) {
-        return years + "년 전";
-    }
 }
