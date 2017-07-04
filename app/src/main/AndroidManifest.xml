@@ -32,15 +32,16 @@
 
         <activity android:name=".view.login.JoinActivity" />
         <activity android:name=".view.login.FirstLoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".view.login.EmailLoginActivity" />
 
 
         <activity android:name=".view.main.MainActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity
             android:name="com.facebook.FacebookActivity"

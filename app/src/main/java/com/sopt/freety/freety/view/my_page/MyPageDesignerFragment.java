@@ -15,7 +15,6 @@ import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
-import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageViewPagerAdapter;
@@ -28,7 +27,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
  * Created by cmslab on 6/26/17.
  */
 
-public class MyPageFragment extends Fragment implements ScrollFeedbackRecyclerView.Callbacks{
+public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRecyclerView.Callbacks{
 
     @BindView(R.id.my_page_profile)
     ImageView profileImage;
@@ -50,13 +49,13 @@ public class MyPageFragment extends Fragment implements ScrollFeedbackRecyclerVi
 
     private static final float OPACITIY_FACTOR = 1.8f;
 
-    public MyPageFragment() {
+    public MyPageDesignerFragment() {
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_my_page, container, false);
+        final View view = inflater.inflate(R.layout.fragment_my_page_designer, container, false);
         ButterKnife.bind(this, view);
         Glide.with(this).load(R.drawable.chat_list_elem)
                 .bitmapTransform(new CropCircleTransformation(getContext()))

@@ -1,8 +1,5 @@
 package com.sopt.freety.freety.view.main;
 
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -10,20 +7,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.view.chat.ChatListFragment;
+import com.sopt.freety.freety.view.my_page.MyPageModelFragment;
 import com.sopt.freety.freety.view.search.SearchFragment;
 import com.sopt.freety.freety.view.home.HomeFragment;
-import com.sopt.freety.freety.view.my_page.MyPageFragment;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import com.sopt.freety.freety.view.my_page.MyPageDesignerFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,7 +66,10 @@ public class MainActivity extends AppCompatActivity {
                         replaceFragment(new ChatListFragment(), new Bundle(), "recruit");
                         break;
                     case R.id.action_my_page:
-                        replaceFragment(new MyPageFragment(), new Bundle(), "my_page");
+                        if (SharedAccessor.isDesigner(MainActivity.this))
+                            replaceFragment(new MyPageDesignerFragment(), new Bundle(), "my_page_designer");
+                        else
+                            replaceFragment(new MyPageModelFragment(), new Bundle(), "my_page_model");
                         break;
                 }
                 return true;

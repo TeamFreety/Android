@@ -239,9 +239,6 @@ private int rId;
             case R.id.kakaoBtn:
                 isKakaoLogin();
                 break;
-            case R.id.kakaoBtn:
-                isKakaoLogin();
-                break;
         }
     }
 

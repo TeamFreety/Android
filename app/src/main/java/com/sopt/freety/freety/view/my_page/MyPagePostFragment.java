@@ -32,7 +32,7 @@ import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 public class MyPagePostFragment extends Fragment {
 
 
-    @BindView(R.id.my_page_post_recycler_view)
+    @BindView(R.id.my_page_pick_list_recycler_view)
     ScrollFeedbackRecyclerView recyclerView;
 
     private ViewPagerEx viewPager;
