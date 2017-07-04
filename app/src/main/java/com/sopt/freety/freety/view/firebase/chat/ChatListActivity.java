@@ -11,7 +11,7 @@ public class ChatListActivity extends AppCompatActivity implements SwipeRefreshL
 
     public static final String ME = "junhoeKim";
 
-    private List<LetterListData> chatListDatas;
+    private List<LetterRoomData> chatListDatas;
     private LinearLayoutManager layoutManager;
     private LetterListAdapter adapter;
     private final DatabaseReference roomsReference = FirebaseDatabase.getInstance().getReference()
@@ -39,10 +39,10 @@ public class ChatListActivity extends AppCompatActivity implements SwipeRefreshL
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot chatListDataSnapShot : dataSnapshot.getChildren()) {
                     ChatListFirebaseData data = chatListDataSnapShot.getValue(ChatListFirebaseData.class);
-                    Log.i("LetterListData", "data myId : " + data.getMyId() + ", data otherId : " + data.getOtherId()
+                    Log.i("LetterRoomData", "data myId : " + data.getMyId() + ", data otherId : " + data.getOtherId()
                             + String.valueOf(data.getIsNew()));
                     if (data.getMyId().equals(ME)) {
-                        chatListDatas.add(new LetterListData(data.getRoomId(), R.drawable.chat_list_elem,
+                        chatListDatas.add(new LetterRoomData(data.getRoomId(), R.drawable.chat_list_elem,
                                 data.getIsNew(),
                                 "junhoe",
                                 "4:23",
@@ -54,7 +54,7 @@ public class ChatListActivity extends AppCompatActivity implements SwipeRefreshL
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.i("LetterListData", "the read failed" + databaseError.getMessage());
+                Log.i("LetterRoomData", "the read failed" + databaseError.getMessage());
             }
         });
 
@@ -64,7 +64,7 @@ public class ChatListActivity extends AppCompatActivity implements SwipeRefreshL
             @Override
             public void onItemClick(View v, int position) {
                 Intent toChatActivityIntent = new Intent(getApplicationContext(), ChatActivity.class);
-                LetterListData chatListData = chatListDatas.get(position);
+                LetterRoomData chatListData = chatListDatas.get(position);
                 toChatActivityIntent.putExtra("roomId", chatListData.getRoomId());
                 toChatActivityIntent.putExtra("otherId", chatListData.getOtherId());
                 startActivity(toChatActivityIntent);

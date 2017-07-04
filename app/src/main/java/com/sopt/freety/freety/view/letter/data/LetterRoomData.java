@@ -6,7 +6,7 @@ import com.sopt.freety.freety.R;
  * Created by cmslab on 6/25/17.
  */
 
-public class LetterListData {
+public class LetterRoomData {
 
     private final String imageURL;
     private final int notifCount;
@@ -14,7 +14,7 @@ public class LetterListData {
     private final String date;
     private final String lastMsg;
 
-    public LetterListData(final String imageURL, final int numUnRead, final String name, final String date, final String lastMsg) {
+    public LetterRoomData(final String imageURL, final int numUnRead, final String name, final String date, final String lastMsg) {
         this.imageURL = imageURL;
         this.notifCount = numUnRead;
         this.otherId = name;

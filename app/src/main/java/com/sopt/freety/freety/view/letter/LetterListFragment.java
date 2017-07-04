@@ -14,12 +14,11 @@ import android.view.ViewGroup;
 
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.view.letter.adapter.LetterListAdapter;
-import com.sopt.freety.freety.view.letter.data.LetterListData;
+import com.sopt.freety.freety.view.letter.data.LetterRoomData;
 import com.sopt.freety.freety.view.letter.data.RealmPerson;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -59,16 +58,16 @@ public class LetterListFragment extends Fragment implements SwipeRefreshLayout.O
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         RealmResults<RealmPerson> persons = realm.where(RealmPerson.class).findAll();
-        List<LetterListData> letterListDataList = new ArrayList<>();
+        List<LetterRoomData> letterListDataRoom = new ArrayList<>();
         for (RealmPerson person : persons) {
             try {
-                letterListDataList.add(person.getLetterListData());
+                letterListDataRoom.add(person.getLetterListData());
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
         }
 
-        chatListAdapter = new LetterListAdapter(getContext(), letterListDataList);
+        chatListAdapter = new LetterListAdapter(getContext(), letterListDataRoom);
         recyclerView.setAdapter(chatListAdapter);
         refreshLayout.setOnRefreshListener(this);
         return view;

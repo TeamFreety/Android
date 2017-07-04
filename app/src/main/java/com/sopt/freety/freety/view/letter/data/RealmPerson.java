@@ -46,7 +46,7 @@ public class RealmPerson extends RealmObject {
         return letterList;
     }
 
-    public LetterListData getLetterListData() throws ParseException {
+    public LetterRoomData getLetterListData() throws ParseException {
         int unReadCount = 0;
         String date = "";
         String lastMsg = "";
@@ -63,7 +63,7 @@ public class RealmPerson extends RealmObject {
                 lastMsg = letter.getContent();
             }
         }
-        return new LetterListData(imageURL, unReadCount, memberName, date, lastMsg);
+        return new LetterRoomData(imageURL, unReadCount, memberName, date, lastMsg);
     }
 }
 
