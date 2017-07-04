@@ -19,10 +19,8 @@ import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.view.chat.ChatListFragment;
 import com.sopt.freety.freety.view.my_page.MyPageDesignerFragment;
-<<<<<<< HEAD
+
 import com.sopt.freety.freety.view.my_page.MyPageModelFragment;
-=======
->>>>>>> master
 import com.sopt.freety.freety.view.search.SearchFragment;
 import com.sopt.freety.freety.view.home.HomeFragment;
 
