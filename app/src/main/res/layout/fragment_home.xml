@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:content="com.sopt.freety.freety.view.home.HomeFragment">
+    tools:context="com.sopt.freety.freety.view.home.HomeFragment">
 
 
     <RelativeLayout

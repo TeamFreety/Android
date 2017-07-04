@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:onClick="onScreenClick"
-    tools:content="com.sopt.freety.freety.view.login.DesignerEmailSignUpActivity">
+    tools:context="com.sopt.freety.freety.view.login.DesignerEmailSignUpActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
