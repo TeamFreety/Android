@@ -8,14 +8,14 @@ public class LetterData {
 
     private String name;
     private String imageURL;
-    private String context;
+    private String content;
     private String date;
     private boolean isMine;
 
-    public LetterData(String name, String imageURL, String context, String date, boolean isMine) {
+    public LetterData(String name, String imageURL, String content, String date, boolean isMine) {
         this.name = name;
         this.imageURL = imageURL;
-        this.context = context;
+        this.content = content;
         this.date = date;
         this.isMine = isMine;
     }
@@ -36,12 +36,12 @@ public class LetterData {
         this.imageURL = imageURL;
     }
 
-    public String getContext() {
-        return context;
+    public String getContent() {
+        return content;
     }
 
-    public void setContext(String context) {
-        this.context = context;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getDate() {

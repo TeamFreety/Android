@@ -51,13 +51,13 @@ public class LetterRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             Glide.with(context).load(letterDataList.get(position).getImageURL()).override(100, 100).thumbnail(0.2f).into(castedHolder.getImage());
             castedHolder.getNameText().setText(letterDataList.get(position).getName());
             castedHolder.getDateText().setText(letterDataList.get(position).getDate());
-            castedHolder.getContentText().setText(letterDataList.get(position).getContext());
+            castedHolder.getContentText().setText(letterDataList.get(position).getContent());
         } else {
             LetterViewRightHolder castedHolder = (LetterViewRightHolder) holder;
             Glide.with(context).load(letterDataList.get(position).getImageURL()).override(100, 100).thumbnail(0.2f).into(castedHolder.getImage());
             castedHolder.getNameText().setText(letterDataList.get(position).getName());
             castedHolder.getDateText().setText(letterDataList.get(position).getDate());
-            castedHolder.getContentText().setText(letterDataList.get(position).getContext());
+            castedHolder.getContentText().setText(letterDataList.get(position).getContent());
         }
     }
 

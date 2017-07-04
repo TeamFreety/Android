@@ -30,7 +30,6 @@
 
         <activity android:name=".view.login.SelectMemberTypeActivity" />
         <activity android:name=".view.login.StartActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

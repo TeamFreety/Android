@@ -11,7 +11,7 @@
     android:paddingRight="15dp"
     android:orientation="vertical"
     android:onClick="onScreenClick"
-    tools:context="com.sopt.freety.freety.view.recruit.MapPopupActivity">
+    tools:content="com.sopt.freety.freety.view.recruit.MapPopupActivity">
     
     <Button
         android:id="@+id/recruit_popup_exit"

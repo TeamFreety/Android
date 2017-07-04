@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.sopt.freety.freety.view.letter.LetterActivity">
+    tools:content="com.sopt.freety.freety.view.letter.LetterActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -38,10 +38,12 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:onClick="onScreenClick"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/letter_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/letter_input_layout">
