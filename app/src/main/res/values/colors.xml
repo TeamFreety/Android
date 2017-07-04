@@ -8,6 +8,10 @@
     <color name="tabUnselectedColor">#969696</color>
     <color name="itemBorderColor">#C3C3C3</color>
     <color name="postStyleColor">#909090</color>
+    <color name="myPageTitle">#cccccc</color>
+    <color name="myPageModelTitle">#95989A</color>
+    <color name="myPagePictureDefault">#CBCBCB</color>
+    <color name="myPageHeaderColor">#EFEFEF</color>
 
     <color name="checkBoxCheckedColor">#222222</color>
     <color name="checkBoxUncheckedColor">#676767</color>

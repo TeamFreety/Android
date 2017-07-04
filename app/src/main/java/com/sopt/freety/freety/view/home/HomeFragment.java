@@ -100,6 +100,7 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
         postViewPager.setAdapter(pagerAdapter);
         postViewPager.setOffscreenPageLimit(4);
 
+
         // contents view pager
         for (int count = 0; count < PAGE_COUNT; count++) {
             indicatorTabLayout.addTab(indicatorTabLayout.newTab());

@@ -2,6 +2,7 @@ package com.sopt.freety.freety.view.my_page;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
@@ -12,8 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.data.OnlyMsgResultData;
 import com.sopt.freety.freety.network.NetworkService;
 import com.sopt.freety.freety.util.SharedAccessor;
+
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.util.util.EditTextUtils;
@@ -54,16 +56,16 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
  * Created by cmslab on 6/26/17.
  */
 
-public class MyPageFragment extends Fragment implements ScrollFeedbackRecyclerView.Callbacks, ScreenClickable{
+public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRecyclerView.Callbacks, ScreenClickable{
 
     @BindView(R.id.my_page_profile)
     ImageView profileImage;
 
-    @BindView(R.id.my_page_designer_name)
+    @BindView(R.id.text_my_page_designer_name)
     TextView designerNameText;
 
-    @BindView(R.id.my_page_designer_status)
-    EditText designerStatusEditText;
+    @BindView(R.id.edit_my_page_designer_status)
+    EditText designerStatusTextView;
 
     @BindView(R.id.my_page_tab)
     TabLayout tabLayout;
@@ -85,31 +87,33 @@ public class MyPageFragment extends Fragment implements ScrollFeedbackRecyclerVi
     @BindView(R.id.my_page_hide_toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.my_page_letter_btn)
-    Button letterButton;
+    @BindView(R.id.btn_my_page_chat)
+    ImageButton chatButton;
 
-    @BindView(R.id.my_page_status_edit_btn)
-    Button statusEditButton;
+    @BindView(R.id.btn_my_page_status_edit)
+    ImageButton statusEditButton;
 
-    @OnClick(R.id.my_page_status_edit_btn)
+    @OnClick(R.id.btn_my_page_status_edit)
     public void onClickEditBtn() {
-        EditTextUtils.setUseableEditText(designerStatusEditText, true);
-        designerStatusEditText.requestFocus();
+        EditTextUtils.setUseableEditText(designerStatusTextView, true);
+        designerStatusTextView.requestFocus();
+        designerStatusTextView.setSelection(designerStatusTextView.length());
         InputMethodManager lManager = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        lManager.showSoftInput(designerStatusEditText, 0);
+        lManager.showSoftInput(designerStatusTextView, 0);
     }
 
     private static final float OPACITY_FACTOR = 1.8f;
     private NetworkService networkService;
     private MyPageDesignerGetData myPageDesignerGetData;
 
-    public MyPageFragment() {
+    public MyPageDesignerFragment() {
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_my_page, container, false);
+
+        final View view = inflater.inflate(R.layout.fragment_designer_my_page, container, false);
         ButterKnife.bind(this, view);
         Glide.with(this).load(R.drawable.chat_list_elem)
                 .bitmapTransform(new CropCircleTransformation(getContext()))
@@ -119,9 +123,12 @@ public class MyPageFragment extends Fragment implements ScrollFeedbackRecyclerVi
         tabLayout.addTab(tabLayout.newTab().setText("스타일"));
         tabLayout.addTab(tabLayout.newTab().setText("후기"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.setTabTextColors(Color.parseColor("#95989A"), Color.parseColor("#000000"));
+        tabLayout.setSelectedTabIndicatorHeight((int) (3 * getResources().getDisplayMetrics().density));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+
                 viewPager.setCurrentItem(tab.getPosition());
             }
             @Override
@@ -143,13 +150,13 @@ public class MyPageFragment extends Fragment implements ScrollFeedbackRecyclerVi
         });
 
         if (SharedAccessor.isDesigner(getContext())) {
-            letterButton.setEnabled(false);
-            letterButton.setVisibility(View.INVISIBLE);
+            chatButton.setEnabled(false);
+            chatButton.setVisibility(View.INVISIBLE);
         } else {
             statusEditButton.setEnabled(false);
             statusEditButton.setVisibility(View.INVISIBLE);
         }
-        EditTextUtils.setUseableEditText(designerStatusEditText, false);
+        EditTextUtils.setUseableEditText(designerStatusTextView, false);
         return view;
     }
 
@@ -183,12 +190,12 @@ public class MyPageFragment extends Fragment implements ScrollFeedbackRecyclerVi
 
     @Override
     public void onScreenClick(View v) {
-        if (designerStatusEditText.isFocused()) {
+        if (designerStatusTextView.isFocused()) {
             InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(designerStatusEditText.getWindowToken(), 0);
-            EditTextUtils.setUseableEditText(designerStatusEditText, false);
+            imm.hideSoftInputFromWindow(designerStatusTextView.getWindowToken(), 0);
+            EditTextUtils.setUseableEditText(designerStatusTextView, false);
             Call<OnlyMsgResultData> call = networkService.getOkMsg(SharedAccessor.getToken(getContext()),
-                    new MyPageStatusUpdateRequestData(designerStatusEditText.getText().toString()));
+                    new MyPageStatusUpdateRequestData(designerStatusTextView.getText().toString()));
             call.enqueue(new Callback<OnlyMsgResultData>() {
                 @Override
                 public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
@@ -216,7 +223,7 @@ public class MyPageFragment extends Fragment implements ScrollFeedbackRecyclerVi
                     myPageDesignerGetData = response.body();
                     Glide.with(getContext()).load(response.body().getDesignerImageURL()).into(profileImage);
                     designerNameText.setText(response.body().getDesignerName());
-                    designerStatusEditText.setText(response.body().getDesignerStatusMsg());
+                    designerStatusTextView.setText(response.body().getDesignerStatusMsg());
                     viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
                     PagerAdapter pagerAdapter = new MyPageViewPagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
                     viewPager.setAdapter(pagerAdapter);

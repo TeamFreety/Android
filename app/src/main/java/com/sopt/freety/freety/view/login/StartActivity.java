@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
+
+
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -19,6 +21,8 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+
+
 
 import com.kakao.auth.AuthType;
 import com.kakao.auth.ErrorCode;
@@ -31,9 +35,10 @@ import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
-
 import com.sopt.freety.freety.R;
+
 import com.sopt.freety.freety.application.AppController;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;

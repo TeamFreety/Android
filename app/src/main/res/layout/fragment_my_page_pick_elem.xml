@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/image_border"
+    android:gravity="center">
+
+    <com.sopt.freety.freety.util.custom.ImageView34
+        android:id="@+id/my_page_pick_list_image"
+        android:src="@drawable/freety_logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/my_page_pick_list_address"
+            android:text="부천"
+            android:textColor="@color/colorBlack"
+            android:paddingBottom="4dp"
+            android:paddingTop="10dp"
+            android:textSize="12sp"
+            android:textAlignment="center"
+            android:background="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/my_page_pick_list_style"
+            android:text="스핀스왈로 펌"
+            android:textColor="@color/postStyleColor"
+            android:paddingBottom="13dp"
+            android:textSize="17sp"
+            android:textAlignment="center"
+            android:background="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>
+

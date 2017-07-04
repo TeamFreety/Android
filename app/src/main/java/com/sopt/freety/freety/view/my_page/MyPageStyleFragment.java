@@ -17,7 +17,6 @@ import com.sopt.freety.freety.view.my_page.adapter.MyPageStyleRecyclerAdapter;
 import com.sopt.freety.freety.view.my_page.data.MyPageStyleHeaderData;
 import com.sopt.freety.freety.view.my_page.data.MyPageStyleBodyData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -38,7 +37,7 @@ public class MyPageStyleFragment extends Fragment {
     private GridLayoutManager layoutManager;
     private MyPageStyleRecyclerAdapter adapter;
     private ViewPagerEx viewPager;
-    private MyPageFragment myPageFragment;
+    private MyPageDesignerFragment myPageFragment;
 
     public MyPageStyleFragment() {
     }
@@ -48,7 +47,7 @@ public class MyPageStyleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_page_style, container, false);
         ButterKnife.bind(this, view);
-        myPageFragment = (MyPageFragment) getParentFragment();
+        myPageFragment = (MyPageDesignerFragment) getParentFragment();
         viewPager = (ViewPagerEx) container;
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.my_page_style_offset));
