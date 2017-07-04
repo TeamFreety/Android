@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -103,15 +102,7 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
         viewPager.setCurrentItem(currPageCount);
 
 
-        int betweenSpace = 100;
 
-        ViewGroup slidingTabStrip = (ViewGroup) indicatorTab.getChildAt(0);
-
-        for (int i=0; i<slidingTabStrip.getChildCount()-1; i++) {
-            View v = slidingTabStrip.getChildAt(i);
-            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-            params.rightMargin = betweenSpace;
-        }
 
         // contents view pager
         for (int count = 0; count < PAGE_COUNT; count++) {

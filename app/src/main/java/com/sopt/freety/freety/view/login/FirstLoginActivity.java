@@ -1,7 +1,5 @@
 package com.sopt.freety.freety.view.login;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,9 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -22,8 +17,6 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-
-import com.facebook.login.widget.LoginButton;
 import com.kakao.auth.AuthType;
 import com.kakao.auth.ErrorCode;
 import com.kakao.auth.ISessionCallback;
@@ -35,14 +28,11 @@ import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
-
 import com.sopt.freety.freety.R;
-import com.sopt.freety.freety.util.custom.KakaoLoginButton;
 import com.sopt.freety.freety.view.main.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.Arrays;
 
@@ -239,9 +229,7 @@ private int rId;
             case R.id.kakaoBtn:
                 isKakaoLogin();
                 break;
-            case R.id.kakaoBtn:
-                isKakaoLogin();
-                break;
+
         }
     }
 
