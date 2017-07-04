@@ -59,14 +59,22 @@ public interface NetworkService {
     @POST("/signup/model/email")
     Call<SignUpResultData> registerModelData(@Body SignUpData signUpData);
 
+    @POST("/signup/designer/sns")
+    Call<SignUpResultData> registerSNSDesignerData(@Body SignUpData signUpData);
+
+    @POST("/signup/model/sns")
+    Call<SignUpResultData> registerSNSModelData(@Body SignUpData signUpData);
+
+    @POST("/signup/")
+
     @GET("/duplicateCheck")
     Call<DuplicateData> checkDuplicate(@Query("tempEmail") String email);
 
     @POST("/login/email")
     Call<LoginResultData> login(@Body LoginRequestData data);
 
-    @POST("/login/SNS")
-    Call<SNSLoginResultData> SNSlogin(@Body SNSLoginRequestData data);
+    @POST("/login/sns")
+    Call<SNSLoginResultData> snslogin(@Body SNSLoginRequestData data);
 
     @GET("/postList")
     Call<PostListResultData> getHomePostData(@Query("sort") int type);

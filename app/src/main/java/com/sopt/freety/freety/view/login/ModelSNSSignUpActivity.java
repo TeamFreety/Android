@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
+import com.sopt.freety.freety.network.NetworkService;
 import com.sopt.freety.freety.util.Consts;
 import com.sopt.freety.freety.util.util.FormatChecker;
 import com.sopt.freety.freety.view.login.data.SignUpData;
@@ -51,15 +52,23 @@ public class ModelSNSSignUpActivity extends AppCompatActivity {
         onBackPressed();
     }
 
+    private NetworkService networkService;
+    private String kUserId;
+    private String fUserId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        kUserId = intent.getStringExtra("kuserId");
+        fUserId = intent.getStringExtra("fUserId");
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(Color.parseColor("#f1f1f1"));
         }
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_model_sns_sign_up);
         ButterKnife.bind(this);
+        networkService = AppController.getInstance().getNetworkService();
         initCheckBoxList();
         finishBtn.setClickable(false);
     }
@@ -97,12 +106,11 @@ public class ModelSNSSignUpActivity extends AppCompatActivity {
             //TODO: 통신 부분을 구현하고 나서 startActivity()하기 전에 꼭 AppController.getInstance().resetPageStack()을 호출할 것
             // 모르겠으면 물어보기!
             final SignUpData signUpData = new SignUpData.Builder(nameEditText.getText().toString(), Integer.parseInt(ageEditText.getText().toString()))
-                    .setMemberEmail(emailEditText.getText().toString())
-                    .setMemberPassword(passwordEditText.getText().toString())
+                    .setMemberFacebookCode(fUserId).setMemberKakaoCode(kUserId)
                     .build();
 
-            final Call<SignUpResultData> requestSignUpData = networkService.registerModelData(signUpData);
-            requestSignUpData.enqueue(new Callback<SignUpResultData>() {
+            final Call<SignUpResultData> requestSNSSignUpData = networkService.registerSNSModelData(signUpData);
+            requestSNSSignUpData.enqueue(new Callback<SignUpResultData>() {
                 @Override
                 public void onResponse(Call<SignUpResultData> call, Response<SignUpResultData> response) {
                     if (response.isSuccessful()) {
@@ -115,10 +123,14 @@ public class ModelSNSSignUpActivity extends AppCompatActivity {
                             editor.apply();
                             editor.commit();
                             AppController.getInstance().resetPageStack();
-                            startActivity(new Intent(ModelEmailSignUpActivity.this, MainActivity.class));
-                        } else {
-                            Toast.makeText(ModelEmailSignUpActivity.this, "메세지 내용이 뭔가 실패", Toast.LENGTH_SHORT).show();
-                        }
+                            startActivity(new Intent(ModelSNSSignUpActivity.this, MainActivity.class));
+                        } else if(resultData.getMessage().equals("signup failure")){
+                            if(resultData.getDetail().equals("duplicated sns code")) {
+                                Toast.makeText(ModelSNSSignUpActivity.this, "이미 있는 계정", Toast.LENGTH_SHORT).show();
+                            }else if(resultData.getDetail().equals("while making token")){
+                                Toast.makeText(ModelSNSSignUpActivity.this, "토큰 발급 실패", Toast.LENGTH_SHORT).show();
+                            }
+                        }else{}
                     }
                 }
 

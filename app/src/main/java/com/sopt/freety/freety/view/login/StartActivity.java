@@ -132,7 +132,7 @@ public class StartActivity extends AppCompatActivity {
                                 intent.putExtra("userName",userName);
                                 startActivity(intent);*/
 
-                                Call<SNSLoginResultData> call = AppController.getInstance().getNetworkService().SNSlogin(new SNSLoginRequestData(fUserId, kUserId));
+                                Call<SNSLoginResultData> call = AppController.getInstance().getNetworkService().snslogin(new SNSLoginRequestData(fUserId, kUserId));
                                 call.enqueue(new Callback<SNSLoginResultData>() {
                                     @Override
                                     public void onResponse(Call<SNSLoginResultData> call, Response<SNSLoginResultData> response) {
@@ -224,7 +224,7 @@ public class StartActivity extends AppCompatActivity {
                     //userName = userProfile.getNickname();
 
 
-                    Call<SNSLoginResultData> call = AppController.getInstance().getNetworkService().SNSlogin(new SNSLoginRequestData(fUserId, kUserId));
+                    Call<SNSLoginResultData> call = AppController.getInstance().getNetworkService().snslogin(new SNSLoginRequestData(fUserId, kUserId));
                     call.enqueue(new Callback<SNSLoginResultData>() {
                         @Override
                         public void onResponse(Call<SNSLoginResultData> call, Response<SNSLoginResultData> response) {
