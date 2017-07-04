@@ -1,4 +1,4 @@
-package com.sopt.freety.freety.view.chat.adapter;
+package com.sopt.freety.freety.view.letter.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,47 +8,45 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
-import com.sopt.freety.freety.view.chat.adapter.holder.ChatListViewHolder;
-import com.sopt.freety.freety.view.chat.data.ChatListData;
+import com.sopt.freety.freety.view.letter.adapter.holder.LetterListViewHolder;
+import com.sopt.freety.freety.view.letter.data.LetterListData;
 
 import java.util.List;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
-import static java.security.AccessController.getContext;
-
 /**
  * Created by cmslab on 6/25/17.
  */
 
-public class ChatListAdapter extends RecyclerView.Adapter<ChatListViewHolder> {
+public class LetterListAdapter extends RecyclerView.Adapter<LetterListViewHolder> {
 
     private RecyclerView recyclerView;
     private Context context;
-    private List<ChatListData> chatListDatas;
+    private List<LetterListData> chatListDatas;
 
 
-    public ChatListAdapter(Context context, List<ChatListData> chatListDatas) {
+    public LetterListAdapter(Context context, List<LetterListData> chatListDatas) {
         this.context = context;
         this.chatListDatas = chatListDatas;
     }
 
-    public void setAdapter(List<ChatListData> chatListDatas) {
+    public void setAdapter(List<LetterListData> chatListDatas) {
         this.chatListDatas = chatListDatas;
         notifyDataSetChanged();
     }
 
     @Override
-    public ChatListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public LetterListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_chat_body, parent, false);
-        final ChatListViewHolder chatListViewHolder = new ChatListViewHolder(view);
+        final LetterListViewHolder chatListViewHolder = new LetterListViewHolder(view);
         return chatListViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(ChatListViewHolder holder, int position) {
+    public void onBindViewHolder(LetterListViewHolder holder, int position) {
         holder.getName().setText(chatListDatas.get(position).getOtherId());
-        Glide.with(context).load(chatListDatas.get(position).getImgSource())
+        Glide.with(context).load(chatListDatas.get(position).getImageURL())
                 .thumbnail(0.3f)
                 .bitmapTransform(new CropCircleTransformation(context))
                 .into(holder.getImage());

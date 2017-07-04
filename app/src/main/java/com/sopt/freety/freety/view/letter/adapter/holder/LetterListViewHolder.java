@@ -1,4 +1,4 @@
-package com.sopt.freety.freety.view.chat.adapter.holder;
+package com.sopt.freety.freety.view.letter.adapter.holder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,14 +14,14 @@ import butterknife.ButterKnife;
  * Created by cmslab on 6/25/17.
  */
 
-public class ChatListViewHolder extends RecyclerView.ViewHolder {
+public class LetterListViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.chat_list_elem_image) public ImageView vhImage;
     @BindView(R.id.chat_list_elem_name) public TextView vhName;
     @BindView(R.id.chat_list_elem_date) public TextView vhDate;
     @BindView(R.id.chat_list_elem_last) public TextView vhLastMsg;
 
-    public ChatListViewHolder(View itemView) {
+    public LetterListViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }

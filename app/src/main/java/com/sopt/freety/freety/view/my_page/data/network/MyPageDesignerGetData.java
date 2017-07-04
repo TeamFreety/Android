@@ -1,6 +1,6 @@
 package com.sopt.freety.freety.view.my_page.data.network;
 
-import com.sopt.freety.freety.util.helper.DateFormatter;
+import com.sopt.freety.freety.util.util.DateParser;
 import com.sopt.freety.freety.view.my_page.data.MyPagePostData;
 import com.sopt.freety.freety.view.my_page.data.MyPageReviewData;
 import com.sopt.freety.freety.view.my_page.data.MyPageReviewElemData;
@@ -92,7 +92,7 @@ public class MyPageDesignerGetData {
         private String writtenTime;
 
         public MyPageReviewElemData getMyPageReviewElemData() throws ParseException {
-            String parsedDate = DateFormatter.fromDateStringToYearMonthDay(writtenTime);
+            String parsedDate = DateParser.toYearMonthDay(writtenTime);
             return new MyPageReviewElemData(title, parsedDate, content, commentPhoto, score, writerName);
         }
     }

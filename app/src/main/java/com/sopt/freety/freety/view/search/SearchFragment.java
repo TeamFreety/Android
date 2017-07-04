@@ -127,7 +127,6 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
                     mFloatingActionButton.hide();
                 }
             }
-
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
@@ -142,6 +141,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
                     @Override
                     public void onItemClick(View v, int position) {
                         Intent postDetailIntent = new Intent(getContext(), RecruitActivity.class);
+                        postDetailIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         postDetailIntent.putExtra("postId", adapter.getPostDataList().get(position).getPostId());
                         AppController.getInstance().pushPageStack();
                         startActivity(postDetailIntent);
@@ -177,7 +177,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
             call.enqueue(new Callback<PostListResultData>() {
                 @Override
                 public void onResponse(Call<PostListResultData> call, Response<PostListResultData> response) {
-                    if (response.isSuccessful() && response.body().getMessage().equals("successfully load NEAREST post list data")) {
+                    if (response.isSuccessful() && response.body().getMessage().equals("successfully load post list data")) {
                         Log.i("SearchFragment", "onResponse: " + response.body().getPostList().size());
                         adapter.updatePostListData(response.body().getPostList());
                     } else {

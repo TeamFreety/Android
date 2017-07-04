@@ -17,7 +17,9 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.application.AppController;
-import com.sopt.freety.freety.view.chat.ChatListFragment;
+import com.sopt.freety.freety.view.letter.LetterListFragment;
+import com.sopt.freety.freety.view.search.SearchFragment;
+import com.sopt.freety.freety.view.home.HomeFragment;
 import com.sopt.freety.freety.view.my_page.MyPageDesignerFragment;
 
 import com.sopt.freety.freety.view.my_page.MyPageModelFragment;
@@ -26,6 +28,7 @@ import com.sopt.freety.freety.view.home.HomeFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 
 import static com.sopt.freety.freety.view.search.SearchFragment.DETAIL_SEARCH_CODE;
 
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        Realm.init(this);
         bottomNavigationView.enableShiftingMode(false);
         bottomNavigationView.enableItemShiftingMode(false);
         bottomNavigationView.setTextVisibility(false);
@@ -55,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                         replaceFragment(new SearchFragment(), new Bundle(), "search");
                         break;
                     case R.id.action_recruit:
-                        replaceFragment(new ChatListFragment(), new Bundle(), "recruit");
+                        replaceFragment(new LetterListFragment(), new Bundle(), "recruit");
                         break;
                     case R.id.action_my_page:
 
