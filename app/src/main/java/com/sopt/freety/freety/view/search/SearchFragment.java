@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -23,14 +24,14 @@ import com.google.android.gms.location.LocationServices;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.adapter.RecyclerViewOnItemClickListener;
 import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.data.PostListData;
 import com.sopt.freety.freety.data.PostListResultData;
 import com.sopt.freety.freety.network.NetworkService;
 import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
-import com.sopt.freety.freety.util.util.Pair;
+import com.sopt.freety.freety.view.recruit.RecruitActivity;
 import com.sopt.freety.freety.view.search.adapter.SearchRecyclerAdapter;
-import com.sopt.freety.freety.view.search.data.SearchBodyData;
 import com.sopt.freety.freety.view.wirte.WriteActivity;
 
 import java.util.ArrayList;
@@ -51,9 +52,7 @@ import static com.sopt.freety.freety.R.id.fabtn_search_to_write;
 
 public class SearchFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
-    @BindView(R.id.btn_search_detail)
-    Button detailSearchBtn;
-
+    public static final int DETAIL_SEARCH_CODE = 7777;
     @BindView(R.id.rv_search)
     RecyclerView mRecyclerView;
 
@@ -79,27 +78,30 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
         updateLatestSortVersion();
     }
 
+    @OnClick({R.id.search_filter_btn1, R.id.search_filter_btn2})
+    public void onFilterBtn() {
+        Intent intent = new Intent(getActivity(), FilteredSearchActivity.class);
+        getActivity().startActivityForResult(intent, DETAIL_SEARCH_CODE);
+        getActivity().overridePendingTransition(R.anim.screen_slide_up, R.anim.screen_slide_stop);
+        AppController.getInstance().pushPageStack();
+    }
+
+    @OnClick(R.id.search_back_btn)
+    public void onBackBtn() {
+        getActivity().onBackPressed();
+    }
+
     private SearchRecyclerAdapter adapter;
     private GridLayoutManager gridLayoutManager;
     private NetworkService networkService;
     private GoogleApiClient googleApiClient;
 
-    public SearchFragment() {
-
-    }
+    public SearchFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         ButterKnife.bind(this, view);
-
-        detailSearchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), DetailSearchActivity.class);
-                getActivity().startActivity(intent);
-            }
-        });
 
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,13 +130,29 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
 
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE)
-                {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     mFloatingActionButton.show();
                 }
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
+
+        mRecyclerView.addOnItemTouchListener(new RecyclerViewOnItemClickListener(getContext(), mRecyclerView,
+                new RecyclerViewOnItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int position) {
+                        Intent postDetailIntent = new Intent(getContext(), RecruitActivity.class);
+                        postDetailIntent.putExtra("postId", adapter.getPostDataList().get(position).getPostId());
+                        AppController.getInstance().pushPageStack();
+                        startActivity(postDetailIntent);
+                    }
+
+            @Override
+            public void onItemLongClick(View v, int position) {
+
+            }
+        }));
+
         if (googleApiClient == null) {
             googleApiClient = buildGoogleApiClient();
         }
@@ -142,6 +160,36 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
 
         updateLatestSortVersion();
         return view;
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == DETAIL_SEARCH_CODE) {
+            Call<PostListResultData> call = networkService.getFilteredData(data.getIntExtra("typeDye", 0),
+                    data.getIntExtra("typePerm", 0),
+                    data.getIntExtra("typeCut", 0),
+                    data.getIntExtra("typeEct", 0),
+                    data.getIntExtra("least_price", 0),
+                    data.getIntExtra("high_price", 300000),
+                    data.getIntExtra("career", 0),
+                    data.getStringExtra("least_date"),
+                    data.getStringExtra("high_date"),
+                    data.getStringExtra("sigugun"));
+            call.enqueue(new Callback<PostListResultData>() {
+                @Override
+                public void onResponse(Call<PostListResultData> call, Response<PostListResultData> response) {
+                    if (response.isSuccessful() && response.body().getMessage().equals("successfully load NEAREST post list data")) {
+                        Log.i("SearchFragment", "onResponse: " + response.body().getPostList().size());
+                        adapter.updatePostListData(response.body().getPostList());
+                    } else {
+                        Toast.makeText(getActivity(), "응답은 잘 왔지만 메세지가 안맞음.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                @Override
+                public void onFailure(Call<PostListResultData> call, Throwable t) {
+                    Toast.makeText(getActivity(), "데이터 로딩 실패.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     private void updateLatestSortVersion() {
@@ -160,7 +208,6 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
             }
             @Override
             public void onFailure(Call<PostListResultData> call, Throwable t) {
-
             }
         });
     }
@@ -229,4 +276,5 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
         googleApiClient.stopAutoManage(getActivity());
         googleApiClient.disconnect();
     }
+
 }

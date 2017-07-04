@@ -1,6 +1,7 @@
 package com.sopt.freety.freety.util.helper;
 
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
+import com.sopt.freety.freety.util.util.TimeStampFormatter;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -13,13 +14,10 @@ import java.util.Date;
 
 public class DateFormatter {
 
-    public static String toDateString() {
-        return "";
-    }
-
     public static String fromDateStringToYearMonthDay(String date) throws ParseException {
+        TimeStampFormatter timeStampFormatter = new TimeStampFormatter();
         Date parsedDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(date);
-        String formatted = new SimpleDateFormat("yyyy.MM.dd").format(parsedDate);
+        String formatted = timeStampFormatter.format(parsedDate);
         return formatted;
     }
 }

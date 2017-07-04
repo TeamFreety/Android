@@ -21,8 +21,9 @@ public class AppController extends Application {
     private static AppController instance;
     private NetworkService networkService;
     private MapNetworkService mapNetworkService;
-    //private static GlobalApplication mInstance;
     private static volatile Activity currentActivity = null;
+    private int pageStackCounter = 0;
+    private long pageStackMillis;
 
     public static Activity getCurrentActivity() {
         Log.d("TAG", "++ currentActivity : " + (currentActivity != null ? currentActivity.getClass().getSimpleName() : ""));
@@ -58,7 +59,6 @@ public class AppController extends Application {
         if (mapNetworkService == null) {
             mapNetworkService = buildMapNetworkService();
         }
-
         return mapNetworkService;
     }
 
@@ -88,4 +88,27 @@ public class AppController extends Application {
                 .build();
         return retrofit.create(MapNetworkService.class);
     }
+
+    public int popPageStack() {
+        if (pageStackCounter == 0 && System.currentTimeMillis() - pageStackMillis < 2000) {
+            return -1;
+        } else if (pageStackCounter == 0) {
+            pageStackMillis = System.currentTimeMillis();
+            return 0;
+        } else {
+            pageStackCounter--;
+        }
+        return 1;
+    }
+
+    public void pushPageStack() {
+        if (pageStackCounter < 3) {
+            pageStackCounter++;
+        }
+    }
+
+    public void resetPageStack() {
+        pageStackCounter = 0;
+    }
+
 }
