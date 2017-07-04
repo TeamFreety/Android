@@ -9,12 +9,14 @@ public class LetterData {
     private String name;
     private String imageURL;
     private String context;
+    private String date;
     private boolean isMine;
 
-    public LetterData(String name, String imageURL, String context, boolean isMine) {
+    public LetterData(String name, String imageURL, String context, String date, boolean isMine) {
         this.name = name;
         this.imageURL = imageURL;
         this.context = context;
+        this.date = date;
         this.isMine = isMine;
     }
 
@@ -40,6 +42,14 @@ public class LetterData {
 
     public void setContext(String context) {
         this.context = context;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public boolean isMine() {

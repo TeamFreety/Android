@@ -14,7 +14,7 @@
 
         <ImageButton
             android:background="@null"
-            android:id="@+id/btn_write_back"
+            android:id="@+id/btn_letter_back"
             android:src="@drawable/back_button"
             android:layout_width="wrap_content"
             android:layout_marginLeft="8dp"
@@ -28,6 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="4dp"
@@ -36,9 +37,58 @@
 
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/letter_input_layout">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="45dp"
+            android:background="#C3C3C3"/>
+
+        <LinearLayout
+            android:id="@+id/letter_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="#ffffff"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/letter_edit_text"
+                android:layout_width="315dp"
+                android:layout_height="45dp"
+                android:hint="메세지를 입력하세요."
+                android:paddingLeft="16dp"
+                android:textSize="13sp"
+                android:textColor="#B3B5B6"
+                android:background="@null"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="45dp"
+                android:background="#C3C3C3"/>
+
+
+            <ImageButton
+                android:id="@+id/letter_edit_btn"
+                android:src="@drawable/letter_send"
+                android:background="#ffffff"
+                android:layout_width="45dp"
+                android:layout_height="45dp" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
 </LinearLayout>
