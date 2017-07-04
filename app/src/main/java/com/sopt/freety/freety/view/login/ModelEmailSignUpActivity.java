@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -36,7 +37,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ModelEmailSignUpActivity extends AppCompatActivity implements LoginInterface {
+public class ModelEmailSignUpActivity extends AppCompatActivity {
 
     @BindView(R.id.sign_up_email_model_email)
     EditText emailEditText;
@@ -64,6 +65,11 @@ public class ModelEmailSignUpActivity extends AppCompatActivity implements Login
 
     @BindView(R.id.sign_up_email_model_address_rep_btn)
     Button modelAddressRepBtn;
+
+    @OnClick(R.id.sign_up_email_model_back_btn)
+    public void onBackButton() {
+        onBackPressed();
+    }
 
     private boolean isAddressRepititionPassed;
     private NetworkService networkService;
@@ -130,6 +136,7 @@ public class ModelEmailSignUpActivity extends AppCompatActivity implements Login
                             editor.putString(Consts.PREF_POSITION, resultData.getPosition());
                             editor.apply();
                             editor.commit();
+                            AppController.getInstance().resetPageStack();
                             startActivity(new Intent(ModelEmailSignUpActivity.this, MainActivity.class));
                         } else {
                             Toast.makeText(ModelEmailSignUpActivity.this, "메세지 내용이 뭔가 실패", Toast.LENGTH_SHORT).show();
@@ -216,8 +223,15 @@ public class ModelEmailSignUpActivity extends AppCompatActivity implements Login
     }
 
     @Override
-    public void onBackBtn() {
-        onBackPressed();
+    public void onBackPressed() {
+        int result = AppController.getInstance().popPageStack();
+        if (result == 0) {
+            Toast.makeText(this, "한 번 더 터치하시면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show();
+        }  else if (result < 0) {
+            ActivityCompat.finishAffinity(this);
+        } else {
+            super.onBackPressed();
+        }
     }
 
 }

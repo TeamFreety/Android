@@ -1,11 +1,12 @@
 package com.sopt.freety.freety.view.recruit.data;
 
+import android.util.Log;
+
 import com.google.android.gms.maps.model.LatLng;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -81,10 +82,11 @@ public class PostDetailResultData {
         private String dong;
         private String detail;
         private double latitude;
-        private double longitute;
+        private double longitude;
 
         public LatLng getLatLng() {
-            return new LatLng(latitude, longitute);
+            Log.i("Recruit", "getLatLng: " + latitude + " " + longitude);
+            return new LatLng(latitude, longitude);
         }
 
         public String getFullAddress() {
@@ -150,7 +152,7 @@ public class PostDetailResultData {
     }
 
     public String getDate() throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         Date date = sdf.parse(postDetail.getServiceTime());
         if (date.getHours() > 12) {
             String realHours = String.valueOf(date.getHours() - 12);

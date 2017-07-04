@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -40,7 +41,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DesignerEmailSignUpActivity extends AppCompatActivity implements LoginInterface , ScreenClickable{
+public class DesignerEmailSignUpActivity extends AppCompatActivity implements ScreenClickable{
 
 
     @BindView(R.id.sign_up_email_designer_email)
@@ -84,6 +85,11 @@ public class DesignerEmailSignUpActivity extends AppCompatActivity implements Lo
 
     @BindView(R.id.sign_up_email_designer_address_rep_btn)
     Button addressRepBtn;
+
+    @OnClick(R.id.sign_up_email_designer_back_btn)
+    public void onBackBtn() {
+        onBackPressed();
+    }
 
     private boolean isAddressRepititionPassed;
     private NetworkService networkService;
@@ -179,6 +185,7 @@ public class DesignerEmailSignUpActivity extends AppCompatActivity implements Lo
                             editor.putString(Consts.PREF_POSITION, resultData.getPosition());
                             editor.apply();
                             editor.commit();
+                            AppController.getInstance().resetPageStack();
                             startActivity(new Intent(DesignerEmailSignUpActivity.this, MainActivity.class));
                         } else {
                             Toast.makeText(DesignerEmailSignUpActivity.this, "메세지 내용이 뭔가 실패", Toast.LENGTH_SHORT).show();
@@ -281,8 +288,15 @@ public class DesignerEmailSignUpActivity extends AppCompatActivity implements Lo
     }
 
     @Override
-    public void onBackBtn() {
-        onBackPressed();
+    public void onBackPressed() {
+        int result = AppController.getInstance().popPageStack();
+        if (result == 0) {
+            Toast.makeText(this, "한 번 더 터치하시면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show();
+        }  else if (result < 0) {
+            ActivityCompat.finishAffinity(this);
+        } else {
+            super.onBackPressed();
+        }
     }
 
 }

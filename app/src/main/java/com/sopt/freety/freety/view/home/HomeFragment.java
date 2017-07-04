@@ -48,8 +48,8 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
     @BindView(R.id.home_tab)
     TabLayout tabLayout;
 
-    @BindView(R.id.home_view_pager)
-    ViewPagerEx viewPager;
+    @BindView(R.id.home_post_view_pager)
+    ViewPagerEx postViewPager;
 
     @BindView(R.id.home_app_bar)
     AppBarLayout appBarLayout;
@@ -60,7 +60,7 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
     @BindView(R.id.home_hide_toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.home_contents_view_pager) ViewPager contentsViewPager;
+    @BindView(R.id.home_banner_view_pager) ViewPager bannerViewPager;
 
     @BindView(R.id.indicatorTab) TabLayout indicatorTabLayout;
 
@@ -76,7 +76,6 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         ButterKnife.bind(this, view);
-
         tabLayout.addTab(tabLayout.newTab().setText("전체"));
         tabLayout.addTab(tabLayout.newTab().setText("펌"));
         tabLayout.addTab(tabLayout.newTab().setText("염색"));
@@ -86,7 +85,7 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
+                postViewPager.setCurrentItem(tab.getPosition());
             }
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
@@ -95,13 +94,11 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        postViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         PagerAdapter pagerAdapter = new HomeViewPagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.setOffscreenPageLimit(4);
-        viewPager.setCurrentItem(currPageCount);
-
-
+        postViewPager.setAdapter(pagerAdapter);
+        postViewPager.setOffscreenPageLimit(4);
 
 
         // contents view pager
@@ -120,15 +117,16 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
         }
 
         startTimer();
-        final HomeContentsViewPagerAdapter homeContentsViewPagerAdapter = new HomeContentsViewPagerAdapter(getActivity(), indicatorTabLayout.getTabCount(), Collections.<String>emptyList());
-        contentsViewPager.setAdapter(homeContentsViewPagerAdapter);
-        contentsViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        final HomeContentsViewPagerAdapter homeContentsViewPagerAdapter =
+                new HomeContentsViewPagerAdapter(getActivity(), indicatorTabLayout.getTabCount(), Collections.<String>emptyList());
+        bannerViewPager.setAdapter(homeContentsViewPagerAdapter);
+        bannerViewPager.setCurrentItem(100);
+        bannerViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
             @Override
             public void onPageSelected(int position) {
-               // Log.i("HomeFragment", "onPageSelected: ");
                 currPageCount = position;
                 int realPos = position % 5;
                 TabLayout.Tab currIndicator = indicatorTabLayout.getTabAt(realPos);
@@ -141,7 +139,6 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
         });
         return view;
     }
-
 
     @Override
     public boolean isAppBarCollapsed() {
@@ -157,7 +154,7 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
         final Handler handler = new Handler();
         final Runnable Update = new Runnable() {
             public void run() {
-                contentsViewPager.setCurrentItem(currPageCount + 1, true);
+                bannerViewPager.setCurrentItem(currPageCount + 1, true);
             }
         };
         if (swipeTimer != null) {
@@ -173,6 +170,13 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
                 handler.post(Update);
             }
         }, 4000, 4000);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        PagerAdapter pagerAdapter = new HomeViewPagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
+        postViewPager.setAdapter(pagerAdapter);
     }
 
 }
