@@ -138,7 +138,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="140dp"
-                        android:layout_marginBottom="1dp"
                         android:singleLine="true"
                         android:text="최선을 다하여 모시겠습니다."
                         android:textColor="#95989A"
@@ -149,7 +148,7 @@
                         android:layout_width="11.5dp"
                         android:layout_height="11.5dp"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="14dp"
+                        android:layout_marginBottom="13dp"
                         android:layout_marginLeft="9dp"
                         android:layout_toRightOf="@+id/edit_my_page_designer_status"
                         android:src="@drawable/mypage_writing" />
