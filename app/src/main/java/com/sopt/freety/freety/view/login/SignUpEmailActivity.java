@@ -35,7 +35,7 @@ import retrofit2.Response;
 
 public class SignUpEmailActivity extends AppCompatActivity {
 
-    @BindView(R.id.back_btn) Button cancelBtn;
+    @BindView(R.id.email_login_back_btn) Button cancelBtn;
     @BindView(R.id.submit_btn) Button submitBtn;
     @BindView(R.id.edit_login_email) EditText emailEdit;
     @BindView(R.id.edit_login_pwd) EditText pwdEdit;
@@ -91,10 +91,10 @@ public class SignUpEmailActivity extends AppCompatActivity {
         mProgressDialog.setIndeterminate(true);
     }
 
-    @OnClick({R.id.submit_btn,R.id.back_btn})
+    @OnClick({R.id.submit_btn,R.id.email_login_back_btn})
     public void onButtonClick(View view){
         switch(view.getId()){
-            case R.id.back_btn:
+            case R.id.email_login_back_btn:
                 super.onBackPressed();
                 break;
             case R.id.submit_btn:

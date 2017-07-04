@@ -2,6 +2,7 @@ package com.sopt.freety.freety.view.login;
 
 import android.graphics.Color;
 import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.util.util.FormatChecker;
 import com.sopt.freety.freety.util.util.Pair;
 
@@ -31,7 +33,7 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DesignerSNSSignUpActivity extends AppCompatActivity implements LoginInterface {
+public class DesignerSNSSignUpActivity extends AppCompatActivity {
 
     @BindView(R.id.sign_up_sns_designer_name_edit)
     EditText nameEditText;
@@ -130,6 +132,8 @@ public class DesignerSNSSignUpActivity extends AppCompatActivity implements Logi
     public void onFinishBtn() {
         if (isClearFormat()) {
             Toast.makeText(this, "통과하셨습니다! 통신구현 ㄱ", Toast.LENGTH_SHORT).show();
+            //TODO: 통신 부분을 구현하고 나서 startActivity()하기 전에 꼭 AppController.getInstance().resetPageStack()을 호출할 것
+            // 모르겠으면 물어보기!
         } else {
         }
     }
@@ -177,7 +181,14 @@ public class DesignerSNSSignUpActivity extends AppCompatActivity implements Logi
     }
 
     @Override
-    public void onBackBtn() {
-        onBackPressed();
+    public void onBackPressed() {
+        int result = AppController.getInstance().popPageStack();
+        if (result == 0) {
+            Toast.makeText(this, "한 번 더 터치하시면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show();
+        }  else if (result < 0) {
+            ActivityCompat.finishAffinity(this);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

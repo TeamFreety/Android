@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -14,9 +15,11 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.view.chat.ChatListFragment;
 import com.sopt.freety.freety.view.search.SearchFragment;
 import com.sopt.freety.freety.view.home.HomeFragment;
@@ -40,21 +43,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-     /*   try {
-            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.e("MY KEY HASH:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-
-        } catch (NoSuchAlgorithmException e) {
-
-        }*/
-
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
         bottomNavigationView.enableShiftingMode(false);
         bottomNavigationView.enableItemShiftingMode(false);
         bottomNavigationView.setTextVisibility(false);
@@ -75,15 +63,14 @@ public class MainActivity extends AppCompatActivity {
                         replaceFragment(new MyPageFragment(), new Bundle(), "my_page");
                         break;
                 }
+                AppController.getInstance().pushPageStack();
                 return true;
             }
         });
 
-
         if (savedInstanceState == null) {
             initFragment(new HomeFragment(), new Bundle(), "first");
         }
-
     }
 
     public void initFragment(Fragment fragment, Bundle bundle, String tag) {
@@ -102,6 +89,18 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.main_fragment_content, fragment, tag);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        int result = AppController.getInstance().popPageStack();
+        if (result == 0) {
+            Toast.makeText(this, "한 번 더 터치하시면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show();
+        }  else if (result < 0) {
+            ActivityCompat.finishAffinity(this);
+        } else {
+            super.onBackPressed();
+        }
     }
 
 }

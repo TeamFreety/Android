@@ -3,6 +3,7 @@ package com.sopt.freety.freety.view.search;
 import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -11,11 +12,13 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.util.util.Triple;
 
 import java.util.Calendar;
@@ -31,7 +34,7 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DetailSearchActivity extends AppCompatActivity {
+public class FilteredSearchActivity extends AppCompatActivity {
 
 
     @OnClick({R.id.btn_sort_perm, R.id.btn_sort_dye, R.id.btn_sort_cut, R.id.btn_sort_etc})
@@ -53,7 +56,7 @@ public class DetailSearchActivity extends AppCompatActivity {
 
     @OnClick(R.id.text_search_start_day)
     public void onDateBtn() {
-        new DatePickerDialog(DetailSearchActivity.this, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+        new DatePickerDialog(FilteredSearchActivity.this, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
@@ -62,57 +65,14 @@ public class DetailSearchActivity extends AppCompatActivity {
 
     @OnClick(R.id.text_search_end_day)
     public void onDateEndBtn() {
-        new DatePickerDialog(DetailSearchActivity.this, dateEndSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+        new DatePickerDialog(FilteredSearchActivity.this, dateEndSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
-
-    private GregorianCalendar calendar = new GregorianCalendar();
-    private Set<String> hairTypeSet = new HashSet<>();
-    @BindView(R.id.btn_detail_cancel)
-    ImageButton detailCancelBtn;
-    @BindView(R.id.btn_detail_location_none)
-    ImageButton btnDetailLocationNone;
-    @BindView(R.id.btn_detail_location_near)
-    ImageButton btnDetailLocationNear;
-    @BindView(R.id.btn_detail_location_gangnam)
-    ImageButton btnDetailLocationGangnam;
-    @BindView(R.id.btn_detail_location_hongdae)
-    ImageButton btnDetailLocationHongdae;
-    @BindView(R.id.btn_detail_location_gundae)
-    ImageButton btnDetailLocationGundae;
-    @BindView(R.id.btn_detail_location_kyodae)
-    ImageButton btnDetailLocationKyodae;
-    @BindView(R.id.btn_detail_location_myungdong)
-    ImageButton btnDetailLocationMyungdong;
-    @BindView(R.id.btn_detail_location_boondang)
-    ImageButton btnDetailLocationBoondang;
-    @BindView(R.id.btn_detail_location_garosu)
-    ImageButton btnDetailLocationGarosu;
-    @BindView(R.id.btn_detail_location_yangjae)
-    ImageButton btnDetailLocationYangjae;
-    @BindView(R.id.btn_detail_location_edae)
-    ImageButton btnDetailLocationEdae;
-    @BindView(R.id.btn_detail_location_nowon)
-    ImageButton btnDetailLocationNowon;
-    @BindView(R.id.btn_detail_location_sungshin)
-    ImageButton btnDetailLocationSungshin;
-    @BindView(R.id.btn_detail_location_ilsan)
-    ImageButton btnDetailLocationIlsan;
-    @BindView(R.id.btn_detail_location_bucheon)
-    ImageButton btnDetailLocationBucheon;
-    @BindView(R.id.btn_detail_location_guro)
-    ImageButton btnDetailLocationGuro;
-    @BindView(R.id.btn_detail_location_jamsil)
-    ImageButton btnDetailLocationJamsil;
-    @BindView(R.id.btn_detail_location_mockdong)
-    ImageButton btnDetailLocationMockdong;
-    @BindView(R.id.btn_detail_location_anyang)
-    ImageButton btnDetailLocationAnyang;
-    @BindView(R.id.btn_detail_location_kyunggi)
-    ImageButton btnDetailLocationKyunggi;
-    @BindView(R.id.btn_detail_location_etc)
-    ImageButton btnDetailLocationEtc;
+    @OnClick(R.id.btn_detail_cancel)
+    public void onBackBtn() {
+        onBackPressed();
+    }
 
     @BindView(R.id.checkbtn_career_default)
     CheckBox checkboxCareerDefault;
@@ -142,25 +102,14 @@ public class DetailSearchActivity extends AppCompatActivity {
         checkBox.setChecked(true);
     }
 
-
-
-    private CrystalRangeSeekbar rangeSeekbar;
-    private TextView tvMin, tvMax;
-
+    private GregorianCalendar calendar = new GregorianCalendar();
+    private Set<String> hairTypeSet = new HashSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_search);
         ButterKnife.bind(this);
-
-        detailCancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
 
         // get seekbar from view
         final CrystalRangeSeekbar rangeSeekbar = (CrystalRangeSeekbar) findViewById(R.id.rangeSeekbar);
@@ -186,7 +135,6 @@ public class DetailSearchActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
     private DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -203,13 +151,6 @@ public class DetailSearchActivity extends AppCompatActivity {
         }
     };
 
-
-
-
-
-
-
-
     Map<Integer, Triple<Integer, Integer, Boolean>> locationBtnMap = initLocationBtnMap();
     @BindViews({R.id.btn_detail_location_none, R.id.btn_detail_location_near,
             R.id.btn_detail_location_gangnam, R.id.btn_detail_location_hongdae,
@@ -223,8 +164,6 @@ public class DetailSearchActivity extends AppCompatActivity {
             R.id.btn_detail_location_anyang, R.id.btn_detail_location_kyunggi, R.id.btn_detail_location_etc})
     List<ImageButton> locationBtnList;
 
-
-
     @OnClick({R.id.btn_detail_location_none, R.id.btn_detail_location_near,
             R.id.btn_detail_location_gangnam, R.id.btn_detail_location_hongdae,
             R.id.btn_detail_location_gundae, R.id.btn_detail_location_kyodae,
@@ -235,9 +174,6 @@ public class DetailSearchActivity extends AppCompatActivity {
             R.id.btn_detail_location_bucheon, R.id.btn_detail_location_guro,
             R.id.btn_detail_location_jamsil, R.id.btn_detail_location_mockdong,
             R.id.btn_detail_location_anyang, R.id.btn_detail_location_kyunggi, R.id.btn_detail_location_etc})
-
-
-
     public void onViewClicked(ImageButton imageButton) {
         for (ImageButton button : locationBtnList) {
             int btnId = button.getId();
@@ -279,6 +215,18 @@ public class DetailSearchActivity extends AppCompatActivity {
         map.put(R.id.btn_detail_location_kyunggi, Triple.of(R.drawable.search_gyeongki, R.drawable.search_onclick_kyeongki, false));
         map.put(R.id.btn_detail_location_etc, Triple.of(R.drawable.search_etc, R.drawable.search_onclick_etc, false));
         return map;
+    }
+
+    @Override
+    public void onBackPressed() {
+        int result = AppController.getInstance().popPageStack();
+        if (result == 0) {
+            Toast.makeText(this, "한 번 더 터치하시면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show();
+        }  else if (result < 0) {
+            ActivityCompat.finishAffinity(this);
+        } else {
+            super.onBackPressed();
+        }
     }
 }
 

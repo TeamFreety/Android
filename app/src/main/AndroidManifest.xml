@@ -30,18 +30,17 @@
             android:value="AIzaSyCzezaEEraT_PEJt4VxBY5MtEGLqWrNF4U" />
 
 
-        <activity android:name=".view.login.JoinActivity" />
-        <activity android:name=".view.login.FirstLoginActivity">
-        </activity>
-        <activity android:name=".view.login.EmailLoginActivity" />
-
-
-        <activity android:name=".view.main.MainActivity" >
+        <activity android:name=".view.login.SelectMemberTypeActivity" />
+        <activity android:name=".view.login.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.login.EmailLoginActivity" />
+        <activity android:name=".view.main.MainActivity" >
+        </activity>
+
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -59,7 +58,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.search.DetailSearchActivity" />
+        <activity android:name=".view.search.FilteredSearchActivity" />
         <activity android:name=".view.recruit.RecruitActivity"></activity>
 
         <activity
@@ -77,7 +76,6 @@
         <activity android:name=".view.login.ModelEmailSignUpActivity"/>
         <activity android:name=".view.wirte.WriteActivity"
             android:windowSoftInputMode="adjustPan|adjustResize">
-
 
         </activity>
         <activity android:name="com.yongbeam.y_photopicker.util.photopicker.PhotoPickerActivity"

@@ -1,5 +1,6 @@
 package com.sopt.freety.freety.view.recruit;
 
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
@@ -79,15 +81,15 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
     @OnClick(R.id.recruit_pick_btn)
     public void onPickBtnClick(ToggleButton toggleBtn) {
 
-        int currPickNumber = Integer.parseInt(toggleBtn.getText().toString());
-        Log.i(TAG, "onPickBtnClick: currPickNumber " + currPickNumber);
         final boolean isChecked = toggleBtn.isChecked();
         if (isChecked) {
+            int currPickNumber = Integer.parseInt(toggleBtn.getTextOn().toString());
             ImageSwicherHelper.doChangeAnimation(this, pickHeartImage,
                     R.anim.heart_fade_out, R.anim.heart_fade_in, R.drawable.recruit_heart_gradient_single);
             toggleBtn.setTextOff(String.valueOf(currPickNumber - 1));
 
         } else {
+            int currPickNumber = Integer.parseInt(toggleBtn.getTextOff().toString());
             ImageSwicherHelper.doChangeAnimation(this, pickHeartImage,
                     R.anim.heart_fade_out, R.anim.heart_fade_in, R.drawable.recruit_heart_empty_single);
             toggleBtn.setTextOn(String.valueOf(currPickNumber + 1));
@@ -119,6 +121,16 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
 
     @BindView(R.id.recruit_letter_btn)
     Button letterBtn;
+
+    @OnClick(R.id.recruit_letter_btn)
+    public void onLetterBtn() {
+        //TODO: implement this.
+    }
+
+    @OnClick(R.id.recruit_back_btn)
+    public void onBackBtn() {
+        onBackPressed();
+    }
 
     private NetworkService networkService;
     private LatLng latLng;
@@ -171,7 +183,6 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
                     } catch (ParseException e) {
                         throw new RuntimeException(e);
                     }
-
                     latLng = result.getLatLng();
                     hairInfoText.setText(result.getContent());
                     addressText.setText(result.getAddress());
@@ -180,12 +191,24 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
                 }
             }
 
-
             @Override
             public void onFailure(Call<PostDetailResultData> call, Throwable t) {
+                Toast.makeText(RecruitActivity.this, "데이터 로드 실패", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
+
+    @Override
+    public void onBackPressed() {
+        int result = AppController.getInstance().popPageStack();
+        if (result == 0) {
+            Toast.makeText(this, "한 번 더 터치하시면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show();
+        }  else if (result < 0) {
+            ActivityCompat.finishAffinity(this);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
 
 }

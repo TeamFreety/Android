@@ -20,6 +20,7 @@
             android:id="@+id/my_page_toolbar">
 
             <ImageButton
+                android:id="@+id/recruit_back_btn"
                 android:background="@null"
                 android:src="@drawable/back_button"
                 android:layout_width="wrap_content"

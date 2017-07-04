@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.sopt.freety.freety.view.search.DetailSearchActivity">
+    tools:context="com.sopt.freety.freety.view.search.FilteredSearchActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -43,7 +43,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:overScrollMode="never">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -182,7 +183,8 @@
                         android:cursorVisible="false"
                         android:textSize="13sp"
                         android:drawableRight="@drawable/search_spinner_arrow"
-                        android:paddingRight="10dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="2dp"
                         android:textAlignment="center" />
                 </LinearLayout>
 
@@ -223,6 +225,7 @@
                         android:layout_toRightOf="@+id/text_detail_search_end_day"
                         android:background="@drawable/layout_detailsearch_datepicker_shape"
                         android:cursorVisible="false"
+                        android:paddingTop="2dp"
                         android:drawableRight="@drawable/search_spinner_arrow"
                         android:paddingRight="10dp" />
                 </LinearLayout>
@@ -641,7 +644,7 @@
                     <CheckBox
                         android:id="@+id/checkbtn_career_default"
                         android:layout_width="50dp"
-                        android:layout_height="15dp"
+                        android:layout_height="17dp"
                         android:layout_centerVertical="true"
                         android:text="무관"
                         android:textColor="#95989A"
@@ -650,7 +653,7 @@
                     <CheckBox
                         android:id="@+id/checkbtn_career_under_1year"
                         android:layout_width="75dp"
-                        android:layout_height="15dp"
+                        android:layout_height="17dp"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="6dp"
                         android:layout_toRightOf="@+id/checkbtn_career_default"
@@ -661,7 +664,7 @@
                     <CheckBox
                         android:id="@+id/checkbtn_career_1to3year"
                         android:layout_width="59dp"
-                        android:layout_height="15dp"
+                        android:layout_height="17dp"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="6dp"
                         android:layout_toRightOf="@+id/checkbtn_career_under_1year"
@@ -672,7 +675,7 @@
                     <CheckBox
                         android:id="@+id/checkbtn_career_3to5year"
                         android:layout_width="59dp"
-                        android:layout_height="15dp"
+                        android:layout_height="17dp"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="6dp"
                         android:layout_toRightOf="@+id/checkbtn_career_1to3year"
@@ -683,7 +686,7 @@
                     <CheckBox
                         android:id="@+id/checkbtn_career_over_5year"
                         android:layout_width="75dp"
-                        android:layout_height="15dp"
+                        android:layout_height="17dp"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="6dp"
                         android:layout_toRightOf="@+id/checkbtn_career_3to5year"
@@ -691,6 +694,7 @@
                         android:textColor="#95989A"
                         android:textSize="9sp" />
                 </RelativeLayout>
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -707,6 +711,9 @@
                     android:textColor="#5D5D5D"
                     android:textSize="14sp" />
             </RelativeLayout>
+
         </LinearLayout>
+
     </ScrollView>
+
 </LinearLayout>

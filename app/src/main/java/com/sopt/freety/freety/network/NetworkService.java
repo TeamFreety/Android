@@ -75,4 +75,6 @@ public interface NetworkService {
     @GET("/search/nearest")
     Call<PostListResultData> getSearchNearestData(@Query("latitude") double lat, @Query("longitude") double lng);
 
+    @GET("/search/")
+    Call<PostListResultData> getFilteredData();
 }

@@ -28,9 +28,7 @@ import com.sopt.freety.freety.data.PostListData;
 import com.sopt.freety.freety.data.PostListResultData;
 import com.sopt.freety.freety.network.NetworkService;
 import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
-import com.sopt.freety.freety.util.util.Pair;
 import com.sopt.freety.freety.view.search.adapter.SearchRecyclerAdapter;
-import com.sopt.freety.freety.view.search.data.SearchBodyData;
 import com.sopt.freety.freety.view.wirte.WriteActivity;
 
 import java.util.ArrayList;
@@ -51,9 +49,7 @@ import static com.sopt.freety.freety.R.id.fabtn_search_to_write;
 
 public class SearchFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
-    @BindView(R.id.btn_search_detail)
-    Button detailSearchBtn;
-
+    public static final int DETAIL_SEARCH_CODE = 7777;
     @BindView(R.id.rv_search)
     RecyclerView mRecyclerView;
 
@@ -79,27 +75,30 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
         updateLatestSortVersion();
     }
 
+    @OnClick({R.id.search_filter_btn1, R.id.search_filter_btn2})
+    public void onFilterBtn() {
+        Intent intent = new Intent(getActivity(), FilteredSearchActivity.class);
+        getActivity().startActivityForResult(intent, DETAIL_SEARCH_CODE);
+        getActivity().overridePendingTransition(R.anim.screen_slide_up, R.anim.screen_slide_stop);
+        AppController.getInstance().pushPageStack();
+    }
+
+    @OnClick(R.id.search_back_btn)
+    public void onBackBtn() {
+        getActivity().onBackPressed();
+    }
+
     private SearchRecyclerAdapter adapter;
     private GridLayoutManager gridLayoutManager;
     private NetworkService networkService;
     private GoogleApiClient googleApiClient;
 
-    public SearchFragment() {
-
-    }
+    public SearchFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         ButterKnife.bind(this, view);
-
-        detailSearchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), DetailSearchActivity.class);
-                getActivity().startActivity(intent);
-            }
-        });
 
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,6 +143,29 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
         return view;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == DETAIL_SEARCH_CODE) {
+            /*
+            Call<PostListResultData> call = networkService.getFilteredData();
+            call.enqueue(new Callback<PostListResultData>() {
+                @Override
+                public void onResponse(Call<PostListResultData> call, Response<PostListResultData> response) {
+                    if (response.isSuccessful() && response.body().getMessage().equals("")) {
+                        Log.i("SearchFragment", "onResponse: " + response.body().getPostList().size());
+                        adapter.updatePostListData(response.body().getPostList());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<PostListResultData> call, Throwable t) {
+
+                }
+            });
+            */
+        }
+    }
+
     private void updateLatestSortVersion() {
         if (networkService == null) {
             networkService = AppController.getInstance().getNetworkService();
@@ -160,7 +182,6 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
             }
             @Override
             public void onFailure(Call<PostListResultData> call, Throwable t) {
-
             }
         });
     }
@@ -229,4 +250,5 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
         googleApiClient.stopAutoManage(getActivity());
         googleApiClient.disconnect();
     }
+
 }
