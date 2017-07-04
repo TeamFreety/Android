@@ -1,4 +1,4 @@
-package com.sopt.freety.freety.view.chat;
+package com.sopt.freety.freety.view.letter;
 
 
 import android.os.Bundle;
@@ -13,21 +13,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sopt.freety.freety.R;
-import com.sopt.freety.freety.view.chat.adapter.ChatListAdapter;
-import com.sopt.freety.freety.view.chat.data.ChatListData;
+import com.sopt.freety.freety.view.letter.adapter.LetterListAdapter;
+import com.sopt.freety.freety.view.letter.data.LetterRoomData;
+import com.sopt.freety.freety.view.letter.data.RealmPerson;
 
+import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * Created by cmslab on 6/26/17.
  */
 
-public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class LetterListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
 
     @BindView(R.id.chat_recycler_view)
@@ -36,9 +39,9 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
     @BindView(R.id.chat_refresh_layout)
     SwipeRefreshLayout refreshLayout;
 
-    private ChatListAdapter chatListAdapter;
-
-    public ChatListFragment() {
+    private LetterListAdapter chatListAdapter;
+    private Realm realm;
+    public LetterListFragment() {
 
     }
 
@@ -48,13 +51,23 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
         final View view = inflater.inflate(R.layout.fragment_chat_list, container, false);
         ButterKnife.bind(this, view);
 
-        final List<ChatListData> mockDataList = new ArrayList<>(Arrays.asList(new ChatListData(), new ChatListData(),
-                new ChatListData(), new ChatListData(), new ChatListData()));
-        chatListAdapter = new ChatListAdapter(getContext(), mockDataList);
+        realm = Realm.getDefaultInstance();
 
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        RealmResults<RealmPerson> persons = realm.where(RealmPerson.class).findAll();
+        List<LetterRoomData> letterListDataRoom = new ArrayList<>();
+        for (RealmPerson person : persons) {
+            try {
+                letterListDataRoom.add(person.getLetterListData());
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        chatListAdapter = new LetterListAdapter(getContext(), letterListDataRoom);
         recyclerView.setAdapter(chatListAdapter);
         refreshLayout.setOnRefreshListener(this);
         return view;

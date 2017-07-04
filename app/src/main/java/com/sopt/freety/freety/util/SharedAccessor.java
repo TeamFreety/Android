@@ -26,4 +26,18 @@ public class SharedAccessor {
         }
         return type.equals("designer");
     }
+
+    public static String getImageURL(Context context) {
+
+        SharedPreferences pref = context.getSharedPreferences(Consts.PREF_KEY, Context.MODE_PRIVATE);
+        String url = pref.getString(Consts.PREF_IMAGE, "");
+        return url;
+    }
+
+    public static String getName(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(Consts.PREF_KEY, Context.MODE_PRIVATE);
+        String url = pref.getString(Consts.PREF_NAME, "");
+        return url;
+    }
 }
+
