@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
+import com.sopt.freety.freety.view.login.data.LoginRequestData;
+import com.sopt.freety.freety.view.login.data.LoginResultData;
 import com.sopt.freety.freety.view.main.MainActivity;
 import com.sopt.freety.freety.view.property.ScreenClickable;
 
@@ -27,6 +29,9 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by KYJ on 2017-06-26.
@@ -59,22 +64,6 @@ public class EmailLoginActivity extends AppCompatActivity implements ScreenClick
         emailEditText.requestFocus();
     }
 
-    private boolean loginValidation(String email, String password) {
-        if (pref.getString("email", "").equals(email) && pref.getString("비밀번호", "").equals(password)) {
-            // login success
-            return true;
-        } else {
-            if (pref.getString("email", "").equals(null)) {
-                // 없는 이메일
-                Toast.makeText(EmailLoginActivity.this, "존재하지 않는 이메일입니다.", Toast.LENGTH_LONG).show();
-                return false;
-            } else {
-                // login failed
-                return false;
-            }
-        }
-    }
-
     @OnClick({R.id.submit_btn, R.id.email_login_back_btn, R.id.text_email_login_to_sign_up})
     public void onButtonClick(View view){
         switch(view.getId()){
@@ -94,9 +83,28 @@ public class EmailLoginActivity extends AppCompatActivity implements ScreenClick
                 email = emailEditText.getText().toString();
                 pwd = pwdEditText.getText().toString();
                 //TODO: implement login network
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                AppController.getInstance().resetPageStack();
-                startActivity(intent);
+                Call<LoginResultData> call = AppController.getInstance().getNetworkService().login(new LoginRequestData(email, pwd));
+                call.enqueue(new Callback<LoginResultData>() {
+                    @Override
+                    public void onResponse(Call<LoginResultData> call, Response<LoginResultData> response) {
+                        if (response.isSuccessful()) {
+                            if (response.body().getMessage().equals("login success")) {
+                                response.body().registerToken(EmailLoginActivity.this);
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                AppController.getInstance().resetPageStack();
+                                startActivity(intent);
+                            } else if (response.body().getMessage().equals("no information about the account")) {
+                                Toast.makeText(EmailLoginActivity.this, "아이디나 비밀번호가 틀립니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<LoginResultData> call, Throwable t) {
+                    }
+                });
+
                 break;
         }
     }
