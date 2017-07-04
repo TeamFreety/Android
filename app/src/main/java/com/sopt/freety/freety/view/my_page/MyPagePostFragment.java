@@ -13,22 +13,13 @@ import android.view.ViewGroup;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.network.NetworkService;
-import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.view.my_page.adapter.MyPagePostRecyclerAdapter;
-import com.sopt.freety.freety.view.my_page.data.MyPagePostData;
-import com.sopt.freety.freety.view.my_page.data.network.MyPageModelGetData;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_DRAGGING;
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
@@ -48,7 +39,9 @@ public class MyPagePostFragment extends Fragment {
     private GridLayoutManager layoutManager;
     private MyPagePostRecyclerAdapter adapter;
     private NetworkService networkService;
-    private MyPageDesignerFragment myPageDesignerFragment;
+
+    private MyPageDesignerFragment myPageFragment;
+
 
     public MyPagePostFragment() {
     }
@@ -60,14 +53,15 @@ public class MyPagePostFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my_page_post, container, false);
         ButterKnife.bind(this, view);
 
-        myPageDesignerFragment = (MyPageDesignerFragment) getParentFragment();
+
+        myPageFragment = (MyPageDesignerFragment) getParentFragment();
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.my_page_post_offset));
         recyclerView.attachCallbacks(getParentFragment());
         layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
-        Log.i("test", "onCreateView: " + myPageDesignerFragment.getPostDataList().size());
-        adapter = new MyPagePostRecyclerAdapter(getContext(), myPageDesignerFragment.getPostDataList());
+        Log.i("test", "onCreateView: " + myPageFragment.getPostDataList().size());
+        adapter = new MyPagePostRecyclerAdapter(getContext(), myPageFragment.getPostDataList());
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

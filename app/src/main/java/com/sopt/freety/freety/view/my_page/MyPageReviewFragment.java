@@ -14,14 +14,8 @@ import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageReviewRecyclerAdapter;
-import com.sopt.freety.freety.view.my_page.data.MyPageReviewData;
-import com.sopt.freety.freety.view.my_page.data.MyPageReviewElemData;
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,7 +35,9 @@ public class MyPageReviewFragment extends Fragment {
     private LinearLayoutManager layoutManager;
     private MyPageReviewRecyclerAdapter adapter;
     private ViewPagerEx viewPager;
-    private MyPageDesignerFragment myPageDesignerFragment;
+
+    private MyPageDesignerFragment myPageFragment;
+
 
     public MyPageReviewFragment() {
     }
@@ -69,11 +65,13 @@ public class MyPageReviewFragment extends Fragment {
             }
         });
         layoutManager = new LinearLayoutManager(getContext());
-        myPageDesignerFragment = (MyPageDesignerFragment) getParentFragment();
+
+        myPageFragment = (MyPageDesignerFragment) getParentFragment();
+
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), layoutManager.getOrientation()));
         try {
-            adapter = new MyPageReviewRecyclerAdapter(getContext(), myPageDesignerFragment.getMyPageReviewData());
+            adapter = new MyPageReviewRecyclerAdapter(getContext(), myPageFragment.getMyPageReviewData());
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }

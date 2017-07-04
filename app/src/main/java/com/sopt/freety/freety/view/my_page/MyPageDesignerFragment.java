@@ -56,7 +56,6 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
  * Created by cmslab on 6/26/17.
  */
 
-
 public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRecyclerView.Callbacks, ScreenClickable{
 
     @BindView(R.id.my_page_profile)
