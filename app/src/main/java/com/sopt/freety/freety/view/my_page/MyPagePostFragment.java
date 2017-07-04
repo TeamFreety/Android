@@ -48,7 +48,7 @@ public class MyPagePostFragment extends Fragment {
     private GridLayoutManager layoutManager;
     private MyPagePostRecyclerAdapter adapter;
     private NetworkService networkService;
-    private MyPageFragment myPageFragment;
+    private MyPageDesignerFragment myPageDesignerFragment;
 
     public MyPagePostFragment() {
     }
@@ -60,14 +60,14 @@ public class MyPagePostFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my_page_post, container, false);
         ButterKnife.bind(this, view);
 
-        myPageFragment = (MyPageFragment) getParentFragment();
+        myPageDesignerFragment = (MyPageDesignerFragment) getParentFragment();
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.my_page_post_offset));
         recyclerView.attachCallbacks(getParentFragment());
         layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
-        Log.i("test", "onCreateView: " + myPageFragment.getPostDataList().size());
-        adapter = new MyPagePostRecyclerAdapter(getContext(), myPageFragment.getPostDataList());
+        Log.i("test", "onCreateView: " + myPageDesignerFragment.getPostDataList().size());
+        adapter = new MyPagePostRecyclerAdapter(getContext(), myPageDesignerFragment.getPostDataList());
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

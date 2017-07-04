@@ -2,9 +2,6 @@ package com.sopt.freety.freety.view.main;
 
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -21,7 +18,7 @@ import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.view.chat.ChatListFragment;
-import com.sopt.freety.freety.view.my_page.MyPageFragment;
+import com.sopt.freety.freety.view.my_page.MyPageDesignerFragment;
 import com.sopt.freety.freety.view.my_page.MyPageModelFragment;
 import com.sopt.freety.freety.view.search.SearchFragment;
 import com.sopt.freety.freety.view.home.HomeFragment;
@@ -61,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.action_my_page:
                         if (SharedAccessor.isDesigner(MainActivity.this))
-                            replaceFragment(new MyPageFragment(), new Bundle(), "my_page_designer");
+                            replaceFragment(new MyPageDesignerFragment(), new Bundle(), "my_page_designer");
                         else
                             replaceFragment(new MyPageModelFragment(), new Bundle(), "my_page_model");
                         break;

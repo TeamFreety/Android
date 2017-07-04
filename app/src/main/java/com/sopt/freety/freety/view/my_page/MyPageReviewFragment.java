@@ -41,7 +41,7 @@ public class MyPageReviewFragment extends Fragment {
     private LinearLayoutManager layoutManager;
     private MyPageReviewRecyclerAdapter adapter;
     private ViewPagerEx viewPager;
-    private MyPageFragment myPageFragment;
+    private MyPageDesignerFragment myPageDesignerFragment;
 
     public MyPageReviewFragment() {
     }
@@ -69,11 +69,11 @@ public class MyPageReviewFragment extends Fragment {
             }
         });
         layoutManager = new LinearLayoutManager(getContext());
-        myPageFragment = (MyPageFragment) getParentFragment();
+        myPageDesignerFragment = (MyPageDesignerFragment) getParentFragment();
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), layoutManager.getOrientation()));
         try {
-            adapter = new MyPageReviewRecyclerAdapter(getContext(), myPageFragment.getMyPageReviewData());
+            adapter = new MyPageReviewRecyclerAdapter(getContext(), myPageDesignerFragment.getMyPageReviewData());
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
