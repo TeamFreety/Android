@@ -1,9 +1,6 @@
 package com.sopt.freety.freety.view.main;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -12,8 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -22,12 +17,9 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.view.chat.ChatListFragment;
+import com.sopt.freety.freety.view.my_page.MyPageDesignerFragment;
 import com.sopt.freety.freety.view.search.SearchFragment;
 import com.sopt.freety.freety.view.home.HomeFragment;
-import com.sopt.freety.freety.view.my_page.MyPageFragment;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                         replaceFragment(new ChatListFragment(), new Bundle(), "recruit");
                         break;
                     case R.id.action_my_page:
-                        replaceFragment(new MyPageFragment(), new Bundle(), "my_page");
+                        replaceFragment(new MyPageDesignerFragment(), new Bundle(), "my_page");
                         break;
                 }
                 AppController.getInstance().pushPageStack();
