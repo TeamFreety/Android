@@ -145,7 +145,6 @@ public class HomePostFragment extends Fragment {
             @Override
             public void onResponse(Call<PostListResultData> call, Response<PostListResultData> response) {
                 if (response.isSuccessful() && response.body().getMessage().equals("successfully load post list data")) {
-                    Log.i("HomePostFragment", "onResponse: " + response.body().getPostList());
                     adapter.updatePostDataList(response.body().getPostList());
                 }
             }

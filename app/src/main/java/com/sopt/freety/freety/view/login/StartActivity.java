@@ -8,9 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-
-
-
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -22,9 +19,6 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginBehavior;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-
-
-
 import com.kakao.auth.AuthType;
 import com.kakao.auth.ErrorCode;
 import com.kakao.auth.ISessionCallback;
@@ -37,12 +31,16 @@ import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
 import com.sopt.freety.freety.R;
-
 import com.sopt.freety.freety.application.AppController;
+
 import com.sopt.freety.freety.view.login.data.LoginRequestData;
 import com.sopt.freety.freety.view.login.data.LoginResultData;
 import com.sopt.freety.freety.view.login.data.SNSLoginRequestData;
 import com.sopt.freety.freety.view.login.data.SNSLoginResultData;
+
+import com.sopt.freety.freety.data.OnlyMsgResultData;
+import com.sopt.freety.freety.util.SharedAccessor;
+import com.sopt.freety.freety.view.login.data.AutoLoginResultData;
 import com.sopt.freety.freety.view.main.MainActivity;
 
 
@@ -68,8 +66,11 @@ public class StartActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
     private SessionCallback callback;
 
+
     private String fUserId;
     private String kUserId;
+    private String userId;
+    private String userName;
 
     // view
     private Button facebookBtn;
@@ -81,6 +82,30 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_first_login);
+
+        Call<OnlyMsgResultData> autoLoginCall = AppController.getInstance().getNetworkService().auto(SharedAccessor.getToken(StartActivity.this));
+        autoLoginCall.enqueue(new Callback<OnlyMsgResultData>() {
+            @Override
+            public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
+                if (response.isSuccessful()) {
+                    if (response.body().getMessage().equals("token validated")) {
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        AppController.getInstance().resetPageStack();
+                        startActivity(intent);
+                    } else if (response.body().getMessage().equals("invalid token")) {
+                        Toast.makeText(StartActivity.this, "토큰없음!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
+
+                Toast.makeText(StartActivity.this, "데이터 로드 실패", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
         UserManagement.requestLogout(new LogoutResponseCallback() {
 
             @Override
@@ -90,9 +115,12 @@ public class StartActivity extends AppCompatActivity {
         });
         callbackManager = CallbackManager.Factory.create();
         ButterKnife.bind(this);
+
         facebookBtn = (Button)findViewById(R.id.facebookBtn);
         fUserId="";
         kUserId="";
+
+        facebookBtn = (Button) findViewById(R.id.facebookBtn);
         facebookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,7 +149,7 @@ public class StartActivity extends AppCompatActivity {
                                                     JSONObject object,
                                                     GraphResponse response) {
 
-                                               // Log.v("LoginActivity", response.toString());
+                                                // Log.v("LoginActivity", response.toString());
                                                 try {
                                                     fUserId = object.getString("id");
                                                 } catch (JSONException e) {
@@ -179,6 +207,7 @@ public class StartActivity extends AppCompatActivity {
         });
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //간편로그인시 호출 ,없으면 간편로그인시 로그인 성공화면으로 넘어가지 않음
@@ -221,6 +250,7 @@ public class StartActivity extends AppCompatActivity {
                 public void onSuccess(UserProfile userProfile) {
                     //로그인에 성공하면 로그인한 사용자의 일련번호, 닉네임, 이미지url등을 리턴합니다.
                     //사용자 ID는 보안상의 문제로 제공하지 않고 일련번호는 제공합니다.
+
                     fUserId = "";
                     kUserId = String.valueOf(userProfile.getId());
                     //userName = userProfile.getNickname();
@@ -252,7 +282,6 @@ public class StartActivity extends AppCompatActivity {
                         public void onFailure(Call<SNSLoginResultData> call, Throwable t) {
                         }
                     });
-
                     finish();
                 }
             });
@@ -261,13 +290,13 @@ public class StartActivity extends AppCompatActivity {
 
         @Override
         public void onSessionOpenFailed(KakaoException exception) {
-            Log.e("err", ""+exception);
+            Log.e("err", "" + exception);
         }
     }
 
     @OnClick({R.id.emailBtn, R.id.kakaoBtn})
-    public void onClick(View view){
-        switch(view.getId()){
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.emailBtn:
                 Intent intent = new Intent(getApplicationContext(), EmailLoginActivity.class);
                 AppController.getInstance().pushPageStack();
@@ -280,11 +309,11 @@ public class StartActivity extends AppCompatActivity {
         }
     }
 
-    private void isKakaoLogin(){
+    private void isKakaoLogin() {
         callback = new SessionCallback();
         com.kakao.auth.Session.getCurrentSession().addCallback(callback);
         com.kakao.auth.Session.getCurrentSession().checkAndImplicitOpen();
-        com.kakao.auth.Session.getCurrentSession().open(AuthType.KAKAO_TALK,StartActivity.this);
+        com.kakao.auth.Session.getCurrentSession().open(AuthType.KAKAO_TALK, StartActivity.this);
     }
 
     @Override
@@ -292,7 +321,7 @@ public class StartActivity extends AppCompatActivity {
         int result = AppController.getInstance().popPageStack();
         if (result == 0) {
             Toast.makeText(this, "한 번 더 터치하시면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show();
-        }  else if (result < 0) {
+        } else if (result < 0) {
             ActivityCompat.finishAffinity(this);
         } else {
             super.onBackPressed();

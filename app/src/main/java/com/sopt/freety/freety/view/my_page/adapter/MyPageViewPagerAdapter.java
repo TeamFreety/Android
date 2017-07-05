@@ -2,16 +2,21 @@ package com.sopt.freety.freety.view.my_page.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
+
 
 import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.data.PostListResultData;
 import com.sopt.freety.freety.network.NetworkService;
-import com.sopt.freety.freety.view.my_page.MyPagePostFragment;
-import com.sopt.freety.freety.view.my_page.MyPageReviewFragment;
-import com.sopt.freety.freety.view.my_page.MyPageStyleFragment;
+import com.sopt.freety.freety.view.my_page.MyPageDesignerPostFragment;
+import com.sopt.freety.freety.view.my_page.MyPageDesignerReviewFragment;
+import com.sopt.freety.freety.view.my_page.MyPageDesignerStyleFragment;
+
+import com.sopt.freety.freety.view.my_page.MyPageDesignerPostFragment;
+import com.sopt.freety.freety.view.my_page.MyPageDesignerReviewFragment;
+import com.sopt.freety.freety.view.my_page.MyPageDesignerStyleFragment;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,16 +45,17 @@ public class MyPageViewPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch(position) {
             case INDEX_POST_LIST:
-                MyPagePostFragment myPagePostFragment = new MyPagePostFragment();
-                myPagePostFragment.initMyPagePostFragment();
+
+                MyPageDesignerPostFragment myPagePostFragment = new MyPageDesignerPostFragment();
+                myPagePostFragment.initMyPageDesignerPostFragment();
                 return myPagePostFragment;
             case INDEX_STYLE:
-                MyPageStyleFragment myPageStyleFragment = new MyPageStyleFragment();
-                myPageStyleFragment.initMyPageStyleFragment();
+                MyPageDesignerStyleFragment myPageStyleFragment = new MyPageDesignerStyleFragment();
+                myPageStyleFragment.initMyPageDesignerStyleFragment();
                 return myPageStyleFragment;
             case INDEX_REVIEW:
-                MyPageReviewFragment myPageReviewFragment = new MyPageReviewFragment();
-                myPageReviewFragment.initMyPageReviewFragment();
+                MyPageDesignerReviewFragment myPageReviewFragment = new MyPageDesignerReviewFragment();
+                myPageReviewFragment.initMyPageDesignerReviewFragment();
                 return myPageReviewFragment;
             default:
                 throw new RuntimeException("There is unexpected position");

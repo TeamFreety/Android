@@ -651,7 +651,7 @@
 
                     <CheckBox
                         android:id="@+id/checkbtn_career_under_1year"
-                        android:layout_width="75dp"
+                        android:layout_width="69dp"
                         android:layout_height="17dp"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="6dp"
@@ -665,7 +665,7 @@
                         android:layout_width="59dp"
                         android:layout_height="17dp"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="6dp"
+                        android:layout_marginLeft="4dp"
                         android:layout_toRightOf="@+id/checkbtn_career_under_1year"
                         android:text="1~3년"
                         android:textColor="#95989A"

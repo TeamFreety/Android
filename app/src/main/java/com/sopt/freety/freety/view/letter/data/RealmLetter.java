@@ -1,5 +1,7 @@
 package com.sopt.freety.freety.view.letter.data;
 
+import com.sopt.freety.freety.util.util.DateParser;
+
 import io.realm.RealmObject;
 
 /**
@@ -7,11 +9,19 @@ import io.realm.RealmObject;
  */
 public class RealmLetter extends RealmObject {
 
+    private int otherId;
     private String content;
     private String date;
     private String otherName;
     private boolean isMyMsg;
-    private boolean isPending;
+
+    public int getOtherId() {
+        return otherId;
+    }
+
+    public void setOtherId(int otherId) {
+        this.otherId = otherId;
+    }
 
     public String getContent() {
         return content;
@@ -45,11 +55,12 @@ public class RealmLetter extends RealmObject {
         isMyMsg = myMsg;
     }
 
-    public boolean isPending() {
-        return isPending;
+    public LetterData getLetterData(String imageURL) {
+        return new LetterData(otherName, imageURL, content, date, isMyMsg);
     }
 
-    public void setPending(boolean pending) {
-        isPending = pending;
+    @Override
+    public String toString() {
+        return "otherId : " + otherId + ", content : " + content + ", isMyMsg " + String.valueOf(isMyMsg);
     }
 }

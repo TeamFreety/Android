@@ -8,11 +8,14 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.util.util.DateParser;
 import com.sopt.freety.freety.view.letter.adapter.holder.LetterViewLeftHolder;
 import com.sopt.freety.freety.view.letter.adapter.holder.LetterViewRightHolder;
 import com.sopt.freety.freety.view.letter.data.LetterData;
 
 import java.util.List;
+
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
  * Created by cmslab on 7/5/17.
@@ -48,15 +51,27 @@ public class LetterRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof LetterViewLeftHolder) {
             LetterViewLeftHolder castedHolder = (LetterViewLeftHolder) holder;
-            Glide.with(context).load(letterDataList.get(position).getImageURL()).override(100, 100).thumbnail(0.2f).into(castedHolder.getImage());
+            if (!letterDataList.get(position).getImageURL().equals("")) {
+                Glide.with(context).load(letterDataList.get(position).getImageURL()).thumbnail(0.3f)
+                        .bitmapTransform(new CropCircleTransformation(context)).into(castedHolder.getImage());
+            } else {
+                Glide.with(context).load(R.drawable.placeholder_photo).thumbnail(0.3f)
+                        .bitmapTransform(new CropCircleTransformation(context)).into(castedHolder.getImage());
+            }
             castedHolder.getNameText().setText(letterDataList.get(position).getName());
-            castedHolder.getDateText().setText(letterDataList.get(position).getDate());
+            castedHolder.getDateText().setText(DateParser.toPrettyFormat(letterDataList.get(position).getDate()));
             castedHolder.getContentText().setText(letterDataList.get(position).getContent());
         } else {
             LetterViewRightHolder castedHolder = (LetterViewRightHolder) holder;
-            Glide.with(context).load(letterDataList.get(position).getImageURL()).override(100, 100).thumbnail(0.2f).into(castedHolder.getImage());
+            if (!letterDataList.get(position).getImageURL().equals("")) {
+                Glide.with(context).load(letterDataList.get(position).getImageURL()).thumbnail(0.3f)
+                        .bitmapTransform(new CropCircleTransformation(context)).into(castedHolder.getImage());
+            } else {
+                Glide.with(context).load(R.drawable.placeholder_photo).thumbnail(0.3f)
+                        .bitmapTransform(new CropCircleTransformation(context)).into(castedHolder.getImage());
+            }
             castedHolder.getNameText().setText(letterDataList.get(position).getName());
-            castedHolder.getDateText().setText(letterDataList.get(position).getDate());
+            castedHolder.getDateText().setText(DateParser.toPrettyFormat(letterDataList.get(position).getDate()));
             castedHolder.getContentText().setText(letterDataList.get(position).getContent());
         }
     }
@@ -73,5 +88,10 @@ public class LetterRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         } else {
             return TYPE_LEFT;
         }
+    }
+
+    public void updateLetterDataList(List<LetterData> dataList) {
+        this.letterDataList = dataList;
+        notifyDataSetChanged();
     }
 }

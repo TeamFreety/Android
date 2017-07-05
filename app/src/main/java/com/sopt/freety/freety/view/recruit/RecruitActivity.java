@@ -1,5 +1,6 @@
 package com.sopt.freety.freety.view.recruit;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.PagerAdapter;
@@ -23,6 +24,7 @@ import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.network.NetworkService;
 import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.helper.ImageSwicherHelper;
+import com.sopt.freety.freety.view.letter.LetterActivity;
 import com.sopt.freety.freety.view.recruit.adapter.RecruitViewPagerAdapter;
 import com.sopt.freety.freety.view.recruit.data.PickRequestData;
 import com.sopt.freety.freety.view.recruit.data.PickResultData;
@@ -47,6 +49,11 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
 
     @BindView(R.id.recruit_profile)
     ImageView profileImage;
+
+    @OnClick(R.id.recruit_profile)
+    public void onProfileClcik(ImageView profileImage){
+
+    }
 
     @BindView(R.id.recruit_title)
     TextView profileTitleText;
@@ -127,7 +134,10 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
 
     @OnClick(R.id.recruit_letter_btn)
     public void onLetterBtn() {
-        //TODO: implement this.
+        AppController.getInstance().pushPageStack();
+        Intent intent = new Intent(RecruitActivity.this, LetterActivity.class);
+        intent.putExtra("memberId", memberId);
+        startActivity(intent);
     }
 
     @OnClick(R.id.recruit_back_btn)
@@ -142,6 +152,7 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
      * This is boolean value for {@link #pickBtn}
      */
     private boolean isPicked;
+    private int memberId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,7 +168,6 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
         if (latLng == null) {
             return;
         }
-
         googleMap.addMarker(new MarkerOptions().position(latLng));
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
         googleMap.getUiSettings().setAllGesturesEnabled(false);
@@ -172,6 +182,7 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
                 if (response.isSuccessful()) {
                     PostDetailResultData result = response.body();
                     final PagerAdapter adapter = new RecruitViewPagerAdapter(RecruitActivity.this, result.getImageList());
+                    memberId = result.getMemberId();
                     imageViewPager.setAdapter(adapter);
                     imageViewPager.setCurrentItem(1000);
                     Glide.with(RecruitActivity.this).load(result.getWriterImageURL()).thumbnail(0.3f)
@@ -195,7 +206,7 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
                     try {
                         hairDateText.setText(result.getDate());
                     } catch (ParseException e) {
-                        throw new RuntimeException(e);
+                        hairDateText.setText("시간을 설정하지 않았습니다.");
                     }
                     latLng = result.getLatLng();
                     hairInfoText.setText(result.getContent());

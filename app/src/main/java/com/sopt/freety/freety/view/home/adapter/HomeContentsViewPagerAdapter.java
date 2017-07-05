@@ -23,21 +23,19 @@ public class HomeContentsViewPagerAdapter extends PagerAdapter {
 
     private final static int PAGE_COUNT = 5;
     private Context context;
-    private int tabCount;
     private List<String> imageURLList;
     private List<Integer> imageMockList = new ArrayList<>();
 
-    public HomeContentsViewPagerAdapter(Context context, int tabCount, List<String> imageURLList) {
+    public HomeContentsViewPagerAdapter(Context context, List<String> imageURLList) {
         this.context = context;
-        this.tabCount = tabCount;
         this.imageURLList = imageURLList;
         this.imageMockList = new ArrayList<>();
 
-        imageMockList.add(R.drawable.chat_list_elem);
-        imageMockList.add(R.drawable.half_star);
-        imageMockList.add(R.drawable.empty_star);
-        imageMockList.add(R.drawable.half_star);
-        imageMockList.add(R.drawable.star);
+        imageMockList.add(R.drawable.a);
+        imageMockList.add(R.drawable.b);
+        imageMockList.add(R.drawable.c);
+        imageMockList.add(R.drawable.d);
+        imageMockList.add(R.drawable.e);
 
     }
 
@@ -50,7 +48,7 @@ public class HomeContentsViewPagerAdapter extends PagerAdapter {
 
         View viewItem = inflater.inflate(R.layout.fragment_home_contents, container, false);
         ImageView imageView = (ImageView) viewItem.findViewById(R.id.home_contents_image_view);
-        Glide.with(context).load(imageMockList.get(realPos)).override(164,187).centerCrop().thumbnail(0.001f).into(imageView);
+        Glide.with(context).load(imageMockList.get(realPos)).override(360,196).centerCrop().thumbnail(0.1f).into(imageView);
 
         ((ViewPager)container).addView(viewItem);
 
@@ -62,11 +60,6 @@ public class HomeContentsViewPagerAdapter extends PagerAdapter {
         // TODO Auto-generated method stub
         return 1000;
     }
-
-    public int getRealCount() {
-        return tabCount;
-    }
-
 
     @Override
     public boolean isViewFromObject(View view, Object object) {

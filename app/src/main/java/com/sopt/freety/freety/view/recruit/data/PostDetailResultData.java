@@ -100,6 +100,10 @@ public class PostDetailResultData {
         private String writerName;
         private String writerBelongName;
 
+        public int getWriterId() {
+            return writerId;
+        }
+
         public String getWriterImg() {
             return writerImg;
         }
@@ -188,6 +192,10 @@ public class PostDetailResultData {
             }
         }
         return imageList;
+    }
+
+    public int getMemberId() {
+        return writerInfo.getWriterId();
     }
 
 }

@@ -67,7 +67,7 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
     @BindView(R.id.edit_my_page_designer_status)
     EditText designerStatusTextView;
 
-    @BindView(R.id.my_page_style_career_text)
+    @BindView(R.id.edit_my_page_port_career)
     TextView careerString;
 
     @BindView(R.id.my_page_tab)
@@ -123,7 +123,7 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
                 .into(profileImage);
 
         tabLayout.addTab(tabLayout.newTab().setText("글목록"));
-        tabLayout.addTab(tabLayout.newTab().setText("스타일"));
+        tabLayout.addTab(tabLayout.newTab().setText("포트폴리오"));
         tabLayout.addTab(tabLayout.newTab().setText("후기"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabTextColors(Color.parseColor("#95989A"), Color.parseColor("#000000"));

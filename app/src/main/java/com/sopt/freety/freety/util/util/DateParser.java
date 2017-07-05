@@ -1,5 +1,8 @@
 package com.sopt.freety.freety.util.util;
 
+import android.util.Log;
+
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,6 +18,7 @@ public class DateParser {
     /**
      * For use with java.util.Date
      */
+    private static final String TAG = "DateParser";
     public String format(Date timestamp) {
         long millisFromNow = getMillisFromNow(timestamp);
 
@@ -43,11 +47,39 @@ public class DateParser {
         return parsedDate;
     }
 
-    public static String toYearMonthDay(String date) throws ParseException {
-        DateParser timeStampFormatter = new DateParser();
-        Date parsedDate = DateParser.from(date);
-        String formatted = timeStampFormatter.format(parsedDate);
-        return formatted;
+    public static String toPrettyFormat(String date) {
+        try {
+            DateParser timeStampFormatter = new DateParser();
+            Date parsedDate = DateParser.from(date);
+            String formatted = timeStampFormatter.format(parsedDate);
+            return formatted;
+        } catch (ParseException e) {
+            return "";
+        }
+    }
+
+    public static String to() {
+       return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(new Date());
+    }
+
+    public static String toDateTimeFormat(String date) {
+        String[] splits = date.split(" ");
+        String year = splits[0].substring(0, splits[0].length());
+        String month = splits[1].substring(0, splits[1].length());
+        if (month.length() == 1) {
+            month = "0" + month;
+        }
+        String day = splits[2].substring(0, splits[2].length());
+        if (day.length() == 1) {
+            day = "0" + day;
+        }
+        int hourOffset = splits[3].equals("오후") ? 12 : 0;
+        String hour = splits[4].substring(0, splits[4].length());
+        if (hour.length() == 1) {
+            hour = "0" + hour;
+        }
+        Log.i(TAG, "toDateTimeFormat: " + String.format("%s-%s-%s'T'%s:00:00", year, month, date, hour));
+        return String.format("%s-%s-%s'T'%s:00:00", year, month, date, hour);
     }
 
     private long getMillisFromNow(Date commentedAt) {

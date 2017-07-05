@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView
+        android:id="@+id/my_page_review_recycler_view"
+        android:overScrollMode="never"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabtn_review_to_review"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_gravity="bottom|right"
+            android:src="@drawable/mypage_writing"
+            android:backgroundTint="#FFFFFF"
+            app:borderWidth="0dp"
+            android:layout_margin="@dimen/floating_btn_offset" />
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</LinearLayout>
