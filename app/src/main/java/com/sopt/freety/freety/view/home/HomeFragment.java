@@ -13,8 +13,10 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TableLayout;
 
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
@@ -23,10 +25,12 @@ import com.sopt.freety.freety.view.home.adapter.HomeContentsViewPagerAdapter;
 import com.sopt.freety.freety.view.home.adapter.HomeViewPagerAdapter;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
 
 /**
@@ -62,11 +66,12 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
 
     @BindView(R.id.home_banner_view_pager) ViewPager bannerViewPager;
 
-    @BindView(R.id.indicatorTab) TabLayout indicatorTabLayout;
+    @BindViews({R.id.indicator1, R.id.indicator2, R.id.indicator3, R.id.indicator4, R.id.indicator5})
+    List<ImageView> indicators;
+
 
     private int currPageCount = 100;
     private Timer swipeTimer;
-
     public HomeFragment() {
 
     }
@@ -100,25 +105,9 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
         postViewPager.setAdapter(pagerAdapter);
         postViewPager.setOffscreenPageLimit(4);
 
-
-        // contents view pager
-        for (int count = 0; count < PAGE_COUNT; count++) {
-            indicatorTabLayout.addTab(indicatorTabLayout.newTab());
-        }
-
-        LinearLayout tabStrip = ((LinearLayout) indicatorTabLayout.getChildAt(0));
-        for (int i = 0; i <  tabStrip.getChildCount(); i++) {
-            tabStrip.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    return true;
-                }
-            });
-        }
-
         startTimer();
         final HomeContentsViewPagerAdapter homeContentsViewPagerAdapter =
-                new HomeContentsViewPagerAdapter(getActivity(), indicatorTabLayout.getTabCount(), Collections.<String>emptyList());
+                new HomeContentsViewPagerAdapter(getActivity(),  Collections.<String>emptyList());
         bannerViewPager.setAdapter(homeContentsViewPagerAdapter);
         bannerViewPager.setCurrentItem(100);
         bannerViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -129,8 +118,10 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
             public void onPageSelected(int position) {
                 currPageCount = position;
                 int realPos = position % 5;
-                TabLayout.Tab currIndicator = indicatorTabLayout.getTabAt(realPos);
-                currIndicator.select();
+                for (ImageView indicator : indicators) {
+                    indicator.setImageResource(R.drawable.fullcircle);
+                }
+                indicators.get(realPos).setImageResource(R.drawable.donut);
                 startTimer();
             }
             @Override

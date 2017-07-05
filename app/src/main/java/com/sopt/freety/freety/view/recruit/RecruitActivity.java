@@ -48,6 +48,11 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
     @BindView(R.id.recruit_profile)
     ImageView profileImage;
 
+    @OnClick(R.id.recruit_profile)
+    public void onProfileClcik(ImageView profileImage){
+
+    }
+
     @BindView(R.id.recruit_title)
     TextView profileTitleText;
 
@@ -157,7 +162,6 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
         if (latLng == null) {
             return;
         }
-
         googleMap.addMarker(new MarkerOptions().position(latLng));
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
         googleMap.getUiSettings().setAllGesturesEnabled(false);
@@ -195,7 +199,7 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
                     try {
                         hairDateText.setText(result.getDate());
                     } catch (ParseException e) {
-                        throw new RuntimeException(e);
+                        hairDateText.setText("시간을 설정하지 않았습니다.");
                     }
                     latLng = result.getLatLng();
                     hairInfoText.setText(result.getContent());

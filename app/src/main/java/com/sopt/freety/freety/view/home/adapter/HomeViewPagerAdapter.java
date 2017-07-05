@@ -34,7 +34,7 @@ public class HomeViewPagerAdapter extends FragmentStatePagerAdapter {
         switch(position) {
             case INDEX_ALL:
                 homePostFragment = new HomePostFragment();
-                homePostFragment.initPostFragment(HomeFragment.PostType.NEW);
+                homePostFragment.   initPostFragment(HomeFragment.PostType.NEW);
                 return homePostFragment;
             case INDEX_PERM:
                 homePostFragment = new HomePostFragment();

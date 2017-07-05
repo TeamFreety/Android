@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:paddingTop="11dp" android:paddingBottom="11dp"
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/letter_right_name"
@@ -59,5 +60,13 @@
         android:layout_marginRight="67dp"
         android:layout_marginTop="13dp"
         android:lineSpacingMultiplier="1.3"/>
+
+    <View
+        android:layout_width="233dp"
+        android:layout_height="1dp"
+        android:layout_alignLeft="@+id/letter_right_content"
+        android:layout_marginTop="11dp"
+        android:background="#d9d9d9"
+        android:layout_below="@+id/letter_right_content"/>
 
 </RelativeLayout>

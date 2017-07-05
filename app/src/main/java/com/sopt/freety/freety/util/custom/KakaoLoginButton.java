@@ -122,8 +122,8 @@ public class KakaoLoginButton extends LoginButton {
         super.onAttachedToWindow();
        // resourceId = getResources().getIdentifier(R.layout.);
        // kakao_layout = (RelativeLayout)findViewById(R.layout.);
-       // inflate(getContext(),resourceId, this);
-       // inflate(getContext(), R.layout.kakao_login_layout, this);
+       // inflate(getContent(),resourceId, this);
+       // inflate(getContent(), R.layout.kakao_login_layout, this);
         setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 // 카톡 또는 카스가 존재하면 옵션을 보여주고, 존재하지 않으면 바로 직접 로그인창.
@@ -131,7 +131,7 @@ public class KakaoLoginButton extends LoginButton {
 
                 //final List<AuthType> authTypes = getAuthTypes();
                 //if(authTypes.size() == 1){
-                    Session.getCurrentSession().open(AuthType.KAKAO_TALK, (Activity) getContext());
+                    Session.getCurrentSession().open(AuthType.KAKAO_TALK, (Activity) getContent());
                // } else {
                //     Log.e("err","Kakao-Login not exist");
                     //onClickLoginButton(authTypes);
@@ -142,11 +142,11 @@ public class KakaoLoginButton extends LoginButton {
 
     private List<AuthType> getAuthTypes() {
         final List<AuthType> availableAuthTypes = new ArrayList<AuthType>();
-        if(TalkProtocol.existCapriLoginActivityInTalk(getContext(), Session.getCurrentSession().isProjectLogin())){
+        if(TalkProtocol.existCapriLoginActivityInTalk(getContent(), Session.getCurrentSession().isProjectLogin())){
             availableAuthTypes.add(AuthType.KAKAO_TALK);
             availableAuthTypes.add(AuthType.KAKAO_TALK_EXCLUDE_NATIVE_LOGIN);
         }
-        if(StoryProtocol.existCapriLoginActivityInStory(getContext(), Session.getCurrentSession().isProjectLogin())){
+        if(StoryProtocol.existCapriLoginActivityInStory(getContent(), Session.getCurrentSession().isProjectLogin())){
             availableAuthTypes.add(AuthType.KAKAO_STORY);
         }
         availableAuthTypes.add(AuthType.KAKAO_ACCOUNT);
@@ -177,7 +177,7 @@ public class KakaoLoginButton extends LoginButton {
         final com.kakao.usermgmt.LoginButton.Item[] items = itemList.toArray(new com.kakao.usermgmt.LoginButton.Item[itemList.size()]);
 
         final ListAdapter adapter = new ArrayAdapter<com.kakao.usermgmt.LoginButton.Item>(
-                getContext(),
+                getContent(),
                 android.R.layout.select_dialog_item,
                 android.R.id.text1, items){
             public View getView(int position, View convertView, ViewGroup parent) {
@@ -203,12 +203,12 @@ public class KakaoLoginButton extends LoginButton {
         };
 
 
-        new AlertDialog.Builder(getContext())
-                .setAdapter(adapter, new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder(getContent())
+                .updateData(adapter, new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, final int position) {
                         final AuthType authType = items[position].authType;
                         if (authType != null) {
-                            Session.getCurrentSession().open(authType, (Activity) getContext());
+                            Session.getCurrentSession().open(authType, (Activity) getContent());
                         }
 
                         dialog.dismiss();

@@ -23,7 +23,7 @@
                 android:id="@+id/recruit_back_btn"
                 android:background="@null"
                 android:src="@drawable/back_button"
-                android:layout_width="wrap_content"
+                android:layout_width="30dp"
                 android:layout_marginLeft="8dp"
                 android:layout_height="match_parent" />
 

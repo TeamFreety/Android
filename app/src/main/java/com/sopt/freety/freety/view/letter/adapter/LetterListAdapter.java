@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
-import com.sopt.freety.freety.view.letter.adapter.holder.LetterListViewHolder;
-import com.sopt.freety.freety.view.letter.data.LetterListData;
+import com.sopt.freety.freety.view.letter.adapter.holder.LetterRoomViewHolder;
+import com.sopt.freety.freety.view.letter.data.LetterRoomData;
 
 import java.util.List;
 
@@ -19,44 +19,52 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
  * Created by cmslab on 6/25/17.
  */
 
-public class LetterListAdapter extends RecyclerView.Adapter<LetterListViewHolder> {
+public class LetterListAdapter extends RecyclerView.Adapter<LetterRoomViewHolder> {
 
     private RecyclerView recyclerView;
     private Context context;
-    private List<LetterListData> chatListDatas;
+    private List<LetterRoomData> roomDataList;
 
 
-    public LetterListAdapter(Context context, List<LetterListData> chatListDatas) {
+    public LetterListAdapter(Context context, List<LetterRoomData> letterRoomDatas) {
         this.context = context;
-        this.chatListDatas = chatListDatas;
+        this.roomDataList = letterRoomDatas;
     }
 
-    public void setAdapter(List<LetterListData> chatListDatas) {
-        this.chatListDatas = chatListDatas;
+    public void updateData(List<LetterRoomData> chatListDatas) {
+        this.roomDataList = chatListDatas;
         notifyDataSetChanged();
     }
 
     @Override
-    public LetterListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public LetterRoomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_chat_body, parent, false);
-        final LetterListViewHolder chatListViewHolder = new LetterListViewHolder(view);
-        return chatListViewHolder;
+        final LetterRoomViewHolder roomViewHolder = new LetterRoomViewHolder(view);
+        return roomViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(LetterListViewHolder holder, int position) {
-        holder.getName().setText(chatListDatas.get(position).getOtherId());
-        Glide.with(context).load(chatListDatas.get(position).getImageURL())
-                .thumbnail(0.3f)
-                .bitmapTransform(new CropCircleTransformation(context))
-                .into(holder.getImage());
-        holder.getLastMsg().setText(chatListDatas.get(position).getLastMsg());
-        holder.getDate().setText(chatListDatas.get(position).getDate());
+    public void onBindViewHolder(LetterRoomViewHolder holder, int position) {
+        holder.getName().setText(roomDataList.get(position).getOtherName());
+        if (!roomDataList.get(position).getImageURL().equals("")) {
+            Glide.with(context).load(roomDataList.get(position).getImageURL())
+                    .thumbnail(0.3f)
+                    .bitmapTransform(new CropCircleTransformation(context))
+                    .into(holder.getImage());
+        } else {
+            Glide.with(context).load(R.drawable.placeholder_photo)
+                    .thumbnail(0.3f)
+                    .bitmapTransform(new CropCircleTransformation(context))
+                    .into(holder.getImage());
+        }
+        holder.getLastMsg().setText(roomDataList.get(position).getLastMsg());
+        holder.getDate().setText(roomDataList.get(position).getDate());
+        holder.getPendingImage().setText(String.valueOf(roomDataList.get(position).getNotifCount()));
     }
 
     @Override
     public int getItemCount() {
-        return chatListDatas != null ? chatListDatas.size() : 0;
+        return roomDataList != null ? roomDataList.size() : 0;
     }
 
     @Override
@@ -65,9 +73,8 @@ public class LetterListAdapter extends RecyclerView.Adapter<LetterListViewHolder
         this.recyclerView = recyclerView;
     }
 
-    public void removeDataElem(View view) {
-        int itemPosition = recyclerView.getChildLayoutPosition(view);
-        chatListDatas.remove(itemPosition);
-        notifyDataSetChanged();
+    public LetterRoomData getItem(int position) {
+        return roomDataList.get(position);
     }
+
 }

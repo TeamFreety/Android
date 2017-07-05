@@ -6,7 +6,7 @@
 
     <dimen name="home_post_offset">6dp</dimen>
 
-    <dimen name="floating_btn_offset">20dp</dimen>
+    <dimen name="floating_btn_offset">18dp</dimen>
 
 
 </resources>

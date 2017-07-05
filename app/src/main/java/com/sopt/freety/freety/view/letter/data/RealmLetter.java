@@ -5,13 +5,21 @@ import io.realm.RealmObject;
 /**
  * Created by cmslab on 7/4/17.
  */
-
 public class RealmLetter extends RealmObject {
 
+    private int otherId;
     private String content;
     private String date;
+    private String otherName;
     private boolean isMyMsg;
-    private boolean isPending;
+
+    public int getOtherId() {
+        return otherId;
+    }
+
+    public void setOtherId(int otherId) {
+        this.otherId = otherId;
+    }
 
     public String getContent() {
         return content;
@@ -29,6 +37,14 @@ public class RealmLetter extends RealmObject {
         this.date = date;
     }
 
+    public String getOtherName() {
+        return otherName;
+    }
+
+    public void setOtherName(String otherName) {
+        this.otherName = otherName;
+    }
+
     public boolean isMyMsg() {
         return isMyMsg;
     }
@@ -37,11 +53,7 @@ public class RealmLetter extends RealmObject {
         isMyMsg = myMsg;
     }
 
-    public boolean isPending() {
-        return isPending;
-    }
-
-    public void setPending(boolean pending) {
-        isPending = pending;
+    public LetterData getLetterData(String imageURL) {
+        return new LetterData(otherName, imageURL, content, date, isMyMsg);
     }
 }

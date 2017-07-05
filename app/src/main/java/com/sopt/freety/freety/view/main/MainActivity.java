@@ -2,6 +2,7 @@ package com.sopt.freety.freety.view.main;
 
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -9,31 +10,29 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.util.Consts;
 import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.application.AppController;
-import com.sopt.freety.freety.view.letter.LetterListFragment;
-import com.sopt.freety.freety.view.search.SearchFragment;
+import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.view.home.HomeFragment;
+import com.sopt.freety.freety.view.letter.LetterListFragment;
 import com.sopt.freety.freety.view.my_page.MyPageDesignerFragment;
-
 import com.sopt.freety.freety.view.my_page.MyPageModelFragment;
 import com.sopt.freety.freety.view.search.SearchFragment;
-import com.sopt.freety.freety.view.home.HomeFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
 
-import static com.sopt.freety.freety.view.search.SearchFragment.DETAIL_SEARCH_CODE;
-
 public class MainActivity extends AppCompatActivity {
 
+    public static final int RESULT_SUCCESS = 200;
     @BindView(R.id.main_bottom_nav)
     BottomNavigationViewEx bottomNavigationView;
     @BindView(R.id.main_fragment_content)
@@ -44,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        Realm.init(this);
         bottomNavigationView.enableShiftingMode(false);
         bottomNavigationView.enableItemShiftingMode(false);
         bottomNavigationView.setTextVisibility(false);
@@ -111,9 +109,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == DETAIL_SEARCH_CODE) {
+        if ((requestCode == Consts.DETAIL_SEARCH_CODE || requestCode == Consts.WRITE_REQUEST) && resultCode == RESULT_OK) {
             SearchFragment searchFragment = (SearchFragment) getSupportFragmentManager().findFragmentByTag("search");
             searchFragment.onActivityResult(requestCode, 0, data);
+        } else {
+
         }
     }
 }
