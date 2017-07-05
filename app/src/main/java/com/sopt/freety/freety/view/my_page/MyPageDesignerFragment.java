@@ -67,6 +67,9 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
     @BindView(R.id.edit_my_page_designer_status)
     EditText designerStatusTextView;
 
+    @BindView(R.id.my_page_style_career_text)
+    TextView careerString;
+
     @BindView(R.id.my_page_tab)
     TabLayout tabLayout;
 
@@ -180,8 +183,8 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
         return myPageDesignerGetData.getMyStyleBodyDataList();
     }
 
-    public MyPageStyleHeaderData getStyleHeaderData() {
-        return myPageDesignerGetData.getMyPageStyleHeaderData();
+    public String getStyleHeaderData() {
+        return myPageDesignerGetData.getDesignerCareerText();
     }
 
     public MyPageReviewData getMyPageReviewData() throws ParseException {
@@ -224,6 +227,7 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
                     Glide.with(getContext()).load(response.body().getDesignerImageURL()).into(profileImage);
                     designerNameText.setText(response.body().getDesignerName());
                     designerStatusTextView.setText(response.body().getDesignerStatusMsg());
+
                     viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
                     PagerAdapter pagerAdapter = new MyPageViewPagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
                     viewPager.setAdapter(pagerAdapter);

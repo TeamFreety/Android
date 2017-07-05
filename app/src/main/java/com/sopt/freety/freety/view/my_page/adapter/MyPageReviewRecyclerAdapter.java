@@ -11,8 +11,11 @@ import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.view.my_page.adapter.holder.MyPageReviewBodyHolder;
 import com.sopt.freety.freety.view.my_page.adapter.holder.MyPageReviewHeaderHolder;
+import com.sopt.freety.freety.view.my_page.data.MyPagePostData;
 import com.sopt.freety.freety.view.my_page.data.MyPageReviewData;
 import com.sopt.freety.freety.view.my_page.data.MyPageReviewElemData;
+
+import java.util.List;
 
 import static android.view.View.GONE;
 import static com.sopt.freety.freety.view.my_page.adapter.MyPageStyleRecyclerAdapter.TYPE_HEADER;
@@ -71,6 +74,13 @@ public class MyPageReviewRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
             }
         }
     }
+
+    public void updateMyPageReviewData(MyPageReviewData data) {
+        this.data = data;
+        notifyDataSetChanged();
+    }
+
+    public MyPageReviewData getData(){ return data;}
 
     @Override
     public int getItemViewType(int position) {

@@ -19,6 +19,7 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.login.LoginBehavior;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 
@@ -48,7 +49,9 @@ import com.sopt.freety.freety.view.main.MainActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -67,7 +70,6 @@ public class StartActivity extends AppCompatActivity {
 
     private String fUserId;
     private String kUserId;
-    private String userName;
 
     // view
     private Button facebookBtn;
@@ -95,6 +97,15 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //LoginManager - 요청된 읽기 또는 게시 권한으로 로그인 절차를 시작합니다.
+                List<String> permission =
+                        new ArrayList<>();
+                permission.add("email");
+                permission.add("public_profile");
+                permission.add("user_friends");
+                LoginManager.getInstance()
+                        .setLoginBehavior(LoginBehavior.NATIVE_WITH_FALLBACK)
+                        .logInWithReadPermissions(StartActivity.this,
+                                permission);
                 LoginManager.getInstance().logInWithReadPermissions(StartActivity.this,
                         Arrays.asList("public_profile", "email"));
                 LoginManager.getInstance().registerCallback(callbackManager,
@@ -125,13 +136,6 @@ public class StartActivity extends AppCompatActivity {
                                 request.setParameters(parameters);
                                 request.executeAsync();
 
-                                //Toast.makeText(getApplicationContext(),"facebook success",Toast.LENGTH_LONG).show();
-                              /*  Intent intent = new Intent(StartActivity.this, SelectMemberTypeActivity.class);
-                                intent.putExtra("login case","facebook");
-                                intent.putExtra("userId",kUserId);
-                                intent.putExtra("userName",userName);
-                                startActivity(intent);*/
-
                                 Call<SNSLoginResultData> call = AppController.getInstance().getNetworkService().snslogin(new SNSLoginRequestData(fUserId, kUserId));
                                 call.enqueue(new Callback<SNSLoginResultData>() {
                                     @Override
@@ -151,14 +155,12 @@ public class StartActivity extends AppCompatActivity {
                                                 startActivity(intent);
                                             }
                                         }
-
                                     }
 
                                     @Override
                                     public void onFailure(Call<SNSLoginResultData> call, Throwable t) {
                                     }
                                 });
-
 
                                 finish();
                             }
@@ -251,16 +253,6 @@ public class StartActivity extends AppCompatActivity {
                         }
                     });
 
-
-                    /*
-                    Log.e("UserProfile", userProfile.toString());
-                    Toast.makeText(getApplicationContext(),userId,Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(StartActivity.this, SelectMemberTypeActivity.class);
-                    intent.putExtra("login case","kakao");
-                    intent.putExtra("userId",userId);
-                    intent.putExtra("userName", userName);
-                    startActivity(intent);
-                    */
                     finish();
                 }
             });

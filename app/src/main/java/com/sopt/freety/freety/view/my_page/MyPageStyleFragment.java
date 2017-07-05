@@ -5,22 +5,30 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.application.AppController;
+import com.sopt.freety.freety.network.NetworkService;
+import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageStyleRecyclerAdapter;
 import com.sopt.freety.freety.view.my_page.data.MyPageStyleHeaderData;
 import com.sopt.freety.freety.view.my_page.data.MyPageStyleBodyData;
+import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_DRAGGING;
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
@@ -34,10 +42,14 @@ public class MyPageStyleFragment extends Fragment {
 
     @BindView(R.id.my_page_style_recyeler_view)
     ScrollFeedbackRecyclerView recyclerView;
+
     private GridLayoutManager layoutManager;
     private MyPageStyleRecyclerAdapter adapter;
     private ViewPagerEx viewPager;
     private MyPageDesignerFragment myPageFragment;
+    private NetworkService networkService;
+
+    private MyPageDesignerGetData myPageDesignerGetData;
 
     public MyPageStyleFragment() {
     }
@@ -85,6 +97,32 @@ public class MyPageStyleFragment extends Fragment {
         return view;
     }
 
+    public void initMyPageStyleFragment() {
+        if (networkService == null) {
+            networkService = AppController.getInstance().getNetworkService();
+        }
+        getMyPageStyleData();
+        //getMyPageStyleBodyData();
+    }
+    private void getMyPageStyleData() {
+        Call<MyPageDesignerGetData> call = networkService.getMyPageDesigner(SharedAccessor.getToken(getContext()));
+        call.enqueue(new Callback<MyPageDesignerGetData>() {
+            @Override
+            public void onResponse(Call<MyPageDesignerGetData> call, Response<MyPageDesignerGetData> response) {
+                if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
+                    //TO DO : Style Header
+                    adapter.updateMyPageStyleHeaderData(response.body().getDesignerCareerText());
+
+                    //adapter.updateMyPageStyleHeaderData(response.body().getMyPageStyleHeaderData());
+                    adapter.updateMyPageStyleBodyData(response.body().getMyStyleBodyDataList());
+                }
+            }
+            @Override
+            public void onFailure(Call<MyPageDesignerGetData> call, Throwable t) {
+            }
+        });
+    }
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -99,8 +137,7 @@ public class MyPageStyleFragment extends Fragment {
         return myPageFragment.getStyleBodyDataList();
     }
 
-    private MyPageStyleHeaderData getHeaderData() {
+    private String getHeaderData() {
         return myPageFragment.getStyleHeaderData();
     }
-
 }
