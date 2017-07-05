@@ -29,6 +29,7 @@ import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.data.PostListData;
 import com.sopt.freety.freety.data.PostListResultData;
 import com.sopt.freety.freety.network.NetworkService;
+import com.sopt.freety.freety.util.Consts;
 import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
 import com.sopt.freety.freety.view.recruit.RecruitActivity;
 import com.sopt.freety.freety.view.search.adapter.SearchRecyclerAdapter;
@@ -52,7 +53,6 @@ import static com.sopt.freety.freety.R.id.fabtn_search_to_write;
 
 public class SearchFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
-    public static final int DETAIL_SEARCH_CODE = 7777;
     @BindView(R.id.rv_search)
     RecyclerView mRecyclerView;
 
@@ -81,7 +81,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
     @OnClick({R.id.img_search_filter, R.id.search_filter_btn2})
     public void onFilterBtn() {
         Intent intent = new Intent(getActivity(), FilteredSearchActivity.class);
-        getActivity().startActivityForResult(intent, DETAIL_SEARCH_CODE);
+        getActivity().startActivityForResult(intent, Consts.DETAIL_SEARCH_CODE);
         getActivity().overridePendingTransition(R.anim.screen_slide_up, R.anim.screen_slide_stop);
         AppController.getInstance().pushPageStack();
     }
@@ -163,7 +163,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == DETAIL_SEARCH_CODE) {
+        if (requestCode == Consts.DETAIL_SEARCH_CODE) {
             Call<PostListResultData> call = networkService.getFilteredData(data.getIntExtra("typeDye", 0),
                     data.getIntExtra("typePerm", 0),
                     data.getIntExtra("typeCut", 0),
@@ -189,6 +189,8 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
                     Toast.makeText(getActivity(), "데이터 로딩 실패.", Toast.LENGTH_SHORT).show();
                 }
             });
+        } else if (requestCode == Consts.WRITE_REQUEST) {
+            updateLatestSortVersion();
         }
     }
 

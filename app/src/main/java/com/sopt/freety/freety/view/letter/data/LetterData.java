@@ -1,5 +1,7 @@
 package com.sopt.freety.freety.view.letter.data;
 
+import io.realm.Realm;
+
 /**
  * Created by cmslab on 7/5/17.
  */

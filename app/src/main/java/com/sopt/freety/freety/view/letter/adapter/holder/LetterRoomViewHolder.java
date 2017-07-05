@@ -21,7 +21,7 @@ public class LetterRoomViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.chat_list_elem_name) public TextView vhName;
     @BindView(R.id.chat_list_elem_date) public TextView vhDate;
     @BindView(R.id.chat_list_elem_last) public TextView vhLastMsg;
-    @BindView(R.id.letter_list_elem_pending) public Button vhPendingImage;
+    @BindView(R.id.letter_list_elem_pending) public TextView vhPendingImage;
 
     public LetterRoomViewHolder(View itemView) {
         super(itemView);
@@ -44,7 +44,7 @@ public class LetterRoomViewHolder extends RecyclerView.ViewHolder {
         return vhLastMsg;
     }
 
-    public Button getPendingImage() {
+    public TextView getPendingImage() {
         return vhPendingImage;
     }
 }

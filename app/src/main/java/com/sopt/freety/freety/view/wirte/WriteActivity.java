@@ -27,12 +27,25 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.Request;
+import com.google.android.gms.maps.model.LatLng;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
+import com.sopt.freety.freety.data.OnlyMsgResultData;
+import com.sopt.freety.freety.network.NaverNetworkService;
+import com.sopt.freety.freety.network.NetworkService;
+import com.sopt.freety.freety.util.Consts;
+import com.sopt.freety.freety.util.SharedAccessor;
+import com.sopt.freety.freety.util.util.DateParser;
+import com.sopt.freety.freety.util.util.FormatChecker;
 import com.sopt.freety.freety.view.property.ScreenClickable;
 import com.sopt.freety.freety.view.recruit.MapPopupActivity;
+import com.sopt.freety.freety.view.wirte.data.NaverResultData;
+import com.sopt.freety.freety.view.wirte.data.WritePhotoData;
+import com.sopt.freety.freety.view.wirte.data.WritePostResultData;
+import com.sopt.freety.freety.view.wirte.data.WriteRequestData;
 import com.yongbeam.y_photopicker.util.photopicker.PhotoPickerActivity;
 import com.yongbeam.y_photopicker.util.photopicker.utils.YPhotoPickerIntent;
 
@@ -43,6 +56,7 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import butterknife.BindView;
 import butterknife.BindViews;
@@ -51,11 +65,12 @@ import butterknife.OnClick;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class WriteActivity extends AppCompatActivity implements ScreenClickable {
 
-    public static final int MAP_POPUP_CODE = 1234;
-    public static final int PICTURE_CODE = 4321;
     private static final String TAG = "WriteActivity";
 
     private PermissionListener permissionListener = new PermissionListener() {
@@ -65,12 +80,10 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
             intent.setMaxSelectCount(5);
             intent.setSelectCheckBox(true);
             intent.setMaxGrideItemCount(3);
-            startActivityForResult(intent, PICTURE_CODE);
+            startActivityForResult(intent, Consts.WRITE_PICTURE_CODE);
         }
-
         @Override
         public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-
         }
     };
 
@@ -104,7 +117,8 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
     public void onMapSearchBtn() {
         if (!isPopup) {
             isPopup = true;
-            startActivityForResult(new Intent(WriteActivity.this, MapPopupActivity.class), MAP_POPUP_CODE);
+            startActivityForResult(new Intent(WriteActivity.this, MapPopupActivity.class), Consts.MAP_POPUP_CODE);
+            AppController.getInstance().pushPageStack();
         }
     }
 
@@ -117,14 +131,16 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
                 .setDeniedMessage("거부하시면 볼수 없는데...")
                 .setPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA})
                 .check();
-
     }
 
-    @BindViews({R.id.write_map_text1, R.id.write_map_text2})
-    List<EditText> mapTextList;
+    @BindViews({R.id.write_place_text1, R.id.write_place_text2})
+    List<EditText> placeTextList;
 
     @BindViews({R.id.img_write_selected_first, R.id.img_write_selected_second, R.id.img_write_selected_third, R.id.img_write_selected_fourth, R.id.img_write_selected_fifth})
     List<ImageView> writeSelectedImageList;
+
+    @BindView(R.id.edit_write_cost)
+    EditText priceEditText;
 
     @BindView(R.id.edit_write_title)
     EditText writeTitleEdit;
@@ -135,13 +151,7 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
     @BindView(R.id.btn_write_register)
     Button writeRegisterBtn;
 
-    @OnClick(R.id.btn_write_register)
-    public void onRegisterBtn() {
-        if (imageBodyList.size() <= 0) {
-            Toast.makeText(this, "사진을 한 장 이상 등록해주세요.", Toast.LENGTH_SHORT).show();
-        } else {
-        }
-    }
+
 
     @BindView(R.id.write_content_counter_text)
     TextView contentCounterText;
@@ -156,6 +166,9 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
     private boolean isPopup;
     private ProgressDialog progressDialog;
     private List<MultipartBody.Part> imageBodyList = new ArrayList<>();
+    private LatLng latLng;
+    private String sigugun;
+    private String fullAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,7 +193,7 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
 
         progressDialog = new ProgressDialog(WriteActivity.this);
         progressDialog.setCancelable(false);
-        progressDialog.setMessage("업로드 중...");
+        progressDialog.setMessage("업로드 중 입니다...");
         progressDialog.setIndeterminate(true);
     }
 
@@ -189,8 +202,8 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(writeTitleEdit.getWindowToken(), 0);
         imm.hideSoftInputFromWindow(writeContentEdit.getWindowToken(), 0);
-        imm.hideSoftInputFromWindow(mapTextList.get(0).getWindowToken(), 0);
-        imm.hideSoftInputFromWindow(mapTextList.get(1).getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(placeTextList.get(0).getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(placeTextList.get(1).getWindowToken(), 0);
     }
 
     private DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -221,21 +234,38 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         isPopup = false;
-        if (requestCode == MAP_POPUP_CODE) {
-            if (resultCode == MapPopupActivity.RESULT_SUCCESS) {
+        if (requestCode == Consts.MAP_POPUP_CODE) {
+            if (resultCode == RESULT_OK) {
                 String addressString = data.getStringExtra("address");
                 double lat = data.getDoubleExtra("lat", 0);
                 double lng = data.getDoubleExtra("lng", 0);
+                latLng = new LatLng(lat, lng);
                 int subIndex;
                 for (subIndex = 0; subIndex < addressString.length(); subIndex++) {
                     if (subIndex >= 10 && addressString.charAt(subIndex) == ' ') {
                         break;
                     }
                 }
-                mapTextList.get(0).setText(addressString.substring(0, subIndex));
-                mapTextList.get(1).setText(addressString.substring(subIndex));
+                placeTextList.get(0).setText(addressString.substring(0, subIndex));
+                placeTextList.get(1).setText(addressString.substring(subIndex));
+
+                Call<NaverResultData> call = AppController.getInstance().getNaverNetworkService()
+                        .getSigugun(String.valueOf(lat) + "," + String.valueOf(lng), NaverNetworkService.CLIENT_KEY, NaverNetworkService.SECRET_KEY);
+                call.enqueue(new Callback<NaverResultData>() {
+                    @Override
+                    public void onResponse(Call<NaverResultData> call, Response<NaverResultData> response) {
+                        if (response.isSuccessful()) {
+                            Log.i(TAG, "onResponse: sigugun : " + sigugun);
+                            sigugun = response.body().getSigugun();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<NaverResultData> call, Throwable t) {
+                    }
+                });
             }
-        } else if (requestCode == PICTURE_CODE){
+        } else if (requestCode == Consts.WRITE_PICTURE_CODE){
             List<String> photos = null;
             if (resultCode == RESULT_OK) {
                 if (data != null) {
@@ -244,6 +274,8 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
                         writeSelectedImageList.get(i).setImageResource(0);
                     }
                     imageBodyList.clear();
+                    Log.i(TAG, "onActivityResult: " + data.getData());
+                    Log.i(TAG, "onActivityResult: " + photos);
                     for (int i = 0; i < photos.size(); i++) {
                         Log.i(TAG, "onActivityResult: " + photos.get(i));
                         File file = new File(photos.get(i));
@@ -254,6 +286,104 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
                     }
                 }
             }
+        }
+    }
+
+    private boolean checkPermission() {
+        if (hairTypeSet.size() <= 0) {
+            Toast.makeText(this, "시술 유형을 최소 1가지 선택해주세요.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (writeDateText.getText().toString().length() <= 0) {
+            Toast.makeText(this, "시술 시간을 선택해주세요.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (placeTextList.get(0).getText().toString().length() <= 0) {
+            Toast.makeText(this, "시술 시간을 선택해주세요.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (priceEditText.getText().length() <= 0 || !FormatChecker.isDecimal(priceEditText.getText().toString())) {
+            Toast.makeText(this, "가격을 설정하세요", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (imageBodyList.size() <= 0) {
+            Toast.makeText(this, "사진을 한 장 이상 등록해주세요.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (writeTitleEdit.getText().toString().length() <= 0) {
+            Toast.makeText(this, "제목을 입력해주세요.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (writeContentEdit.getText().toString().length() <= 0) {
+            Toast.makeText(this, "제목을 입력해주세요.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
+
+       @OnClick(R.id.btn_write_register)
+    public void onRegisterBtn() {
+        if (checkPermission()) {
+            progressDialog.show();
+            WriteRequestData writeRequestData = new WriteRequestData
+                    .Builder(writeTitleEdit.getText().toString(), writeContentEdit.getText().toString(), DateParser.toDateTimeFormat(writeDateText.getText().toString()))
+                    .setPrice(Integer.parseInt(priceEditText.getText().toString()))
+                    .setTypeCut(hairTypeSet.contains(Consts.HAIR_CUT))
+                    .setTypeDye(hairTypeSet.contains(Consts.HAIR_DYE))
+                    .setTypePerm(hairTypeSet.contains(Consts.HAIR_PERM))
+                    .setTypeEct(hairTypeSet.contains(Consts.HAIR_ECT))
+                    .setLatitude(latLng.latitude)
+                    .setLongitude(latLng.longitude)
+                    .setSigugun(sigugun)
+                    .setFullAddress(fullAddress)
+                    .build();
+
+            final NetworkService networkService = AppController.getInstance().getNetworkService();
+            Call<WritePostResultData> call = networkService.writePostData(SharedAccessor.getToken(WriteActivity.this), writeRequestData);
+            call.enqueue(new Callback<WritePostResultData>() {
+                @Override
+                public void onResponse(Call<WritePostResultData> call, Response<WritePostResultData> response) {
+                    if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
+                        final int postId = response.body().getPostId();
+                        final AtomicInteger imageCounter = new AtomicInteger(0);
+                        for (int i = 0; i < imageBodyList.size(); i++) {
+                            RequestBody postBody = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(postId));
+                            Call<OnlyMsgResultData> photoCall = networkService.uploadPhoto(SharedAccessor.getToken(WriteActivity.this),
+                                    postBody, imageBodyList.get(i));
+                            Log.i(TAG, "onResponse: " + String.valueOf(i) + " 번째 전송" );
+                            photoCall.enqueue(new Callback<OnlyMsgResultData>() {
+                                @Override
+                                public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
+                                    if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
+                                        int currentUploadedCount = imageCounter.incrementAndGet();
+                                        progressDialog.setProgress(currentUploadedCount * (100 / imageBodyList.size()));
+                                        if (currentUploadedCount == imageBodyList.size()) {
+                                            progressDialog.dismiss();
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
+                                }
+                            });
+                        }
+                    } else {
+                        Toast.makeText(WriteActivity.this, "만들기 실패", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<WritePostResultData> call, Throwable t) {
+                }
+            });
         }
     }
 

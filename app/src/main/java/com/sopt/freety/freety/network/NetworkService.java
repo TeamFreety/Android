@@ -2,6 +2,7 @@ package com.sopt.freety.freety.network;
 
 import com.sopt.freety.freety.data.OnlyMsgResultData;
 import com.sopt.freety.freety.data.PostListResultData;
+import com.sopt.freety.freety.view.letter.data.LetterListResultData;
 import com.sopt.freety.freety.view.login.JoinResult;
 import com.sopt.freety.freety.view.login.data.AutoLoginResultData;
 import com.sopt.freety.freety.view.login.data.DuplicateData;
@@ -11,15 +12,19 @@ import com.sopt.freety.freety.view.login.data.SignUpData;
 import com.sopt.freety.freety.view.login.data.SignUpResultData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageModelGetData;
+import com.sopt.freety.freety.view.my_page.data.network.MyPageReviewRequestData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageStatusUpdateRequestData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPhotoRequestData;
 import com.sopt.freety.freety.view.recruit.data.PickRequestData;
 import com.sopt.freety.freety.view.recruit.data.PickResultData;
 import com.sopt.freety.freety.view.recruit.data.PostDetailResultData;
-import com.sopt.freety.freety.view.recruit.data.WriteRequestData;
+import com.sopt.freety.freety.view.wirte.data.WritePhotoData;
+import com.sopt.freety.freety.view.wirte.data.WriteRequestData;
+import com.sopt.freety.freety.view.wirte.data.WritePostResultData;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -39,16 +44,6 @@ public interface NetworkService {
 
     public static final String BASE_URL = "http://52.79.172.131:3000";
 
-    @Multipart
-    @POST("/")
-    Call<JoinResult> registerDesignerData(@Part("email") RequestBody email,
-                                          @Part("pwd") RequestBody pwd,
-                                          @Part("name") RequestBody name,
-                                          @Part("age") RequestBody age,
-                                          @Part("belong") RequestBody belong,
-                                          @Part("belongName") RequestBody belongName,
-                                          @Part("career") RequestBody career);
-
     @POST("/signup/designer/email")
     Call<SignUpResultData> registerDesignerData(@Body SignUpData signUpData);
 
@@ -59,7 +54,7 @@ public interface NetworkService {
     Call<DuplicateData> checkDuplicate(@Query("tempEmail") String email);
 
     @POST("/logincheck")
-    Call<AutoLoginResultData> auto(@Header("member_token") String token);
+    Call<OnlyMsgResultData> auto(@Header("member_token") String token);
 
     @POST("/login/email")
     Call<LoginResultData> login(@Body LoginRequestData data);
@@ -69,6 +64,13 @@ public interface NetworkService {
 
     @GET("/postDetail/{postId}")
     Call<PostDetailResultData> getPostDetailData(@Header("member_token") String token, @Path("postId") int postId);
+
+    @POST("/postDetail/writePost")
+    Call<WritePostResultData> writePostData(@Header("member_token") String token, @Body WriteRequestData writeRequestData);
+
+    @Multipart
+    @POST("/postDetail/writePostPhoto")
+    Call<OnlyMsgResultData> uploadPhoto(@Header("member_token") String token, @Part("postId") RequestBody postId, @Part MultipartBody.Part body);
 
     @Multipart
     @POST("/post/write")
@@ -85,6 +87,12 @@ public interface NetworkService {
 
     @POST("/mypage/statusMsg")
     Call<OnlyMsgResultData> getOkMsg(@Header("member_token") String token, @Body MyPageStatusUpdateRequestData data);
+
+    @POST("/mypage/myPhoto")
+    Call<OnlyMsgResultData> getOkMsgFromProfile(@Header("member_token") String token, @Body MyPhotoRequestData data);
+
+    @POST("/comment/writeComment")
+    Call<OnlyMsgResultData> registerReview(@Header("member_token") String token, @Body MyPageReviewRequestData data, @Part MultipartBody.Part imageBody);
 
     @GET("/search/latest")
     Call<PostListResultData> getSearchLatestData();
@@ -104,6 +112,13 @@ public interface NetworkService {
                                              @Query("high_date") String highDate,
                                              @Query("sigugun") String sigugun);
 
-    @POST("/mypage/myPhoto")
-    Call<OnlyMsgResultData> getOkMsgFromProfile(@Header("member_token") String token, @Body MyPhotoRequestData data);
+
+    @GET("/letterList")
+    Call<LetterListResultData> getLetterListDatas(@Header("member_token") String token);
+
+    @GET("/letterDetail")
+    Call<LetterListResultData> getLetterDatas(@Header("member_token") String token,
+                                              @Query("sent_mem_id") int memberId);
+
+
 }

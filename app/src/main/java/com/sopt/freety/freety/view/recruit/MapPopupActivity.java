@@ -90,7 +90,7 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
 
     private ArrayAdapter listAdapter;
     private List<PlacesResults.PlaceResult> placeResults;
-    private Intent resultIntent;
+    private Intent resultIntent = new Intent();
     @BindView(R.id.recruit_popup_list)
     ListView searchListView;
 
@@ -99,7 +99,7 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
 
     @OnClick(R.id.recruit_popup_register)
     public void onRegister() {
-        setResult(RESULT_SUCCESS, resultIntent);
+        setResult(RESULT_OK, resultIntent);
         finish();
     }
 
@@ -122,7 +122,7 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
         getWindow().getAttributes().width = (int)(0.9f * display.getWidth());
         getWindow().getAttributes().height = (int)(0.9f * display.getHeight());
         ButterKnife.bind(this);
-        mapNetworkService = AppController.getInstance().getMapNetworkService();
+        mapNetworkService = AppController.getInstance().getGoogleNetworkService();
         buildGoogleApiClient();
         googleApiClient.connect();
         List<String> initResultList = new ArrayList<>();
@@ -138,8 +138,7 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
                 }
                 PlacesResults.PlaceResult selectedPlace = placeResults.get(position);
                 moveCameraToLatLng(selectedPlace.getLat(), selectedPlace.getLng(), selectedPlace.getName());
-                resultIntent = new Intent();
-                resultIntent.putExtra("address", selectedPlace.getFormattedAddress());
+                resultIntent.putExtra("address", selectedPlace.getFormattedAddress() + " " + selectedPlace.getName());
                 resultIntent.putExtra("lat", selectedPlace.getLat());
                 resultIntent.putExtra("lng", selectedPlace.getLng());
             }
@@ -195,6 +194,8 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, DEFAULT_ZOOM));
             cameraPosition = googleMap.getCameraPosition();
             googleMap.addMarker(new MarkerOptions().position(currentLatLng).title("현재 위치"));
+            resultIntent.putExtra("lat", currentLocation.getLatitude());
+            resultIntent.putExtra("lng", currentLocation.getLongitude());
         } else {
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, DEFAULT_ZOOM));
             googleMap.getUiSettings().setMyLocationButtonEnabled(false);
@@ -220,7 +221,8 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
                     placeResults = response.body().getResults();
                     for (int index = 0; index < placeResults.size(); index++) {
                         PlacesResults.PlaceResult result = placeResults.get(index);
-                        resultList.add(result.getFormattedAddress() + " " + result.getName());
+                        String fullAddress = result.getFormattedAddress() + " " + result.getName();
+                        resultList.add(fullAddress);
                         if (index >= 10) {
                             break;
                         }

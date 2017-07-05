@@ -12,8 +12,10 @@ import retrofit2.http.Query;
 
 public interface MapNetworkService {
 
-    String BASE_URL = "https://maps.googleapis.com";
-    String API_KEY = "AIzaSyCzezaEEraT_PEJt4VxBY5MtEGLqWrNF4U";
+    public static final String BASE_URL = "https://maps.googleapis.com";
+    public static final String API_KEY = "AIzaSyCzezaEEraT_PEJt4VxBY5MtEGLqWrNF4U";
+
+
 
     @GET("/maps/api/place/textsearch/json?key=" + API_KEY + "&language=ko")
     Call<PlacesResults> getLocationResults(@Query("query") String query);

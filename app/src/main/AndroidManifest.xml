@@ -37,7 +37,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.login.EmailLoginActivity" />
-        <activity android:name=".view.main.MainActivity"></activity>
+        <activity android:name=".view.main.MainActivity" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -58,16 +58,16 @@
         <activity android:name=".view.recruit.RecruitActivity" />
         <activity
             android:name=".view.recruit.MapPopupActivity"
-            android:theme="@style/Dialog"></activity>
+            android:theme="@style/Dialog" />
         <activity android:name=".view.login.ModelSNSSignUpActivity" />
         <activity android:name=".view.login.DesignerSNSSignUpActivity" />
         <activity
             android:name=".view.login.DesignerEmailSignUpActivity"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity android:name=".view.login.ModelEmailSignUpActivity" />
         <activity
             android:name=".view.wirte.WriteActivity"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name="com.yongbeam.y_photopicker.util.photopicker.PhotoPickerActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
@@ -78,7 +78,9 @@
             android:name="com.yongbeam.y_photopicker.util.photopicker.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".view.letter.LetterActivity"></activity>
+        <activity android:name=".view.letter.LetterActivity" />
+        <activity android:name=".view.my_page.MyPageReviewPopupActivity"
+            android:theme="@style/Dialog" />
     </application>
 
 </manifest>

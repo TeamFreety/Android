@@ -4,8 +4,10 @@ import com.sopt.freety.freety.util.util.DateParser;
 
 import java.text.ParseException;
 
+import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.RealmResults;
 
 /**
  * Created by cmslab on 7/4/17.
@@ -46,24 +48,16 @@ public class RealmPerson extends RealmObject {
         return letterList;
     }
 
-    public LetterRoomData getLetterListData() throws ParseException {
-        int unReadCount = 0;
-        String date = "";
-        String lastMsg = "";
-        int letterListSize = letterList.size();
-        DateParser formatter = new DateParser();
-        for (int index = 0; index < letterListSize; index++) {
-            RealmLetter letter = letterList.get(index);
-            if (letter.isPending()) {
-                unReadCount++;
-            }
-
-            if (index == letterListSize - 1) {
-                date = DateParser.toYearMonthDay(letter.getDate());
-                lastMsg = letter.getContent();
-            }
+    public LetterRoomData getLetterRoomData(Realm realm, RealmPerson person) throws ParseException {
+        RealmResults<RealmLetter> realmLetters = realm.where(RealmLetter.class).equalTo("letterList.otherId", person.getMemberId()).findAll();
+        int letterListSize = realmLetters.size();
+        if (letterListSize > 0) {
+            RealmLetter letter = realmLetters.get(letterListSize - 1);
+            String lastMsg = letter.getContent();
+            return new LetterRoomData(memberId, imageURL, 0, memberName, letter.getDate(), lastMsg);
+        } else {
+            return null;
         }
-        return new LetterRoomData(imageURL, unReadCount, memberName, date, lastMsg);
     }
 }
 

@@ -8,13 +8,13 @@
     android:layout_height="match_parent"
     tools:context="com.sopt.freety.freety.view.home.HomeFragment">
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="#ffffff"
         android:orientation="horizontal"
         android:id="@+id/home_toolbar">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -23,6 +23,7 @@
             android:src="@drawable/freety_logo_black"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
+
     </RelativeLayout>
 
     <android.support.design.widget.CoordinatorLayout
@@ -57,23 +58,65 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true">
-
+                    android:layout_centerHorizontal="true">
                 </android.support.v4.view.ViewPager>
 
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/indicatorTab"
-                    android:layout_width="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_height="12dp"
-                    android:layout_marginBottom="18dp"
+                <LinearLayout
+                    android:layout_width="95dp"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal"
                     android:layout_alignParentBottom="true"
-                    app:tabBackground="@drawable/dot_selector"
-                    app:tabGravity="center"
-                    app:tabPaddingStart="6dp"
-                    app:tabPaddingEnd="6dp"
-                    app:tabIndicatorHeight="0dp" />
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="15dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/indicator1"
+                        android:src="@drawable/fullcircle"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        />
+
+                    <ImageView
+                        android:id="@+id/indicator2"
+                        android:src="@drawable/fullcircle"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        />
+
+                    <ImageView
+                        android:id="@+id/indicator3"
+                        android:src="@drawable/fullcircle"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        />
+
+                    <ImageView
+                        android:id="@+id/indicator4"
+                        android:src="@drawable/fullcircle"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        />
+
+                    <ImageView
+                        android:id="@+id/indicator5"
+                        android:src="@drawable/fullcircle"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        />
+
+                </LinearLayout>
+
 
             </RelativeLayout>
 

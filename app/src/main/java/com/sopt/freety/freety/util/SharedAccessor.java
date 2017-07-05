@@ -2,6 +2,7 @@ package com.sopt.freety.freety.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 /**
  * Created by cmslab on 7/2/17.
@@ -12,7 +13,6 @@ public class SharedAccessor {
     public static String getToken(Context context) {
         SharedPreferences pref = context.getSharedPreferences(Consts.PREF_KEY, Context.MODE_PRIVATE);
         return pref.getString(Consts.PREF_TOKEN, "");
-
     }
 
     public static boolean isDesigner(Context context) {
