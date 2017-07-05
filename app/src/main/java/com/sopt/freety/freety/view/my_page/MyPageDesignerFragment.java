@@ -120,7 +120,7 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
                 .into(profileImage);
 
         tabLayout.addTab(tabLayout.newTab().setText("글목록"));
-        tabLayout.addTab(tabLayout.newTab().setText("스타일"));
+        tabLayout.addTab(tabLayout.newTab().setText("포트폴리오"));
         tabLayout.addTab(tabLayout.newTab().setText("후기"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabTextColors(Color.parseColor("#95989A"), Color.parseColor("#000000"));

@@ -3,6 +3,7 @@ package com.sopt.freety.freety.network;
 import com.sopt.freety.freety.data.OnlyMsgResultData;
 import com.sopt.freety.freety.data.PostListResultData;
 import com.sopt.freety.freety.view.login.JoinResult;
+import com.sopt.freety.freety.view.login.data.AutoLoginResultData;
 import com.sopt.freety.freety.view.login.data.DuplicateData;
 import com.sopt.freety.freety.view.login.data.LoginRequestData;
 import com.sopt.freety.freety.view.login.data.LoginResultData;
@@ -21,7 +22,6 @@ import com.sopt.freety.freety.view.wirte.data.WritePostResultData;
 
 import java.util.List;
 
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -59,6 +59,9 @@ public interface NetworkService {
 
     @GET("/duplicateCheck")
     Call<DuplicateData> checkDuplicate(@Query("tempEmail") String email);
+
+    @POST("/logincheck")
+    Call<AutoLoginResultData> auto(@Header("member_token") String token);
 
     @POST("/login/email")
     Call<LoginResultData> login(@Body LoginRequestData data);

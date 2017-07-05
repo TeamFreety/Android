@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="#FFFFFF"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -50,6 +51,7 @@
                 android:src="@drawable/controls"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
+                android:background="@null"
                 android:layout_marginTop="25dp"/>
 
             <Button
@@ -96,11 +98,9 @@
             android:layout_height="match_parent">
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_search"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
                 android:clipToPadding="false"
-                android:padding="@dimen/my_page_post_offset"
+                android:padding="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:overScrollMode="never">

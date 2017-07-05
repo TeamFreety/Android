@@ -7,11 +7,9 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +18,6 @@ import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListen
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
-import com.sopt.freety.freety.data.PostListResultData;
 import com.sopt.freety.freety.util.util.Triple;
 
 import java.util.Calendar;
@@ -35,7 +32,6 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
 
 public class FilteredSearchActivity extends AppCompatActivity {
 
@@ -124,7 +120,7 @@ public class FilteredSearchActivity extends AppCompatActivity {
         }
         Log.i(TAG, "onAdaptBtn: " + sigugun);
         resultIntent.putExtra("sigugun", sigugun);
-        setResult(0, resultIntent);
+        setResult(RESULT_OK, resultIntent);
         finish();
     }
 

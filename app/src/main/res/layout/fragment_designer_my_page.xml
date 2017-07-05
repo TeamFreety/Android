@@ -107,8 +107,8 @@
                         app:srcCompat="@drawable/chat_list_elem" />
 
                     <ImageButton
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_marginBottom="77dp"
                         android:layout_marginLeft="92dp"
@@ -150,6 +150,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginBottom="13dp"
                         android:layout_marginLeft="9dp"
+                        android:background="@null"
                         android:layout_toRightOf="@+id/edit_my_page_designer_status"
                         android:src="@drawable/mypage_writing" />
                     </RelativeLayout>
