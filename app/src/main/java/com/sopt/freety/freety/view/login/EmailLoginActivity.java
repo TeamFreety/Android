@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -42,6 +43,7 @@ public class EmailLoginActivity extends AppCompatActivity implements ScreenClick
     SharedPreferences pref;
     String email;
     String pwd;
+    private static final String TAG = "EmailLoginActivity";
 
     @BindView(R.id.edit_login_email) EditText emailEditText;
     @BindView(R.id.edit_login_pwd) EditText pwdEditText;
@@ -82,13 +84,13 @@ public class EmailLoginActivity extends AppCompatActivity implements ScreenClick
             case R.id.submit_btn:
                 email = emailEditText.getText().toString();
                 pwd = pwdEditText.getText().toString();
-                //TODO: implement login network
                 Call<LoginResultData> call = AppController.getInstance().getNetworkService().login(new LoginRequestData(email, pwd));
                 call.enqueue(new Callback<LoginResultData>() {
                     @Override
                     public void onResponse(Call<LoginResultData> call, Response<LoginResultData> response) {
                         if (response.isSuccessful()) {
                             if (response.body().getMessage().equals("login success")) {
+                                Log.i(TAG, "onResponse: in login success");
                                 response.body().registerToken(EmailLoginActivity.this);
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 AppController.getInstance().resetPageStack();
@@ -97,11 +99,11 @@ public class EmailLoginActivity extends AppCompatActivity implements ScreenClick
                                 Toast.makeText(EmailLoginActivity.this, "아이디나 비밀번호가 틀립니다.", Toast.LENGTH_SHORT).show();
                             }
                         }
-
                     }
 
                     @Override
                     public void onFailure(Call<LoginResultData> call, Throwable t) {
+                        Log.i(TAG, "onResponse: in login failure");
                     }
                 });
 
