@@ -71,7 +71,7 @@ public class LetterListResultData {
             String imageURL = room.getSenderInfo().getSenderPhoto();
             int notifCount = room.getMessageList().size();
             String lastMsg = room.getMessageList().get(notifCount - 1).getContent();
-            String date = DateParser.toPrettyFormat(room.getMessageList().get(notifCount - 1).getDate());
+            String date = room.getMessageList().get(notifCount - 1).getDate();
             result.add(new LetterRoomData(otherId, imageURL, notifCount, otherName, date, lastMsg));
         }
         return result;
@@ -84,14 +84,14 @@ public class LetterListResultData {
             String name = roomList.get(0).getSenderInfo().getSenderName();
             String imageURL = roomList.get(0).getSenderInfo().getSenderPhoto();
             String content = roomList.get(0).getMessageList().get(i).getContent();
-            String date = DateParser.toPrettyFormat(roomList.get(0).getMessageList().get(i).getDate());
+            String date = roomList.get(0).getMessageList().get(i).getDate();
             boolean isMine = false;
             result.add(new LetterData(name, imageURL, content, date, isMine));
         }
         return result;
     }
 
-    public String getMemberName() {
+    public String getOtherName() {
         return roomList.get(0).getSenderInfo().getSenderName();
     }
 
@@ -99,7 +99,7 @@ public class LetterListResultData {
         return roomList.get(0).getSenderInfo().getSenderPhoto();
     }
 
-    public int getMemberId() {
+    public int getOtherId() {
         return roomList.get(0).getSenderInfo().getSenderId();
     }
 

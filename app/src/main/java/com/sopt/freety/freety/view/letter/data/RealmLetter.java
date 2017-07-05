@@ -1,5 +1,7 @@
 package com.sopt.freety.freety.view.letter.data;
 
+import com.sopt.freety.freety.util.util.DateParser;
+
 import io.realm.RealmObject;
 
 /**
@@ -55,5 +57,10 @@ public class RealmLetter extends RealmObject {
 
     public LetterData getLetterData(String imageURL) {
         return new LetterData(otherName, imageURL, content, date, isMyMsg);
+    }
+
+    @Override
+    public String toString() {
+        return "otherId : " + otherId + ", content : " + content + ", isMyMsg " + String.valueOf(isMyMsg);
     }
 }
