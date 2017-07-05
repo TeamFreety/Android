@@ -110,7 +110,7 @@ public class HomePostFragment extends Fragment {
                 }
             }
         });
-    topFabtn.setImageResource(R.drawable.mypage_floating_arrow);
+
     topFabtn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {

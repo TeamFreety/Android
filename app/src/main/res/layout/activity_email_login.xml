@@ -29,7 +29,7 @@
         android:id="@+id/img_first_login_logo"
         android:layout_width="193dp"
         android:layout_height="64dp"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="106dp"
         android:background="@drawable/email_login_logo"/>
 
     <LinearLayout

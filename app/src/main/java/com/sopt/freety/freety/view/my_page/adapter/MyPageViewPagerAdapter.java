@@ -2,12 +2,11 @@ package com.sopt.freety.freety.view.my_page.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.sopt.freety.freety.view.my_page.MyPagePostFragment;
-import com.sopt.freety.freety.view.my_page.MyPageReviewFragment;
-import com.sopt.freety.freety.view.my_page.MyPageStyleFragment;
+import com.sopt.freety.freety.view.my_page.MyPageDesignerPostFragment;
+import com.sopt.freety.freety.view.my_page.MyPageDesignerReviewFragment;
+import com.sopt.freety.freety.view.my_page.MyPageDesignerStyleFragment;
 
 /**
  * Created by cmslab on 6/26/17.
@@ -29,11 +28,11 @@ public class MyPageViewPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch(position) {
             case INDEX_POST_LIST:
-                return new MyPagePostFragment();
+                return new MyPageDesignerPostFragment();
             case INDEX_STYLE:
-                return new MyPageStyleFragment();
+                return new MyPageDesignerStyleFragment();
             case INDEX_REVIEW:
-                return new MyPageReviewFragment();
+                return new MyPageDesignerReviewFragment();
             default:
                 throw new RuntimeException("There is unexpected position");
         }
