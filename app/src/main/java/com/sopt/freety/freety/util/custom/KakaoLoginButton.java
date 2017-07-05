@@ -204,7 +204,7 @@ public class KakaoLoginButton extends LoginButton {
 
 
         new AlertDialog.Builder(getContent())
-                .setAdapter(adapter, new DialogInterface.OnClickListener() {
+                .updateData(adapter, new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, final int position) {
                         final AuthType authType = items[position].authType;
                         if (authType != null) {

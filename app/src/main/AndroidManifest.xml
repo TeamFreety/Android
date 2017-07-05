@@ -79,7 +79,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".view.letter.LetterActivity" />
-        <activity android:name=".view.my_page.MyPageReviewPopupActivity"></activity>
+        <activity android:name=".view.my_page.MyPageReviewPopupActivity"
+            android:theme="@style/Dialog" />
     </application>
 
 </manifest>

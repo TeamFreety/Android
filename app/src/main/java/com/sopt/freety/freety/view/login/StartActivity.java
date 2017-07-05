@@ -31,6 +31,7 @@ import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
+import com.sopt.freety.freety.data.OnlyMsgResultData;
 import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.view.login.data.AutoLoginResultData;
 import com.sopt.freety.freety.view.main.MainActivity;
@@ -67,11 +68,10 @@ public class StartActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_first_login);
 
-//        SharedAccessor.reset(this);
-        Call<AutoLoginResultData> autoLoginCall = AppController.getInstance().getNetworkService().auto(SharedAccessor.getToken(StartActivity.this));
-        autoLoginCall.enqueue(new Callback<AutoLoginResultData>() {
+        Call<OnlyMsgResultData> autoLoginCall = AppController.getInstance().getNetworkService().auto(SharedAccessor.getToken(StartActivity.this));
+        autoLoginCall.enqueue(new Callback<OnlyMsgResultData>() {
             @Override
-            public void onResponse(Call<AutoLoginResultData> call, Response<AutoLoginResultData> response) {
+            public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
                 if (response.isSuccessful()) {
                     if (response.body().getMessage().equals("token validated")) {
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -84,13 +84,12 @@ public class StartActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<AutoLoginResultData> call, Throwable t) {
+            public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
 
                 Toast.makeText(StartActivity.this, "데이터 로드 실패", Toast.LENGTH_SHORT).show();
 
             }
         });
-
 
         UserManagement.requestLogout(new LogoutResponseCallback() {
 

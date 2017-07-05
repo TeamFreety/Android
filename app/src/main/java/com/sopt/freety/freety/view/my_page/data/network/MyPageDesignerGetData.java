@@ -92,7 +92,7 @@ public class MyPageDesignerGetData {
         private String writtenTime;
 
         public MyPageReviewElemData getMyPageReviewElemData() throws ParseException {
-            String parsedDate = DateParser.toYearMonthDay(writtenTime);
+            String parsedDate = DateParser.toPrettyFormat(writtenTime);
             return new MyPageReviewElemData(title, parsedDate, content, commentPhoto, score, writerName);
         }
     }

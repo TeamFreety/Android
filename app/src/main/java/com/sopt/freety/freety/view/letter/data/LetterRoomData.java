@@ -1,25 +1,29 @@
 package com.sopt.freety.freety.view.letter.data;
 
-import com.sopt.freety.freety.R;
-
 /**
  * Created by cmslab on 6/25/17.
  */
 
 public class LetterRoomData {
 
-    private final String imageURL;
-    private final int notifCount;
-    private final String otherId;
-    private final String date;
-    private final String lastMsg;
+    private int otherId;
+    private String imageURL;
+    private int notifCount;
+    private String otherName;
+    private String date;
+    private String lastMsg;
 
-    public LetterRoomData(final String imageURL, final int numUnRead, final String name, final String date, final String lastMsg) {
+    public LetterRoomData(final int otherId, final String imageURL, final int numUnRead, final String name, final String date, final String lastMsg) {
+        this.otherId = otherId;
         this.imageURL = imageURL;
         this.notifCount = numUnRead;
-        this.otherId = name;
+        this.otherName = name;
         this.date = date;
         this.lastMsg = lastMsg;
+    }
+
+    public int getOtherId() {
+        return otherId;
     }
 
     public String getImageURL() {
@@ -30,8 +34,8 @@ public class LetterRoomData {
         return notifCount;
     }
 
-    public String getOtherId() {
-        return otherId;
+    public String getOtherName() {
+        return otherName;
     }
 
     public String getDate() {
@@ -40,5 +44,29 @@ public class LetterRoomData {
 
     public String getLastMsg() {
         return lastMsg;
+    }
+
+    public void setOtherId(int otherId) {
+        this.otherId = otherId;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public void setNotifCount(int notifCount) {
+        this.notifCount = notifCount;
+    }
+
+    public void setOtherName(String otherName) {
+        this.otherName = otherName;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setLastMsg(String lastMsg) {
+        this.lastMsg = lastMsg;
     }
 }

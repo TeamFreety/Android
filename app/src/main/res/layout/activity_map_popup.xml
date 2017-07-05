@@ -33,7 +33,7 @@
             android:id="@+id/recruit_popup_edit"
             android:hint="주소를 입력하세요."
             android:background="@null"
-            android:layout_width="235dp"
+            android:layout_width="210dp"
             android:textSize="13sp"
             android:textColor="#96989a"
             android:singleLine="true"

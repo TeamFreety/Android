@@ -74,4 +74,9 @@ public class LetterRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             return TYPE_LEFT;
         }
     }
+
+    public void updateLetterDataList(List<LetterData> dataList) {
+        this.letterDataList = dataList;
+        notifyDataSetChanged();
+    }
 }

@@ -39,7 +39,7 @@ public class ChatListActivity extends AppCompatActivity implements SwipeRefreshL
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot chatListDataSnapShot : dataSnapshot.getChildren()) {
                     ChatListFirebaseData data = chatListDataSnapShot.getValue(ChatListFirebaseData.class);
-                    Log.i("LetterRoomData", "data myId : " + data.getMyId() + ", data otherId : " + data.getOtherId()
+                    Log.i("LetterRoomData", "data myId : " + data.getMyId() + ", data otherId : " + data.getOtherName()
                             + String.valueOf(data.getIsNew()));
                     if (data.getMyId().equals(ME)) {
                         chatListDatas.add(new LetterRoomData(data.getRoomId(), R.drawable.chat_list_elem,
@@ -66,7 +66,7 @@ public class ChatListActivity extends AppCompatActivity implements SwipeRefreshL
                 Intent toChatActivityIntent = new Intent(getApplicationContext(), ChatActivity.class);
                 LetterRoomData chatListData = chatListDatas.get(position);
                 toChatActivityIntent.putExtra("roomId", chatListData.getRoomId());
-                toChatActivityIntent.putExtra("otherId", chatListData.getOtherId());
+                toChatActivityIntent.putExtra("otherId", chatListData.getOtherName());
                 startActivity(toChatActivityIntent);
             }
 

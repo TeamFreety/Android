@@ -26,12 +26,12 @@ public class LetterListAdapter extends RecyclerView.Adapter<LetterRoomViewHolder
     private List<LetterRoomData> roomDataList;
 
 
-    public LetterListAdapter(Context context, List<LetterRoomData> chatListDatas) {
+    public LetterListAdapter(Context context, List<LetterRoomData> letterRoomDatas) {
         this.context = context;
-        this.roomDataList = chatListDatas;
+        this.roomDataList = letterRoomDatas;
     }
 
-    public void setAdapter(List<LetterRoomData> chatListDatas) {
+    public void updateData(List<LetterRoomData> chatListDatas) {
         this.roomDataList = chatListDatas;
         notifyDataSetChanged();
     }
@@ -45,14 +45,21 @@ public class LetterListAdapter extends RecyclerView.Adapter<LetterRoomViewHolder
 
     @Override
     public void onBindViewHolder(LetterRoomViewHolder holder, int position) {
-        holder.getName().setText(roomDataList.get(position).getOtherId());
-        Glide.with(context).load(roomDataList.get(position).getImageURL())
-                .thumbnail(0.3f)
-                .bitmapTransform(new CropCircleTransformation(context))
-                .into(holder.getImage());
+        holder.getName().setText(roomDataList.get(position).getOtherName());
+        if (!roomDataList.get(position).getImageURL().equals("")) {
+            Glide.with(context).load(roomDataList.get(position).getImageURL())
+                    .thumbnail(0.3f)
+                    .bitmapTransform(new CropCircleTransformation(context))
+                    .into(holder.getImage());
+        } else {
+            Glide.with(context).load(R.drawable.placeholder_photo)
+                    .thumbnail(0.3f)
+                    .bitmapTransform(new CropCircleTransformation(context))
+                    .into(holder.getImage());
+        }
         holder.getLastMsg().setText(roomDataList.get(position).getLastMsg());
         holder.getDate().setText(roomDataList.get(position).getDate());
-        holder.getPendingImage().setText(roomDataList.get(position).getNotifCount());
+        holder.getPendingImage().setText(String.valueOf(roomDataList.get(position).getNotifCount()));
     }
 
     @Override
@@ -64,6 +71,10 @@ public class LetterListAdapter extends RecyclerView.Adapter<LetterRoomViewHolder
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
         this.recyclerView = recyclerView;
+    }
+
+    public LetterRoomData getItem(int position) {
+        return roomDataList.get(position);
     }
 
 }
