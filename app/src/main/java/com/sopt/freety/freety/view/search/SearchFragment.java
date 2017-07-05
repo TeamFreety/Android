@@ -78,7 +78,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
         updateLatestSortVersion();
     }
 
-    @OnClick({R.id.search_filter_btn1, R.id.search_filter_btn2})
+    @OnClick({R.id.img_search_filter, R.id.search_filter_btn2})
     public void onFilterBtn() {
         Intent intent = new Intent(getActivity(), FilteredSearchActivity.class);
         getActivity().startActivityForResult(intent, Consts.DETAIL_SEARCH_CODE);

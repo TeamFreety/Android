@@ -2,7 +2,6 @@ package com.sopt.freety.freety.view.my_page.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,10 +33,10 @@ public class MyPageReviewRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View inflatedView;
         if (viewType == TYPE_HEADER) {
-            inflatedView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_my_page_review_header, parent, false);
+            inflatedView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_designer_my_page_review_header, parent, false);
             return new MyPageReviewHeaderHolder(inflatedView);
         } else {
-            inflatedView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_my_page_review_body, parent, false);
+            inflatedView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_designer_my_page_review_body, parent, false);
             return new MyPageReviewBodyHolder(inflatedView);
         }
     }

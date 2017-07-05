@@ -48,6 +48,11 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
     @BindView(R.id.recruit_profile)
     ImageView profileImage;
 
+    @OnClick(R.id.recruit_profile)
+    public void onProfileClcik(ImageView profileImage){
+
+    }
+
     @BindView(R.id.recruit_title)
     TextView profileTitleText;
 
