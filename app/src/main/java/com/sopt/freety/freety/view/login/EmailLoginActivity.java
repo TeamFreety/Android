@@ -11,6 +11,8 @@ import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -82,31 +84,49 @@ public class EmailLoginActivity extends AppCompatActivity implements ScreenClick
                 break;
 
             case R.id.submit_btn:
-                email = emailEditText.getText().toString();
-                pwd = pwdEditText.getText().toString();
-                Call<LoginResultData> call = AppController.getInstance().getNetworkService().login(new LoginRequestData(email, pwd));
-                call.enqueue(new Callback<LoginResultData>() {
+
+                Animation btnAnim = AnimationUtils.loadAnimation(EmailLoginActivity.this, R.anim.join_btn_anim);
+                btnAnim.setAnimationListener(new Animation.AnimationListener(){
                     @Override
-                    public void onResponse(Call<LoginResultData> call, Response<LoginResultData> response) {
-                        if (response.isSuccessful()) {
-                            if (response.body().getMessage().equals("login success")) {
-                                Log.i(TAG, "onResponse: in login success");
-                                response.body().registerToken(EmailLoginActivity.this);
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                AppController.getInstance().resetPageStack();
-                                startActivity(intent);
-                            } else if (response.body().getMessage().equals("no information about the account")) {
-                                Toast.makeText(EmailLoginActivity.this, "아이디나 비밀번호가 틀립니다.", Toast.LENGTH_SHORT).show();
-                            }
-                        }
+                    public void onAnimationStart(Animation animation) {
+
                     }
 
                     @Override
-                    public void onFailure(Call<LoginResultData> call, Throwable t) {
-                        Log.i(TAG, "onResponse: in login failure");
+                    public void onAnimationEnd(Animation animation) {
+                        email = emailEditText.getText().toString();
+                        pwd = pwdEditText.getText().toString();
+                        Call<LoginResultData> call = AppController.getInstance().getNetworkService().login(new LoginRequestData(email, pwd));
+                        call.enqueue(new Callback<LoginResultData>() {
+                            @Override
+                            public void onResponse(Call<LoginResultData> call, Response<LoginResultData> response) {
+                                if (response.isSuccessful()) {
+                                    if (response.body().getMessage().equals("login success")) {
+                                        Log.i(TAG, "onResponse: in login success");
+                                        response.body().registerToken(EmailLoginActivity.this);
+                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        AppController.getInstance().resetPageStack();
+                                        startActivity(intent);
+                                    } else if (response.body().getMessage().equals("no information about the account")) {
+                                        Toast.makeText(EmailLoginActivity.this, "아이디나 비밀번호가 틀립니다.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<LoginResultData> call, Throwable t) {
+                                Log.i(TAG, "onResponse: in login failure");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
                     }
                 });
 
+                view.startAnimation(btnAnim);
                 break;
         }
     }

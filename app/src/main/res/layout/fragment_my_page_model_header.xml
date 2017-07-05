@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
+    android:background="#ffffff"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
@@ -45,8 +45,8 @@
                 android:layout_height="100dp"
              />
             <ImageButton
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@drawable/mypage_photo"
                 android:background="@null"
                 android:layout_alignRight="@+id/front_picture"
@@ -73,8 +73,8 @@
                 android:gravity="center_horizontal"
                 />
             <ImageButton
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@null"
                 android:src="@drawable/mypage_photo"
                 android:layout_alignRight="@+id/back_picture"
@@ -95,8 +95,8 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"/>
             <ImageButton
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@null"
                 android:src="@drawable/mypage_photo"
                 android:layout_alignRight="@+id/side_picture"
@@ -120,6 +120,5 @@
                 android:textSize="10dp"
                 android:textColor="@color/myPageModelTitle"/>
         </LinearLayout>
-
         </LinearLayout>
 </LinearLayout>

@@ -29,7 +29,7 @@ import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
  * Created by cmslab on 6/26/17.
  */
 
-public class MyPagePostFragment extends Fragment {
+public class MyPageDesignerPostFragment extends Fragment {
 
 
     @BindView(R.id.my_page_pick_list_recycler_view)
@@ -47,7 +47,7 @@ public class MyPagePostFragment extends Fragment {
     private MyPageDesignerFragment myPageFragment;
 
 
-    public MyPagePostFragment() {
+    public MyPageDesignerPostFragment() {
     }
 
     @Nullable

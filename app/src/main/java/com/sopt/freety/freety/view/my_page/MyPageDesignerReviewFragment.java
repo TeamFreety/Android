@@ -27,7 +27,7 @@ import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
  * Created by cmslab on 6/26/17.
  */
 
-public class MyPageReviewFragment extends Fragment {
+public class MyPageDesignerReviewFragment extends Fragment {
 
     @BindView(R.id.my_page_review_recycler_view)
     ScrollFeedbackRecyclerView recyclerView;
@@ -39,7 +39,7 @@ public class MyPageReviewFragment extends Fragment {
     private MyPageDesignerFragment myPageFragment;
 
 
-    public MyPageReviewFragment() {
+    public MyPageDesignerReviewFragment() {
     }
 
     @Nullable

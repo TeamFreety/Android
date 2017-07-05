@@ -31,7 +31,7 @@ import static com.sopt.freety.freety.view.my_page.adapter.MyPageStyleRecyclerAda
  * Created by cmslab on 6/26/17.
  */
 
-public class MyPageStyleFragment extends Fragment {
+public class MyPageDesignerStyleFragment extends Fragment {
 
     @BindView(R.id.my_page_style_recyeler_view)
     ScrollFeedbackRecyclerView recyclerView;
@@ -43,7 +43,7 @@ public class MyPageStyleFragment extends Fragment {
     @BindView(R.id.fabtn_designer_portfolio_to_top)
     FloatingActionButton topFabtn;
 
-    public MyPageStyleFragment() {
+    public MyPageDesignerStyleFragment() {
     }
 
     @Nullable
