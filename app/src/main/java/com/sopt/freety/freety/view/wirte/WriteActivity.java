@@ -31,8 +31,15 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
+import com.sopt.freety.freety.data.OnlyMsgResultData;
+import com.sopt.freety.freety.network.NetworkService;
+import com.sopt.freety.freety.util.Consts;
+import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.view.property.ScreenClickable;
 import com.sopt.freety.freety.view.recruit.MapPopupActivity;
+import com.sopt.freety.freety.view.wirte.data.WritePhotoData;
+import com.sopt.freety.freety.view.wirte.data.WritePostResultData;
+import com.sopt.freety.freety.view.wirte.data.WriteRequestData;
 import com.yongbeam.y_photopicker.util.photopicker.PhotoPickerActivity;
 import com.yongbeam.y_photopicker.util.photopicker.utils.YPhotoPickerIntent;
 
@@ -43,6 +50,7 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import butterknife.BindView;
 import butterknife.BindViews;
@@ -51,11 +59,12 @@ import butterknife.OnClick;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class WriteActivity extends AppCompatActivity implements ScreenClickable {
 
-    public static final int MAP_POPUP_CODE = 1234;
-    public static final int PICTURE_CODE = 4321;
     private static final String TAG = "WriteActivity";
 
     private PermissionListener permissionListener = new PermissionListener() {
@@ -65,12 +74,10 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
             intent.setMaxSelectCount(5);
             intent.setSelectCheckBox(true);
             intent.setMaxGrideItemCount(3);
-            startActivityForResult(intent, PICTURE_CODE);
+            startActivityForResult(intent, Consts.PICTURE_CODE);
         }
-
         @Override
         public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-
         }
     };
 
@@ -104,7 +111,7 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
     public void onMapSearchBtn() {
         if (!isPopup) {
             isPopup = true;
-            startActivityForResult(new Intent(WriteActivity.this, MapPopupActivity.class), MAP_POPUP_CODE);
+            startActivityForResult(new Intent(WriteActivity.this, MapPopupActivity.class), Consts.MAP_POPUP_CODE);
         }
     }
 
@@ -126,11 +133,16 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
     @BindViews({R.id.img_write_selected_first, R.id.img_write_selected_second, R.id.img_write_selected_third, R.id.img_write_selected_fourth, R.id.img_write_selected_fifth})
     List<ImageView> writeSelectedImageList;
 
+    @BindView(R.id.edit_write_cost)
+    EditText priceEditText;
+
     @BindView(R.id.edit_write_title)
     EditText writeTitleEdit;
 
     @BindView(R.id.edit_write_content)
     EditText writeContentEdit;
+
+
 
     @BindView(R.id.btn_write_register)
     Button writeRegisterBtn;
@@ -140,6 +152,55 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
         if (imageBodyList.size() <= 0) {
             Toast.makeText(this, "사진을 한 장 이상 등록해주세요.", Toast.LENGTH_SHORT).show();
         } else {
+            progressDialog.show();
+            WriteRequestData writeRequestData = new WriteRequestData
+                    .Builder(writeTitleEdit.toString(), writeContentEdit.toString(), writeDateText.toString())
+                    .setPrice(Integer.parseInt(priceEditText.toString()))
+                    .setTypeCut(hairTypeSet.contains(Consts.HAIR_CUT))
+                    .setTypeDye(hairTypeSet.contains(Consts.HAIR_DYE))
+                    .setTypePerm(hairTypeSet.contains(Consts.HAIR_PERM))
+                    .setTypeEct(hairTypeSet.contains(Consts.HAIR_ECT))
+                    .build();
+
+            final NetworkService networkService = AppController.getInstance().getNetworkService();
+            Call<WritePostResultData> call = networkService.writePostData(SharedAccessor.getToken(WriteActivity.this), writeRequestData);
+            call.enqueue(new Callback<WritePostResultData>() {
+                @Override
+                public void onResponse(Call<WritePostResultData> call, Response<WritePostResultData> response) {
+                    if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
+                        final int postId = response.body().getPostId();
+                        final AtomicInteger imageCounter = new AtomicInteger(0);
+                        for (int i = 0; i < imageBodyList.size(); i++) {
+                            Call<OnlyMsgResultData> photoCall = networkService.uploadPhoto(SharedAccessor.getToken(WriteActivity.this),
+                                    new WritePhotoData(postId),
+                                    imageBodyList.get(i));
+
+                            photoCall.enqueue(new Callback<OnlyMsgResultData>() {
+                                @Override
+                                public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
+                                    if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
+                                        int currentUploadedCount = imageCounter.incrementAndGet();
+                                        progressDialog.setProgress(currentUploadedCount * (100 / imageBodyList.size()));
+                                        if (currentUploadedCount == imageBodyList.size()) {
+                                            progressDialog.dismiss();
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
+
+                                }
+                            });
+                        }
+                    } else {
+                        Toast.makeText(WriteActivity.this, "만들기 실패", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                @Override
+                public void onFailure(Call<WritePostResultData> call, Throwable t) {
+                }
+            });
         }
     }
 
@@ -180,7 +241,7 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
 
         progressDialog = new ProgressDialog(WriteActivity.this);
         progressDialog.setCancelable(false);
-        progressDialog.setMessage("업로드 중...");
+        progressDialog.setMessage("업로드 중 입니다...");
         progressDialog.setIndeterminate(true);
     }
 
@@ -221,7 +282,7 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         isPopup = false;
-        if (requestCode == MAP_POPUP_CODE) {
+        if (requestCode == Consts.MAP_POPUP_CODE) {
             if (resultCode == MapPopupActivity.RESULT_SUCCESS) {
                 String addressString = data.getStringExtra("address");
                 double lat = data.getDoubleExtra("lat", 0);
@@ -235,7 +296,7 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
                 mapTextList.get(0).setText(addressString.substring(0, subIndex));
                 mapTextList.get(1).setText(addressString.substring(subIndex));
             }
-        } else if (requestCode == PICTURE_CODE){
+        } else if (requestCode == Consts.PICTURE_CODE){
             List<String> photos = null;
             if (resultCode == RESULT_OK) {
                 if (data != null) {
@@ -244,6 +305,8 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
                         writeSelectedImageList.get(i).setImageResource(0);
                     }
                     imageBodyList.clear();
+                    Log.i(TAG, "onActivityResult: " + data.getData());
+                    Log.i(TAG, "onActivityResult: " + photos);
                     for (int i = 0; i < photos.size(); i++) {
                         Log.i(TAG, "onActivityResult: " + photos.get(i));
                         File file = new File(photos.get(i));

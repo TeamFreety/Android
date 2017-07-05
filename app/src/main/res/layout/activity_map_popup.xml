@@ -16,8 +16,8 @@
         android:background="@drawable/popup_cancel"
         android:layout_marginRight="8dp"
         android:layout_gravity="right"
-        android:layout_width="13dp"
-        android:layout_height="13dp" />
+        android:layout_width="15dp"
+        android:layout_height="15dp" />
 
     <LinearLayout
         android:layout_width="match_parent"

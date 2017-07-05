@@ -15,10 +15,11 @@ import com.sopt.freety.freety.view.my_page.data.network.MyPhotoRequestData;
 import com.sopt.freety.freety.view.recruit.data.PickRequestData;
 import com.sopt.freety.freety.view.recruit.data.PickResultData;
 import com.sopt.freety.freety.view.recruit.data.PostDetailResultData;
-import com.sopt.freety.freety.view.recruit.data.WriteRequestData;
+import com.sopt.freety.freety.view.wirte.data.WritePhotoData;
+import com.sopt.freety.freety.view.wirte.data.WriteRequestData;
+import com.sopt.freety.freety.view.wirte.data.WritePostResultData;
 
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -29,7 +30,6 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
-import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -68,6 +68,13 @@ public interface NetworkService {
 
     @GET("/postDetail/{postId}")
     Call<PostDetailResultData> getPostDetailData(@Header("member_token") String token, @Path("postId") int postId);
+
+    @POST("/postDetail/writePost")
+    Call<WritePostResultData> writePostData(@Header("member_token") String token, @Body WriteRequestData writeRequestData);
+
+    @Multipart
+    @POST("/postDetail/writePostPhoto")
+    Call<OnlyMsgResultData> uploadPhoto(@Header("member_token") String token, @Body WritePhotoData writePhotoData, MultipartBody.Part body);
 
     @Multipart
     @POST("/post/write")

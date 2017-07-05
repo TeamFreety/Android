@@ -1,4 +1,4 @@
-package com.sopt.freety.freety.view.recruit.data;
+package com.sopt.freety.freety.view.wirte.data;
 
 /**
  * Created by cmslab on 7/4/17.
@@ -49,24 +49,28 @@ public class WriteRequestData {
             return this;
         }
 
-        public Builder addTypeCut() {
-            this.typeCut = 1;
+        public Builder setTypeCut(boolean isTypeCut) {
+            this.typeCut = isTypeCut ? 1 : 0;
             return this;
         }
 
-        public Builder addTypeDye() {
-            this.typeDye = 1;
+        public Builder setTypeDye(boolean isTypeDye) {
+            this.typeDye = isTypeDye ? 1 : 0;
             return this;
         }
 
-        public Builder addTypePerm() {
-            this.typePerm = 1;
+        public Builder setTypePerm(boolean isTypePerm) {
+            this.typePerm = isTypePerm ? 1 : 0;
             return this;
         }
 
-        public Builder addTypeEct() {
-            this.typeEct = 1;
+        public Builder setTypeEct(boolean isTypeEct) {
+            this.typeEct = isTypeEct ? 1 : 0;
             return this;
+        }
+
+        public WriteRequestData build() {
+            return new WriteRequestData(this);
         }
 
         public String getTitle() {

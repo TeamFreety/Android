@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.util.Consts;
 import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.view.letter.LetterListFragment;
@@ -29,8 +30,6 @@ import com.sopt.freety.freety.view.home.HomeFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
-
-import static com.sopt.freety.freety.view.search.SearchFragment.DETAIL_SEARCH_CODE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -111,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == DETAIL_SEARCH_CODE) {
+        if ((requestCode == Consts.DETAIL_SEARCH_CODE || requestCode == Consts.WRITE_REQUEST) && resultCode == RESULT_OK) {
             SearchFragment searchFragment = (SearchFragment) getSupportFragmentManager().findFragmentByTag("search");
             searchFragment.onActivityResult(requestCode, 0, data);
         }
