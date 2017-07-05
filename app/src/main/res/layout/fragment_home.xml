@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
     android:background="#ffffff"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -12,7 +11,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="38dp"
+        android:layout_height="40dp"
         android:background="#ffffff"
         android:orientation="horizontal"
         android:id="@+id/home_toolbar">
@@ -33,33 +32,33 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/home_app_bar"
         android:layout_width="match_parent"
-        android:layout_height="247dp"
+        android:layout_height="236dp"
         android:clipChildren="false"
-        android:fitsSystemWindows="true"
-        android:background="@android:color/transparent">
+        android:fitsSystemWindows="false"
+        android:background="#ffffff">
 
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipChildren="false"
-            android:minHeight="45dp"
+            android:minHeight="40dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <RelativeLayout
                 android:id="@+id/home_collaspsing_relative_layout"
                 android:layout_width="match_parent"
-                android:layout_height="202dp"
+                android:layout_height="196dp"
                 app:layout_collapseMode="parallax"
                 android:orientation="vertical">
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/home_banner_view_pager"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true">
-
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true">
 
                 </android.support.v4.view.ViewPager>
 
@@ -78,6 +77,7 @@
 
             </RelativeLayout>
 
+
             <android.support.design.widget.TabLayout
                 android:id="@+id/home_tab"
                 app:tabTextColor="@color/tabUnselectedColor"
@@ -86,20 +86,20 @@
                 app:tabIndicatorHeight="5dp"
                 android:background="#ffffff"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 app:layout_collapseMode="pin"
                 android:layout_gravity="bottom">
 
             </android.support.design.widget.TabLayout>
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/home_hide_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                app:layout_collapseMode="pin"></android.support.v7.widget.Toolbar>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/home_hide_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            app:layout_collapseMode="pin"></android.support.v7.widget.Toolbar>
+
 
         </android.support.design.widget.CollapsingToolbarLayout>
-
     </android.support.design.widget.AppBarLayout>
 
         <com.sopt.freety.freety.util.custom.ViewPagerEx

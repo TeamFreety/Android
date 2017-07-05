@@ -50,7 +50,7 @@ public class HomeContentsViewPagerAdapter extends PagerAdapter {
 
         View viewItem = inflater.inflate(R.layout.fragment_home_contents, container, false);
         ImageView imageView = (ImageView) viewItem.findViewById(R.id.home_contents_image_view);
-        Glide.with(context).load(imageMockList.get(realPos)).override(164,187).centerCrop().thumbnail(0.001f).into(imageView);
+        Glide.with(context).load(imageMockList.get(realPos)).override(360,196).centerCrop().thumbnail(0.1f).into(imageView);
 
         ((ViewPager)container).addView(viewItem);
 
