@@ -1,23 +1,23 @@
 package com.sopt.freety.freety.view.letter.data;
 
-import com.sopt.freety.freety.util.util.DateParser;
-
 import java.text.ParseException;
 
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
+import io.realm.annotations.Required;
 
 /**
  * Created by cmslab on 7/4/17.
  */
 
-public class RealmPerson extends RealmObject {
+public class RPerson extends RealmObject {
 
     private int memberId;
     private String memberName;
     private String imageURL;
+
     private RealmList<RealmLetter> letterList;
 
     public int getMemberId() {
@@ -48,16 +48,9 @@ public class RealmPerson extends RealmObject {
         return letterList;
     }
 
-    public LetterRoomData getLetterRoomData(Realm realm, RealmPerson person) throws ParseException {
-        RealmResults<RealmLetter> realmLetters = realm.where(RealmLetter.class).equalTo("letterList.otherId", person.getMemberId()).findAll();
-        int letterListSize = realmLetters.size();
-        if (letterListSize > 0) {
-            RealmLetter letter = realmLetters.get(letterListSize - 1);
-            String lastMsg = letter.getContent();
-            return new LetterRoomData(memberId, imageURL, 0, memberName, letter.getDate(), lastMsg);
-        } else {
-            return null;
-        }
+    public LetterRoomData getLetterRoomData() {
+        RealmLetter letter = letterList.get(letterList.size() - 1);
+        return new LetterRoomData(memberId, imageURL, 0, memberName, letter.getDate(), letter.getContent());
     }
 }
 
