@@ -14,7 +14,6 @@ import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
-import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageModelRecyclerAdapter;
 import com.sopt.freety.freety.view.my_page.data.MyPageModelHeaderData;
@@ -76,7 +75,7 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
         });
 
         recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.my_page_post_offset));
+//        recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.my_page_post_offset));
         recyclerView.attachCallbacks(this);
 
         layoutManager = new GridLayoutManager(getContext(), 2);

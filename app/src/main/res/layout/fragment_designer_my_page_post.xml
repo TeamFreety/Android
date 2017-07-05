@@ -2,8 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
-
+<android.support.design.widget.CoordinatorLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
     <com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView
         android:id="@+id/my_page_pick_list_recycler_view"
         android:layout_marginTop="20dp"
@@ -16,5 +19,14 @@
         android:overScrollMode="never">
 
     </com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView>
-
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabtn_designer_post_to_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/floating_btn_offset"
+        app:borderWidth="0dp"
+        android:backgroundTint="#FFFFFF"
+        android:src="@drawable/mypage_floating_arrow"
+        android:layout_gravity="bottom|right" />
+</android.support.design.widget.CoordinatorLayout>
 </LinearLayout>

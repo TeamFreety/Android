@@ -2,6 +2,7 @@ package com.sopt.freety.freety.view.my_page;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,32 +40,47 @@ public class MyPageStyleFragment extends Fragment {
     private ViewPagerEx viewPager;
     private MyPageDesignerFragment myPageFragment;
 
+    @BindView(R.id.fabtn_designer_portfolio_to_top)
+    FloatingActionButton topFabtn;
+
     public MyPageStyleFragment() {
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_my_page_style, container, false);
+        View view = inflater.inflate(R.layout.fragment_designer_my_page_portfolio, container, false);
         ButterKnife.bind(this, view);
         myPageFragment = (MyPageDesignerFragment) getParentFragment();
         viewPager = (ViewPagerEx) container;
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.my_page_style_offset));
         recyclerView.attachCallbacks(getParentFragment());
+
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                switch(newState) {
-                    case SCROLL_STATE_DRAGGING:
-                        viewPager.setPagingEnabled(false);
-                        break;
-                    case SCROLL_STATE_IDLE:
-                        viewPager.setPagingEnabled(true);
-                        break;
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    topFabtn.show();
+                    super.onScrollStateChanged(recyclerView, newState);
+                    switch (newState) {
+                        case SCROLL_STATE_DRAGGING:
+                            viewPager.setPagingEnabled(false);
+                            break;
+                        case SCROLL_STATE_IDLE:
+                            viewPager.setPagingEnabled(true);
+                            break;
+                    }
                 }
             }
+                @Override
+                public void onScrolled (RecyclerView recyclerView,int dx, int dy){
+                    super.onScrolled(recyclerView, dx, dy);
+                    if (dy > 0 || dy < 0 && topFabtn.isShown()) {
+                        topFabtn.hide();
+                    }
+                }
+
         });
 
         layoutManager = new GridLayoutManager(getContext(), 3);

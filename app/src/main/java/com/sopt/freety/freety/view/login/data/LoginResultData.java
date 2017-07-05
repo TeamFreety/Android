@@ -2,6 +2,7 @@ package com.sopt.freety.freety.view.login.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.sopt.freety.freety.util.Consts;
 
@@ -25,6 +26,7 @@ public class LoginResultData {
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(Consts.PREF_TOKEN, member_token);
         //TODO: resolve this
+        Log.i("LoginResult", "registerToken: " + position);
         if (position == null) {
             position = "model";
         }

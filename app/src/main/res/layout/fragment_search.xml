@@ -17,7 +17,7 @@
             android:id="@+id/search_back_btn"
             android:src="@drawable/back_button"
             android:layout_width="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="10dp"
             android:layout_height="match_parent" />
 
         <TextView
@@ -35,24 +35,21 @@
             android:background="@drawable/drop_shadow"/>
     </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:orientation="vertical">
+
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="48dp">
 
-            <ImageButton
-                android:id="@+id/search_filter_btn1"
+            <ImageView
+                android:id="@+id/img_search_filter"
                 android:src="@drawable/controls"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:background="@null"
-                android:layout_marginTop="25dp"/>
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="13dp"
+                android:layout_marginLeft="17dp"/>
 
             <Button
                 android:id="@+id/search_filter_btn2"
@@ -60,8 +57,9 @@
                 android:layout_height="18dp"
                 android:background="@null"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="24dp"
-                android:layout_toRightOf="@+id/search_filter_btn1"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="13dp"
+                android:layout_toRightOf="@+id/img_search_filter"
                 android:text="필터"
                 android:textColor="#95989A"
                 android:textSize="13sp"/>
@@ -70,7 +68,7 @@
                 android:id="@+id/btn_search_latest"
                 android:layout_width="58dp"
                 android:layout_height="29dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="9dp"
                 android:layout_marginRight="8dp"
                 android:text="최신순"
                 android:textColor="#ffffff"
@@ -83,7 +81,7 @@
                 android:id="@+id/btn_search_nearest"
                 android:layout_width="58dp"
                 android:layout_height="29dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="9dp"
                 android:text="거리순"
                 android:textColor="#95989a"
                 android:background="@drawable/search_nearest_btn"
@@ -93,6 +91,16 @@
 
         </RelativeLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="#EFEFEF" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
+        android:orientation="vertical">
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -100,7 +108,7 @@
                 android:id="@+id/rv_search"
                 android:layout_marginTop="10dp"
                 android:clipToPadding="false"
-                android:padding="2dp"
+                android:padding="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:overScrollMode="never">
@@ -112,10 +120,11 @@
                 android:id="@+id/fabtn_search_to_write"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|right"
                 android:layout_margin="@dimen/floating_btn_offset"
-                android:src="@android:drawable/ic_dialog_email"
-                app:layout_anchorGravity="bottom|end|right" />
+                app:borderWidth="0dp"
+                android:backgroundTint="#FFFFFF"
+                android:src="@drawable/mypage_writing"
+                android:layout_gravity="bottom|right" />
 
         </android.support.design.widget.CoordinatorLayout>
 

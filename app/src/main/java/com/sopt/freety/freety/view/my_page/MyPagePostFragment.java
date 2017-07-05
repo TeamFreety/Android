@@ -2,6 +2,7 @@ package com.sopt.freety.freety.view.my_page;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,6 +35,9 @@ public class MyPagePostFragment extends Fragment {
     @BindView(R.id.my_page_pick_list_recycler_view)
     ScrollFeedbackRecyclerView recyclerView;
 
+    @BindView(R.id.fabtn_designer_post_to_top)
+    FloatingActionButton topFabtn;
+
     private ViewPagerEx viewPager;
 
     private GridLayoutManager layoutManager;
@@ -50,7 +54,7 @@ public class MyPagePostFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         viewPager = (ViewPagerEx) container;
-        View view = inflater.inflate(R.layout.fragment_my_page_post, container, false);
+        View view = inflater.inflate(R.layout.fragment_designer_my_page_post, container, false);
         ButterKnife.bind(this, view);
 
 
@@ -66,6 +70,9 @@ public class MyPagePostFragment extends Fragment {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    topFabtn.show();
+                }
                 super.onScrollStateChanged(recyclerView, newState);
                 switch(newState) {
                     case SCROLL_STATE_DRAGGING:
@@ -75,6 +82,15 @@ public class MyPagePostFragment extends Fragment {
                         viewPager.setPagingEnabled(true);
                         break;
                 }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0 || dy < 0 && topFabtn.isShown()) {
+                    topFabtn.hide();
+                }
+
             }
         });
 
