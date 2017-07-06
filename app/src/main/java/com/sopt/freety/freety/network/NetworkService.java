@@ -101,7 +101,19 @@ public interface NetworkService {
     Call<OnlyMsgResultData> getOkMsg(@Header("member_token") String token, @Body MyPageStatusUpdateRequestData data);
 
     @POST("/mypage/myPhoto")
-    Call<OnlyMsgResultData> getOkMsgFromProfile(@Header("member_token") String token, @Body MyPhotoRequestData data);
+    Call<OnlyMsgResultData> getOkMsgFromProfile(@Header("member_token") String token, @Body MultipartBody.Part body);
+
+    @Multipart
+    @POST("/mypage/modelPhoto1")
+    Call<OnlyMsgResultData> uploadModelPhoto1(@Header("member_token") String token, @Part MultipartBody.Part body);
+
+    @Multipart
+    @POST("/mypage/modelPhoto2")
+    Call<OnlyMsgResultData> uploadModelPhoto2(@Header("member_token") String token, @Part MultipartBody.Part body);
+
+    @Multipart
+    @POST("/mypage/modelPhoto3")
+    Call<OnlyMsgResultData> uploadModelPhoto3(@Header("member_token") String token, @Part MultipartBody.Part body);
 
     @GET("/postDetail/writer/{memberId}")
     Call<MyPageDesignerGetData> getOtherDesignerMyPage(@Header("member_token") String token, @Path("memberId") int memberId);

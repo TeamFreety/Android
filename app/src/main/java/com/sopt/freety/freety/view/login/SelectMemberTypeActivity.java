@@ -44,8 +44,10 @@ public class SelectMemberTypeActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Intent intent = getIntent();
         loginCase = intent.getStringExtra("login case");
+
         kUserId = intent.getStringExtra(Consts.KAKAO_ID_KEY);
         fUserId = intent.getStringExtra(Consts.FACEBOOK_ID_KEY);
+
     }
 
     @OnClick({R.id.modelCaseBtn, R.id.designerCaseBtn})

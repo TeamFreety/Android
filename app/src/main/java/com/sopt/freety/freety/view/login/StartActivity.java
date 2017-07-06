@@ -62,6 +62,7 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_login);
         ButterKnife.bind(this);
+
         HashKeyChecker.checkHashKey(this);
         callbackManager = CallbackManager.Factory.create();
         kakaoCallback = new SessionCallback();
@@ -119,6 +120,7 @@ public class StartActivity extends AppCompatActivity {
                                 } else if (response.body().getMessage().equals("no information about SNS account")) {
                                     Toast.makeText(StartActivity.this, "Freety에 아직 SNS 계정이 등록되지 않았습니다.", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(StartActivity.this, SelectMemberTypeActivity.class);
+
                                     intent.putExtra("login case","kakao");
                                     Log.i("Kakao", "onResponse: " + kakaoId);
                                     intent.putExtra("kUserId", kakaoId);

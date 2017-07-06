@@ -30,5 +30,12 @@ public class Consts {
     public static final int REVIEW_PICTURE_CODE = 4322;
     public static final int DETAIL_SEARCH_CODE = 7777;
 
+    public static final int MODEL_PROFILE_PHOTO_CODE = 3000;
+    public static final int DESIGNER_PROFILE_PHOTO_CODE = 3001;
+
+    public static final int MODEL_PICTURE_1_CODE = 5000;
+    public static final int MODEL_PICTURE_2_CODE = 5001;
+    public static final int MODEL_PICTURE_3_CODE = 5002;
+
 }
 

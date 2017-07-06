@@ -18,13 +18,7 @@ public class MyPageModelHeaderData{
 
     public String imageURL;
     public int imageSource;
-   // List<String> imageURL = new ArrayList<String>();
 
-
-  /*  private int[] imageList = new int[3];
-
-    imageList = {R.drawable.chat_list_elem, R.drawable.chat_list_elem, R.drawable.chat_list_elem};
-*/
   public int getImageSource() {
       return imageSource;
   }
@@ -42,8 +36,7 @@ public class MyPageModelHeaderData{
         return imageURL;
     }
 
-
-
-
-
+    public void setImageURL(java.lang.String imageURL) {
+        this.imageURL = imageURL;
+    }
 }

@@ -1,6 +1,7 @@
 package com.sopt.freety.freety.view.my_page;
 
 
+import android.Manifest;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +23,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.data.OnlyMsgResultData;
 import com.sopt.freety.freety.network.NetworkService;
+import com.sopt.freety.freety.util.Consts;
 import com.sopt.freety.freety.util.SharedAccessor;
 
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
@@ -38,14 +43,20 @@ import com.sopt.freety.freety.view.my_page.data.MyPageStyleHeaderData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageStatusUpdateRequestData;
 import com.sopt.freety.freety.view.property.ScreenClickable;
+import com.yongbeam.y_photopicker.util.photopicker.utils.YPhotoPickerIntent;
 
+import java.io.File;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -221,7 +232,7 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
                     myPageDesignerGetData = response.body();
                     Glide.with(getContext()).load(response.body().getDesignerImageURL()).into(profileImage);
                     designerNameText.setText(response.body().getDesignerName());
-                    designerStatusTextView.setText(response.body().getDesignerStatusMsg());
+                    //designerStatusTextView atusTextView.setText(response.body().getDesignerStatusMsg());
 
                     viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
                     PagerAdapter pagerAdapter = new MyPageViewPagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
@@ -235,5 +246,59 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
             public void onFailure(Call<MyPageDesignerGetData> call, Throwable t) {
             }
         });
+    }
+
+    private PermissionListener permissionListener = new PermissionListener() {
+        @Override
+        public void onPermissionGranted() {
+            YPhotoPickerIntent intent = new YPhotoPickerIntent(getActivity());
+            intent.setMaxSelectCount(1);
+            intent.setSelectCheckBox(true);
+            intent.setMaxGrideItemCount(3);
+            startActivityForResult(intent, Consts.DESIGNER_PROFILE_PHOTO_CODE);
+        }
+        @Override
+        public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+        }
+    };
+
+    @OnClick(R.id.my_page_profile)
+    public void onPictureBtn() {
+        new TedPermission(getContext())
+                .setPermissionListener(permissionListener)
+                .setRationaleConfirmText("확인")
+                .setRationaleMessage("\"Freety\"의 다음 작업을 허용하시겠습니까? 이 기기의 외부 저장소에 액세스하기")
+                .setDeniedMessage("거부하시면 볼수 없는데...")
+                .setPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA})
+                .check();
+    }
+
+    public void onPictureRegistered(int requestCode, String path) {
+        final NetworkService networkService = AppController.getInstance().getNetworkService();
+        switch (requestCode) {
+            case Consts.DESIGNER_PROFILE_PHOTO_CODE:
+                File file = new File(path);
+                RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);
+                MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), fileBody);
+
+                Call<OnlyMsgResultData> photoCall = networkService.getOkMsgFromProfile(SharedAccessor.getToken(getActivity()),
+                        body);
+                photoCall.enqueue(new Callback<OnlyMsgResultData>() {
+                    @Override
+                    public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
+                        if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
+                    }
+                });
+
+                break;
+            default:
+                throw new RuntimeException("there is unexpected request code.");
+        }
     }
 }

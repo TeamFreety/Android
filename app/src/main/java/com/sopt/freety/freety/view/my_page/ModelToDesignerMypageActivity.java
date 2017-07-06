@@ -147,7 +147,9 @@ public class ModelToDesignerMypageActivity extends AppCompatActivity implements 
     }
 
     private void reload() {
+
         Call<MyPageDesignerGetData> call = networkService.getOtherDesignerMyPage(SharedAccessor.getToken(getApplicationContext()), getIntent().getIntExtra("memberId", 0));
+
         call.enqueue(new Callback<MyPageDesignerGetData>() {
             @Override
             public void onResponse(Call<MyPageDesignerGetData> call, Response<MyPageDesignerGetData> response) {

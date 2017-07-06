@@ -131,6 +131,7 @@ public class MyPageDesignerGetData {
         return new MyPageStyleHeaderData(designerCareerText);
     }
 
+
     public List<MyPageStyleBodyData> getMyStyleBodyDataList() {
         List<MyPageStyleBodyData> list = new ArrayList<>();
         for (PortFolioPhoto portFolioPhoto : designerPFPhoto) {
