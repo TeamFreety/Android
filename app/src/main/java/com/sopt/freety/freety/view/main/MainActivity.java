@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if ((requestCode == Consts.DETAIL_SEARCH_CODE || requestCode == Consts.WRITE_REQUEST) && resultCode == RESULT_OK) {
             SearchFragment searchFragment = (SearchFragment) getSupportFragmentManager().findFragmentByTag("search");
             searchFragment.onActivityResult(requestCode, 0, data);
@@ -119,6 +120,30 @@ public class MainActivity extends AppCompatActivity {
                 MyPageModelFragment myPageModelFragment = (MyPageModelFragment) getSupportFragmentManager().findFragmentByTag("my_page_model");
                 String imagePath = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS).get(0);
                 myPageModelFragment.onPictureRegistered(Consts.MODEL_PICTURE_1_CODE, imagePath);
+            }
+        }else if (requestCode == Consts.MODEL_PICTURE_2_CODE){
+            if (resultCode == RESULT_OK) {
+                MyPageModelFragment myPageModelFragment = (MyPageModelFragment) getSupportFragmentManager().findFragmentByTag("my_page_model");
+                String imagePath = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS).get(0);
+                myPageModelFragment.onPictureRegistered(Consts.MODEL_PICTURE_2_CODE, imagePath);
+            }
+        }else if (requestCode == Consts.MODEL_PICTURE_3_CODE){
+            if (resultCode == RESULT_OK) {
+                MyPageModelFragment myPageModelFragment = (MyPageModelFragment) getSupportFragmentManager().findFragmentByTag("my_page_model");
+                String imagePath = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS).get(0);
+                myPageModelFragment.onPictureRegistered(Consts.MODEL_PICTURE_3_CODE, imagePath);
+            }
+        }else if (requestCode == Consts.MODEL_PROFILE_PHOTO_CODE){
+            if (resultCode == RESULT_OK) {
+                MyPageModelFragment myPageModelFragment = (MyPageModelFragment) getSupportFragmentManager().findFragmentByTag("my_page_model");
+                String imagePath = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS).get(0);
+                myPageModelFragment.onPictureRegistered(Consts.MODEL_PROFILE_PHOTO_CODE, imagePath);
+            }
+        }else if (requestCode == Consts.DESIGNER_PROFILE_PHOTO_CODE){
+            if (resultCode == RESULT_OK) {
+                MyPageDesignerFragment myPageDesignerFragment = (MyPageDesignerFragment) getSupportFragmentManager().findFragmentByTag("my_page_designer");
+                String imagePath = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS).get(0);
+                myPageDesignerFragment.onPictureRegistered(Consts.DESIGNER_PROFILE_PHOTO_CODE, imagePath);
             }
         }
     }

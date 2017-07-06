@@ -32,6 +32,7 @@ import com.sopt.freety.freety.view.my_page.adapter.MyPageModelRecyclerAdapter;
 import com.sopt.freety.freety.view.my_page.data.MyPageModelHeaderData;
 import com.sopt.freety.freety.view.my_page.data.MyPagePickData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageModelGetData;
+import com.sopt.freety.freety.view.my_page.data.network.MyPhotoRequestData;
 import com.yongbeam.y_photopicker.util.photopicker.utils.YPhotoPickerIntent;
 
 import java.io.File;
@@ -85,8 +86,8 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
     @BindView(R.id.model_photo_3)
     ImageButton modelPhoto3;
 
-    @BindView(R.id.my_page_model_profile_edit) ImageButton modelProfileEdit;
-
+    @BindView(R.id.my_page_model_profile_edit)
+    ImageButton myPageModelProfile;
 
     private GridLayoutManager layoutManager;
     private MyPageModelRecyclerAdapter adapter;
@@ -177,6 +178,20 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
         });
     }
 
+    private PermissionListener permissionListener = new PermissionListener() {
+        @Override
+        public void onPermissionGranted() {
+            YPhotoPickerIntent intent = new YPhotoPickerIntent(getActivity());
+            intent.setMaxSelectCount(1);
+            intent.setSelectCheckBox(true);
+            intent.setMaxGrideItemCount(3);
+            startActivityForResult(intent, Consts.MODEL_PROFILE_PHOTO_CODE);
+        }
+        @Override
+        public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+        }
+    };
+
     private PermissionListener permissionListener1 = new PermissionListener() {
         @Override
         public void onPermissionGranted() {
@@ -217,6 +232,16 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
         }
     };
 
+    @OnClick(R.id.my_page_model_profile_edit)
+    public void onPictureBtn() {
+        new TedPermission(getContext())
+                .setPermissionListener(permissionListener)
+                .setRationaleConfirmText("확인")
+                .setRationaleMessage("\"Freety\"의 다음 작업을 허용하시겠습니까? 이 기기의 외부 저장소에 액세스하기")
+                .setDeniedMessage("거부하시면 볼수 없는데...")
+                .setPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA})
+                .check();
+    }
     @OnClick(R.id.model_photo_1)
     public void onPictureBtn1() {
         new TedPermission(getContext())
@@ -251,6 +276,27 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
     public void onPictureRegistered(int requestCode, String path) {
         final NetworkService networkService = AppController.getInstance().getNetworkService();
         switch (requestCode) {
+            case Consts.MODEL_PROFILE_PHOTO_CODE:
+                File file = new File(path);
+                RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);
+                MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), fileBody);
+
+                Call<OnlyMsgResultData> photoCall = networkService.getOkMsgFromProfile(SharedAccessor.getToken(getActivity()),
+                        body);
+                photoCall.enqueue(new Callback<OnlyMsgResultData>() {
+                    @Override
+                    public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
+                        if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
+                            Log.i("modelProfileUpload : ","success" );
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
+                    }
+                });
+
+                break;
             case Consts.MODEL_PICTURE_1_CODE:
                 adapter.updatePicture(0, path);
                 // 사진 보이게 등록하기.
@@ -258,9 +304,9 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
                 RequestBody fileBody1 = RequestBody.create(MediaType.parse("image/*"), file1);
                 MultipartBody.Part body1 = MultipartBody.Part.createFormData("image", file1.getName(), fileBody1);
 
-                Call<OnlyMsgResultData> photoCall = networkService.uploadModelPhoto1(SharedAccessor.getToken(getActivity()),
+                Call<OnlyMsgResultData> photoCall1 = networkService.uploadModelPhoto1(SharedAccessor.getToken(getActivity()),
                         body1);
-                photoCall.enqueue(new Callback<OnlyMsgResultData>() {
+                photoCall1.enqueue(new Callback<OnlyMsgResultData>() {
                     @Override
                     public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
                         if (response.isSuccessful() && response.body().getMessage().equals("ok")) {

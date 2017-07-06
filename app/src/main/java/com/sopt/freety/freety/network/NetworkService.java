@@ -103,7 +103,7 @@ public interface NetworkService {
     Call<OnlyMsgResultData> getOkMsg(@Header("member_token") String token, @Body MyPageStatusUpdateRequestData data);
 
     @POST("/mypage/myPhoto")
-    Call<OnlyMsgResultData> getOkMsgFromProfile(@Header("member_token") String token, @Body MyPhotoRequestData data);
+    Call<OnlyMsgResultData> getOkMsgFromProfile(@Header("member_token") String token, @Body MultipartBody.Part body);
 
     @Multipart
     @POST("/mypage/modelPhoto1")
