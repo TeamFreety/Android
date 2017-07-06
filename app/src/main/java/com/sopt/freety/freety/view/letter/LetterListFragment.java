@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.adapter.RecyclerViewOnItemClickListener;
@@ -20,10 +21,10 @@ import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.view.letter.adapter.LetterListAdapter;
 import com.sopt.freety.freety.view.letter.data.LetterListResultData;
 import com.sopt.freety.freety.view.letter.data.LetterRoomData;
-import com.sopt.freety.freety.view.letter.data.RealmPerson;
+import com.sopt.freety.freety.view.letter.data.RPerson;
 
-import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,7 +49,7 @@ public class LetterListFragment extends Fragment implements SwipeRefreshLayout.O
     SwipeRefreshLayout refreshLayout;
 
     private static final String TAG = "LetterListFragment";
-    private LetterListAdapter chatListAdapter;
+    private LetterListAdapter letterListAdapter;
     private Realm realm;
     public LetterListFragment() {
     }
@@ -63,9 +64,11 @@ public class LetterListFragment extends Fragment implements SwipeRefreshLayout.O
         recyclerView.addOnItemTouchListener(new RecyclerViewOnItemClickListener(getContext(), recyclerView, new RecyclerViewOnItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-                int receiverId = chatListAdapter.getItem(position).getOtherId();
+                int receiverId = letterListAdapter.getItem(position).getOtherId();
                 Intent intent = new Intent(getActivity(), LetterActivity.class);
                 intent.putExtra("memberId", receiverId);
+                intent.putExtra("memberURL", letterListAdapter.getItem(position).getImageURL());
+                AppController.getInstance().pushPageStack();
                 startActivity(intent);
             }
 
@@ -76,42 +79,41 @@ public class LetterListFragment extends Fragment implements SwipeRefreshLayout.O
         }));
         realm = Realm.getDefaultInstance();
         refreshLayout.setOnRefreshListener(this);
-        update();
+        letterListAdapter = new LetterListAdapter(getContext(), Collections.<LetterRoomData>emptyList());
+        recyclerView.setAdapter(letterListAdapter);
         return view;
     }
 
     @Override
     public void onRefresh() {
         update();
-        refreshLayout.setRefreshing(false);
     }
 
     private void update() {
 
-        RealmResults<RealmPerson> persons = realm.where(RealmPerson.class).findAll();
+        RealmResults<RPerson> persons = realm.where(RPerson.class).findAll();
+        Log.i(TAG, "update: local persons size : " + persons.size());
         final List<LetterRoomData> letterRoomDataList = new ArrayList<>();
-        for (RealmPerson person : persons) {
-            try {
-                LetterRoomData roomData = person.getLetterRoomData(realm, person);
-                if (roomData != null) {
-                    letterRoomDataList.add(person.getLetterRoomData(realm, person));
-                }
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
-            }
+
+        for (RPerson person : persons) {
+            letterRoomDataList.add(person.getLetterRoomData());
         }
+
         Call<LetterListResultData> call = AppController.getInstance().getNetworkService().getLetterListDatas(SharedAccessor.getToken(getContext()));
         call.enqueue(new Callback<LetterListResultData>() {
             @Override
             public void onResponse(Call<LetterListResultData> call, Response<LetterListResultData> response) {
                 if (response.isSuccessful() && response.body().getMessage().equals("success loading message list")) {
                     updateLetterList(letterRoomDataList, response.body().getRoomList());
-                    chatListAdapter = new LetterListAdapter(getContext(), letterRoomDataList);
-                    recyclerView.setAdapter(chatListAdapter);
+                    letterListAdapter.updateData(letterRoomDataList);
+                    refreshLayout.setRefreshing(false);
                 }
             }
             @Override
             public void onFailure(Call<LetterListResultData> call, Throwable t) {
+                Toast.makeText(getActivity(), "전송 실패", Toast.LENGTH_SHORT).show();
+                letterListAdapter.updateData(letterRoomDataList);
+                refreshLayout.setRefreshing(false);
             }
         });
     }
@@ -119,7 +121,6 @@ public class LetterListFragment extends Fragment implements SwipeRefreshLayout.O
     private static void updateLetterList(List<LetterRoomData> oldList, List<LetterRoomData> updateList) {
         for (LetterRoomData newData : updateList) {
             boolean isExist = false;
-            Log.i(TAG, "updateLetterList: newData's image : " + newData.getImageURL());
             for (LetterRoomData oldData : oldList) {
                 if (newData.getOtherId() == oldData.getOtherId()) {
                     oldData.setNotifCount(newData.getNotifCount());
@@ -131,9 +132,15 @@ public class LetterListFragment extends Fragment implements SwipeRefreshLayout.O
             }
 
             if (!isExist) {
-                Log.i(TAG, "updateLetterList: add new one");
                 oldList.add(newData);
             }
         }
+    }
+    
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume: ");
+        update();
     }
 }

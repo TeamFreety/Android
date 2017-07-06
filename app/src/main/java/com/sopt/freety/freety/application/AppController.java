@@ -79,9 +79,6 @@ public class AppController extends Application {
         AppController.instance = this;
         instance = this;
         Realm.init(this);
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
-        Realm.deleteRealm(realmConfiguration);
-        Realm.setDefaultConfiguration(realmConfiguration);
         KakaoSDK.init(new KakaoSDKAdapter());
     }
 

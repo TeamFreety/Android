@@ -3,6 +3,7 @@ package com.sopt.freety.freety.network;
 import com.sopt.freety.freety.data.OnlyMsgResultData;
 import com.sopt.freety.freety.data.PostListResultData;
 import com.sopt.freety.freety.view.letter.data.LetterListResultData;
+import com.sopt.freety.freety.view.letter.data.PushRequestData;
 import com.sopt.freety.freety.view.login.JoinResult;
 import com.sopt.freety.freety.view.login.data.AutoLoginResultData;
 import com.sopt.freety.freety.view.login.data.DuplicateData;
@@ -119,6 +120,9 @@ public interface NetworkService {
     @GET("/letterDetail")
     Call<LetterListResultData> getLetterDatas(@Header("member_token") String token,
                                               @Query("sent_mem_id") int memberId);
+
+    @POST("/letterInsert")
+    Call<OnlyMsgResultData> pushLetter(@Header("member_token") String token, @Body PushRequestData data);
 
 
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.util.util.DateParser;
 import com.sopt.freety.freety.view.letter.adapter.holder.LetterRoomViewHolder;
 import com.sopt.freety.freety.view.letter.data.LetterRoomData;
 
@@ -58,8 +59,14 @@ public class LetterListAdapter extends RecyclerView.Adapter<LetterRoomViewHolder
                     .into(holder.getImage());
         }
         holder.getLastMsg().setText(roomDataList.get(position).getLastMsg());
-        holder.getDate().setText(roomDataList.get(position).getDate());
+        holder.getDate().setText(DateParser.toPrettyFormat(roomDataList.get(position).getDate()));
         holder.getPendingImage().setText(String.valueOf(roomDataList.get(position).getNotifCount()));
+        if (roomDataList.get(position).getNotifCount() == 0) {
+            holder.getPendingImage().setBackgroundResource(0);
+            holder.getPendingImage().setText("");
+        } else {
+            holder.getPendingImage().setBackgroundResource(R.drawable.letter_pending_image);
+        }
     }
 
     @Override

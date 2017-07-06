@@ -1,5 +1,6 @@
 package com.sopt.freety.freety.view.recruit;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.PagerAdapter;
@@ -23,6 +24,7 @@ import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.network.NetworkService;
 import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.helper.ImageSwicherHelper;
+import com.sopt.freety.freety.view.letter.LetterActivity;
 import com.sopt.freety.freety.view.recruit.adapter.RecruitViewPagerAdapter;
 import com.sopt.freety.freety.view.recruit.data.PickRequestData;
 import com.sopt.freety.freety.view.recruit.data.PickResultData;
@@ -132,7 +134,10 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
 
     @OnClick(R.id.recruit_letter_btn)
     public void onLetterBtn() {
-        //TODO: implement this.
+        AppController.getInstance().pushPageStack();
+        Intent intent = new Intent(RecruitActivity.this, LetterActivity.class);
+        intent.putExtra("memberId", memberId);
+        startActivity(intent);
     }
 
     @OnClick(R.id.recruit_back_btn)
@@ -147,6 +152,7 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
      * This is boolean value for {@link #pickBtn}
      */
     private boolean isPicked;
+    private int memberId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,6 +182,7 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
                 if (response.isSuccessful()) {
                     PostDetailResultData result = response.body();
                     final PagerAdapter adapter = new RecruitViewPagerAdapter(RecruitActivity.this, result.getImageList());
+                    memberId = result.getMemberId();
                     imageViewPager.setAdapter(adapter);
                     imageViewPager.setCurrentItem(1000);
                     Glide.with(RecruitActivity.this).load(result.getWriterImageURL()).thumbnail(0.3f)
