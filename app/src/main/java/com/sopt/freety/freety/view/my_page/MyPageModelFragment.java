@@ -3,9 +3,7 @@ package com.sopt.freety.freety.view.my_page;
 
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -21,14 +19,11 @@ import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.network.NetworkService;
 import com.sopt.freety.freety.util.SharedAccessor;
-import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
 
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageModelRecyclerAdapter;
-import com.sopt.freety.freety.view.my_page.adapter.MyPageViewPagerAdapter;
 import com.sopt.freety.freety.view.my_page.data.MyPageModelHeaderData;
 import com.sopt.freety.freety.view.my_page.data.MyPagePickData;
-import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageModelGetData;
 
 import java.util.ArrayList;
@@ -140,7 +135,7 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
     }
 
     private void reload() {
-        Call<MyPageModelGetData> call = networkService.getMyPageModel(SharedAccessor.getToken(getContext()));
+        Call<MyPageModelGetData> call = networkService.getMyPageInModelAccount(SharedAccessor.getToken(getContext()));
         call.enqueue(new Callback<MyPageModelGetData>() {
             @Override
             public void onResponse(Call<MyPageModelGetData> call, Response<MyPageModelGetData> response) {

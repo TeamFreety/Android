@@ -94,16 +94,19 @@ public interface NetworkService {
     Call<PickResultData> pick(@Header("member_token") String token, @Body PickRequestData data);
 
     @GET("/mypage/modelMypage")
-    Call<MyPageModelGetData> getMyPageModel(@Header("member_token") String token);
+    Call<MyPageModelGetData> getMyPageInModelAccount(@Header("member_token") String token);
 
     @GET("/mypage/designerMypage")
-    Call<MyPageDesignerGetData> getMyPageDesigner(@Header("member_token") String token);
+    Call<MyPageDesignerGetData> getMyPageInDesignerAccount(@Header("member_token") String token);
 
     @POST("/mypage/statusMsg")
     Call<OnlyMsgResultData> getOkMsg(@Header("member_token") String token, @Body MyPageStatusUpdateRequestData data);
 
     @POST("/mypage/myPhoto")
     Call<OnlyMsgResultData> getOkMsgFromProfile(@Header("member_token") String token, @Body MyPhotoRequestData data);
+
+    @GET("/postDetail/{memberId}")
+    Call<MyPageDesignerGetData> getOtherDesignerMyPage(@Header("member_token") String token, @Path("memberId") int memberId);
 
     @POST("/comment/writeComment")
     Call<OnlyMsgResultData> registerReview(@Header("member_token") String token, @Body MyPageReviewRequestData data, @Part MultipartBody.Part imageBody);

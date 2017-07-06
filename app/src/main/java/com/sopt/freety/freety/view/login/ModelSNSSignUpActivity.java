@@ -18,6 +18,7 @@ import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.network.NetworkService;
 import com.sopt.freety.freety.util.Consts;
+import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.util.FormatChecker;
 import com.sopt.freety.freety.view.login.data.SignUpData;
 import com.sopt.freety.freety.view.login.data.SignUpResultData;
@@ -60,7 +61,7 @@ public class ModelSNSSignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        kUserId = intent.getStringExtra("kuserId");
+        kUserId = intent.getStringExtra("kUserId");
         fUserId = intent.getStringExtra("fUserId");
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(Color.parseColor("#f1f1f1"));
@@ -83,7 +84,6 @@ public class ModelSNSSignUpActivity extends AppCompatActivity {
             finishBtn.setClickable(true);
         }
     }
-
     private void initCheckBoxList() {
         for (final CheckBox checkBox : checkBoxList) {
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -98,15 +98,12 @@ public class ModelSNSSignUpActivity extends AppCompatActivity {
             });
         }
     }
-
     @OnClick(R.id.sign_up_sns_model_finish_btn)
     public void onClick() {
         if (isClearFormat()) {
-            Toast.makeText(this, "통과하셨습니다! 통신구현 ㄱ", Toast.LENGTH_SHORT).show();
-            //TODO: 통신 부분을 구현하고 나서 startActivity()하기 전에 꼭 AppController.getInstance().resetPageStack()을 호출할 것
-            // 모르겠으면 물어보기!
             final SignUpData signUpData = new SignUpData.Builder(nameEditText.getText().toString(), Integer.parseInt(ageEditText.getText().toString()))
-                    .setMemberFacebookCode(fUserId).setMemberKakaoCode(kUserId)
+                    .setMemberFacebookCode(fUserId)
+                    .setMemberKakaoCode(kUserId)
                     .build();
 
             final Call<SignUpResultData> requestSNSSignUpData = networkService.registerSNSModelData(signUpData);
@@ -116,12 +113,7 @@ public class ModelSNSSignUpActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         final SignUpResultData resultData = response.body();
                         if (resultData.getMessage().equals("signup success")) {
-                            SharedPreferences pref = getSharedPreferences(Consts.PREF_KEY, MODE_PRIVATE);
-                            SharedPreferences.Editor editor = pref.edit();
-                            editor.putString(Consts.PREF_TOKEN, resultData.getMemberToken());
-                            editor.putString(Consts.PREF_POSITION, resultData.getPosition());
-                            editor.apply();
-                            editor.commit();
+                            SharedAccessor.register(ModelSNSSignUpActivity.this, resultData.getMemberToken(), resultData.getPosition());
                             AppController.getInstance().resetPageStack();
                             startActivity(new Intent(ModelSNSSignUpActivity.this, MainActivity.class));
                         } else if(resultData.getMessage().equals("signup failure")){

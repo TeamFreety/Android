@@ -363,15 +363,21 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
                                 public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
                                     if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
                                         int currentUploadedCount = imageCounter.incrementAndGet();
+                                        Log.i(TAG, "onResponse: current uploaded count / total size : (" + currentUploadedCount + ", " + imageBodyList.size() + ")");
                                         progressDialog.setProgress(currentUploadedCount * (100 / imageBodyList.size()));
                                         if (currentUploadedCount == imageBodyList.size()) {
                                             progressDialog.dismiss();
                                         }
+                                    } else {
+                                        Toast.makeText(WriteActivity.this, "사진 전송 오류", Toast.LENGTH_SHORT).show();
+                                        progressDialog.dismiss();
                                     }
                                 }
 
                                 @Override
                                 public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
+                                    Toast.makeText(WriteActivity.this, "사진 전송 오류 failure", Toast.LENGTH_SHORT).show();
+                                    progressDialog.dismiss();
                                 }
                             });
                         }

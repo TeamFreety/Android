@@ -25,6 +25,7 @@ import com.sopt.freety.freety.network.NetworkService;
 import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.helper.ImageSwicherHelper;
 import com.sopt.freety.freety.view.letter.LetterActivity;
+import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
 import com.sopt.freety.freety.view.recruit.adapter.RecruitViewPagerAdapter;
 import com.sopt.freety.freety.view.recruit.data.PickRequestData;
 import com.sopt.freety.freety.view.recruit.data.PickResultData;
@@ -50,9 +51,20 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
     @BindView(R.id.recruit_profile)
     ImageView profileImage;
 
-    @OnClick(R.id.recruit_profile)
-    public void onProfileClcik(ImageView profileImage){
+    @OnClick({R.id.recruit_profile, R.id.recruit_title, R.id.recruit_name})
+    public void onProfileClick(ImageView profileImage){
+        Call<MyPageDesignerGetData> call = networkService.getOtherDesignerMyPage(SharedAccessor.getToken(RecruitActivity.this), memberId);
+        call.enqueue(new Callback<MyPageDesignerGetData>() {
+            @Override
+            public void onResponse(Call<MyPageDesignerGetData> call, Response<MyPageDesignerGetData> response) {
 
+            }
+
+            @Override
+            public void onFailure(Call<MyPageDesignerGetData> call, Throwable t) {
+
+            }
+        });
     }
 
     @BindView(R.id.recruit_title)

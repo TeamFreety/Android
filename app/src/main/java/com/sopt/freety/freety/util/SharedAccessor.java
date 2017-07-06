@@ -47,5 +47,14 @@ public class SharedAccessor {
         editor.apply();
         editor.commit();
     }
+
+    public static void register(Context context, String token, String postiton) {
+        SharedPreferences pref = context.getSharedPreferences(Consts.PREF_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(Consts.PREF_TOKEN, token);
+        editor.putString(Consts.PREF_POSITION, postiton);
+        editor.apply();
+        editor.commit();
+    }
 }
 

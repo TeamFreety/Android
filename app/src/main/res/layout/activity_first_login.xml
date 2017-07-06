@@ -67,6 +67,8 @@
                 android:orientation="vertical"
                 android:gravity="center_horizontal">
 
+
+
                 <Button
                     android:id="@+id/kakaoBtn"
                     android:layout_width="48dp"
