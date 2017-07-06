@@ -1,5 +1,6 @@
 package com.sopt.freety.freety.view.my_page.adapter;
 
+import android.Manifest;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.telecom.Call;
@@ -10,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 
 import com.bumptech.glide.Glide;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.view.my_page.adapter.holder.MyPageModelBodyHolder;
 import com.sopt.freety.freety.view.my_page.adapter.holder.MyPageModelHeaderHolder;
@@ -20,6 +23,8 @@ import com.sopt.freety.freety.view.my_page.data.MyPageModelHeaderData;
 import com.sopt.freety.freety.view.my_page.data.MyPagePickData;
 
 import java.util.List;
+
+import butterknife.OnClick;
 
 /**
  * Created by cmslab on 6/26/17.
@@ -32,13 +37,16 @@ public class MyPageModelRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
     private List<MyPageModelHeaderData> myPageModelHeaderDataList;  //Header
     private List<MyPagePickData> myPagePickDataList;    //recyclerView
     private Context context;
+    private PermissionListener permissionListener;
 
     public MyPageModelRecyclerAdapter(final List<MyPageModelHeaderData> myPageModelHeaderDataList,
                                       final List<MyPagePickData> myPagePickDataList,
-                                      final Context context) {
+                                      final Context context,
+                                      final PermissionListener permissionListener) {
         this.context = context;
         this.myPagePickDataList = myPagePickDataList;
         this.myPageModelHeaderDataList = myPageModelHeaderDataList;
+        this.permissionListener = permissionListener;
     }
 
     @Override
@@ -71,6 +79,16 @@ public class MyPageModelRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
             castedHolder.getStyleText().setText(myPagePickDataList.get(position - 1).getMockStyle());
         }
     }
+
+  /*  public void onPictureBtn() {
+        new TedPermission(context)
+                .setPermissionListener(permissionListener)
+                .setRationaleConfirmText("확인")
+                .setRationaleMessage("\"Freety\"의 다음 작업을 허용하시겠습니까? 이 기기의 외부 저장소에 액세스하기")
+                .setDeniedMessage("거부하시면 볼수 없는데...")
+                .setPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA})
+                .check();
+    }*/
 
     @Override
     public int getItemViewType(int position) {

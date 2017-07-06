@@ -77,17 +77,6 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
     @BindView(R.id.text_my_page_model_name)
     TextView modelNameText;
 
-    @BindView(R.id.model_photo_1)
-    ImageButton modelPhoto1;
-
-    @BindView(R.id.model_photo_2)
-    ImageButton modelPhoto2;
-
-    @BindView(R.id.model_photo_3)
-    ImageButton modelPhoto3;
-
-    @BindView(R.id.my_page_model_profile_edit)
-    ImageButton myPageModelProfile;
 
     private GridLayoutManager layoutManager;
     private MyPageModelRecyclerAdapter adapter;
@@ -143,7 +132,7 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
             mockDataList2.add(MyPagePickData.getMockData());
         }
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new MyPageModelRecyclerAdapter(mockDataList1, mockDataList2, getContext());
+        adapter = new MyPageModelRecyclerAdapter(mockDataList1, mockDataList2, getContext(), permissionListener);
         recyclerView.setAdapter(adapter);
         return view;
     }
@@ -242,7 +231,8 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
                 .setPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA})
                 .check();
     }
-    @OnClick(R.id.model_photo_1)
+
+    /*@OnClick(R.id.model_photo_1)
     public void onPictureBtn1() {
         new TedPermission(getContext())
                 .setPermissionListener(permissionListener1)
@@ -271,7 +261,7 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
                 .setDeniedMessage("거부하시면 볼수 없는데...")
                 .setPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA})
                 .check();
-    }
+    }*/
 
     public void onPictureRegistered(int requestCode, String path) {
         final NetworkService networkService = AppController.getInstance().getNetworkService();
@@ -297,11 +287,11 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
                 });
 
                 break;
-            case Consts.MODEL_PICTURE_1_CODE:
+            /*case Consts.MODEL_PICTURE_1_CODE:
                 adapter.updatePicture(0, path);
                 // 사진 보이게 등록하기.
                 File file1 = new File(path);
-                RequestBody fileBody1 = RequestBody.create(MediaType.parse("image/*"), file1);
+                RequestBody fileBody1 = RequestBody.create(MediaType.parse("image*//*"), file1);
                 MultipartBody.Part body1 = MultipartBody.Part.createFormData("image", file1.getName(), fileBody1);
 
                 Call<OnlyMsgResultData> photoCall1 = networkService.uploadModelPhoto1(SharedAccessor.getToken(getActivity()),
@@ -324,7 +314,7 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
                 adapter.updatePicture(1, path);
                 // 사진 보이게 등록하기.
                 File file2 = new File(path);
-                RequestBody fileBody2 = RequestBody.create(MediaType.parse("image/*"), file2);
+                RequestBody fileBody2 = RequestBody.create(MediaType.parse("image*//*"), file2);
                 MultipartBody.Part body2 = MultipartBody.Part.createFormData("image", file2.getName(), fileBody2);
 
                 Call<OnlyMsgResultData> photoCall2 = networkService.uploadModelPhoto2(SharedAccessor.getToken(getActivity()),
@@ -346,7 +336,7 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
                 adapter.updatePicture(2, path);
                 // 사진 보이게 등록하기.
                 File file3 = new File(path);
-                RequestBody fileBody3 = RequestBody.create(MediaType.parse("image/*"), file3);
+                RequestBody fileBody3 = RequestBody.create(MediaType.parse("image*//*"), file3);
                 MultipartBody.Part body3 = MultipartBody.Part.createFormData("image", file3.getName(), fileBody3);
 
                 Call<OnlyMsgResultData> photoCall3 = networkService.uploadModelPhoto3(SharedAccessor.getToken(getActivity()),
@@ -363,7 +353,7 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
                     public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
                     }
                 });
-                break;
+                break;*/
             default:
                 throw new RuntimeException("there is unexpected request code.");
         }
