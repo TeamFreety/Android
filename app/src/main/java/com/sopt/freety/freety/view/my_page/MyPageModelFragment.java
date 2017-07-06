@@ -28,6 +28,7 @@ import com.sopt.freety.freety.util.Consts;
 import com.sopt.freety.freety.util.SharedAccessor;
 
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
+import com.sopt.freety.freety.view.main.MainActivity;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageModelRecyclerAdapter;
 import com.sopt.freety.freety.view.my_page.data.MyPageModelHeaderData;
 import com.sopt.freety.freety.view.my_page.data.MyPagePickData;
@@ -132,7 +133,7 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
             mockDataList2.add(MyPagePickData.getMockData());
         }
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new MyPageModelRecyclerAdapter(mockDataList1, mockDataList2, getContext(), permissionListener);
+        adapter = new MyPageModelRecyclerAdapter(mockDataList1, mockDataList2, getContext());
         recyclerView.setAdapter(adapter);
         return view;
     }
@@ -267,22 +268,26 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
         final NetworkService networkService = AppController.getInstance().getNetworkService();
         switch (requestCode) {
             case Consts.MODEL_PROFILE_PHOTO_CODE:
+
+                Log.i("image",""+path);
                 File file = new File(path);
                 RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);
                 MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), fileBody);
 
-                Call<OnlyMsgResultData> photoCall = networkService.getOkMsgFromProfile(SharedAccessor.getToken(getActivity()),
+                Call<OnlyMsgResultData> photoCall = networkService.getOkMsgFromProfile(SharedAccessor.getToken((MainActivity)getActivity()),
                         body);
                 photoCall.enqueue(new Callback<OnlyMsgResultData>() {
                     @Override
                     public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
                         if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
                             Log.i("modelProfileUpload : ","success" );
-                        }
+                        }else if(response.isSuccessful()&& response.body().getMessage().equals("member photo failure"))
+                            Log.i("modelProfileUpload : ","fail");
                     }
 
                     @Override
                     public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
+
                     }
                 });
 

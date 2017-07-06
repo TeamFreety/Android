@@ -41,12 +41,10 @@ public class MyPageModelRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
 
     public MyPageModelRecyclerAdapter(final List<MyPageModelHeaderData> myPageModelHeaderDataList,
                                       final List<MyPagePickData> myPagePickDataList,
-                                      final Context context,
-                                      final PermissionListener permissionListener) {
+                                      final Context context) {
         this.context = context;
         this.myPagePickDataList = myPagePickDataList;
         this.myPageModelHeaderDataList = myPageModelHeaderDataList;
-        this.permissionListener = permissionListener;
     }
 
     @Override

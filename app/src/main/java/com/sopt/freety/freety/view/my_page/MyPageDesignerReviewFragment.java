@@ -1,7 +1,9 @@
 package com.sopt.freety.freety.view.my_page;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +18,7 @@ import com.sopt.freety.freety.network.NetworkService;
 import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
+import com.sopt.freety.freety.view.login.SelectMemberTypeActivity;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageReviewRecyclerAdapter;
 import com.sopt.freety.freety.view.my_page.data.MyPageReviewData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
@@ -25,12 +28,14 @@ import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_DRAGGING;
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by cmslab on 6/26/17.
@@ -40,6 +45,9 @@ public class MyPageDesignerReviewFragment extends Fragment {
 
     @BindView(R.id.my_page_review_recycler_view)
     ScrollFeedbackRecyclerView recyclerView;
+
+    @BindView(R.id.fabtn_review_to_review)
+    FloatingActionButton reviewBtn;
 
     private LinearLayoutManager layoutManager;
     private MyPageReviewRecyclerAdapter adapter;
@@ -101,5 +109,11 @@ public class MyPageDesignerReviewFragment extends Fragment {
 
     public void setMine(boolean isMine) {
         this.isMine = isMine;
+    }
+
+    @OnClick(R.id.fabtn_review_to_review)
+    public void onClick(){
+        Intent intent = new Intent(getApplicationContext(), MyPageReviewPopupActivity.class);
+        startActivity(intent);
     }
 }

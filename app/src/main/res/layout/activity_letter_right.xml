@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:paddingTop="11dp" android:paddingBottom="11dp"
+    android:paddingTop="5dp" android:paddingBottom="5dp"
     android:layout_height="wrap_content">
 
     <TextView
@@ -15,14 +15,14 @@
         android:textSize="12sp"
         android:gravity="left"
         android:paddingRight="5dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="19dp"
         android:layout_marginRight="32dp"
         android:background="#7EEFD3"/>
 
     <ImageView
         android:src="@drawable/circle_background"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="7dp"
         android:layout_width="46dp"
         android:layout_marginRight="16dp"
         android:layout_height="46dp" />
@@ -30,7 +30,7 @@
     <ImageView
         android:id="@+id/letter_right_image"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="11dp"
         android:scaleType="centerCrop"
         android:src="@drawable/triangle"
         android:layout_marginRight="20dp"
@@ -52,7 +52,7 @@
         android:id="@+id/letter_right_content"
         android:layout_alignParentRight="true"
         android:layout_width="233dp"
-        android:minHeight="50dp"
+        android:minHeight="42dp"
         android:text="민주야 시술 유형 버튼 안에 글씨 색 알려줄 수 있는 것 부탁해"
         android:textSize="11sp"
         android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
         android:layout_width="233dp"
         android:layout_height="1dp"
         android:layout_alignLeft="@+id/letter_right_content"
-        android:layout_marginTop="11dp"
+        android:layout_marginTop="5dp"
         android:background="#d9d9d9"
         android:layout_below="@+id/letter_right_content"/>
 
