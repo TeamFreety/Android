@@ -2,6 +2,7 @@ package com.sopt.freety.freety.view.my_page;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,13 +15,18 @@ import android.view.ViewGroup;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.network.NetworkService;
+import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.view.my_page.adapter.MyPagePostRecyclerAdapter;
+import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_DRAGGING;
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
@@ -43,6 +49,7 @@ public class MyPageDesignerPostFragment extends Fragment {
     private GridLayoutManager layoutManager;
     private MyPagePostRecyclerAdapter adapter;
     private NetworkService networkService;
+    private MyPageDesignerGetData myPageDesignerGetData;
 
     private MyPageDesignerFragment myPageFragment;
 
@@ -56,8 +63,6 @@ public class MyPageDesignerPostFragment extends Fragment {
         viewPager = (ViewPagerEx) container;
         View view = inflater.inflate(R.layout.fragment_designer_my_page_post, container, false);
         ButterKnife.bind(this, view);
-
-
         myPageFragment = (MyPageDesignerFragment) getParentFragment();
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.my_page_post_offset));
@@ -97,6 +102,51 @@ public class MyPageDesignerPostFragment extends Fragment {
         networkService = AppController.getInstance().getNetworkService();
 
         return view;
+    }
+
+    public void initMyPageDesignerPostFragment() {
+        if (networkService == null) {
+            networkService = AppController.getInstance().getNetworkService();
+        }
+        getMyPagePostData();
+    }
+
+    public void initMyPageDesignerPostFragment(int memberId) {
+        if (networkService == null) {
+            networkService = AppController.getInstance().getNetworkService();
+        }
+        getMyPagePostData(memberId);
+    }
+    private void getMyPagePostData() {
+        Call<MyPageDesignerGetData> call = networkService.getMyPageInDesignerAccount(SharedAccessor.getToken(getContext()));
+        call.enqueue(new Callback<MyPageDesignerGetData>() {
+            @Override
+            public void onResponse(Call<MyPageDesignerGetData> call, Response<MyPageDesignerGetData> response) {
+                if (response.isSuccessful() && response.body().getMessage().equals("successfully load post list data")) {
+                    Log.i("MyPagePostFragment", "onResponse: " + response.body().getMyPagePostDataList());
+                    adapter.updatePostDataList(response.body().getMyPagePostDataList());
+                }
+            }
+            @Override
+            public void onFailure(Call<MyPageDesignerGetData> call, Throwable t) {
+            }
+        });
+    }
+
+    private void getMyPagePostData(int memberId) {
+        Call<MyPageDesignerGetData> call = networkService.getOtherDesignerMyPage(SharedAccessor.getToken(getContext()), memberId);
+        call.enqueue(new Callback<MyPageDesignerGetData>() {
+            @Override
+            public void onResponse(Call<MyPageDesignerGetData> call, Response<MyPageDesignerGetData> response) {
+                if (response.isSuccessful() && response.body().getMessage().equals("successfully load post list data")) {
+                    Log.i("MyPagePostFragment", "onResponse: " + response.body().getMyPagePostDataList());
+                    adapter.updatePostDataList(response.body().getMyPagePostDataList());
+                }
+            }
+            @Override
+            public void onFailure(Call<MyPageDesignerGetData> call, Throwable t) {
+            }
+        });
     }
 
     @Override

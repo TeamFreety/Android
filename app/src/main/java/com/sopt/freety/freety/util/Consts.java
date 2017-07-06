@@ -20,7 +20,8 @@ public class Consts {
     public static final String HAIR_DYE = "염색";
     public static final String HAIR_ECT = "기타";
 
-
+    public static final String KAKAO_ID_KEY = "kUserId";
+    public static final String FACEBOOK_ID_KEY = "fUserId";
 
     // request code들
     public static final int WRITE_REQUEST = 1111;
@@ -28,5 +29,6 @@ public class Consts {
     public static final int WRITE_PICTURE_CODE = 4321;
     public static final int REVIEW_PICTURE_CODE = 4322;
     public static final int DETAIL_SEARCH_CODE = 7777;
+
 }
 

@@ -25,6 +25,8 @@ import com.sopt.freety.freety.network.NetworkService;
 import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.helper.ImageSwicherHelper;
 import com.sopt.freety.freety.view.letter.LetterActivity;
+import com.sopt.freety.freety.view.my_page.ModelToDesignerMypageActivity;
+import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
 import com.sopt.freety.freety.view.recruit.adapter.RecruitViewPagerAdapter;
 import com.sopt.freety.freety.view.recruit.data.PickRequestData;
 import com.sopt.freety.freety.view.recruit.data.PickResultData;
@@ -44,15 +46,18 @@ import retrofit2.Response;
 public class RecruitActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String TAG = "RecruitActivity";
+
     @BindView(R.id.recruit_image_view_pager)
     ViewPager imageViewPager;
 
     @BindView(R.id.recruit_profile)
     ImageView profileImage;
 
-    @OnClick(R.id.recruit_profile)
-    public void onProfileClcik(ImageView profileImage){
-
+    @OnClick({R.id.recruit_profile, R.id.recruit_title, R.id.recruit_name})
+    public void onProfileClick(ImageView profileImage){
+        Intent intent = new Intent(RecruitActivity.this, ModelToDesignerMypageActivity.class);
+        intent.putExtra("memberId", memberId);
+        startActivity(intent);
     }
 
     @BindView(R.id.recruit_title)

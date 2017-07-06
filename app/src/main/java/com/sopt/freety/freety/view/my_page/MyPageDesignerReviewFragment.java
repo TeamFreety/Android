@@ -11,14 +11,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.application.AppController;
+import com.sopt.freety.freety.network.NetworkService;
+import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageReviewRecyclerAdapter;
+import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
 
 import java.text.ParseException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_DRAGGING;
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
@@ -35,6 +42,8 @@ public class MyPageDesignerReviewFragment extends Fragment {
     private LinearLayoutManager layoutManager;
     private MyPageReviewRecyclerAdapter adapter;
     private ViewPagerEx viewPager;
+    private NetworkService networkService;
+    private MyPageDesignerGetData myPageDesignerGetData;
 
     private MyPageDesignerFragment myPageFragment;
 
@@ -76,6 +85,35 @@ public class MyPageDesignerReviewFragment extends Fragment {
             throw new RuntimeException(e);
         }
         recyclerView.setAdapter(adapter);
+
+        networkService = AppController.getInstance().getNetworkService();
+
         return view;
+    }
+
+
+    public void initMyPageDesignerReviewFragment() {
+        if (networkService == null) {
+            networkService = AppController.getInstance().getNetworkService();
+        }
+        getMyPageReviewData();
+    }
+    private void getMyPageReviewData() {
+        Call<MyPageDesignerGetData> call = networkService.getMyPageInDesignerAccount(SharedAccessor.getToken(getContext()));
+        call.enqueue(new Callback<MyPageDesignerGetData>() {
+            @Override
+            public void onResponse(Call<MyPageDesignerGetData> call, Response<MyPageDesignerGetData> response) {
+                if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
+                    try {
+                        adapter.updateMyPageReviewData(response.body().getMyPageReviewData());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<MyPageDesignerGetData> call, Throwable t) {
+            }
+        });
     }
 }

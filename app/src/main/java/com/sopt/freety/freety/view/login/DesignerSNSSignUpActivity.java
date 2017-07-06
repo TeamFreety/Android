@@ -1,5 +1,7 @@
 package com.sopt.freety.freety.view.login;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
@@ -13,18 +15,19 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
+import com.sopt.freety.freety.network.NetworkService;
+import com.sopt.freety.freety.util.Consts;
+import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.util.FormatChecker;
-import com.sopt.freety.freety.util.util.Pair;
-
-import org.w3c.dom.Text;
+import com.sopt.freety.freety.view.login.data.SignUpData;
+import com.sopt.freety.freety.view.login.data.SignUpResultData;
+import com.sopt.freety.freety.view.main.MainActivity;
 
 import java.util.List;
 
@@ -32,6 +35,9 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DesignerSNSSignUpActivity extends AppCompatActivity {
 
@@ -62,20 +68,28 @@ public class DesignerSNSSignUpActivity extends AppCompatActivity {
     @BindView(R.id.sign_up_sns_designer_finish_btn)
     TextView finishBtn;
 
+    private NetworkService networkService;
+    private String kUserId;
+    private String fUserId;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        kUserId = intent.getStringExtra(Consts.KAKAO_ID_KEY);
+        fUserId = intent.getStringExtra(Consts.FACEBOOK_ID_KEY);
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(Color.parseColor("#f1f1f1"));
         }
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_designer_sns_sign_up);
         ButterKnife.bind(this);
+        networkService = AppController.getInstance().getNetworkService();
         initCheckBoxList();
         initSpinner(belongSpinner, R.array.belong, true);
         initSpinner(careerSpinner, R.array.career, false);
         finishBtn.setClickable(false);
-
     }
 
     private void setFinishBtnActive(boolean isReady) {
@@ -131,9 +145,40 @@ public class DesignerSNSSignUpActivity extends AppCompatActivity {
     @OnClick(R.id.sign_up_sns_designer_finish_btn)
     public void onFinishBtn() {
         if (isClearFormat()) {
-            Toast.makeText(this, "통과하셨습니다! 통신구현 ㄱ", Toast.LENGTH_SHORT).show();
-            //TODO: 통신 부분을 구현하고 나서 startActivity()하기 전에 꼭 AppController.getInstance().resetPageStack()을 호출할 것
-            // 모르겠으면 물어보기!
+            final SignUpData signUpData = new SignUpData.Builder(nameEditText.getText().toString(), Integer.parseInt(ageEditText.getText().toString()))
+                    .setMemberBelong(belongSelectedText.getText().toString())
+                    .setMemberBelongName(belongNameEditText.getText().toString())
+                    .setMemberCareer(careerSelectedText.getText().toString())
+                    .setMemberFacebookCode(fUserId)
+                    .setMemberKakaoCode(kUserId)
+                    .build();
+
+            final Call<SignUpResultData> requestSNSSignUpData = networkService.registerSNSDesignerData(signUpData);
+            requestSNSSignUpData.enqueue(new Callback<SignUpResultData>() {
+                @Override
+                public void onResponse(Call<SignUpResultData> call, Response<SignUpResultData> response) {
+                    if (response.isSuccessful()) {
+                        final SignUpResultData resultData = response.body();
+                        if (resultData.getMessage().equals("signup success")) {
+                            SharedAccessor.register(DesignerSNSSignUpActivity.this, resultData.getMemberToken(), resultData.getPosition());
+                            AppController.getInstance().resetPageStack();
+                            startActivity(new Intent(DesignerSNSSignUpActivity.this, MainActivity.class));
+                        } else if(resultData.getMessage().equals("signup failure")){
+                            if(resultData.getDetail().equals("duplicated sns code")) {
+                                Toast.makeText(DesignerSNSSignUpActivity.this, "이미 있는 계정", Toast.LENGTH_SHORT).show();
+                            }else if(resultData.getDetail().equals("while making token")){
+                                Toast.makeText(DesignerSNSSignUpActivity.this, "토큰 발급 실패", Toast.LENGTH_SHORT).show();
+                            }
+                        }else{}
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<SignUpResultData> call, Throwable t) {
+
+                }
+            });
+
         } else {
         }
     }

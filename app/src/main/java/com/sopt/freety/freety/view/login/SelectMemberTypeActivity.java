@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
+import com.sopt.freety.freety.util.Consts;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,8 +31,8 @@ public class SelectMemberTypeActivity extends AppCompatActivity {
     @BindView(R.id.designerCaseBtn) Button designerCaseBtn;
 
     private String loginCase;
-    private String userId;
-    private String userName;
+    private String kUserId;
+    private String fUserId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,8 +44,8 @@ public class SelectMemberTypeActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Intent intent = getIntent();
         loginCase = intent.getStringExtra("login case");
-        userId = intent.getStringExtra("userId");
-        userName = intent.getStringExtra("userName");
+        kUserId = intent.getStringExtra(Consts.KAKAO_ID_KEY);
+        fUserId = intent.getStringExtra(Consts.FACEBOOK_ID_KEY);
     }
 
     @OnClick({R.id.modelCaseBtn, R.id.designerCaseBtn})
@@ -62,8 +64,9 @@ public class SelectMemberTypeActivity extends AppCompatActivity {
                             intent = new Intent(getApplicationContext(), ModelEmailSignUpActivity.class);
                         } else {
                             intent = new Intent(getApplicationContext(), ModelSNSSignUpActivity.class);
-                            intent.putExtra("userId", userId);
-                            intent.putExtra("userName", userName);
+                            intent.putExtra(Consts.KAKAO_ID_KEY, kUserId);
+                            intent.putExtra(Consts.FACEBOOK_ID_KEY, fUserId);
+                            Log.i("Select", "onAnimationEnd: kakao user id " + kUserId);
                         }
                         break;
                     case R.id.designerCaseBtn:
@@ -71,8 +74,8 @@ public class SelectMemberTypeActivity extends AppCompatActivity {
                             intent = new Intent(getApplicationContext(), DesignerEmailSignUpActivity.class);
                         } else{
                             intent = new Intent(getApplicationContext(), DesignerSNSSignUpActivity.class);
-                            intent.putExtra("userId", userId);
-                            intent.putExtra("userName", userName);
+                            intent.putExtra(Consts.KAKAO_ID_KEY, kUserId);
+                            intent.putExtra(Consts.FACEBOOK_ID_KEY, fUserId);
                         }
                         break;
                     default:
@@ -82,7 +85,6 @@ public class SelectMemberTypeActivity extends AppCompatActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
             }
-
             @Override
             public void onAnimationRepeat(Animation animation) {
             }

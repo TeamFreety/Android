@@ -34,7 +34,6 @@ import com.sopt.freety.freety.view.my_page.adapter.MyPageViewPagerAdapter;
 import com.sopt.freety.freety.view.my_page.data.MyPagePostData;
 import com.sopt.freety.freety.view.my_page.data.MyPageReviewData;
 import com.sopt.freety.freety.view.my_page.data.MyPageStyleBodyData;
-import com.sopt.freety.freety.view.my_page.data.MyPageStyleHeaderData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageStatusUpdateRequestData;
 import com.sopt.freety.freety.view.property.ScreenClickable;
@@ -66,6 +65,9 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
 
     @BindView(R.id.edit_my_page_designer_status)
     EditText designerStatusTextView;
+
+    @BindView(R.id.edit_my_page_port_career)
+    TextView careerString;
 
     @BindView(R.id.my_page_tab)
     TabLayout tabLayout;
@@ -180,8 +182,8 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
         return myPageDesignerGetData.getMyStyleBodyDataList();
     }
 
-    public MyPageStyleHeaderData getStyleHeaderData() {
-        return myPageDesignerGetData.getMyPageStyleHeaderData();
+    public String getStyleHeaderData() {
+        return myPageDesignerGetData.getDesignerCareerText();
     }
 
     public MyPageReviewData getMyPageReviewData() throws ParseException {
@@ -215,7 +217,7 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
     }
 
     private void reload() {
-        Call<MyPageDesignerGetData> call = networkService.getMyPageDesigner(SharedAccessor.getToken(getContext()));
+        Call<MyPageDesignerGetData> call = networkService.getMyPageInDesignerAccount(SharedAccessor.getToken(getContext()));
         call.enqueue(new Callback<MyPageDesignerGetData>() {
             @Override
             public void onResponse(Call<MyPageDesignerGetData> call, Response<MyPageDesignerGetData> response) {
@@ -224,6 +226,7 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
                     Glide.with(getContext()).load(response.body().getDesignerImageURL()).into(profileImage);
                     designerNameText.setText(response.body().getDesignerName());
                     designerStatusTextView.setText(response.body().getDesignerStatusMsg());
+
                     viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
                     PagerAdapter pagerAdapter = new MyPageViewPagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
                     viewPager.setAdapter(pagerAdapter);

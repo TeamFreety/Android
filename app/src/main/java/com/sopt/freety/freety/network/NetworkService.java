@@ -9,6 +9,8 @@ import com.sopt.freety.freety.view.login.data.AutoLoginResultData;
 import com.sopt.freety.freety.view.login.data.DuplicateData;
 import com.sopt.freety.freety.view.login.data.LoginRequestData;
 import com.sopt.freety.freety.view.login.data.LoginResultData;
+import com.sopt.freety.freety.view.login.data.SNSLoginRequestData;
+import com.sopt.freety.freety.view.login.data.SNSLoginResultData;
 import com.sopt.freety.freety.view.login.data.SignUpData;
 import com.sopt.freety.freety.view.login.data.SignUpResultData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
@@ -51,6 +53,14 @@ public interface NetworkService {
     @POST("/signup/model/email")
     Call<SignUpResultData> registerModelData(@Body SignUpData signUpData);
 
+    @POST("/signup/designer/sns")
+    Call<SignUpResultData> registerSNSDesignerData(@Body SignUpData signUpData);
+
+    @POST("/signup/model/sns")
+    Call<SignUpResultData> registerSNSModelData(@Body SignUpData signUpData);
+
+    @POST("/signup/")
+
     @GET("/duplicateCheck")
     Call<DuplicateData> checkDuplicate(@Query("tempEmail") String email);
 
@@ -59,6 +69,9 @@ public interface NetworkService {
 
     @POST("/login/email")
     Call<LoginResultData> login(@Body LoginRequestData data);
+
+    @POST("/login/sns")
+    Call<SNSLoginResultData> snslogin(@Body SNSLoginRequestData data);
 
     @GET("/postList")
     Call<PostListResultData> getHomePostData(@Query("sort") int type);
@@ -81,16 +94,19 @@ public interface NetworkService {
     Call<PickResultData> pick(@Header("member_token") String token, @Body PickRequestData data);
 
     @GET("/mypage/modelMypage")
-    Call<MyPageModelGetData> getMyPageModel(@Header("member_token") String token);
+    Call<MyPageModelGetData> getMyPageInModelAccount(@Header("member_token") String token);
 
     @GET("/mypage/designerMypage")
-    Call<MyPageDesignerGetData> getMyPageDesigner(@Header("member_token") String token);
+    Call<MyPageDesignerGetData> getMyPageInDesignerAccount(@Header("member_token") String token);
 
     @POST("/mypage/statusMsg")
     Call<OnlyMsgResultData> getOkMsg(@Header("member_token") String token, @Body MyPageStatusUpdateRequestData data);
 
     @POST("/mypage/myPhoto")
     Call<OnlyMsgResultData> getOkMsgFromProfile(@Header("member_token") String token, @Body MyPhotoRequestData data);
+
+    @GET("/postDetail/{memberId}")
+    Call<MyPageDesignerGetData> getOtherDesignerMyPage(@Header("member_token") String token, @Path("memberId") int memberId);
 
     @POST("/comment/writeComment")
     Call<OnlyMsgResultData> registerReview(@Header("member_token") String token, @Body MyPageReviewRequestData data, @Part MultipartBody.Part imageBody);

@@ -26,6 +26,10 @@ public class MyPageDesignerGetData {
     private String designerMsg;
     private String designerCareerText;
 
+    public String getDesignerCareerText() {
+        return designerCareerText;
+    }
+
     public String getMessage() {
         return message;
     }
@@ -123,6 +127,10 @@ public class MyPageDesignerGetData {
         return postDataList;
     }
 
+    public MyPageStyleHeaderData getMyPageStyleHeaderData() {
+        return new MyPageStyleHeaderData(designerCareerText);
+    }
+
     public List<MyPageStyleBodyData> getMyStyleBodyDataList() {
         List<MyPageStyleBodyData> list = new ArrayList<>();
         for (PortFolioPhoto portFolioPhoto : designerPFPhoto) {
@@ -131,9 +139,7 @@ public class MyPageDesignerGetData {
         return list;
     }
 
-    public MyPageStyleHeaderData getMyPageStyleHeaderData() {
-        return new MyPageStyleHeaderData(designerCareerText);
-    }
+
 
     public MyPageReviewData getMyPageReviewData() throws ParseException {
         List<MyPageReviewElemData> myPageReviewElemDataList = new ArrayList<>();

@@ -15,6 +15,7 @@ public class SharedAccessor {
         return pref.getString(Consts.PREF_TOKEN, "");
     }
 
+
     public static boolean isDesigner(Context context) {
         SharedPreferences pref = context.getSharedPreferences(Consts.PREF_KEY, Context.MODE_PRIVATE);
         String type = pref.getString(Consts.PREF_POSITION, Consts.TYPE_MODEL);
@@ -43,6 +44,15 @@ public class SharedAccessor {
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(Consts.PREF_TOKEN, "");
         editor.putString(Consts.PREF_POSITION, "");
+        editor.apply();
+        editor.commit();
+    }
+
+    public static void register(Context context, String token, String postiton) {
+        SharedPreferences pref = context.getSharedPreferences(Consts.PREF_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(Consts.PREF_TOKEN, token);
+        editor.putString(Consts.PREF_POSITION, postiton);
         editor.apply();
         editor.commit();
     }
