@@ -2,7 +2,7 @@ package com.sopt.freety.freety.view.my_page.adapter.holder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.sopt.freety.freety.R;
@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 public class MyPageStyleHeaderHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.my_page_style_career_edit_btn)
-    Button careerEditBtn;
+    ImageButton careerEditBtn;
 
     @BindView(R.id.edit_my_page_port_career)
     TextView careerText;
@@ -26,7 +26,7 @@ public class MyPageStyleHeaderHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    public Button getCareerEditBtn() {
+    public ImageButton getCareerEditBtn() {
         return careerEditBtn;
     }
 
