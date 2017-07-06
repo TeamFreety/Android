@@ -42,7 +42,6 @@ import retrofit2.Response;
 
 public class EmailLoginActivity extends AppCompatActivity implements ScreenClickable {
 
-    SharedPreferences pref;
     String email;
     String pwd;
     private static final String TAG = "EmailLoginActivity";
@@ -89,7 +88,6 @@ public class EmailLoginActivity extends AppCompatActivity implements ScreenClick
                 btnAnim.setAnimationListener(new Animation.AnimationListener(){
                     @Override
                     public void onAnimationStart(Animation animation) {
-
                     }
 
                     @Override
@@ -102,17 +100,17 @@ public class EmailLoginActivity extends AppCompatActivity implements ScreenClick
                             public void onResponse(Call<LoginResultData> call, Response<LoginResultData> response) {
                                 if (response.isSuccessful()) {
                                     if (response.body().getMessage().equals("login success")) {
-                                        Log.i(TAG, "onResponse: in login success");
                                         response.body().registerToken(EmailLoginActivity.this);
                                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                         AppController.getInstance().resetPageStack();
                                         startActivity(intent);
                                     } else if (response.body().getMessage().equals("no information about the account")) {
                                         Toast.makeText(EmailLoginActivity.this, "아이디나 비밀번호가 틀립니다.", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(EmailLoginActivity.this, " 알 수 없는 로그인 실패.", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }
-
                             @Override
                             public void onFailure(Call<LoginResultData> call, Throwable t) {
                                 Log.i(TAG, "onResponse: in login failure");

@@ -144,7 +144,9 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
             public void onResponse(Call<MyPageModelGetData> call, Response<MyPageModelGetData> response) {
                 if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
                     myPageModelGetData = response.body();
-                    Glide.with(getContext()).load(response.body().getModelPhoto()).into(profileImage);
+                    Glide.with(getContext()).load(response.body().getModelPhoto())
+                            .override(200, 200).thumbnail(0.2f).bitmapTransform(new CropCircleTransformation(getContext()))
+                            .into(profileImage);
                     modelNameText.setText(response.body().getModelName());
                     adapter = new MyPageModelRecyclerAdapter(myPageModelGetData.getMyPageModelHeaderDataList(), myPageModelGetData.getModelPickList(), getContext(), MyPageModelFragment.this);
                     recyclerView.setAdapter(adapter);
@@ -162,7 +164,7 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
             intent.setMaxSelectCount(1);
             intent.setSelectCheckBox(true);
             intent.setMaxGrideItemCount(3);
-            startActivityForResult(intent, Consts.MODEL_PROFILE_PHOTO_CODE);
+            getActivity().startActivityForResult(intent, Consts.MODEL_PROFILE_PHOTO_CODE);
         }
         @Override
         public void onPermissionDenied(ArrayList<String> deniedPermissions) {
@@ -188,7 +190,7 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
             intent.setMaxSelectCount(1);
             intent.setSelectCheckBox(true);
             intent.setMaxGrideItemCount(3);
-            startActivityForResult(intent, currRequestCode);
+            getActivity().startActivityForResult(intent, currRequestCode);
         }
         @Override
         public void onPermissionDenied(ArrayList<String> deniedPermissions) {}
@@ -205,26 +207,33 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
                 .check();
     }
 
-    public void onPictureRegistered(int requestCode, String path) {
+    public void onPictureRegistered(int requestCode, final String path) {
         final NetworkService networkService = AppController.getInstance().getNetworkService();
         File file = new File(path);
         RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), fileBody);
         switch (requestCode) {
             case Consts.MODEL_PROFILE_PHOTO_CODE:
-
                 Call<OnlyMsgResultData> photoCall = networkService.getOkMsgFromProfile(SharedAccessor.getToken(getActivity()),
                         body);
                 photoCall.enqueue(new Callback<OnlyMsgResultData>() {
                     @Override
                     public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
+                        Log.i("modelProfileUpload : ", response.raw().toString());
                         if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
+                            Glide.with(getContext()).load(path)
+                                    .bitmapTransform(new CropCircleTransformation(getContext())).override(200, 200).thumbnail(0.2f)
+                                    .into(profileImage);
                             Log.i("modelProfileUpload : ","success" );
+                        } else {
+                            Log.i("modelProfileUpload : ", "fail" );
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {}
+                    public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
+                        Log.i("modelProfileUpload : ", "on failure" );
+                    }
                 });
 
                 break;

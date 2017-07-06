@@ -73,18 +73,14 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
         public void onPermissionGranted() {
             Log.i(TAG, "onPermissionGranted: good");
             isPermissionGranted = true;
-            MapFragment mapFragment =
-                    (MapFragment) getFragmentManager().findFragmentById(R.id.recruit_popup_map);
-            mapFragment.getMapAsync(MapPopupActivity.this);
+            googleApiClient.connect();
         }
 
         @Override
         public void onPermissionDenied(ArrayList<String> deniedPermissions) {
             Log.i(TAG, "onPermissionGranted: denied");
             isPermissionGranted = false;
-            MapFragment mapFragment =
-                    (MapFragment) getFragmentManager().findFragmentById(R.id.recruit_popup_map);
-            mapFragment.getMapAsync(MapPopupActivity.this);
+            googleApiClient.connect();
         }
     };
 
@@ -124,7 +120,6 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
         ButterKnife.bind(this);
         mapNetworkService = AppController.getInstance().getGoogleNetworkService();
         buildGoogleApiClient();
-        googleApiClient.connect();
         List<String> initResultList = new ArrayList<>();
         placeResults = new ArrayList<>();
         initResultList.add("검색 결과 아직 없음.");
@@ -143,7 +138,7 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
                 resultIntent.putExtra("lng", selectedPlace.getLng());
             }
         });
-
+        getDevicePermission();
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -159,7 +154,9 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        getDevicePermission();
+        MapFragment mapFragment =
+                (MapFragment) getFragmentManager().findFragmentById(R.id.recruit_popup_map);
+        mapFragment.getMapAsync(MapPopupActivity.this);
     }
 
     private void getDevicePermission() {
@@ -170,13 +167,13 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
                 .setDeniedMessage("거부하시면 볼수 없는데...")
                 .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
                 .check();
+        Log.i(TAG, "getDevicePermission: " + googleApiClient.isConnected());
     }
 
     @Override
     @SuppressWarnings("MissingPermission")
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
-
         if (isPermissionGranted) {
             currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
             LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, getLocationRequest(), this);

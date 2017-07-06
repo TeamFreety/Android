@@ -109,6 +109,27 @@ public class LetterActivity extends AppCompatActivity implements ScreenClickable
     @OnClick(R.id.letter_edit_btn)
     public void onPress() {
         final String content = letterEditText.getText().toString();
+
+        // check member is exist
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RPerson checkPerson = realm.where(RPerson.class).equalTo("memberId", memberId).findFirst();
+                if (checkPerson == null) {
+                    Log.i(TAG, "onResponse: " + "person is null create new one");
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            RPerson newPerson = realm.createObject(RPerson.class);
+                            newPerson.setMemberId(memberId);
+                            newPerson.setMemberName(getIntent().getStringExtra("memberName"));
+                            newPerson.setImageURL(getIntent().getStringExtra("memberImageURL"));
+                        }
+                    });
+                }
+            }
+        });
+
         if (memberId != -1) {
             realm.executeTransaction(new Realm.Transaction() {
                 @Override

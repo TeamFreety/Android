@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -111,12 +112,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.i("MainActivity", "onActivityResult: " + requestCode);
 
         if ((requestCode == Consts.DETAIL_SEARCH_CODE || requestCode == Consts.WRITE_REQUEST) && resultCode == RESULT_OK) {
             SearchFragment searchFragment = (SearchFragment) getSupportFragmentManager().findFragmentByTag("search");
             searchFragment.onActivityResult(requestCode, 0, data);
         }
-        /*else if (requestCode == Consts.MODEL_PICTURE_1_CODE){
+        else if (requestCode == Consts.MODEL_PICTURE_1_CODE){
             if (resultCode == RESULT_OK) {
                 MyPageModelFragment myPageModelFragment = (MyPageModelFragment) getSupportFragmentManager().findFragmentByTag("my_page_model");
                 String imagePath = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS).get(0);
@@ -134,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
                 String imagePath = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS).get(0);
                 myPageModelFragment.onPictureRegistered(Consts.MODEL_PICTURE_3_CODE, imagePath);
             }
-        }*/
+        }
         else if (requestCode == Consts.MODEL_PROFILE_PHOTO_CODE){
             if (resultCode == RESULT_OK) {
                 MyPageModelFragment myPageModelFragment = (MyPageModelFragment) getSupportFragmentManager().findFragmentByTag("my_page_model");

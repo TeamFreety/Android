@@ -43,6 +43,7 @@
             <ImageView
                 android:background="@color/myPagePictureDefault"
                 android:id="@+id/front_picture"
+                android:scaleType="fitXY"
                 android:layout_width="100dp"
                 android:layout_height="100dp" />
 
@@ -69,6 +70,7 @@
             >
             <ImageView
                 android:id="@+id/back_picture"
+                android:scaleType="fitXY"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@color/myPagePictureDefault"
@@ -94,6 +96,7 @@
             <ImageView
 
                 android:id="@+id/side_picture"
+                android:scaleType="fitXY"
                 android:background="@color/myPagePictureDefault"
                 android:layout_width="100dp"
                 android:layout_height="100dp"/>

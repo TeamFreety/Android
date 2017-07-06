@@ -62,7 +62,6 @@ public class DesignerToModelMypageActivity extends AppCompatActivity implements 
         });
 
         dToMMyPageModelRecyclerView.setHasFixedSize(true);
-//        recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.my_page_post_offset));
         dToMMyPageModelRecyclerView.attachCallbacks(this);
 
         layoutManager = new GridLayoutManager(getApplicationContext(), 2);
@@ -76,16 +75,8 @@ public class DesignerToModelMypageActivity extends AppCompatActivity implements 
                 }
             }
         });
-        final List<MyPageModelHeaderData> mockDataList1 = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            mockDataList1.add(MyPageModelHeaderData.getMockData());
-        }
-        final List<MyPagePickData> mockDataList2 = new ArrayList<>();
-        for (int i = 0; i < 11; i++) {
-            mockDataList2.add(MyPagePickData.getMockData());
-        }
         dToMMyPageModelRecyclerView.setLayoutManager(layoutManager);
-        adapter = new MyPageModelRecyclerAdapter(mockDataList1, mockDataList2, getApplicationContext());
+        //adapter = new MyPageModelRecyclerAdapter(mockDataList1, mockDataList2, getApplicationContext());
         dToMMyPageModelRecyclerView.setAdapter(adapter);
 
     }
