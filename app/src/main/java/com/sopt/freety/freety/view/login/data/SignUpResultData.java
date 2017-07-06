@@ -7,12 +7,17 @@ package com.sopt.freety.freety.view.login.data;
 public class SignUpResultData {
 
     private String message;
+    private String detail;
     private String position;
     private String method;
     private String member_token;
 
     public String getMessage() {
         return message;
+    }
+
+    public String getDetail() {
+        return detail;
     }
 
     public String getPosition() {

@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.view.my_page.adapter.holder.MyPageStyleBodyHolder;
 import com.sopt.freety.freety.view.my_page.adapter.holder.MyPageStyleHeaderHolder;
+import com.sopt.freety.freety.view.my_page.data.MyPagePostData;
 import com.sopt.freety.freety.view.my_page.data.MyPageStyleBodyData;
 import com.sopt.freety.freety.view.my_page.data.MyPageStyleHeaderData;
 
@@ -24,13 +25,15 @@ public class MyPageStyleRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
     private static final int BASE_HEADER_HEIGHT = 60;
     public static int TYPE_HEADER = 0;
     private String careerString;
+
+    private List<MyPageStyleHeaderData> myPageStyleHeaderDataList;
     private List<MyPageStyleBodyData> myPageStyleBodyDataList;
     private Context context;
 
-    public MyPageStyleRecyclerAdapter(final MyPageStyleHeaderData headerData,
+    public MyPageStyleRecyclerAdapter(final String careerString,
                                       final List<MyPageStyleBodyData> myPageStyleBodyDataList,
                                       final Context context) {
-        this.careerString = headerData.getCareerString();
+        this.careerString = careerString;
         this.myPageStyleBodyDataList = myPageStyleBodyDataList;
         this.context = context;
     }
@@ -63,6 +66,20 @@ public class MyPageStyleRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
     public int getItemViewType(int position) {
         return position;
     }
+
+    public void updateMyPageStyleHeaderData(String careerString) {
+        this.careerString = careerString;
+        notifyDataSetChanged();
+    }
+    public String getMyPageStyleHeaderData() {
+        return careerString;
+    }
+
+    public void updateMyPageStyleBodyData(List<MyPageStyleBodyData> myPageStyleBodyDataList) {
+        this.myPageStyleBodyDataList = myPageStyleBodyDataList;
+        notifyDataSetChanged();
+    }
+    public List<MyPageStyleBodyData> getMyPageStyleBodyData(){return myPageStyleBodyDataList;}
 
     @Override
     public int getItemCount() {

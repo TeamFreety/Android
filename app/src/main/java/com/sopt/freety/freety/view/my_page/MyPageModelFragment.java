@@ -3,7 +3,9 @@ package com.sopt.freety.freety.view.my_page;
 
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -11,13 +13,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
+
+import com.sopt.freety.freety.application.AppController;
+import com.sopt.freety.freety.network.NetworkService;
+import com.sopt.freety.freety.util.SharedAccessor;
+import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
+
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageModelRecyclerAdapter;
+import com.sopt.freety.freety.view.my_page.adapter.MyPageViewPagerAdapter;
 import com.sopt.freety.freety.view.my_page.data.MyPageModelHeaderData;
 import com.sopt.freety.freety.view.my_page.data.MyPagePickData;
+import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
+import com.sopt.freety.freety.view.my_page.data.network.MyPageModelGetData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +37,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.sopt.freety.freety.view.my_page.adapter.MyPageStyleRecyclerAdapter.TYPE_HEADER;
 
@@ -49,8 +64,14 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
     @BindView(R.id.my_page_model_hide_toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.text_my_page_model_name)
+    TextView modelNameText;
+
     private GridLayoutManager layoutManager;
     private MyPageModelRecyclerAdapter adapter;
+    private NetworkService networkService;
+    private MyPageModelGetData myPageModelGetData;
+
 
     private static final float OPACITIY_FACTOR = 1.8f;
 
@@ -66,6 +87,8 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
                 .bitmapTransform(new CropCircleTransformation(getContext()))
                 .into(profileImage);
 
+        networkService = AppController.getInstance().getNetworkService();
+        reload();
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -113,5 +136,23 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
     @Override
     public void setExpanded(boolean expanded) {
         appBarLayout.setExpanded(expanded, true);
+    }
+
+    private void reload() {
+        Call<MyPageModelGetData> call = networkService.getMyPageModel(SharedAccessor.getToken(getContext()));
+        call.enqueue(new Callback<MyPageModelGetData>() {
+            @Override
+            public void onResponse(Call<MyPageModelGetData> call, Response<MyPageModelGetData> response) {
+                if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
+                    myPageModelGetData = response.body();
+                    Glide.with(getContext()).load(response.body().getModelPhoto()).into(profileImage);
+                    modelNameText.setText(response.body().getModelName());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MyPageModelGetData> call, Throwable t) {
+            }
+        });
     }
 }

@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:text="이메일"
         android:textSize="18sp"
+
         android:layout_marginStart="24dp"
         tools:layout_editor_absoluteY="32dp"
         tools:layout_editor_absoluteX="24dp" />
