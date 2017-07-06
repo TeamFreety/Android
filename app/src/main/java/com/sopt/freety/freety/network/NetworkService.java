@@ -59,8 +59,6 @@ public interface NetworkService {
     @POST("/signup/model/sns")
     Call<SignUpResultData> registerSNSModelData(@Body SignUpData signUpData);
 
-    @POST("/signup/")
-
     @GET("/duplicateCheck")
     Call<DuplicateData> checkDuplicate(@Query("tempEmail") String email);
 
@@ -105,7 +103,7 @@ public interface NetworkService {
     @POST("/mypage/myPhoto")
     Call<OnlyMsgResultData> getOkMsgFromProfile(@Header("member_token") String token, @Body MyPhotoRequestData data);
 
-    @GET("/postDetail/{memberId}")
+    @GET("/postDetail/writer/{memberId}")
     Call<MyPageDesignerGetData> getOtherDesignerMyPage(@Header("member_token") String token, @Path("memberId") int memberId);
 
     @POST("/comment/writeComment")

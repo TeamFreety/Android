@@ -96,7 +96,7 @@ public class MyPageDesignerGetData {
         private float score;
         private String writtenTime;
 
-        public MyPageReviewElemData getMyPageReviewElemData() throws ParseException {
+        public MyPageReviewElemData getMyPageReviewElemData() {
             String parsedDate = DateParser.toPrettyFormat(writtenTime);
             return new MyPageReviewElemData(title, parsedDate, content, commentPhoto, score, writerName);
         }
@@ -139,9 +139,7 @@ public class MyPageDesignerGetData {
         return list;
     }
 
-
-
-    public MyPageReviewData getMyPageReviewData() throws ParseException {
+    public MyPageReviewData getMyPageReviewData() {
         List<MyPageReviewElemData> myPageReviewElemDataList = new ArrayList<>();
         if (designerCommentPostList == null) {
             designerCommentPostList = Collections.emptyList();

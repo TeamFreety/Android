@@ -20,7 +20,10 @@ import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.view.my_page.adapter.MyPagePostRecyclerAdapter;
+import com.sopt.freety.freety.view.my_page.data.MyPagePostData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
+
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,17 +48,13 @@ public class MyPageDesignerPostFragment extends Fragment {
     FloatingActionButton topFabtn;
 
     private ViewPagerEx viewPager;
+    private boolean isMine = true;
 
     private GridLayoutManager layoutManager;
     private MyPagePostRecyclerAdapter adapter;
     private NetworkService networkService;
     private MyPageDesignerGetData myPageDesignerGetData;
-
-    private MyPageDesignerFragment myPageFragment;
-
-
-    public MyPageDesignerPostFragment() {
-    }
+    public MyPageDesignerPostFragment() {}
 
     @Nullable
     @Override
@@ -63,15 +62,11 @@ public class MyPageDesignerPostFragment extends Fragment {
         viewPager = (ViewPagerEx) container;
         View view = inflater.inflate(R.layout.fragment_designer_my_page_post, container, false);
         ButterKnife.bind(this, view);
-        myPageFragment = (MyPageDesignerFragment) getParentFragment();
+        networkService = AppController.getInstance().getNetworkService();
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.my_page_post_offset));
-        recyclerView.attachCallbacks(getParentFragment());
         layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
-        Log.i("test", "onCreateView: " + myPageFragment.getPostDataList().size());
-        adapter = new MyPagePostRecyclerAdapter(getContext(), myPageFragment.getPostDataList());
-        recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -99,54 +94,27 @@ public class MyPageDesignerPostFragment extends Fragment {
             }
         });
 
-        networkService = AppController.getInstance().getNetworkService();
+        if (isMine) {
+            initByFragment();
+        } else {
+            initByActivity();
+        }
 
         return view;
     }
 
-    public void initMyPageDesignerPostFragment() {
-        if (networkService == null) {
-            networkService = AppController.getInstance().getNetworkService();
-        }
-        getMyPagePostData();
+    public void initByFragment() {
+        MyPageDesignerFragment myPageFragment = (MyPageDesignerFragment) getParentFragment();
+        recyclerView.attachCallbacks(getParentFragment());
+        adapter = new MyPagePostRecyclerAdapter(getContext(), myPageFragment.getPostDataList());
+        recyclerView.setAdapter(adapter);
     }
 
-    public void initMyPageDesignerPostFragment(int memberId) {
-        if (networkService == null) {
-            networkService = AppController.getInstance().getNetworkService();
-        }
-        getMyPagePostData(memberId);
-    }
-    private void getMyPagePostData() {
-        Call<MyPageDesignerGetData> call = networkService.getMyPageInDesignerAccount(SharedAccessor.getToken(getContext()));
-        call.enqueue(new Callback<MyPageDesignerGetData>() {
-            @Override
-            public void onResponse(Call<MyPageDesignerGetData> call, Response<MyPageDesignerGetData> response) {
-                if (response.isSuccessful() && response.body().getMessage().equals("successfully load post list data")) {
-                    Log.i("MyPagePostFragment", "onResponse: " + response.body().getMyPagePostDataList());
-                    adapter.updatePostDataList(response.body().getMyPagePostDataList());
-                }
-            }
-            @Override
-            public void onFailure(Call<MyPageDesignerGetData> call, Throwable t) {
-            }
-        });
-    }
-
-    private void getMyPagePostData(int memberId) {
-        Call<MyPageDesignerGetData> call = networkService.getOtherDesignerMyPage(SharedAccessor.getToken(getContext()), memberId);
-        call.enqueue(new Callback<MyPageDesignerGetData>() {
-            @Override
-            public void onResponse(Call<MyPageDesignerGetData> call, Response<MyPageDesignerGetData> response) {
-                if (response.isSuccessful() && response.body().getMessage().equals("successfully load post list data")) {
-                    Log.i("MyPagePostFragment", "onResponse: " + response.body().getMyPagePostDataList());
-                    adapter.updatePostDataList(response.body().getMyPagePostDataList());
-                }
-            }
-            @Override
-            public void onFailure(Call<MyPageDesignerGetData> call, Throwable t) {
-            }
-        });
+    public void initByActivity() {
+        ModelToDesignerMypageActivity parent = (ModelToDesignerMypageActivity) getActivity();
+        recyclerView.attachCallbacks(getActivity());
+        adapter = new MyPagePostRecyclerAdapter(getContext(), parent.getPostDataList());
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -157,5 +125,9 @@ public class MyPageDesignerPostFragment extends Fragment {
                 recyclerView.getLayoutManager().scrollToPosition(0);
             }
         }
+    }
+
+    public void setMine(boolean isMine) {
+        this.isMine = isMine;
     }
 }
