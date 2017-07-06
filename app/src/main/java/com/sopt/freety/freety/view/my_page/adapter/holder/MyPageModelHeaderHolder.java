@@ -4,6 +4,7 @@ import android.Manifest;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -31,11 +32,14 @@ public class MyPageModelHeaderHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.back_picture) ImageView backPicture;
     @BindView(R.id.side_picture) ImageView sidePicture;
 
+    @BindView(R.id.model_photo_1) ImageButton frontBtn;
+    @BindView(R.id.model_photo_2) ImageButton backBtn;
+    @BindView(R.id.model_photo_3) ImageButton sideBtn;
+
     public MyPageModelHeaderHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
-
 
     public ImageView getFrontPicture() {
         return frontPicture;
@@ -47,6 +51,18 @@ public class MyPageModelHeaderHolder extends RecyclerView.ViewHolder {
 
     public ImageView getSidePicture() {
         return sidePicture;
+    }
+
+    public ImageButton getFrontBtn() {
+        return frontBtn;
+    }
+
+    public ImageButton getBackBtn() {
+        return backBtn;
+    }
+
+    public ImageButton getSideBtn() {
+        return sideBtn;
     }
 
 }

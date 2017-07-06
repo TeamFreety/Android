@@ -33,17 +33,20 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal">
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp">
+
             <ImageView
                 android:background="@color/myPagePictureDefault"
                 android:id="@+id/front_picture"
+                android:scaleType="fitXY"
                 android:layout_width="100dp"
-                android:layout_height="100dp"
-             />
+                android:layout_height="100dp" />
+
             <ImageButton
                 android:id="@+id/model_photo_1"
                 android:layout_width="wrap_content"
@@ -67,6 +70,7 @@
             >
             <ImageView
                 android:id="@+id/back_picture"
+                android:scaleType="fitXY"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@color/myPagePictureDefault"
@@ -92,6 +96,7 @@
             <ImageView
 
                 android:id="@+id/side_picture"
+                android:scaleType="fitXY"
                 android:background="@color/myPagePictureDefault"
                 android:layout_width="100dp"
                 android:layout_height="100dp"/>
