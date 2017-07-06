@@ -128,6 +128,10 @@ public class ModelToDesignerMypageActivity extends AppCompatActivity implements 
         return (appBarVisibleHeight >= toolbarHeight && appBarVisibleHeight <= toolbarHeight + 25);
     }
 
+    @Override
+    public void setExpanded (boolean expanded){
+        mToDMyPageAppBar.setExpanded(expanded, true);
+    }
 
     public List<MyPagePostData> getPostDataList() {
         return myPageDesignerGetData.getMyPagePostDataList();
@@ -144,13 +148,6 @@ public class ModelToDesignerMypageActivity extends AppCompatActivity implements 
     public MyPageReviewData getMyPageReviewData() throws ParseException {
         return myPageDesignerGetData.getMyPageReviewData();
     }
-
-    @Override
-    public void setExpanded (boolean expanded){
-        mToDMyPageAppBar.setExpanded(expanded, true);
-    }
-
-
 
     private void reload() {
         Call<MyPageDesignerGetData> call = networkService.getMyPageDesigner(SharedAccessor.getToken(getApplicationContext()));

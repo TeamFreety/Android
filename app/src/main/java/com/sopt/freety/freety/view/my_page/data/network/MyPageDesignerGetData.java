@@ -9,6 +9,7 @@ import com.sopt.freety.freety.view.my_page.data.MyPageStyleHeaderData;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -136,6 +137,9 @@ public class MyPageDesignerGetData {
 
     public MyPageReviewData getMyPageReviewData() throws ParseException {
         List<MyPageReviewElemData> myPageReviewElemDataList = new ArrayList<>();
+        if (designerCommentPostList == null) {
+            designerCommentPostList = Collections.emptyList();
+        }
         for (DesignerCommentPost designerCommentPost : designerCommentPostList) {
             myPageReviewElemDataList.add(designerCommentPost.getMyPageReviewElemData());
         }
