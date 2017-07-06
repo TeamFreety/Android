@@ -368,11 +368,16 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
                                         if (currentUploadedCount == imageBodyList.size()) {
                                             progressDialog.dismiss();
                                         }
+                                    } else {
+                                        Toast.makeText(WriteActivity.this, "사진 전송 오류", Toast.LENGTH_SHORT).show();
+                                        progressDialog.dismiss();
                                     }
                                 }
 
                                 @Override
                                 public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
+                                    Toast.makeText(WriteActivity.this, "사진 전송 오류 failure", Toast.LENGTH_SHORT).show();
+                                    progressDialog.dismiss();
                                 }
                             });
                         }

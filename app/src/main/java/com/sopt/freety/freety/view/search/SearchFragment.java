@@ -7,6 +7,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -58,7 +59,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
     RecyclerView mRecyclerView;
 
     @BindView(fabtn_search_to_write)
-    FloatingActionButton mFloatingActionButton;
+    FloatingActionButton writeFloatingButton;
 
     @OnClick(R.id.btn_search_nearest)
     public void onDistanceBtn() {
@@ -103,44 +104,13 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         ButterKnife.bind(this, view);
-
-        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), WriteActivity.class);
-                getActivity().startActivity(intent);
-            }
-        });
-
-        if (!SharedAccessor.isDesigner(getContext())) {
-            mFloatingActionButton.setVisibility(View.GONE);
-        }
-
+        hideIfModelWindow();
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.search_image_offset));
-
         gridLayoutManager = new GridLayoutManager(getContext(), 2);
         mRecyclerView.setLayoutManager(gridLayoutManager);
-
         adapter = new SearchRecyclerAdapter(getContext(), Collections.<PostListData>emptyList());
         mRecyclerView.setAdapter(adapter);
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (dy > 0 || dy < 0 && mFloatingActionButton.isShown()) {
-                    mFloatingActionButton.hide();
-                }
-            }
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    mFloatingActionButton.show();
-                }
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-        });
-
         mRecyclerView.addOnItemTouchListener(new RecyclerViewOnItemClickListener(getContext(), mRecyclerView,
                 new RecyclerViewOnItemClickListener.OnItemClickListener() {
                     @Override
@@ -284,4 +254,37 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
         googleApiClient.disconnect();
     }
 
+    private void hideIfModelWindow() {
+        if (SharedAccessor.isDesigner(getContext())) {
+            writeFloatingButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), WriteActivity.class);
+                    getActivity().startActivity(intent);
+                }
+            });
+            mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    if (dy > 0 || dy < 0 && writeFloatingButton.isShown()) {
+                        writeFloatingButton.hide();
+                    }
+                }
+
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        writeFloatingButton.show();
+                    }
+                    super.onScrollStateChanged(recyclerView, newState);
+                }
+            });
+        } else {
+            CoordinatorLayout.LayoutParams p = (CoordinatorLayout.LayoutParams) writeFloatingButton.getLayoutParams();
+            p.setAnchorId(View.NO_ID);
+            writeFloatingButton.setLayoutParams(p);
+            writeFloatingButton.setVisibility(View.GONE);
+        }
+    }
 }
