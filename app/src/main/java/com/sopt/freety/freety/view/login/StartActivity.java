@@ -180,6 +180,7 @@ public class StartActivity extends AppCompatActivity {
                                                 Intent intent = new Intent(getApplicationContext(), SelectMemberTypeActivity.class);
                                                 intent.putExtra("login case","facebook");
                                                 intent.putExtra("fUserId",fUserId);
+                                                Log.i("facebook ID",fUserId);
                                                 AppController.getInstance().resetPageStack();
                                                 startActivity(intent);
                                             }
@@ -224,6 +225,9 @@ public class StartActivity extends AppCompatActivity {
         @Override
         public void onSessionOpened() {
 
+            /*UserManagement.requestSignup(new MeResponseCallback(){
+
+            });*/
             UserManagement.requestMe(new MeResponseCallback() {
 
                 @Override
@@ -253,7 +257,7 @@ public class StartActivity extends AppCompatActivity {
                     //사용자 ID는 보안상의 문제로 제공하지 않고 일련번호는 제공합니다.
 
                     fUserId = "";
-                    kUserId = String.valueOf(userProfile.getId());
+
                     //userName = userProfile.getNickname();
 
 
@@ -270,6 +274,7 @@ public class StartActivity extends AppCompatActivity {
                                 } else if (response.body().getMessage().equals("no information about SNS account")) {
                                     Toast.makeText(StartActivity.this, "Freety에 아직 SNS 계정이 등록되지 않았습니다.", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(), SelectMemberTypeActivity.class);
+                                   // kUserId = String.valueOf(userProfile.getId());
                                     intent.putExtra("login case","kakao");
                                     intent.putExtra("kUserId",kUserId);
                                     AppController.getInstance().resetPageStack();

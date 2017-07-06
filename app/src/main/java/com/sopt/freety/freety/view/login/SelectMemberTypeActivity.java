@@ -44,6 +44,7 @@ public class SelectMemberTypeActivity extends AppCompatActivity {
         loginCase = intent.getStringExtra("login case");
         kUserId = intent.getStringExtra("kuserId");
         fUserId = intent.getStringExtra("fUserId");
+        Toast.makeText(this, "카카오아이디"+kUserId, Toast.LENGTH_SHORT).show();
 
     }
 

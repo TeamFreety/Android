@@ -81,6 +81,7 @@ public class DesignerSNSSignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
+        Toast.makeText(this, "아이디 : "+kUserId+fUserId, Toast.LENGTH_SHORT).show();
         kUserId = intent.getStringExtra("kuserId");
         fUserId = intent.getStringExtra("fUserId");
         if (Build.VERSION.SDK_INT >= 21) {
