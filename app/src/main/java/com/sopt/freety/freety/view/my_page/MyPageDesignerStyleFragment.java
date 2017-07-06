@@ -21,6 +21,7 @@ import com.sopt.freety.freety.view.my_page.adapter.MyPageStyleRecyclerAdapter;
 import com.sopt.freety.freety.view.my_page.data.MyPageStyleBodyData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
 
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -45,10 +46,7 @@ public class MyPageDesignerStyleFragment extends Fragment {
     private GridLayoutManager layoutManager;
     private MyPageStyleRecyclerAdapter adapter;
     private ViewPagerEx viewPager;
-    private MyPageDesignerFragment myPageFragment;
-    private NetworkService networkService;
-
-    private MyPageDesignerGetData myPageDesignerGetData;
+    private boolean isMine = true;
 
     @BindView(R.id.fabtn_designer_portfolio_to_top)
     FloatingActionButton topFabtn;
@@ -61,11 +59,9 @@ public class MyPageDesignerStyleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_designer_my_page_portfolio, container, false);
         ButterKnife.bind(this, view);
-        myPageFragment = (MyPageDesignerFragment) getParentFragment();
         viewPager = (ViewPagerEx) container;
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.my_page_style_offset));
-        recyclerView.attachCallbacks(getParentFragment());
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -106,35 +102,28 @@ public class MyPageDesignerStyleFragment extends Fragment {
         });
 
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new MyPageStyleRecyclerAdapter(getHeaderData(), getBodyData(), getContext());
-        recyclerView.setAdapter(adapter);
+
+        if (isMine) {
+            initByFragment();
+        } else {
+            initByActivity();
+        }
         return view;
     }
 
-    public void initMyPageDesignerStyleFragment() {
-        if (networkService == null) {
-            networkService = AppController.getInstance().getNetworkService();
-        }
-        getMyPageStyleData();
-        //getMyPageStyleBodyData();
+    public void initByFragment() {
+        MyPageDesignerFragment myPageFragment = (MyPageDesignerFragment) getParentFragment();
+        adapter = new MyPageStyleRecyclerAdapter(myPageFragment.getMyPageStyleHeaderData().getCareerString(),
+                myPageFragment.getStyleBodyDataList(), getContext());
+        recyclerView.attachCallbacks(myPageFragment);
+        recyclerView.setAdapter(adapter);
     }
-    private void getMyPageStyleData() {
-        Call<MyPageDesignerGetData> call = networkService.getMyPageInDesignerAccount(SharedAccessor.getToken(getContext()));
-        call.enqueue(new Callback<MyPageDesignerGetData>() {
-            @Override
-            public void onResponse(Call<MyPageDesignerGetData> call, Response<MyPageDesignerGetData> response) {
-                if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
-                    //TO DO : Style Header
-                    adapter.updateMyPageStyleHeaderData(response.body().getDesignerCareerText());
 
-                    //adapter.updateMyPageStyleHeaderData(response.body().getMyPageStyleHeaderData());
-                    adapter.updateMyPageStyleBodyData(response.body().getMyStyleBodyDataList());
-                }
-            }
-            @Override
-            public void onFailure(Call<MyPageDesignerGetData> call, Throwable t) {
-            }
-        });
+    public void initByActivity() {
+        ModelToDesignerMypageActivity parent = (ModelToDesignerMypageActivity) getActivity();
+        adapter = new MyPageStyleRecyclerAdapter(parent.getStyleHeaderData().getCareerString(), parent.getStyleBodyDataList(), getContext());
+        recyclerView.attachCallbacks(parent);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -147,11 +136,7 @@ public class MyPageDesignerStyleFragment extends Fragment {
         }
     }
 
-    private List<MyPageStyleBodyData> getBodyData() {
-        return myPageFragment.getStyleBodyDataList();
-    }
-
-    private String getHeaderData() {
-        return myPageFragment.getStyleHeaderData();
+    public void setMine(boolean isMine) {
+        this.isMine = isMine;
     }
 }

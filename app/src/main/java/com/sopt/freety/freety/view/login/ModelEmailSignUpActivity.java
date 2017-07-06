@@ -217,7 +217,6 @@ public class ModelEmailSignUpActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<DuplicateData> call, Throwable t) {
-
             }
         });
     }

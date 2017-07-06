@@ -226,6 +226,7 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
                 viewString = dateString + String.format(" 오후 %d시", hourOfDay);
             }
             writeDateText.setText(viewString);
+            Log.i(TAG, "onTimeSet: formatted text is : " + DateParser.toDateTimeFormat((writeDateText.getText().toString())));
         }
     };
 
@@ -257,11 +258,14 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
                         if (response.isSuccessful()) {
                             Log.i(TAG, "onResponse: sigugun : " + sigugun);
                             sigugun = response.body().getSigugun();
+                        } else {
+                            Log.i(TAG, "onResponse: 포맷이 다름: " + sigugun);
                         }
                     }
 
                     @Override
                     public void onFailure(Call<NaverResultData> call, Throwable t) {
+                        Log.i(TAG, "onResponse: 전송실패");
                     }
                 });
             }

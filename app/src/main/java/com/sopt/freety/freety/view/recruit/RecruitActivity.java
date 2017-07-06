@@ -7,6 +7,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -54,7 +55,7 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
     ImageView profileImage;
 
     @OnClick({R.id.recruit_profile, R.id.recruit_title, R.id.recruit_name})
-    public void onProfileClick(ImageView profileImage){
+    public void onProfileClick(View view){
         Intent intent = new Intent(RecruitActivity.this, ModelToDesignerMypageActivity.class);
         intent.putExtra("memberId", memberId);
         startActivity(intent);
@@ -185,6 +186,7 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
             @Override
             public void onResponse(Call<PostDetailResultData> call, Response<PostDetailResultData> response) {
                 if (response.isSuccessful()) {
+                    Log.i(TAG, "onResponse: " + response.raw());
                     PostDetailResultData result = response.body();
                     final PagerAdapter adapter = new RecruitViewPagerAdapter(RecruitActivity.this, result.getImageList());
                     memberId = result.getMemberId();

@@ -7,6 +7,7 @@ import com.google.android.gms.maps.model.LatLng;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -184,6 +185,9 @@ public class PostDetailResultData {
 
     public List<String> getImageList() {
         List<String> imageList = new ArrayList<>();
+        if (postImgs == null) {
+            postImgs = Collections.emptyList();
+        }
         for (PostDetailImage postImg : postImgs) {
             if (postImg.isMain()) {
                 imageList.add(0, postImg.getImg());
