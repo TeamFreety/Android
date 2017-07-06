@@ -4,8 +4,6 @@ import com.sopt.freety.freety.data.OnlyMsgResultData;
 import com.sopt.freety.freety.data.PostListResultData;
 import com.sopt.freety.freety.view.letter.data.LetterListResultData;
 import com.sopt.freety.freety.view.letter.data.PushRequestData;
-import com.sopt.freety.freety.view.login.JoinResult;
-import com.sopt.freety.freety.view.login.data.AutoLoginResultData;
 import com.sopt.freety.freety.view.login.data.DuplicateData;
 import com.sopt.freety.freety.view.login.data.LoginRequestData;
 import com.sopt.freety.freety.view.login.data.LoginResultData;
@@ -21,9 +19,8 @@ import com.sopt.freety.freety.view.my_page.data.network.MyPhotoRequestData;
 import com.sopt.freety.freety.view.recruit.data.PickRequestData;
 import com.sopt.freety.freety.view.recruit.data.PickResultData;
 import com.sopt.freety.freety.view.recruit.data.PostDetailResultData;
-import com.sopt.freety.freety.view.wirte.data.WritePhotoData;
-import com.sopt.freety.freety.view.wirte.data.WriteRequestData;
 import com.sopt.freety.freety.view.wirte.data.WritePostResultData;
+import com.sopt.freety.freety.view.wirte.data.WriteRequestData;
 
 import java.util.List;
 
