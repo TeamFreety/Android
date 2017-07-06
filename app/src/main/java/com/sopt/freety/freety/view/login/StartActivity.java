@@ -82,6 +82,7 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_first_login);
+        SharedAccessor.reset(this);
 
         Call<OnlyMsgResultData> autoLoginCall = AppController.getInstance().getNetworkService().auto(SharedAccessor.getToken(StartActivity.this));
         autoLoginCall.enqueue(new Callback<OnlyMsgResultData>() {

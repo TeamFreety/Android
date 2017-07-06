@@ -45,7 +45,6 @@ public class MyPageViewPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch(position) {
             case INDEX_POST_LIST:
-
                 MyPageDesignerPostFragment myPagePostFragment = new MyPageDesignerPostFragment();
                 myPagePostFragment.initMyPageDesignerPostFragment();
                 return myPagePostFragment;
