@@ -88,10 +88,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
         AppController.getInstance().pushPageStack();
     }
 
-    @OnClick(R.id.search_back_btn)
-    public void onBackBtn() {
-        getActivity().onBackPressed();
-    }
+
 
     private SearchRecyclerAdapter adapter;
     private GridLayoutManager gridLayoutManager;
