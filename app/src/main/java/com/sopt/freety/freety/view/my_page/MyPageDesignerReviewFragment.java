@@ -17,9 +17,11 @@ import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageReviewRecyclerAdapter;
+import com.sopt.freety.freety.view.my_page.data.MyPageReviewData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
 
 import java.text.ParseException;
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,10 +44,8 @@ public class MyPageDesignerReviewFragment extends Fragment {
     private LinearLayoutManager layoutManager;
     private MyPageReviewRecyclerAdapter adapter;
     private ViewPagerEx viewPager;
-    private NetworkService networkService;
-    private MyPageDesignerGetData myPageDesignerGetData;
+    private boolean isMine;
 
-    private MyPageDesignerFragment myPageFragment;
 
 
     public MyPageDesignerReviewFragment() {
@@ -58,7 +58,6 @@ public class MyPageDesignerReviewFragment extends Fragment {
         ButterKnife.bind(this, view);
         viewPager = (ViewPagerEx) container;
         recyclerView.setHasFixedSize(true);
-        recyclerView.attachCallbacks(getParentFragment());
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -74,46 +73,33 @@ public class MyPageDesignerReviewFragment extends Fragment {
             }
         });
         layoutManager = new LinearLayoutManager(getContext());
-
-        myPageFragment = (MyPageDesignerFragment) getParentFragment();
-
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), layoutManager.getOrientation()));
-        try {
-            adapter = new MyPageReviewRecyclerAdapter(getContext(), myPageFragment.getMyPageReviewData());
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-        recyclerView.setAdapter(adapter);
 
-        networkService = AppController.getInstance().getNetworkService();
+        if (isMine) {
+            initByFragment();
+        } else {
+            initByActivity();
+        }
 
         return view;
     }
 
-
-    public void initMyPageDesignerReviewFragment() {
-        if (networkService == null) {
-            networkService = AppController.getInstance().getNetworkService();
-        }
-        getMyPageReviewData();
+    public void initByFragment() {
+        MyPageDesignerFragment myPageFragment = (MyPageDesignerFragment) getParentFragment();
+        adapter = new MyPageReviewRecyclerAdapter(getContext(), myPageFragment.getMyPageReviewData());
+        recyclerView.attachCallbacks(getParentFragment());
+        recyclerView.setAdapter(adapter);
     }
-    private void getMyPageReviewData() {
-        Call<MyPageDesignerGetData> call = networkService.getMyPageInDesignerAccount(SharedAccessor.getToken(getContext()));
-        call.enqueue(new Callback<MyPageDesignerGetData>() {
-            @Override
-            public void onResponse(Call<MyPageDesignerGetData> call, Response<MyPageDesignerGetData> response) {
-                if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
-                    try {
-                        adapter.updateMyPageReviewData(response.body().getMyPageReviewData());
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            @Override
-            public void onFailure(Call<MyPageDesignerGetData> call, Throwable t) {
-            }
-        });
+
+    public void initByActivity() {
+        ModelToDesignerMypageActivity parent = (ModelToDesignerMypageActivity) getActivity();
+        adapter = new MyPageReviewRecyclerAdapter(getContext(), parent.getMyPageReviewData());
+        recyclerView.attachCallbacks(getActivity());
+        recyclerView.setAdapter(adapter);
+    }
+
+    public void setMine(boolean isMine) {
+        this.isMine = isMine;
     }
 }

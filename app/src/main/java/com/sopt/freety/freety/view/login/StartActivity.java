@@ -62,7 +62,6 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_login);
         ButterKnife.bind(this);
-        SharedAccessor.reset(this);
         HashKeyChecker.checkHashKey(this);
         callbackManager = CallbackManager.Factory.create();
         kakaoCallback = new SessionCallback();
@@ -106,6 +105,7 @@ public class StartActivity extends AppCompatActivity {
                     //사용자 ID는 보안상의 문제로 제공하지 않고 일련번호는 제공합니다.
                     //userName = userProfile.getNickname();
                     final String kakaoId = String.valueOf(userProfile.getId());
+                    Log.i("Login", "onSuccess: " + kakaoId);
                     Call<SNSLoginResultData> call = AppController.getInstance().getNetworkService().snslogin(new SNSLoginRequestData(null, kakaoId));
                     call.enqueue(new Callback<SNSLoginResultData>() {
                         @Override
@@ -201,7 +201,7 @@ public class StartActivity extends AppCompatActivity {
                     public void onSuccess(final LoginResult loginResult) {
 
                         Call<SNSLoginResultData> call = AppController.getInstance().getNetworkService()
-                                .snslogin(new SNSLoginRequestData(loginResult.getAccessToken().getToken(), null));
+                                .snslogin(new SNSLoginRequestData(loginResult.getAccessToken().getUserId(), null));
                         call.enqueue(new Callback<SNSLoginResultData>() {
                             @Override
                             public void onResponse(Call<SNSLoginResultData> call, Response<SNSLoginResultData> response) {

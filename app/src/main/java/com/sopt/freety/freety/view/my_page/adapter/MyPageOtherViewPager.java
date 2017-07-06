@@ -4,29 +4,22 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-
-import com.sopt.freety.freety.network.NetworkService;
 import com.sopt.freety.freety.view.my_page.MyPageDesignerPostFragment;
 import com.sopt.freety.freety.view.my_page.MyPageDesignerReviewFragment;
 import com.sopt.freety.freety.view.my_page.MyPageDesignerStyleFragment;
 
 /**
- * Created by cmslab on 6/26/17.
+ * Created by cmslab on 7/6/17.
  */
 
-public class MyPageViewPagerAdapter extends FragmentStatePagerAdapter {
+public class MyPageOtherViewPager extends FragmentStatePagerAdapter {
 
     private static final int INDEX_POST_LIST = 0;
     private static final int INDEX_STYLE = 1;
     private static final int INDEX_REVIEW = 2;
-    private final int tabCount;
 
-    private int currType;
-    private NetworkService networkService;
-
-    public MyPageViewPagerAdapter(final FragmentManager fm, final int tabCount) {
+    public MyPageOtherViewPager(final FragmentManager fm) {
         super(fm);
-        this.tabCount = tabCount;
     }
 
     @Override
@@ -34,24 +27,23 @@ public class MyPageViewPagerAdapter extends FragmentStatePagerAdapter {
         switch(position) {
             case INDEX_POST_LIST:
                 MyPageDesignerPostFragment myPagePostFragment = new MyPageDesignerPostFragment();
-                myPagePostFragment.setMine(true);
+                myPagePostFragment.setMine(false);
                 return myPagePostFragment;
             case INDEX_STYLE:
                 MyPageDesignerStyleFragment myPageStyleFragment = new MyPageDesignerStyleFragment();
-                myPageStyleFragment.setMine(true);
+                myPageStyleFragment.setMine(false);
                 return myPageStyleFragment;
             case INDEX_REVIEW:
                 MyPageDesignerReviewFragment myPageReviewFragment = new MyPageDesignerReviewFragment();
-                myPageReviewFragment.setMine(true);
+                myPageReviewFragment.setMine(false);
                 return myPageReviewFragment;
             default:
                 throw new RuntimeException("There is unexpected position");
         }
     }
 
-
     @Override
     public int getCount() {
-        return tabCount;
+        return 3;
     }
 }

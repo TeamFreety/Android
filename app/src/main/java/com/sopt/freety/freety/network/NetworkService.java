@@ -100,7 +100,7 @@ public interface NetworkService {
     @POST("/mypage/myPhoto")
     Call<OnlyMsgResultData> getOkMsgFromProfile(@Header("member_token") String token, @Body MyPhotoRequestData data);
 
-    @GET("/postDetail/{memberId}")
+    @GET("/postDetail/writer/{memberId}")
     Call<MyPageDesignerGetData> getOtherDesignerMyPage(@Header("member_token") String token, @Path("memberId") int memberId);
 
     @POST("/comment/writeComment")

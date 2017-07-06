@@ -49,6 +49,7 @@ public class MyPageReviewRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
         if (holder instanceof MyPageReviewHeaderHolder) {
             float score = data.getTotalScore();
             MyPageReviewHeaderHolder castedHolder = (MyPageReviewHeaderHolder) holder;
+            score = Math.round(score * 10) / 10f;
             castedHolder.getTotalTextView().setText(String.valueOf(score));
             for (int index = 0; index < castedHolder.getScoreImageList().size(); index++) {
                 castedHolder.getScoreImageList().get(index).setImageResource(getStarType(index, score));

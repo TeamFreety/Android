@@ -34,6 +34,7 @@ import com.sopt.freety.freety.view.my_page.adapter.MyPageViewPagerAdapter;
 import com.sopt.freety.freety.view.my_page.data.MyPagePostData;
 import com.sopt.freety.freety.view.my_page.data.MyPageReviewData;
 import com.sopt.freety.freety.view.my_page.data.MyPageStyleBodyData;
+import com.sopt.freety.freety.view.my_page.data.MyPageStyleHeaderData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageStatusUpdateRequestData;
 import com.sopt.freety.freety.view.property.ScreenClickable;
@@ -182,11 +183,11 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
         return myPageDesignerGetData.getMyStyleBodyDataList();
     }
 
-    public String getStyleHeaderData() {
-        return myPageDesignerGetData.getDesignerCareerText();
+    public MyPageStyleHeaderData getMyPageStyleHeaderData() {
+        return myPageDesignerGetData.getMyPageStyleHeaderData();
     }
 
-    public MyPageReviewData getMyPageReviewData() throws ParseException {
+    public MyPageReviewData getMyPageReviewData() {
         return myPageDesignerGetData.getMyPageReviewData();
     }
 
@@ -207,10 +208,8 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
                         Toast.makeText(getContext(), "적용완료", Toast.LENGTH_SHORT).show();
                     }
                 }
-
                 @Override
                 public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
-
                 }
             });
         }

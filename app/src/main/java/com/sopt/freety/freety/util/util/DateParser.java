@@ -64,21 +64,22 @@ public class DateParser {
 
     public static String toDateTimeFormat(String date) {
         String[] splits = date.split(" ");
-        String year = splits[0].substring(0, splits[0].length());
-        String month = splits[1].substring(0, splits[1].length());
+        String year = splits[0].substring(0, splits[0].length() - 1);
+        String month = splits[1].substring(0, splits[1].length() - 1);
         if (month.length() == 1) {
             month = "0" + month;
         }
-        String day = splits[2].substring(0, splits[2].length());
+        String day = splits[2].substring(0, splits[2].length() - 1);
         if (day.length() == 1) {
             day = "0" + day;
         }
         int hourOffset = splits[3].equals("오후") ? 12 : 0;
-        String hour = splits[4].substring(0, splits[4].length());
-        if (hour.length() == 1) {
-            hour = "0" + hour;
+        String hour = splits[4].substring(0, splits[4].length() - 1);
+        String formattedHour = String.valueOf(Integer.parseInt(hour) + hourOffset);
+        if (formattedHour.length() == 1) {
+            formattedHour = "0" + formattedHour;
         }
-        Log.i(TAG, "toDateTimeFormat: " + String.format("%s-%s-%s'T'%s:00:00", year, month, date, hour));
+        Log.i(TAG, "toDateTimeFormat: " + String.format("%s-%s-%s'T'%s:00:00", year, month, day, formattedHour));
         return String.format("%s-%s-%s'T'%s:00:00", year, month, date, hour);
     }
 

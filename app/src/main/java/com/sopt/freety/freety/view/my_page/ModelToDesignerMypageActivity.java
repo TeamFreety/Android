@@ -5,14 +5,17 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
@@ -22,6 +25,7 @@ import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.util.util.EditTextUtils;
+import com.sopt.freety.freety.view.my_page.adapter.MyPageOtherViewPager;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageViewPagerAdapter;
 import com.sopt.freety.freety.view.my_page.data.MyPagePostData;
 import com.sopt.freety.freety.view.my_page.data.MyPageReviewData;
@@ -42,6 +46,9 @@ import retrofit2.Response;
 public class ModelToDesignerMypageActivity extends AppCompatActivity implements ScrollFeedbackRecyclerView.Callbacks{
 
 
+    private static final String TAG = "OtherMyPageActivity";
+    private static final float OPACITY_FACTOR = 1.8f;
+
     @BindView(R.id.img_m_to_d_mypage_designer_profile)
     ImageView imgMToDMypageDesignerProfile;
 
@@ -58,11 +65,9 @@ public class ModelToDesignerMypageActivity extends AppCompatActivity implements 
 
     @BindView(R.id.my_page_m_to_d_view_pager)
     ViewPagerEx myPageMToDViewPager;
-
     @BindView(R.id.m_to_d_mypage_designer_collapsing_bar)
     CollapsingToolbarLayout collapsingToolbarLayout;
 
-    private static final float OPACITY_FACTOR = 1.8f;
     @BindView(R.id.btn_m_to_d_my_page_chat)
     ImageButton btnMToDMyPageChat;
 
@@ -71,6 +76,7 @@ public class ModelToDesignerMypageActivity extends AppCompatActivity implements 
 
     private NetworkService networkService;
     private MyPageDesignerGetData myPageDesignerGetData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,13 +98,9 @@ public class ModelToDesignerMypageActivity extends AppCompatActivity implements 
                 myPageMToDViewPager.setCurrentItem(tab.getPosition());
             }
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabUnselected(TabLayout.Tab tab) {}
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) {}
         });
         mToDMyPageAppBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
@@ -107,6 +109,7 @@ public class ModelToDesignerMypageActivity extends AppCompatActivity implements 
                         appBarLayout.getTotalScrollRange())), 0));
             }
         });
+
         if (SharedAccessor.isDesigner(getApplicationContext())) {
             btnMToDMyPageChat.setEnabled(false);
             btnMToDMyPageChat.setVisibility(View.INVISIBLE);
@@ -139,7 +142,7 @@ public class ModelToDesignerMypageActivity extends AppCompatActivity implements 
         return myPageDesignerGetData.getMyPageStyleHeaderData();
     }
 
-    public MyPageReviewData getMyPageReviewData() throws ParseException {
+    public MyPageReviewData getMyPageReviewData() {
         return myPageDesignerGetData.getMyPageReviewData();
     }
 
@@ -149,22 +152,33 @@ public class ModelToDesignerMypageActivity extends AppCompatActivity implements 
             @Override
             public void onResponse(Call<MyPageDesignerGetData> call, Response<MyPageDesignerGetData> response) {
                 if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
+                    Log.i(TAG, "onResponse: " + response.raw());
                     myPageDesignerGetData = response.body();
-                    Glide.with(getApplicationContext()).load(response.body().getDesignerImageURL()).into(imgMToDMypageDesignerProfile);
+                    Glide.with(getApplicationContext()).load(response.body().getDesignerImageURL())
+                            .bitmapTransform(new CropCircleTransformation(ModelToDesignerMypageActivity.this)).into(imgMToDMypageDesignerProfile);
                     textMToDMyPageDesignerName.setText(response.body().getDesignerName());
                     editMToDMyPageDesignerStatus.setText(response.body().getDesignerStatusMsg());
                     myPageMToDViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(myPageMToDTab));
-                    PagerAdapter pagerAdapter = new MyPageViewPagerAdapter(getSupportFragmentManager(), myPageMToDTab.getTabCount());
+                    MyPageOtherViewPager pagerAdapter = new MyPageOtherViewPager(getSupportFragmentManager());
                     myPageMToDViewPager.setAdapter(pagerAdapter);
                     myPageMToDViewPager.setOffscreenPageLimit(2);
                     myPageMToDViewPager.setCurrentItem(0);
                 }
             }
-
             @Override
-            public void onFailure(Call<MyPageDesignerGetData> call, Throwable t) {
-            }
+            public void onFailure(Call<MyPageDesignerGetData> call, Throwable t) {}
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        int result = AppController.getInstance().popPageStack();
+        if (result == 0) {
+            Toast.makeText(this, "한 번 더 터치하시면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show();
+        }  else if (result < 0) {
+            ActivityCompat.finishAffinity(this);
+        } else {
+            super.onBackPressed();
+        }
+    }
 }
