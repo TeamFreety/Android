@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="#FFFFFF">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,6 +47,7 @@
 
 
             <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/m_to_d_mypage_designer_collapsing_bar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipChildren="false"
@@ -56,7 +58,7 @@
                     android:id="@+id/m_to_d_my_page_hide_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    app:layout_collapseMode="pin"/>
+                    app:layout_collapseMode="pin" />
 
                 <RelativeLayout
                     android:id="@+id/m_to_d_my_page_collaspsing_relative_layout"
@@ -97,6 +99,7 @@
                         android:src="@drawable/circle_background" />
 
                     <ImageView
+                        android:id="@+id/img_m_to_d_mypage_designer_profile"
                         android:layout_width="90dp"
                         android:layout_height="90dp"
                         android:layout_alignParentBottom="true"
@@ -106,13 +109,12 @@
                         app:srcCompat="@drawable/chat_list_elem" />
 
 
-
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:layout_below="@+id/rl1_m_to_d_mypage"
                         android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true">
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/rl1_m_to_d_mypage">
 
                         <TextView
                             android:id="@+id/text_m_to_d_my_page_designer_name"
@@ -127,11 +129,11 @@
 
 
                         <EditText
-                            android:id="@+id/edit_my_page_designer_status"
+                            android:id="@+id/edit_m_to_d_my_page_designer_status"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="1dp"
                             android:layout_alignParentBottom="true"
+                            android:layout_marginBottom="1dp"
                             android:layout_marginLeft="140dp"
                             android:singleLine="true"
                             android:text="최선을 다하여 모시겠습니다."
@@ -143,20 +145,28 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="10dp"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="59dp"
+                        android:background="#A6A6A6" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="9dp"
                         android:layout_alignParentBottom="true"
                         android:layout_marginBottom="50dp"
                         android:background="#EFEFEF" />
+
                 </RelativeLayout>
 
                 <android.support.design.widget.TabLayout
-                    android:id="@+id/my_page_tab"
+                    android:id="@+id/my_page_m_to_d_tab"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    app:tabTextAppearance="@style/TablayoutText"
                     android:background="#FFFFFF"
-                    app:layout_collapseMode="pin"/>
+                    app:layout_collapseMode="pin"
+                    app:tabTextAppearance="@style/TablayoutText" />
 
             </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -164,7 +174,7 @@
 
 
         <com.sopt.freety.freety.util.custom.ViewPagerEx
-            android:id="@+id/my_page_view_pager"
+            android:id="@+id/my_page_m_to_d_view_pager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#FFFFFF"

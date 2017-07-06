@@ -132,19 +132,7 @@
                             android:textSize="14sp" />
 
 
-<<<<<<< HEAD
-                    <EditText
-                        android:id="@+id/edit_my_page_designer_status"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="1dp"
-                        android:layout_marginLeft="140dp"
-                        android:singleLine="true"
-                        android:text="최선을 다하여 모시겠습니다."
-                        android:textColor="#95989A"
-                        android:textSize="10sp" />
-=======
+
                         <EditText
                             android:id="@+id/edit_my_page_designer_status"
                             android:layout_width="wrap_content"
@@ -155,7 +143,7 @@
                             android:text="최선을 다하여 모시겠습니다."
                             android:textColor="#95989A"
                             android:textSize="10sp" />
->>>>>>> master
+
 
                         <ImageButton
                             android:id="@+id/btn_my_page_status_edit"
