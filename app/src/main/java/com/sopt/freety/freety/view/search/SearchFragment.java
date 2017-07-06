@@ -30,6 +30,7 @@ import com.sopt.freety.freety.data.PostListData;
 import com.sopt.freety.freety.data.PostListResultData;
 import com.sopt.freety.freety.network.NetworkService;
 import com.sopt.freety.freety.util.Consts;
+import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
 import com.sopt.freety.freety.view.recruit.RecruitActivity;
 import com.sopt.freety.freety.view.search.adapter.SearchRecyclerAdapter;
@@ -110,6 +111,10 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
                 getActivity().startActivity(intent);
             }
         });
+
+        if (!SharedAccessor.isDesigner(getContext())) {
+            mFloatingActionButton.setVisibility(View.GONE);
+        }
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.search_image_offset));
