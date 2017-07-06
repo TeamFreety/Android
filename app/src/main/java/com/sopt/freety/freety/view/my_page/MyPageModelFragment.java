@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.gun0912.tedpermission.PermissionListener;
@@ -82,9 +83,8 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
     private MyPageModelRecyclerAdapter adapter;
     private NetworkService networkService;
     private MyPageModelGetData myPageModelGetData;
-
-
     private static final float OPACITIY_FACTOR = 1.8f;
+    private int currRequestCode;
 
     public MyPageModelFragment() {
 
@@ -109,9 +109,7 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
         });
 
         recyclerView.setHasFixedSize(true);
-//       recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.my_page_post_offset));
         recyclerView.attachCallbacks(this);
-
         layoutManager = new GridLayoutManager(getContext(), 2);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup(){
             @Override
@@ -123,17 +121,7 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
                 }
             }
         });
-        final List<MyPageModelHeaderData> mockDataList1 = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            mockDataList1.add(MyPageModelHeaderData.getMockData());
-        }
-        final List<MyPagePickData> mockDataList2 = new ArrayList<>();
-        for (int i = 0; i < 11; i++) {
-            mockDataList2.add(MyPagePickData.getMockData());
-        }
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new MyPageModelRecyclerAdapter(mockDataList1, mockDataList2, getContext(), permissionListener);
-        recyclerView.setAdapter(adapter);
         return view;
     }
 
@@ -158,12 +146,12 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
                     myPageModelGetData = response.body();
                     Glide.with(getContext()).load(response.body().getModelPhoto()).into(profileImage);
                     modelNameText.setText(response.body().getModelName());
+                    adapter = new MyPageModelRecyclerAdapter(myPageModelGetData.getMyPageModelHeaderDataList(), myPageModelGetData.getModelPickList(), getContext(), MyPageModelFragment.this);
+                    recyclerView.setAdapter(adapter);
                 }
             }
-
             @Override
-            public void onFailure(Call<MyPageModelGetData> call, Throwable t) {
-            }
+            public void onFailure(Call<MyPageModelGetData> call, Throwable t) {}
         });
     }
 
@@ -181,44 +169,29 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
         }
     };
 
-    private PermissionListener permissionListener1 = new PermissionListener() {
+    public void registerPhoto(int requestCode) {
+        currRequestCode = requestCode;
+        new TedPermission(getContext())
+                .setPermissionListener(modelHairPermissionListener)
+                .setRationaleConfirmText("확인")
+                .setRationaleMessage("\"Freety\"의 다음 작업을 허용하시겠습니까? 이 기기의 외부 저장소에 액세스하기")
+                .setDeniedMessage("거부하시면 볼수 없는데...")
+                .setPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA})
+                .check();
+
+    }
+
+    private PermissionListener modelHairPermissionListener = new PermissionListener() {
         @Override
         public void onPermissionGranted() {
             YPhotoPickerIntent intent = new YPhotoPickerIntent(getActivity());
             intent.setMaxSelectCount(1);
             intent.setSelectCheckBox(true);
             intent.setMaxGrideItemCount(3);
-            startActivityForResult(intent, Consts.MODEL_PICTURE_1_CODE);
+            startActivityForResult(intent, currRequestCode);
         }
         @Override
-        public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-        }
-    };
-    private PermissionListener permissionListener2 = new PermissionListener() {
-        @Override
-        public void onPermissionGranted() {
-            YPhotoPickerIntent intent = new YPhotoPickerIntent(getActivity());
-            intent.setMaxSelectCount(1);
-            intent.setSelectCheckBox(true);
-            intent.setMaxGrideItemCount(3);
-            startActivityForResult(intent, Consts.MODEL_PICTURE_2_CODE);
-        }
-        @Override
-        public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-        }
-    };
-    private PermissionListener permissionListener3 = new PermissionListener() {
-        @Override
-        public void onPermissionGranted() {
-            YPhotoPickerIntent intent = new YPhotoPickerIntent(getActivity());
-            intent.setMaxSelectCount(1);
-            intent.setSelectCheckBox(true);
-            intent.setMaxGrideItemCount(3);
-            startActivityForResult(intent, Consts.MODEL_PICTURE_3_CODE);
-        }
-        @Override
-        public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-        }
+        public void onPermissionDenied(ArrayList<String> deniedPermissions) {}
     };
 
     @OnClick(R.id.my_page_model_profile_edit)
@@ -232,44 +205,13 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
                 .check();
     }
 
-    /*@OnClick(R.id.model_photo_1)
-    public void onPictureBtn1() {
-        new TedPermission(getContext())
-                .setPermissionListener(permissionListener1)
-                .setRationaleConfirmText("확인")
-                .setRationaleMessage("\"Freety\"의 다음 작업을 허용하시겠습니까? 이 기기의 외부 저장소에 액세스하기")
-                .setDeniedMessage("거부하시면 볼수 없는데...")
-                .setPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA})
-                .check();
-    }
-    @OnClick(R.id.model_photo_2)
-    public void onPictureBtn2() {
-        new TedPermission(getContext())
-                .setPermissionListener(permissionListener2)
-                .setRationaleConfirmText("확인")
-                .setRationaleMessage("\"Freety\"의 다음 작업을 허용하시겠습니까? 이 기기의 외부 저장소에 액세스하기")
-                .setDeniedMessage("거부하시면 볼수 없는데...")
-                .setPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA})
-                .check();
-    }
-    @OnClick(R.id.model_photo_3)
-    public void onPictureBtn3() {
-        new TedPermission(getContext())
-                .setPermissionListener(permissionListener3)
-                .setRationaleConfirmText("확인")
-                .setRationaleMessage("\"Freety\"의 다음 작업을 허용하시겠습니까? 이 기기의 외부 저장소에 액세스하기")
-                .setDeniedMessage("거부하시면 볼수 없는데...")
-                .setPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA})
-                .check();
-    }*/
-
     public void onPictureRegistered(int requestCode, String path) {
         final NetworkService networkService = AppController.getInstance().getNetworkService();
+        File file = new File(path);
+        RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), fileBody);
         switch (requestCode) {
             case Consts.MODEL_PROFILE_PHOTO_CODE:
-                File file = new File(path);
-                RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);
-                MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), fileBody);
 
                 Call<OnlyMsgResultData> photoCall = networkService.getOkMsgFromProfile(SharedAccessor.getToken(getActivity()),
                         body);
@@ -282,78 +224,65 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
                     }
 
                     @Override
-                    public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
-                    }
+                    public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {}
                 });
 
                 break;
-            /*case Consts.MODEL_PICTURE_1_CODE:
+            case Consts.MODEL_PICTURE_1_CODE:
                 adapter.updatePicture(0, path);
                 // 사진 보이게 등록하기.
-                File file1 = new File(path);
-                RequestBody fileBody1 = RequestBody.create(MediaType.parse("image*//*"), file1);
-                MultipartBody.Part body1 = MultipartBody.Part.createFormData("image", file1.getName(), fileBody1);
-
                 Call<OnlyMsgResultData> photoCall1 = networkService.uploadModelPhoto1(SharedAccessor.getToken(getActivity()),
-                        body1);
+                        body);
                 photoCall1.enqueue(new Callback<OnlyMsgResultData>() {
                     @Override
                     public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
                         if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
                             Log.i("modelPhoto1Upload : ","success" );
+                            Toast.makeText(getContext(), "사진 업로드 완료.", Toast.LENGTH_SHORT).show();
+
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
-                    }
+                    public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {}
                 });
 
                 break;
             case Consts.MODEL_PICTURE_2_CODE:
                 adapter.updatePicture(1, path);
                 // 사진 보이게 등록하기.
-                File file2 = new File(path);
-                RequestBody fileBody2 = RequestBody.create(MediaType.parse("image*//*"), file2);
-                MultipartBody.Part body2 = MultipartBody.Part.createFormData("image", file2.getName(), fileBody2);
-
                 Call<OnlyMsgResultData> photoCall2 = networkService.uploadModelPhoto2(SharedAccessor.getToken(getActivity()),
-                        body2);
+                        body);
                 photoCall2.enqueue(new Callback<OnlyMsgResultData>() {
                     @Override
                     public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
                         if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
                             Log.i("modelPhoto2Upload","success" );
+                            Toast.makeText(getContext(), "사진 업로드 완료.", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
-                    }
+                    public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {}
                 });
                 break;
             case Consts.MODEL_PICTURE_3_CODE:
                 adapter.updatePicture(2, path);
                 // 사진 보이게 등록하기.
-                File file3 = new File(path);
-                RequestBody fileBody3 = RequestBody.create(MediaType.parse("image*//*"), file3);
-                MultipartBody.Part body3 = MultipartBody.Part.createFormData("image", file3.getName(), fileBody3);
-
                 Call<OnlyMsgResultData> photoCall3 = networkService.uploadModelPhoto3(SharedAccessor.getToken(getActivity()),
-                        body3);
+                        body);
                 photoCall3.enqueue(new Callback<OnlyMsgResultData>() {
                     @Override
                     public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
                         if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
                             Log.i("modelPhoto3Upload","success" );
+                            Toast.makeText(getContext(), "사진 업로드 완료.", Toast.LENGTH_SHORT).show();
                         }
                     }
-
                     @Override
-                    public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
-                    }
+                    public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {}
                 });
-                break;*/
+                break;
             default:
                 throw new RuntimeException("there is unexpected request code.");
         }
