@@ -25,6 +25,7 @@ import com.sopt.freety.freety.network.NetworkService;
 import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.helper.ImageSwicherHelper;
 import com.sopt.freety.freety.view.letter.LetterActivity;
+import com.sopt.freety.freety.view.my_page.ModelToDesignerMypageActivity;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
 import com.sopt.freety.freety.view.recruit.adapter.RecruitViewPagerAdapter;
 import com.sopt.freety.freety.view.recruit.data.PickRequestData;
@@ -45,6 +46,7 @@ import retrofit2.Response;
 public class RecruitActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String TAG = "RecruitActivity";
+
     @BindView(R.id.recruit_image_view_pager)
     ViewPager imageViewPager;
 
@@ -53,18 +55,9 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
 
     @OnClick({R.id.recruit_profile, R.id.recruit_title, R.id.recruit_name})
     public void onProfileClick(ImageView profileImage){
-        Call<MyPageDesignerGetData> call = networkService.getOtherDesignerMyPage(SharedAccessor.getToken(RecruitActivity.this), memberId);
-        call.enqueue(new Callback<MyPageDesignerGetData>() {
-            @Override
-            public void onResponse(Call<MyPageDesignerGetData> call, Response<MyPageDesignerGetData> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<MyPageDesignerGetData> call, Throwable t) {
-
-            }
-        });
+        Intent intent = new Intent(RecruitActivity.this, ModelToDesignerMypageActivity.class);
+        intent.putExtra("memberId", memberId);
+        startActivity(intent);
     }
 
     @BindView(R.id.recruit_title)

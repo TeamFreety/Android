@@ -56,7 +56,6 @@ public class ModelToDesignerMypageActivity extends AppCompatActivity implements 
     @BindView(R.id.m_to_d_my_page_app_bar)
     AppBarLayout mToDMyPageAppBar;
 
-
     @BindView(R.id.my_page_m_to_d_view_pager)
     ViewPagerEx myPageMToDViewPager;
 
@@ -80,7 +79,7 @@ public class ModelToDesignerMypageActivity extends AppCompatActivity implements 
         Glide.with(this).load(R.drawable.chat_list_elem)
                 .bitmapTransform(new CropCircleTransformation(getApplicationContext()))
                 .into(imgMToDMypageDesignerProfile);
-
+        networkService = AppController.getInstance().getNetworkService();
         myPageMToDTab.addTab(myPageMToDTab.newTab().setText("글목록"));
         myPageMToDTab.addTab(myPageMToDTab.newTab().setText("포트폴리오"));
         myPageMToDTab.addTab(myPageMToDTab.newTab().setText("후기"));
@@ -92,20 +91,15 @@ public class ModelToDesignerMypageActivity extends AppCompatActivity implements 
             public void onTabSelected(TabLayout.Tab tab) {
                 myPageMToDViewPager.setCurrentItem(tab.getPosition());
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
 
             }
-
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
             }
         });
-
-        networkService = AppController.getInstance().getNetworkService();
-        reload();
         mToDMyPageAppBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -118,7 +112,7 @@ public class ModelToDesignerMypageActivity extends AppCompatActivity implements 
             btnMToDMyPageChat.setVisibility(View.INVISIBLE);
         }
         EditTextUtils.setUseableEditText(editMToDMyPageDesignerStatus, false);
-
+        reload();
     }
 
     @Override
@@ -150,7 +144,9 @@ public class ModelToDesignerMypageActivity extends AppCompatActivity implements 
     }
 
     private void reload() {
-        Call<MyPageDesignerGetData> call = networkService.getOtherDesignerMyPage(SharedAccessor.getToken(getApplicationContext()), 0);
+
+        Call<MyPageDesignerGetData> call = networkService.getOtherDesignerMyPage(SharedAccessor.getToken(getApplicationContext()), getIntent().getIntExtra("memberId", 0));
+
         call.enqueue(new Callback<MyPageDesignerGetData>() {
             @Override
             public void onResponse(Call<MyPageDesignerGetData> call, Response<MyPageDesignerGetData> response) {
