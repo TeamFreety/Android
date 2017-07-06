@@ -62,6 +62,7 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_login);
         ButterKnife.bind(this);
+        SharedAccessor.reset(this);
         HashKeyChecker.checkHashKey(this);
         callbackManager = CallbackManager.Factory.create();
         kakaoCallback = new SessionCallback();
@@ -214,7 +215,7 @@ public class StartActivity extends AppCompatActivity {
                                         Toast.makeText(StartActivity.this, "Freety에 아직 SNS 계정이 등록되지 않았습니다.", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(getApplicationContext(), SelectMemberTypeActivity.class);
                                         intent.putExtra("login case","facebook");
-                                        intent.putExtra(Consts.FACEBOOK_ID_KEY, loginResult.getAccessToken().getToken());
+                                        intent.putExtra(Consts.FACEBOOK_ID_KEY, loginResult.getAccessToken().getUserId());
                                         AppController.getInstance().resetPageStack();
                                         startActivity(intent);
                                     }
