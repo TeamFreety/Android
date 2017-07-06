@@ -105,6 +105,18 @@ public interface NetworkService {
     @POST("/mypage/myPhoto")
     Call<OnlyMsgResultData> getOkMsgFromProfile(@Header("member_token") String token, @Body MyPhotoRequestData data);
 
+    @Multipart
+    @POST("/mypage/modelPhoto1")
+    Call<OnlyMsgResultData> uploadModelPhoto1(@Header("member_token") String token, @Part MultipartBody.Part body);
+
+    @Multipart
+    @POST("/mypage/modelPhoto2")
+    Call<OnlyMsgResultData> uploadModelPhoto2(@Header("member_token") String token, @Part MultipartBody.Part body);
+
+    @Multipart
+    @POST("/mypage/modelPhoto3")
+    Call<OnlyMsgResultData> uploadModelPhoto3(@Header("member_token") String token, @Part MultipartBody.Part body);
+
     @POST("/comment/writeComment")
     Call<OnlyMsgResultData> registerReview(@Header("member_token") String token, @Body MyPageReviewRequestData data, @Part MultipartBody.Part imageBody);
 

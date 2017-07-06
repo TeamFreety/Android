@@ -42,8 +42,7 @@ public class MyPageModelHeaderData{
         return imageURL;
     }
 
-
-
-
-
+    public void setImageURL(java.lang.String imageURL) {
+        this.imageURL = imageURL;
+    }
 }

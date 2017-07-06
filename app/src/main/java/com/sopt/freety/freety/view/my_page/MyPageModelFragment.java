@@ -1,42 +1,50 @@
 package com.sopt.freety.freety.view.my_page;
 
 
+import android.Manifest;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 import com.sopt.freety.freety.R;
 
 import com.sopt.freety.freety.application.AppController;
+import com.sopt.freety.freety.data.OnlyMsgResultData;
 import com.sopt.freety.freety.network.NetworkService;
+import com.sopt.freety.freety.util.Consts;
 import com.sopt.freety.freety.util.SharedAccessor;
-import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
 
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageModelRecyclerAdapter;
-import com.sopt.freety.freety.view.my_page.adapter.MyPageViewPagerAdapter;
 import com.sopt.freety.freety.view.my_page.data.MyPageModelHeaderData;
 import com.sopt.freety.freety.view.my_page.data.MyPagePickData;
-import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageModelGetData;
+import com.yongbeam.y_photopicker.util.photopicker.utils.YPhotoPickerIntent;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,6 +74,18 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
 
     @BindView(R.id.text_my_page_model_name)
     TextView modelNameText;
+
+    @BindView(R.id.model_photo_1)
+    ImageButton modelPhoto1;
+
+    @BindView(R.id.model_photo_2)
+    ImageButton modelPhoto2;
+
+    @BindView(R.id.model_photo_3)
+    ImageButton modelPhoto3;
+
+    @BindView(R.id.my_page_model_profile_edit) ImageButton modelProfileEdit;
+
 
     private GridLayoutManager layoutManager;
     private MyPageModelRecyclerAdapter adapter;
@@ -98,7 +118,7 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
         });
 
         recyclerView.setHasFixedSize(true);
-//        recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.my_page_post_offset));
+//       recyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.my_page_post_offset));
         recyclerView.attachCallbacks(this);
 
         layoutManager = new GridLayoutManager(getContext(), 2);
@@ -155,4 +175,151 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
             }
         });
     }
+
+    private PermissionListener permissionListener1 = new PermissionListener() {
+        @Override
+        public void onPermissionGranted() {
+            YPhotoPickerIntent intent = new YPhotoPickerIntent(getActivity());
+            intent.setMaxSelectCount(1);
+            intent.setSelectCheckBox(true);
+            intent.setMaxGrideItemCount(3);
+            startActivityForResult(intent, Consts.MODEL_PICTURE_1_CODE);
+        }
+        @Override
+        public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+        }
+    };
+    private PermissionListener permissionListener2 = new PermissionListener() {
+        @Override
+        public void onPermissionGranted() {
+            YPhotoPickerIntent intent = new YPhotoPickerIntent(getActivity());
+            intent.setMaxSelectCount(1);
+            intent.setSelectCheckBox(true);
+            intent.setMaxGrideItemCount(3);
+            startActivityForResult(intent, Consts.MODEL_PICTURE_2_CODE);
+        }
+        @Override
+        public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+        }
+    };
+    private PermissionListener permissionListener3 = new PermissionListener() {
+        @Override
+        public void onPermissionGranted() {
+            YPhotoPickerIntent intent = new YPhotoPickerIntent(getActivity());
+            intent.setMaxSelectCount(1);
+            intent.setSelectCheckBox(true);
+            intent.setMaxGrideItemCount(3);
+            startActivityForResult(intent, Consts.MODEL_PICTURE_3_CODE);
+        }
+        @Override
+        public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+        }
+    };
+
+    @OnClick(R.id.model_photo_1)
+    public void onPictureBtn1() {
+        new TedPermission(getContext())
+                .setPermissionListener(permissionListener1)
+                .setRationaleConfirmText("확인")
+                .setRationaleMessage("\"Freety\"의 다음 작업을 허용하시겠습니까? 이 기기의 외부 저장소에 액세스하기")
+                .setDeniedMessage("거부하시면 볼수 없는데...")
+                .setPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA})
+                .check();
+    }
+    @OnClick(R.id.model_photo_2)
+    public void onPictureBtn2() {
+        new TedPermission(getContext())
+                .setPermissionListener(permissionListener2)
+                .setRationaleConfirmText("확인")
+                .setRationaleMessage("\"Freety\"의 다음 작업을 허용하시겠습니까? 이 기기의 외부 저장소에 액세스하기")
+                .setDeniedMessage("거부하시면 볼수 없는데...")
+                .setPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA})
+                .check();
+    }
+    @OnClick(R.id.model_photo_3)
+    public void onPictureBtn3() {
+        new TedPermission(getContext())
+                .setPermissionListener(permissionListener3)
+                .setRationaleConfirmText("확인")
+                .setRationaleMessage("\"Freety\"의 다음 작업을 허용하시겠습니까? 이 기기의 외부 저장소에 액세스하기")
+                .setDeniedMessage("거부하시면 볼수 없는데...")
+                .setPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA})
+                .check();
+    }
+
+    public void onPictureRegistered(int requestCode, String path) {
+        final NetworkService networkService = AppController.getInstance().getNetworkService();
+        switch (requestCode) {
+            case Consts.MODEL_PICTURE_1_CODE:
+                adapter.updatePicture(0, path);
+                // 사진 보이게 등록하기.
+                File file1 = new File(path);
+                RequestBody fileBody1 = RequestBody.create(MediaType.parse("image/*"), file1);
+                MultipartBody.Part body1 = MultipartBody.Part.createFormData("image", file1.getName(), fileBody1);
+
+                Call<OnlyMsgResultData> photoCall = networkService.uploadModelPhoto1(SharedAccessor.getToken(getActivity()),
+                        body1);
+                photoCall.enqueue(new Callback<OnlyMsgResultData>() {
+                    @Override
+                    public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
+                        if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
+                            Log.i("modelPhoto1Upload : ","success" );
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
+                    }
+                });
+
+                break;
+            case Consts.MODEL_PICTURE_2_CODE:
+                adapter.updatePicture(1, path);
+                // 사진 보이게 등록하기.
+                File file2 = new File(path);
+                RequestBody fileBody2 = RequestBody.create(MediaType.parse("image/*"), file2);
+                MultipartBody.Part body2 = MultipartBody.Part.createFormData("image", file2.getName(), fileBody2);
+
+                Call<OnlyMsgResultData> photoCall2 = networkService.uploadModelPhoto2(SharedAccessor.getToken(getActivity()),
+                        body2);
+                photoCall2.enqueue(new Callback<OnlyMsgResultData>() {
+                    @Override
+                    public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
+                        if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
+                            Log.i("modelPhoto2Upload","success" );
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
+                    }
+                });
+                break;
+            case Consts.MODEL_PICTURE_3_CODE:
+                adapter.updatePicture(2, path);
+                // 사진 보이게 등록하기.
+                File file3 = new File(path);
+                RequestBody fileBody3 = RequestBody.create(MediaType.parse("image/*"), file3);
+                MultipartBody.Part body3 = MultipartBody.Part.createFormData("image", file3.getName(), fileBody3);
+
+                Call<OnlyMsgResultData> photoCall3 = networkService.uploadModelPhoto3(SharedAccessor.getToken(getActivity()),
+                        body3);
+                photoCall3.enqueue(new Callback<OnlyMsgResultData>() {
+                    @Override
+                    public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
+                        if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
+                            Log.i("modelPhoto3Upload","success" );
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
+                    }
+                });
+                break;
+            default:
+                throw new RuntimeException("there is unexpected request code.");
+        }
+    }
+
 }

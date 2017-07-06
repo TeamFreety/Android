@@ -25,6 +25,7 @@ import com.sopt.freety.freety.view.letter.LetterListFragment;
 import com.sopt.freety.freety.view.my_page.MyPageDesignerFragment;
 import com.sopt.freety.freety.view.my_page.MyPageModelFragment;
 import com.sopt.freety.freety.view.search.SearchFragment;
+import com.yongbeam.y_photopicker.util.photopicker.PhotoPickerActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -109,11 +110,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if ((requestCode == Consts.DETAIL_SEARCH_CODE || requestCode == Consts.WRITE_REQUEST) && resultCode == RESULT_OK) {
             SearchFragment searchFragment = (SearchFragment) getSupportFragmentManager().findFragmentByTag("search");
             searchFragment.onActivityResult(requestCode, 0, data);
-        } else {
-
+        } else if (requestCode == Consts.MODEL_PICTURE_1_CODE){
+            if (resultCode == RESULT_OK) {
+                MyPageModelFragment myPageModelFragment = (MyPageModelFragment) getSupportFragmentManager().findFragmentByTag("my_page_model");
+                String imagePath = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS).get(0);
+                myPageModelFragment.onPictureRegistered(Consts.MODEL_PICTURE_1_CODE, imagePath);
+            }
         }
     }
 }

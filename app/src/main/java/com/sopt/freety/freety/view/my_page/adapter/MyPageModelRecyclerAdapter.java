@@ -2,6 +2,7 @@ package com.sopt.freety.freety.view.my_page.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,18 +56,13 @@ public class MyPageModelRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof MyPageModelHeaderHolder) {
-            // 이미지로!
-            /*
-            final ListAdapter listAdapter
-                    = new ArrayAdapter<>(context, R.layout.fragment_my_page_style_carrer_text, myImageList);
-
-            MyPageModelHeaderHolder castedHolder = (MyPageModelHeaderHolder) holder;
-            castedHolder.getCareerListView().setAdapter(listAdapter);
-            //ListViewSizeHelper.setListViewHeightBasedOnChildren(castedHolder.getCareerListView());
-            castedHolder.getCareerListView().getLayoutParams().height = BASE_HEADER_HEIGHT + 20 + 95;
-            castedHolder.getCareerListView().requestLayout();
-
-           */
+            MyPageModelHeaderHolder myPageModelHeaderHolder = (MyPageModelHeaderHolder) holder;
+            Glide.with(context).load(myPageModelHeaderDataList.get(0).getImageURL())
+                    .override(200, 200).thumbnail(0.2f).into(myPageModelHeaderHolder.getFrontPicture());
+            Glide.with(context).load(myPageModelHeaderDataList.get(1).getImageURL())
+                    .override(200, 200).thumbnail(0.2f).into(myPageModelHeaderHolder.getBackPicture());
+            Glide.with(context).load(myPageModelHeaderDataList.get(2).getImageURL())
+                    .override(200, 200).thumbnail(0.2f).into(myPageModelHeaderHolder.getSidePicture());
         } else {
 
             MyPagePickHolder castedHolder = (MyPagePickHolder) holder;
@@ -84,5 +80,10 @@ public class MyPageModelRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
     @Override
     public int getItemCount() {
         return myPagePickDataList.size() + 1;
+    }
+
+    public void updatePicture(int position, String imageURL) {
+        myPageModelHeaderDataList.get(position).setImageURL(imageURL);
+        // network
     }
 }

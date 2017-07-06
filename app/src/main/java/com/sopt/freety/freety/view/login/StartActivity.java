@@ -273,7 +273,7 @@ public class StartActivity extends AppCompatActivity {
                                     startActivity(intent);
                                 } else if (response.body().getMessage().equals("no information about SNS account")) {
                                     Toast.makeText(StartActivity.this, "Freety에 아직 SNS 계정이 등록되지 않았습니다.", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(), SelectMemberTypeActivity.class);
+                                    Intent intent = new Intent(StartActivity.this, SelectMemberTypeActivity.class);
                                    // kUserId = String.valueOf(userProfile.getId());
                                     intent.putExtra("login case","kakao");
                                     intent.putExtra("kUserId",kUserId);

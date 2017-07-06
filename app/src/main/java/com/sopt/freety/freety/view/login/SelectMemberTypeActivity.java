@@ -42,7 +42,7 @@ public class SelectMemberTypeActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Intent intent = getIntent();
         loginCase = intent.getStringExtra("login case");
-        kUserId = intent.getStringExtra("kuserId");
+        kUserId = intent.getStringExtra("kUserId");
         fUserId = intent.getStringExtra("fUserId");
         Toast.makeText(this, "카카오아이디"+kUserId, Toast.LENGTH_SHORT).show();
 
