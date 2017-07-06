@@ -80,7 +80,7 @@ public class DateParser {
             formattedHour = "0" + formattedHour;
         }
         Log.i(TAG, "toDateTimeFormat: " + String.format("%s-%s-%s'T'%s:00:00", year, month, day, formattedHour));
-        return String.format("%s-%s-%s'T'%s:00:00", year, month, date, hour);
+        return String.format("%s-%s-%sT%s:00:00", year, month, day, formattedHour);
     }
 
     private long getMillisFromNow(Date commentedAt) {

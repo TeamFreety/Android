@@ -5,6 +5,7 @@ import com.sopt.freety.freety.view.wirte.data.NaverResultData;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.Query;
 
 /**
@@ -14,9 +15,10 @@ import retrofit2.http.Query;
 public interface NaverNetworkService {
 
     public static final String BASE_URL = "https://openapi.naver.com";
-    public static final String CLIENT_KEY = "1B9fVTgiXiS7zDR4ZHsr";
-    public static final String SECRET_KEY = "b3ZdkTDeHI";
+    public static final String CLIENT_KEY = "yE3kmOeFdzXfCod3n8PY";
+    public static final String SECRET_KEY = "v7xzHiAw3Z";
 
+    @Headers({"X-Naver-Client-Id: yE3kmOeFdzXfCod3n8PY", "X-Naver-Client-Secret: v7xzHiAw3Z"})
     @GET("/v1/map/reversegeocode")
-    Call<NaverResultData> getSigugun(@Query("query") String query, @Header("X-Naver-Client-Id") String client, @Header("X-Naver-Client-Secret") String secret);
+    Call<NaverResultData> getSigugun(@Query("query") String query);
 }

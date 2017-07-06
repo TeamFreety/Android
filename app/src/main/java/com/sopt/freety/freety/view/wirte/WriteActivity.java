@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -167,6 +168,7 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
     private ProgressDialog progressDialog;
     private List<MultipartBody.Part> imageBodyList = new ArrayList<>();
     private LatLng latLng;
+    private String sido;
     private String sigugun;
     private String fullAddress;
 
@@ -226,7 +228,6 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
                 viewString = dateString + String.format(" 오후 %d시", hourOfDay);
             }
             writeDateText.setText(viewString);
-            Log.i(TAG, "onTimeSet: formatted text is : " + DateParser.toDateTimeFormat((writeDateText.getText().toString())));
         }
     };
 
@@ -243,7 +244,7 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
                 latLng = new LatLng(lat, lng);
                 int subIndex;
                 for (subIndex = 0; subIndex < addressString.length(); subIndex++) {
-                    if (subIndex >= 10 && addressString.charAt(subIndex) == ' ') {
+                    if (subIndex >= 8 && addressString.charAt(subIndex) == ' ') {
                         break;
                     }
                 }
@@ -251,12 +252,12 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
                 placeTextList.get(1).setText(addressString.substring(subIndex));
 
                 Call<NaverResultData> call = AppController.getInstance().getNaverNetworkService()
-                        .getSigugun(String.valueOf(lat) + "," + String.valueOf(lng), NaverNetworkService.CLIENT_KEY, NaverNetworkService.SECRET_KEY);
+                        .getSigugun(String.valueOf(lng) + "," + String.valueOf(lat));
                 call.enqueue(new Callback<NaverResultData>() {
                     @Override
                     public void onResponse(Call<NaverResultData> call, Response<NaverResultData> response) {
                         if (response.isSuccessful()) {
-                            Log.i(TAG, "onResponse: sigugun : " + sigugun);
+                            sido = response.body().getSido();
                             sigugun = response.body().getSigugun();
                         } else {
                             Log.i(TAG, "onResponse: 포맷이 다름: " + sigugun);
@@ -278,8 +279,6 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
                         writeSelectedImageList.get(i).setImageResource(0);
                     }
                     imageBodyList.clear();
-                    Log.i(TAG, "onActivityResult: " + data.getData());
-                    Log.i(TAG, "onActivityResult: " + photos);
                     for (int i = 0; i < photos.size(); i++) {
                         Log.i(TAG, "onActivityResult: " + photos.get(i));
                         File file = new File(photos.get(i));
@@ -346,6 +345,7 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
                     .setLatitude(latLng.latitude)
                     .setLongitude(latLng.longitude)
                     .setSigugun(sigugun)
+                    .setSido(sido)
                     .setFullAddress(fullAddress)
                     .build();
 
@@ -371,6 +371,7 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
                                         progressDialog.setProgress(currentUploadedCount * (100 / imageBodyList.size()));
                                         if (currentUploadedCount == imageBodyList.size()) {
                                             progressDialog.dismiss();
+                                            onBackPressed();
                                         }
                                     } else {
                                         Toast.makeText(WriteActivity.this, "사진 전송 오류", Toast.LENGTH_SHORT).show();

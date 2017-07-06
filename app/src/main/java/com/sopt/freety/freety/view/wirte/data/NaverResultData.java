@@ -34,13 +34,22 @@ public class NaverResultData {
 
     private class NaverAddressDetail {
         private String sigugun;
+        private String sido;
 
         public String getSigugun() {
             return sigugun;
+        }
+
+        public String getSido() {
+            return sido;
         }
     }
 
     public String getSigugun() {
         return result.getItems().get(0).getAddrdetail().getSigugun();
+    }
+
+    public String getSido() {
+        return result.getItems().get(0).getAddrdetail().getSido();
     }
 }

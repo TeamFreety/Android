@@ -67,9 +67,6 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
     @BindView(R.id.edit_my_page_designer_status)
     EditText designerStatusTextView;
 
-    @BindView(R.id.edit_my_page_port_career)
-    TextView careerString;
-
     @BindView(R.id.my_page_tab)
     TabLayout tabLayout;
 

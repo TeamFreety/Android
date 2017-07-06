@@ -160,10 +160,10 @@ public class PostDetailResultData {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         Date date = sdf.parse(postDetail.getServiceTime());
         if (date.getHours() > 12) {
-            String realHours = String.valueOf(date.getHours() - 12);
-            return String.format("%d년 %d월 %d일 오후 %d시", date.getYear(), date.getMonth(), date.getDay(), realHours);
+            int realHours = date.getHours() - 12;
+            return String.format("%d년 %d월 %d일 오후 %d시", date.getYear() + 1900, date.getMonth() + 1, date.getDate(), realHours);
         } else {
-            return String.format("%d년 %d월 %d일 오전 %d시", date.getYear(), date.getMonth(), date.getDay(), date.getHours());
+            return String.format("%d년 %d월 %d일 오전 %d시", date.getYear() + 1900, date.getMonth() + 1, date.getDate(), date.getHours());
         }
     }
 
