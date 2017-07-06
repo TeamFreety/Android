@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
 
 import java.util.ArrayList;
@@ -20,29 +21,20 @@ import java.util.List;
 
 public class RecruitViewPagerAdapter extends PagerAdapter {
 
-    private static final int MAX_VIEW_COUNT = 5;
     private Context context;
     private List<String> imageURLList;
-    private List<Integer> imageMockList = new ArrayList<>();
 
     public RecruitViewPagerAdapter(Context context, List<String> imageURLList) {
         this.context = context;
         this.imageURLList = imageURLList;
-        this.imageMockList = new ArrayList<>();
-        imageMockList.add(R.drawable.chat_list_elem);
-        imageMockList.add(R.drawable.freety_logo);
-        imageMockList.add(R.drawable.chat_list_elem);
-        imageMockList.add(R.drawable.freety_logo);
-        imageMockList.add(R.drawable.chat_list_elem);
     }
 
     public Object instantiateItem(ViewGroup container, int position) {
-        int realPos = position % MAX_VIEW_COUNT;
+        int realPos = position % imageURLList.size();
         View itemView = LayoutInflater.from(context).inflate(R.layout.image_item, container, false);
         ImageView imageView = (ImageView) itemView.findViewById(R.id.image_item);
-        imageView.setImageResource(imageMockList.get(realPos));
+        Glide.with(context).load(imageURLList.get(realPos)).override(360, 360).thumbnail(0.3f).into(imageView);
         container.addView(itemView);
-
         return itemView;
     }
 

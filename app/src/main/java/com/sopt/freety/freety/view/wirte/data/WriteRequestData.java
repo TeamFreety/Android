@@ -16,6 +16,7 @@ public class WriteRequestData {
     private final int typeDye;
     private final int typePerm;
     private final int typeEct;
+    private final String sido;
     private final String sigugun;
     private final String fullAddress;
 
@@ -30,6 +31,7 @@ public class WriteRequestData {
         this.typeDye = builder.getTypeDye();
         this.typePerm = builder.getTypePerm();
         this.typeEct = builder.getTypeEct();
+        this.sido = builder.getSido();
         this.sigugun = builder.getSigugun();
         this.fullAddress = builder.getFullAddress();
     }
@@ -41,6 +43,7 @@ public class WriteRequestData {
         private final String serviceTime;
 
         private String sigugun;
+        private String sido;
         private String fullAddress;
         private int price = 0;
         private int typeCut = 0;
@@ -88,6 +91,11 @@ public class WriteRequestData {
 
         public Builder setLongitude(double lng) {
             this.longitude = lng;
+            return this;
+        }
+
+        public Builder setSido(String sido) {
+            this.sido = sido;
             return this;
         }
 
@@ -143,6 +151,10 @@ public class WriteRequestData {
 
         public int getTypeEct() {
             return typeEct;
+        }
+
+        public String getSido() {
+            return sido;
         }
 
         public String getSigugun() {
