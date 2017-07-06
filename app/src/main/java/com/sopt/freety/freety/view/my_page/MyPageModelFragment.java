@@ -160,7 +160,7 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
     }
 
     private void reload() {
-        Call<MyPageModelGetData> call = networkService.getMyPageModel(SharedAccessor.getToken(getContext()));
+        Call<MyPageModelGetData> call = networkService.getMyPageInModelAccount(SharedAccessor.getToken(getContext()));
         call.enqueue(new Callback<MyPageModelGetData>() {
             @Override
             public void onResponse(Call<MyPageModelGetData> call, Response<MyPageModelGetData> response) {
