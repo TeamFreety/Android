@@ -40,7 +40,6 @@ import com.sopt.freety.freety.view.login.data.SNSLoginResultData;
 
 import com.sopt.freety.freety.data.OnlyMsgResultData;
 import com.sopt.freety.freety.util.SharedAccessor;
-import com.sopt.freety.freety.view.login.data.AutoLoginResultData;
 import com.sopt.freety.freety.view.main.MainActivity;
 
 
@@ -84,6 +83,7 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_first_login);
         SharedAccessor.reset(this);
 
+//        SharedAccessor.reset(this);
         Call<OnlyMsgResultData> autoLoginCall = AppController.getInstance().getNetworkService().auto(SharedAccessor.getToken(StartActivity.this));
         autoLoginCall.enqueue(new Callback<OnlyMsgResultData>() {
             @Override
