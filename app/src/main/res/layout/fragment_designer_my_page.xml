@@ -73,7 +73,7 @@
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@drawable/mypage_image" />
+                            android:src="@drawable/mypage_background_image" />
 
                         <ImageButton
                             android:id="@+id/btn_my_page_chat"

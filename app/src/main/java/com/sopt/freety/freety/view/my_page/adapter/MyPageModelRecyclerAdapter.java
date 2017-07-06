@@ -1,30 +1,17 @@
 package com.sopt.freety.freety.view.my_page.adapter;
 
-import android.Manifest;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-
 import com.bumptech.glide.Glide;
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
 import com.sopt.freety.freety.R;
-import com.sopt.freety.freety.view.my_page.adapter.holder.MyPageModelBodyHolder;
 import com.sopt.freety.freety.view.my_page.adapter.holder.MyPageModelHeaderHolder;
 import com.sopt.freety.freety.view.my_page.adapter.holder.MyPagePickHolder;
-import com.sopt.freety.freety.view.my_page.adapter.holder.MyPageStyleBodyHolder;
-import com.sopt.freety.freety.view.my_page.adapter.holder.MyPageStyleHeaderHolder;
 import com.sopt.freety.freety.view.my_page.data.MyPageModelHeaderData;
 import com.sopt.freety.freety.view.my_page.data.MyPagePickData;
-
 import java.util.List;
-
-import butterknife.OnClick;
 
 /**
  * Created by cmslab on 6/26/17.
@@ -37,16 +24,13 @@ public class MyPageModelRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
     private List<MyPageModelHeaderData> myPageModelHeaderDataList;  //Header
     private List<MyPagePickData> myPagePickDataList;    //recyclerView
     private Context context;
-    private PermissionListener permissionListener;
 
     public MyPageModelRecyclerAdapter(final List<MyPageModelHeaderData> myPageModelHeaderDataList,
                                       final List<MyPagePickData> myPagePickDataList,
-                                      final Context context,
-                                      final PermissionListener permissionListener) {
+                                      final Context context) {
         this.context = context;
         this.myPagePickDataList = myPagePickDataList;
         this.myPageModelHeaderDataList = myPageModelHeaderDataList;
-        this.permissionListener = permissionListener;
     }
 
     @Override

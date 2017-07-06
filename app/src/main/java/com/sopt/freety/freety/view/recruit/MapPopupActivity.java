@@ -114,8 +114,10 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState != null) {
+
             currentLocation = savedInstanceState.getParcelable(LOCATION);
             cameraPosition = savedInstanceState.getParcelable(CAMERA_POSITION);
+
         }
         setContentView(R.layout.activity_map_popup);
         Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
@@ -146,6 +148,18 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        googleApiClient.connect();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        googleApiClient.disconnect();
+    }
+
     protected synchronized void buildGoogleApiClient() {
         if (googleApiClient == null) {
             googleApiClient = new GoogleApiClient.Builder(this)
@@ -159,7 +173,11 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        getDevicePermission();
+        if (googleApiClient.isConnected()) {
+            getDevicePermission();
+        } else {
+            Log.i(TAG, "onConnected: googleApiClient is not connected yet.");
+        }
     }
 
     private void getDevicePermission() {
