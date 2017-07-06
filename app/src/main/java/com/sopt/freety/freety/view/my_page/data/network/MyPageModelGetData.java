@@ -1,5 +1,9 @@
 package com.sopt.freety.freety.view.my_page.data.network;
 
+import com.sopt.freety.freety.view.my_page.data.MyPageModelHeaderData;
+import com.sopt.freety.freety.view.my_page.data.MyPagePickData;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,6 +36,22 @@ public class MyPageModelGetData {
         private String postImg;
         private String title;
         private String place;
+
+        public int getPostId() {
+            return postId;
+        }
+
+        public String getPostImg() {
+            return postImg;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getPlace() {
+            return place;
+        }
     }
 
     public String getMessage() {
@@ -54,8 +74,12 @@ public class MyPageModelGetData {
         return modelPhoto3;
     }
 
-    public List<PickPostInfo> getModelPickList() {
-        return modelPickList;
+    public List<MyPagePickData> getModelPickList() {
+        List<MyPagePickData> list = new ArrayList<>();
+        for (PickPostInfo pickPostInfo : modelPickList) {
+            list.add(new MyPagePickData(pickPostInfo.getPostImg(), pickPostInfo.getPlace(), pickPostInfo.getTitle()));
+        }
+        return list;
     }
 
     public String getModelPhoto() {
@@ -63,6 +87,14 @@ public class MyPageModelGetData {
     }
     public String getModelName() {
         return modelInfo.getMemberName();
+    }
+
+    public List<MyPageModelHeaderData> getMyPageModelHeaderDataList() {
+        List<MyPageModelHeaderData> list = new ArrayList<>(3);
+        list.add(new MyPageModelHeaderData(modelPhoto1));
+        list.add(new MyPageModelHeaderData(modelPhoto2));
+        list.add(new MyPageModelHeaderData(modelPhoto3));
+        return list;
     }
 
 }

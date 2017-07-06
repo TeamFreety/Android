@@ -245,7 +245,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
 
     @Override
     public void onPause() {
-        super.onDestroy();
+        super.onPause();
         nearestBtn.setEnabled(false);
         googleApiClient.stopAutoManage(getActivity());
         googleApiClient.disconnect();
