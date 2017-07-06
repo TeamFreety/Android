@@ -102,6 +102,10 @@ public class MyPageDesignerGetData {
         }
     }
 
+    public MyPageStyleHeaderData getMyPageStyleHeaderData() {
+        return new MyPageStyleHeaderData(designerCareerText);
+    }
+
     public String getDesignerImageURL() {
         return designerInfo.getMemberPhoto();
     }
