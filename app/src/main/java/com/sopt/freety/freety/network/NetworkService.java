@@ -9,6 +9,8 @@ import com.sopt.freety.freety.view.login.data.AutoLoginResultData;
 import com.sopt.freety.freety.view.login.data.DuplicateData;
 import com.sopt.freety.freety.view.login.data.LoginRequestData;
 import com.sopt.freety.freety.view.login.data.LoginResultData;
+import com.sopt.freety.freety.view.login.data.SNSLoginRequestData;
+import com.sopt.freety.freety.view.login.data.SNSLoginResultData;
 import com.sopt.freety.freety.view.login.data.SignUpData;
 import com.sopt.freety.freety.view.login.data.SignUpResultData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
@@ -51,6 +53,14 @@ public interface NetworkService {
     @POST("/signup/model/email")
     Call<SignUpResultData> registerModelData(@Body SignUpData signUpData);
 
+    @POST("/signup/designer/sns")
+    Call<SignUpResultData> registerSNSDesignerData(@Body SignUpData signUpData);
+
+    @POST("/signup/model/sns")
+    Call<SignUpResultData> registerSNSModelData(@Body SignUpData signUpData);
+
+    @POST("/signup/")
+
     @GET("/duplicateCheck")
     Call<DuplicateData> checkDuplicate(@Query("tempEmail") String email);
 
@@ -59,6 +69,9 @@ public interface NetworkService {
 
     @POST("/login/email")
     Call<LoginResultData> login(@Body LoginRequestData data);
+
+    @POST("/login/sns")
+    Call<SNSLoginResultData> snslogin(@Body SNSLoginRequestData data);
 
     @GET("/postList")
     Call<PostListResultData> getHomePostData(@Query("sort") int type);

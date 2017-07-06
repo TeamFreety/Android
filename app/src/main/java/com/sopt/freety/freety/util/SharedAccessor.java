@@ -15,6 +15,7 @@ public class SharedAccessor {
         return pref.getString(Consts.PREF_TOKEN, "");
     }
 
+
     public static boolean isDesigner(Context context) {
         SharedPreferences pref = context.getSharedPreferences(Consts.PREF_KEY, Context.MODE_PRIVATE);
         String type = pref.getString(Consts.PREF_POSITION, Consts.TYPE_MODEL);

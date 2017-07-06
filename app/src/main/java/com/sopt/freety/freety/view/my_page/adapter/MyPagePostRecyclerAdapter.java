@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.data.PostListData;
 import com.sopt.freety.freety.view.my_page.adapter.holder.MyPagePostHolder;
 import com.sopt.freety.freety.view.my_page.data.MyPagePostData;
 
@@ -39,6 +40,14 @@ public class MyPagePostRecyclerAdapter extends RecyclerView.Adapter<MyPagePostHo
         Glide.with(context).load(myPagePostDataList.get(position).getImageURL()).override(164,187).centerCrop().thumbnail(0.001f).into(holder.getPostImage());
         holder.getAddressText().setText(myPagePostDataList.get(position).getAddress());
         holder.getTitleText().setText(myPagePostDataList.get(position).getTitle());
+    }
+
+    public void updatePostDataList(List<MyPagePostData> myPagePostDataList) {
+        this.myPagePostDataList = myPagePostDataList;
+        notifyDataSetChanged();
+    }
+    public List<MyPagePostData> getMyPagePostDataList() {
+        return myPagePostDataList;
     }
 
     @Override

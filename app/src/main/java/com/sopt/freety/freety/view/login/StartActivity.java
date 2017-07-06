@@ -16,6 +16,7 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.login.LoginBehavior;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.kakao.auth.AuthType;
@@ -31,15 +32,24 @@ import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
+
+import com.sopt.freety.freety.view.login.data.LoginRequestData;
+import com.sopt.freety.freety.view.login.data.LoginResultData;
+import com.sopt.freety.freety.view.login.data.SNSLoginRequestData;
+import com.sopt.freety.freety.view.login.data.SNSLoginResultData;
+
 import com.sopt.freety.freety.data.OnlyMsgResultData;
 import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.view.login.data.AutoLoginResultData;
 import com.sopt.freety.freety.view.main.MainActivity;
 
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -55,8 +65,13 @@ public class StartActivity extends AppCompatActivity {
 
     private CallbackManager callbackManager;
     private SessionCallback callback;
+
+
+    private String fUserId;
+    private String kUserId;
     private String userId;
     private String userName;
+
     // view
     private Button facebookBtn;
 
@@ -67,6 +82,7 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_first_login);
+        SharedAccessor.reset(this);
 
         Call<OnlyMsgResultData> autoLoginCall = AppController.getInstance().getNetworkService().auto(SharedAccessor.getToken(StartActivity.this));
         autoLoginCall.enqueue(new Callback<OnlyMsgResultData>() {
@@ -100,11 +116,25 @@ public class StartActivity extends AppCompatActivity {
         });
         callbackManager = CallbackManager.Factory.create();
         ButterKnife.bind(this);
+
+        facebookBtn = (Button)findViewById(R.id.facebookBtn);
+        fUserId="";
+        kUserId="";
+
         facebookBtn = (Button) findViewById(R.id.facebookBtn);
         facebookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //LoginManager - 요청된 읽기 또는 게시 권한으로 로그인 절차를 시작합니다.
+                List<String> permission =
+                        new ArrayList<>();
+                permission.add("email");
+                permission.add("public_profile");
+                permission.add("user_friends");
+                LoginManager.getInstance()
+                        .setLoginBehavior(LoginBehavior.NATIVE_WITH_FALLBACK)
+                        .logInWithReadPermissions(StartActivity.this,
+                                permission);
                 LoginManager.getInstance().logInWithReadPermissions(StartActivity.this,
                         Arrays.asList("public_profile", "email"));
                 LoginManager.getInstance().registerCallback(callbackManager,
@@ -122,8 +152,7 @@ public class StartActivity extends AppCompatActivity {
 
                                                 // Log.v("LoginActivity", response.toString());
                                                 try {
-                                                    userId = object.getString("email");
-                                                    userName = object.getString("name");
+                                                    fUserId = object.getString("id");
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();
                                                 }
@@ -132,15 +161,37 @@ public class StartActivity extends AppCompatActivity {
                                         });
                                 Bundle parameters = new Bundle();
                                 parameters.putString("fields", "id,name,email,gender, birthday");
+                                //parameters.get("id");
                                 request.setParameters(parameters);
                                 request.executeAsync();
 
-                                //Toast.makeText(getApplicationContext(),"facebook success",Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(StartActivity.this, SelectMemberTypeActivity.class);
-                                intent.putExtra("login case", "facebook");
-                                intent.putExtra("userId", userId);
-                                intent.putExtra("userName", userName);
-                                startActivity(intent);
+                                Call<SNSLoginResultData> call = AppController.getInstance().getNetworkService().snslogin(new SNSLoginRequestData(fUserId, kUserId));
+                                call.enqueue(new Callback<SNSLoginResultData>() {
+                                    @Override
+                                    public void onResponse(Call<SNSLoginResultData> call, Response<SNSLoginResultData> response) {
+                                        if (response.isSuccessful()) {
+                                            if (response.body().getMessage().equals("SNS login success")) {
+                                                response.body().registerToken(StartActivity.this);
+                                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                AppController.getInstance().resetPageStack();
+                                                startActivity(intent);
+                                            } else if (response.body().getMessage().equals("no information about SNS account")) {
+                                                Toast.makeText(StartActivity.this, "Freety에 아직 SNS 계정이 등록되지 않았습니다.", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(getApplicationContext(), SelectMemberTypeActivity.class);
+                                                intent.putExtra("login case","facebook");
+                                                intent.putExtra("fUserId",fUserId);
+                                                Log.i("facebook ID",fUserId);
+                                                AppController.getInstance().resetPageStack();
+                                                startActivity(intent);
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<SNSLoginResultData> call, Throwable t) {
+                                    }
+                                });
+
                                 finish();
                             }
 
@@ -174,6 +225,9 @@ public class StartActivity extends AppCompatActivity {
         @Override
         public void onSessionOpened() {
 
+            /*UserManagement.requestSignup(new MeResponseCallback(){
+
+            });*/
             UserManagement.requestMe(new MeResponseCallback() {
 
                 @Override
@@ -201,16 +255,39 @@ public class StartActivity extends AppCompatActivity {
                 public void onSuccess(UserProfile userProfile) {
                     //로그인에 성공하면 로그인한 사용자의 일련번호, 닉네임, 이미지url등을 리턴합니다.
                     //사용자 ID는 보안상의 문제로 제공하지 않고 일련번호는 제공합니다.
-                    userId = String.valueOf(userProfile.getId());
-                    userName = userProfile.getNickname();
 
-                    Log.e("UserProfile", userProfile.toString());
-                    Toast.makeText(getApplicationContext(), userId, Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(StartActivity.this, SelectMemberTypeActivity.class);
-                    intent.putExtra("login case", "kakao");
-                    intent.putExtra("userId", userId);
-                    intent.putExtra("userName", userName);
-                    startActivity(intent);
+                    fUserId = "";
+
+                    //userName = userProfile.getNickname();
+
+
+                    Call<SNSLoginResultData> call = AppController.getInstance().getNetworkService().snslogin(new SNSLoginRequestData(fUserId, kUserId));
+                    call.enqueue(new Callback<SNSLoginResultData>() {
+                        @Override
+                        public void onResponse(Call<SNSLoginResultData> call, Response<SNSLoginResultData> response) {
+                            if (response.isSuccessful()) {
+                                if (response.body().getMessage().equals("SNS login success")) {
+                                    response.body().registerToken(StartActivity.this);
+                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    AppController.getInstance().resetPageStack();
+                                    startActivity(intent);
+                                } else if (response.body().getMessage().equals("no information about SNS account")) {
+                                    Toast.makeText(StartActivity.this, "Freety에 아직 SNS 계정이 등록되지 않았습니다.", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(), SelectMemberTypeActivity.class);
+                                   // kUserId = String.valueOf(userProfile.getId());
+                                    intent.putExtra("login case","kakao");
+                                    intent.putExtra("kUserId",kUserId);
+                                    AppController.getInstance().resetPageStack();
+                                    startActivity(intent);
+                                }
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<SNSLoginResultData> call, Throwable t) {
+                        }
+                    });
                     finish();
                 }
             });
