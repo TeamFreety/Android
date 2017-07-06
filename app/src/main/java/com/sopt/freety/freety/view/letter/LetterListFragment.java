@@ -135,6 +135,7 @@ public class LetterListFragment extends Fragment implements SwipeRefreshLayout.O
                 oldList.add(newData);
             }
         }
+        Log.i(TAG, "update: size " + oldList.size());
     }
     
     @Override

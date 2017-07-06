@@ -15,21 +15,10 @@ import java.util.Random;
 
 public class MyPageModelHeaderData{
 
-
     public String imageURL;
-    public int imageSource;
 
-  public int getImageSource() {
-      return imageSource;
-  }
-
-  public static int getMockSource() {
-      Random random = new Random();
-      return random.nextInt() % 2 == 0 ? R.drawable.chat_list_elem : R.drawable.freety_logo;
-  }
-
-    public static MyPageModelHeaderData getMockData() {
-        return new MyPageModelHeaderData();
+    public MyPageModelHeaderData(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public String getImageURL() {

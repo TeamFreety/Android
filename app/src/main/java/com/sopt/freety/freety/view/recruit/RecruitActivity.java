@@ -143,6 +143,8 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
         AppController.getInstance().pushPageStack();
         Intent intent = new Intent(RecruitActivity.this, LetterActivity.class);
         intent.putExtra("memberId", memberId);
+        intent.putExtra("memberName", profileNameText.getText().toString());
+        intent.putExtra("memberImageURL", memberImageURL);
         startActivity(intent);
     }
 
@@ -159,6 +161,7 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
      */
     private boolean isPicked;
     private int memberId;
+    private String memberImageURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,8 +195,10 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
                     memberId = result.getMemberId();
                     imageViewPager.setAdapter(adapter);
                     imageViewPager.setCurrentItem(1000);
-                    Glide.with(RecruitActivity.this).load(result.getWriterImageURL()).thumbnail(0.3f)
-                            .bitmapTransform(new CropCircleTransformation(RecruitActivity.this)).into(profileImage);
+                    memberImageURL = result.getWriterImageURL();
+                    Glide.with(RecruitActivity.this).load(result.getWriterImageURL())
+                            .thumbnail(0.3f).bitmapTransform(new CropCircleTransformation(RecruitActivity.this))
+                            .into(profileImage);
                     profileTitleText.setText(result.getTitle());
                     profileNameText.setText(result.getWriterName());
                     if (result.isPicked()) {

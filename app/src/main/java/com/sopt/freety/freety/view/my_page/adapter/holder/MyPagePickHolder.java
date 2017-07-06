@@ -38,7 +38,7 @@ public class MyPagePickHolder extends RecyclerView.ViewHolder {
         return addressText;
     }
 
-    public TextView getStyleText() {
+    public TextView getTitleText() {
         return styleText;
     }
 }
