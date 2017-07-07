@@ -160,7 +160,7 @@ public class DesignerSNSSignUpActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         final SignUpResultData resultData = response.body();
                         if (resultData.getMessage().equals("signup success")) {
-                            SharedAccessor.register(DesignerSNSSignUpActivity.this, resultData.getMemberToken(), resultData.getPosition());
+                            SharedAccessor.register(DesignerSNSSignUpActivity.this, resultData.getMemberToken(), resultData.getPosition(), nameEditText.getText().toString());
                             AppController.getInstance().resetPageStack();
                             startActivity(new Intent(DesignerSNSSignUpActivity.this, MainActivity.class));
                         } else if(resultData.getMessage().equals("signup failure")){

@@ -8,11 +8,11 @@ public class PushRequestData {
 
     private int memberId;
     private String content;
-    private String sentDate;
+    private String serviceDate;
 
-    public PushRequestData(int memberId, String content, String sentDate) {
+    public PushRequestData(int memberId, String content, String serviceDate) {
         this.memberId = memberId;
         this.content = content;
-        this.sentDate = sentDate;
+        this.serviceDate = serviceDate;
     }
 }

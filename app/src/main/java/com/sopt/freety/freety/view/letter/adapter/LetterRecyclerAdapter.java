@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.util.DateParser;
 import com.sopt.freety.freety.view.letter.adapter.holder.LetterViewLeftHolder;
 import com.sopt.freety.freety.view.letter.adapter.holder.LetterViewRightHolder;
@@ -63,14 +64,15 @@ public class LetterRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             castedHolder.getContentText().setText(letterDataList.get(position).getContent());
         } else {
             LetterViewRightHolder castedHolder = (LetterViewRightHolder) holder;
-            if (letterDataList.get(position).getImageURL() != null) {
-                Glide.with(context).load(letterDataList.get(position).getImageURL()).thumbnail(0.3f)
+            String imageURL = SharedAccessor.getImageURL(context);
+            if (imageURL != null) {
+                Glide.with(context).load(imageURL).thumbnail(0.3f)
                         .bitmapTransform(new CropCircleTransformation(context)).into(castedHolder.getImage());
             } else {
                 Glide.with(context).load(R.drawable.placeholder_photo).thumbnail(0.3f)
                         .bitmapTransform(new CropCircleTransformation(context)).into(castedHolder.getImage());
             }
-            castedHolder.getNameText().setText(letterDataList.get(position).getName());
+            castedHolder.getNameText().setText(SharedAccessor.getName(context));
             castedHolder.getDateText().setText(DateParser.toPrettyFormat(letterDataList.get(position).getDate()));
             castedHolder.getContentText().setText(letterDataList.get(position).getContent());
         }

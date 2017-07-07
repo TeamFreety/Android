@@ -60,11 +60,6 @@ public class LetterActivity extends AppCompatActivity implements ScreenClickable
     @BindView(R.id.letter_refresh_layout)
     SwipeRefreshLayout refreshLayout;
 
-    /*
-    @BindView(R.id.letter_scroll)
-    ScrollView scrollView;
-    */
-
     private Realm realm;
     private LetterRecyclerAdapter adapter;
     private LinearLayoutManager layoutManager;

@@ -116,7 +116,7 @@ public class ModelSNSSignUpActivity extends AppCompatActivity implements ScreenC
                     if (response.isSuccessful()) {
                         final SignUpResultData resultData = response.body();
                         if (resultData.getMessage().equals("signup success")) {
-                            SharedAccessor.register(ModelSNSSignUpActivity.this, resultData.getMemberToken(), resultData.getPosition());
+                            SharedAccessor.register(ModelSNSSignUpActivity.this, resultData.getMemberToken(), resultData.getPosition(), nameEditText.getText().toString());
                             AppController.getInstance().resetPageStack();
                             startActivity(new Intent(ModelSNSSignUpActivity.this, MainActivity.class));
                         } else if(resultData.getMessage().equals("signup failure")){
@@ -125,14 +125,11 @@ public class ModelSNSSignUpActivity extends AppCompatActivity implements ScreenC
                             }else if(resultData.getDetail().equals("while making token")){
                                 Toast.makeText(ModelSNSSignUpActivity.this, "토큰 발급 실패", Toast.LENGTH_SHORT).show();
                             }
-                        }else{}
+                        }
                     }
                 }
-
                 @Override
-                public void onFailure(Call<SignUpResultData> call, Throwable t) {
-
-                }
+                public void onFailure(Call<SignUpResultData> call, Throwable t) {}
             });
         } else {
         }

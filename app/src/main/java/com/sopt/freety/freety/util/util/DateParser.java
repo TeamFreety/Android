@@ -11,6 +11,7 @@ import java.util.Date;
  * Created by cmslab on 7/4/17.
  */
 
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 public class DateParser {
@@ -59,7 +60,10 @@ public class DateParser {
     }
 
     public static String to() {
-       return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(new Date());
+        TimeZone tz = TimeZone.getTimeZone("Asia/Seoul");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        df.setTimeZone(tz);
+       return df.format(new Date());
     }
 
     public static String toDateTimeFormat(String date) {
