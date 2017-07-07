@@ -8,7 +8,6 @@
 
     <com.sopt.freety.freety.util.custom.ImageView34
         android:id="@+id/search_image"
-        android:src="@drawable/freety_logo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"/>
@@ -20,7 +19,6 @@
         android:orientation="vertical">
         <TextView
             android:id="@+id/search_address"
-            android:text="부천"
             android:textColor="#111111"
             android:paddingBottom="4dp"
             android:paddingTop="10dp"
@@ -32,7 +30,6 @@
 
         <TextView
             android:id="@+id/search_style"
-            android:text="스핀스왈로 펌"
             android:textColor="#676767"
             android:paddingBottom="12dp"
             android:textSize="16sp"

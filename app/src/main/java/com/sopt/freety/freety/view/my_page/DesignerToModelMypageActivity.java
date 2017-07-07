@@ -22,6 +22,7 @@ import com.sopt.freety.freety.view.my_page.data.network.MyPageModelGetData;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -91,6 +92,11 @@ public class DesignerToModelMypageActivity extends AppCompatActivity implements 
     public void onResume() {
         super.onResume();
         reload();
+    }
+
+    @OnClick(R.id.d_to_m_my_page_back_btn)
+    public void onBackBtn() {
+        onBackPressed();
     }
 
     @Override
