@@ -1,6 +1,5 @@
 package com.sopt.freety.freety.view.my_page;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -12,15 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-
-
-
 import android.widget.Toast;
 
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.data.OnlyMsgResultData;
-
 import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
@@ -28,19 +23,14 @@ import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.util.util.EditTextUtils;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageStyleRecyclerAdapter;
 import com.sopt.freety.freety.view.my_page.adapter.holder.MyPageStyleHeaderHolder;
-import com.sopt.freety.freety.view.my_page.data.network.MyPageStatusUpdateRequestData;
+import com.sopt.freety.freety.view.my_page.data.network.MyPageCareerRequestData;
 import com.sopt.freety.freety.view.property.ScreenClickable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import butterknife.OnClick;
-
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_DRAGGING;
@@ -166,8 +156,8 @@ public class MyPageDesignerPortfolioFragment extends Fragment implements ScreenC
             InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(careerEdit.getWindowToken(), 0);
             EditTextUtils.setUseableEditText(careerEdit, false);
-            Call<OnlyMsgResultData> call = AppController.getInstance().getNetworkService().getOkMsg(SharedAccessor.getToken(getContext()),
-                    new MyPageStatusUpdateRequestData(careerEdit.getText().toString()));
+            Call<OnlyMsgResultData> call = AppController.getInstance().getNetworkService().getCareerMsg(SharedAccessor.getToken(getContext()),
+                    new MyPageCareerRequestData(careerEdit.getText().toString()));
             call.enqueue(new Callback<OnlyMsgResultData>() {
                 @Override
                 public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
@@ -179,7 +169,7 @@ public class MyPageDesignerPortfolioFragment extends Fragment implements ScreenC
                 }
                 @Override
                 public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
-                    Toast.makeText(getContext(), "on failure", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "네트워크 연결이 좋지 않아 적용이 되지 않습니다.", Toast.LENGTH_SHORT).show();
                 }
             });
         }

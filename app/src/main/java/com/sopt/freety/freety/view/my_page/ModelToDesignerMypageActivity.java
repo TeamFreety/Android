@@ -7,13 +7,10 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,14 +25,12 @@ import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.util.util.EditTextUtils;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageOtherViewPager;
-import com.sopt.freety.freety.view.my_page.adapter.MyPageViewPagerAdapter;
 import com.sopt.freety.freety.view.my_page.data.MyPagePostData;
 import com.sopt.freety.freety.view.my_page.data.MyPageReviewData;
 import com.sopt.freety.freety.view.my_page.data.MyPageStyleBodyData;
 import com.sopt.freety.freety.view.my_page.data.MyPageStyleHeaderData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
 
-import java.text.ParseException;
 import java.util.List;
 
 import butterknife.BindView;
@@ -67,11 +62,9 @@ public class ModelToDesignerMypageActivity extends AppCompatActivity implements 
 
     @BindView(R.id.my_page_m_to_d_view_pager)
     ViewPagerEx myPageMToDViewPager;
+
     @BindView(R.id.m_to_d_mypage_designer_collapsing_bar)
     CollapsingToolbarLayout collapsingToolbarLayout;
-
-    @BindView(R.id.btn_m_to_d_my_page_chat)
-    ImageButton btnMToDMyPageChat;
 
     @BindView(R.id.m_to_d_my_page_hide_toolbar)
     Toolbar mToDMyPageHideToolbar;
@@ -112,10 +105,7 @@ public class ModelToDesignerMypageActivity extends AppCompatActivity implements 
             }
         });
 
-        if (SharedAccessor.isDesigner(getApplicationContext())) {
-            btnMToDMyPageChat.setEnabled(false);
-            btnMToDMyPageChat.setVisibility(View.INVISIBLE);
-        }
+
         EditTextUtils.setUseableEditText(editMToDMyPageDesignerStatus, false);
         reload();
     }
