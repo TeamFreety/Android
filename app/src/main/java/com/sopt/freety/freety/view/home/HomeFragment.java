@@ -58,9 +58,6 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
     @BindView(R.id.home_app_bar)
     AppBarLayout appBarLayout;
 
-    @BindView(R.id.home_collaspsing_relative_layout)
-    RelativeLayout collapsingRelativeLayout;
-
     @BindView(R.id.home_hide_toolbar)
     Toolbar toolbar;
 
@@ -128,6 +125,7 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
             public void onPageScrollStateChanged(int state) {
             }
         });
+
         return view;
     }
 

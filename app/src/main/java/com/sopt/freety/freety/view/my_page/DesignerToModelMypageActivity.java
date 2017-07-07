@@ -86,8 +86,6 @@ public class DesignerToModelMypageActivity extends AppCompatActivity implements 
 
     private void reload() {
         // TODO implment network service
-        
-        adapter = new MyPageModelRecyclerAdapter();
         dToMMyPageModelRecyclerView.setAdapter(adapter);
     }
 }

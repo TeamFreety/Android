@@ -58,9 +58,7 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_login);
         ButterKnife.bind(this);
-
-        //SharedAccessor.reset(this);
-
+        SharedAccessor.reset(this);
         HashKeyChecker.checkHashKey(this);
         callbackManager = CallbackManager.Factory.create();
         kakaoCallback = new SessionCallback();
@@ -189,7 +187,6 @@ public class StartActivity extends AppCompatActivity {
                 Toast.makeText(StartActivity.this, "데이터 로드 실패", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     @OnClick(R.id.facebookBtn)
