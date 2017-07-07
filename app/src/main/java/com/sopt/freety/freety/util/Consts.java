@@ -37,5 +37,7 @@ public class Consts {
     public static final int MODEL_PICTURE_2_CODE = 5001;
     public static final int MODEL_PICTURE_3_CODE = 5002;
 
+    public static final int REVIEW_WRITE_CODE = 707;
+
 }
 

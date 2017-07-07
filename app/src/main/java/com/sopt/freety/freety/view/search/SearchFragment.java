@@ -16,11 +16,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
@@ -53,8 +54,9 @@ import static com.sopt.freety.freety.R.id.fabtn_search_to_write;
  * Created by cmslab on 6/26/17.
  */
 
-public class SearchFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
+public class SearchFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, LocationListener {
 
+    private static final String TAG = "SearchFragment";
     @BindView(R.id.rv_search)
     RecyclerView mRecyclerView;
 
@@ -68,15 +70,13 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
                 .setRationaleConfirmText("확인")
                 .setRationaleMessage("\"Freety\"의 다음 작업을 허용하시겠습니까? 이 기기의 위치에 액세스하기")
                 .setDeniedMessage("거부하시면 볼수 없는데...")
-                .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+                .setPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
                 .check();
     }
 
-    @BindView(R.id.btn_search_nearest)
-    Button nearestBtn;
-
     @OnClick(R.id.btn_search_latest)
     public void onLatestBtn() {
+        googleApiClient.disconnect();
         updateLatestSortVersion();
     }
 
@@ -87,8 +87,6 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
         getActivity().overridePendingTransition(R.anim.screen_slide_up, R.anim.screen_slide_stop);
         AppController.getInstance().pushPageStack();
     }
-
-
 
     private SearchRecyclerAdapter adapter;
     private GridLayoutManager gridLayoutManager;
@@ -128,8 +126,6 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
         if (googleApiClient == null) {
             googleApiClient = buildGoogleApiClient();
         }
-        nearestBtn.setEnabled(false);
-
         updateLatestSortVersion();
         return view;
     }
@@ -206,13 +202,12 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
         });
     }
 
-    @SuppressWarnings("MissingPermission")
     private PermissionListener getPermissionListener() {
         return new PermissionListener() {
             @Override
             public void onPermissionGranted() {
-                Location currLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-                updateNearestSortVersion(currLocation.getLatitude(), currLocation.getLongitude());
+                Log.i(TAG, "onPermissionGranted: granted");
+                googleApiClient.connect();
             }
 
             @Override
@@ -223,16 +218,21 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
 
     protected synchronized GoogleApiClient buildGoogleApiClient() {
         return new GoogleApiClient.Builder(getActivity())
-                .enableAutoManage(getActivity(), this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
     }
 
+    @SuppressWarnings("MissingPermission")
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        nearestBtn.setEnabled(true);
+        Log.i(TAG, "onConnected: onConnected");
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setInterval(120000);
+        locationRequest.setFastestInterval(30000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
     }
 
     @Override
@@ -241,13 +241,12 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Log.i(TAG, "onConnectionFailed: fail");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        nearestBtn.setEnabled(false);
-        googleApiClient.stopAutoManage(getActivity());
         googleApiClient.disconnect();
     }
 
@@ -257,6 +256,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), WriteActivity.class);
+                    AppController.getInstance().pushPageStack();
                     getActivity().startActivity(intent);
                 }
             });
@@ -283,5 +283,11 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
             writeFloatingButton.setLayoutParams(p);
             writeFloatingButton.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        Log.i(TAG, "onLocationChanged: " + location);
+        updateNearestSortVersion(location.getLatitude(), location.getLongitude());
     }
 }

@@ -43,6 +43,12 @@ public class MyPageModelRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         this.myPageModelHeaderDataList = myPageModelHeaderDataList;
     }
 
+    public MyPageModelRecyclerAdapter(final List<MyPageModelHeaderData> myPageModelHeaderDataList,
+                                      final List<MyPagePickData> myPagePickDataList,
+                                      final Context context) {
+        this(myPageModelHeaderDataList, myPagePickDataList, context, null);
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View inflatedView;
@@ -65,19 +71,26 @@ public class MyPageModelRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
                     .override(200, 200).thumbnail(0.2f).into(myPageModelHeaderHolder.getBackPicture());
             Glide.with(context).load(myPageModelHeaderDataList.get(2).getImageURL())
                     .override(200, 200).thumbnail(0.2f).into(myPageModelHeaderHolder.getSidePicture());
-
-            myPageModelHeaderHolder.getFrontBtn().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {fragment.registerPhoto(Consts.MODEL_PICTURE_1_CODE);}
-            });
-            myPageModelHeaderHolder.getBackBtn().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {fragment.registerPhoto(Consts.MODEL_PICTURE_2_CODE);}
-            });
-            myPageModelHeaderHolder.getSideBtn().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {fragment.registerPhoto(Consts.MODEL_PICTURE_3_CODE);}
-            });
+            if (fragment != null) {
+                myPageModelHeaderHolder.getFrontBtn().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fragment.registerPhoto(Consts.MODEL_PICTURE_1_CODE);
+                    }
+                });
+                myPageModelHeaderHolder.getBackBtn().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fragment.registerPhoto(Consts.MODEL_PICTURE_2_CODE);
+                    }
+                });
+                myPageModelHeaderHolder.getSideBtn().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fragment.registerPhoto(Consts.MODEL_PICTURE_3_CODE);
+                    }
+                });
+            }
         } else {
             MyPagePickHolder castedHolder = (MyPagePickHolder) holder;
             castedHolder.getTitleText().setText(myPagePickDataList.get(position - 1).getTitle());

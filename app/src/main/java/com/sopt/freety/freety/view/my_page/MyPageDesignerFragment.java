@@ -31,7 +31,6 @@ import com.sopt.freety.freety.data.OnlyMsgResultData;
 import com.sopt.freety.freety.network.NetworkService;
 import com.sopt.freety.freety.util.Consts;
 import com.sopt.freety.freety.util.SharedAccessor;
-
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.util.util.EditTextUtils;
@@ -46,7 +45,6 @@ import com.sopt.freety.freety.view.property.ScreenClickable;
 import com.yongbeam.y_photopicker.util.photopicker.utils.YPhotoPickerIntent;
 
 import java.io.File;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,8 +67,12 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 
 public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRecyclerView.Callbacks, ScreenClickable{
 
+    private static final String TAG = "MyPageDesigner";
     @BindView(R.id.my_page_profile)
     ImageView profileImage;
+
+    @BindView(R.id.my_page_profile_change)
+    ImageButton profileChangeBtn;
 
     @BindView(R.id.text_my_page_designer_name)
     TextView designerNameText;
@@ -160,13 +162,7 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
             }
         });
 
-        if (SharedAccessor.isDesigner(getContext())) {
-            chatButton.setEnabled(false);
-            chatButton.setVisibility(View.INVISIBLE);
-        } else {
-            statusEditButton.setEnabled(false);
-            statusEditButton.setVisibility(View.INVISIBLE);
-        }
+
         EditTextUtils.setUseableEditText(designerStatusTextView, false);
         return view;
     }
@@ -210,16 +206,19 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
             call.enqueue(new Callback<OnlyMsgResultData>() {
                 @Override
                 public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
-                    if (!response.isSuccessful() && response.body().getMessage().equals("ok")) {
-                        Toast.makeText(getContext(), "네트워크 연결이 좋지 않아 적용이 되지 않습니다.", Toast.LENGTH_SHORT).show();
-                    } else {
+                    if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
                         Toast.makeText(getContext(), "적용완료", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "네트워크 연결이 좋지 않아 적용이 되지 않습니다.", Toast.LENGTH_SHORT).show();
                     }
                 }
                 @Override
                 public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
+                    Toast.makeText(getContext(), "on failure", Toast.LENGTH_SHORT).show();
                 }
             });
+
+
         }
     }
 
@@ -228,11 +227,15 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
         call.enqueue(new Callback<MyPageDesignerGetData>() {
             @Override
             public void onResponse(Call<MyPageDesignerGetData> call, Response<MyPageDesignerGetData> response) {
+
                 if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
+                    Log.i(TAG, "onResponse: " + response.body().getDesignerName());
                     myPageDesignerGetData = response.body();
-                    Glide.with(getContext()).load(response.body().getDesignerImageURL()).into(profileImage);
+                    Glide.with(getContext()).load(response.body().getDesignerImageURL())
+                            .override(200, 200).thumbnail(0.3f).bitmapTransform(new CropCircleTransformation(getContext()))
+                            .into(profileImage);
                     designerNameText.setText(response.body().getDesignerName());
-                    //designerStatusTextView atusTextView.setText(response.body().getDesignerStatusMsg());
+                    designerStatusTextView.setText(response.body().getDesignerStatusMsg());
 
                     viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
                     PagerAdapter pagerAdapter = new MyPageViewPagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
@@ -255,14 +258,14 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
             intent.setMaxSelectCount(1);
             intent.setSelectCheckBox(true);
             intent.setMaxGrideItemCount(3);
-            startActivityForResult(intent, Consts.DESIGNER_PROFILE_PHOTO_CODE);
+            getActivity().startActivityForResult(intent, Consts.DESIGNER_PROFILE_PHOTO_CODE);
         }
         @Override
         public void onPermissionDenied(ArrayList<String> deniedPermissions) {
         }
     };
 
-    @OnClick(R.id.my_page_profile)
+    @OnClick(R.id.my_page_profile_change)
     public void onPictureBtn() {
         new TedPermission(getContext())
                 .setPermissionListener(permissionListener)
@@ -273,7 +276,7 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
                 .check();
     }
 
-    public void onPictureRegistered(int requestCode, String path) {
+    public void onPictureRegistered(int requestCode, final String path) {
         final NetworkService networkService = AppController.getInstance().getNetworkService();
         switch (requestCode) {
             case Consts.DESIGNER_PROFILE_PHOTO_CODE:
@@ -286,8 +289,12 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
                 photoCall.enqueue(new Callback<OnlyMsgResultData>() {
                     @Override
                     public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
+                        Log.i("MyPage", "onResponse: " + response.raw());
+                        Log.i("MyPage", "onResponse: " + response.body().getMessage());
                         if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
-
+                            Glide.with(getContext()).load(path).
+                                    override(200, 200).thumbnail(0.3f).bitmapTransform(new CropCircleTransformation(getContext()))
+                                    .into(profileImage);
                         }
                     }
 

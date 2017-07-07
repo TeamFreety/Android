@@ -27,7 +27,6 @@ import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.helper.ImageSwicherHelper;
 import com.sopt.freety.freety.view.letter.LetterActivity;
 import com.sopt.freety.freety.view.my_page.ModelToDesignerMypageActivity;
-import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
 import com.sopt.freety.freety.view.recruit.adapter.RecruitViewPagerAdapter;
 import com.sopt.freety.freety.view.recruit.data.PickRequestData;
 import com.sopt.freety.freety.view.recruit.data.PickResultData;
@@ -58,6 +57,8 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
     public void onProfileClick(View view){
         Intent intent = new Intent(RecruitActivity.this, ModelToDesignerMypageActivity.class);
         intent.putExtra("memberId", memberId);
+        Toast.makeText(getApplicationContext(),"memberId : "+memberId, Toast.LENGTH_SHORT).show();
+        AppController.getInstance().pushPageStack();
         startActivity(intent);
     }
 

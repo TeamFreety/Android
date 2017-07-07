@@ -102,6 +102,9 @@ public class MyPageDesignerGetData {
         }
     }
 
+    public DesignerInfo getDesignerInfo(){
+        return  designerInfo;
+    }
     public String getDesignerImageURL() {
         return designerInfo.getMemberPhoto();
     }

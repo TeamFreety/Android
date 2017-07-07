@@ -4,8 +4,6 @@ import com.sopt.freety.freety.data.OnlyMsgResultData;
 import com.sopt.freety.freety.data.PostListResultData;
 import com.sopt.freety.freety.view.letter.data.LetterListResultData;
 import com.sopt.freety.freety.view.letter.data.PushRequestData;
-import com.sopt.freety.freety.view.login.JoinResult;
-import com.sopt.freety.freety.view.login.data.AutoLoginResultData;
 import com.sopt.freety.freety.view.login.data.DuplicateData;
 import com.sopt.freety.freety.view.login.data.LoginRequestData;
 import com.sopt.freety.freety.view.login.data.LoginResultData;
@@ -16,14 +14,13 @@ import com.sopt.freety.freety.view.login.data.SignUpResultData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageModelGetData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageReviewRequestData;
+import com.sopt.freety.freety.view.my_page.data.network.MyPageReviewResultData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageStatusUpdateRequestData;
-import com.sopt.freety.freety.view.my_page.data.network.MyPhotoRequestData;
 import com.sopt.freety.freety.view.recruit.data.PickRequestData;
 import com.sopt.freety.freety.view.recruit.data.PickResultData;
 import com.sopt.freety.freety.view.recruit.data.PostDetailResultData;
-import com.sopt.freety.freety.view.wirte.data.WritePhotoData;
-import com.sopt.freety.freety.view.wirte.data.WriteRequestData;
 import com.sopt.freety.freety.view.wirte.data.WritePostResultData;
+import com.sopt.freety.freety.view.wirte.data.WriteRequestData;
 
 import java.util.List;
 
@@ -119,8 +116,17 @@ public interface NetworkService {
     @GET("/postDetail/writer/{memberId}")
     Call<MyPageDesignerGetData> getOtherDesignerMyPage(@Header("member_token") String token, @Path("memberId") int memberId);
 
+    @GET("/letterDetail/mypage/{sent_mem_Id}")
+    Call<MyPageModelGetData> getOtherModelMyPage(@Header("member_token") String token, @Path("sent_mem_id") int memberId);
+
+    @Multipart
     @POST("/comment/writeComment")
-    Call<OnlyMsgResultData> registerReview(@Header("member_token") String token, @Body MyPageReviewRequestData data, @Part MultipartBody.Part imageBody);
+    Call<MyPageReviewResultData> registerReview(@Header("member_token") String token,
+                                                @Part("memberId") RequestBody memberId,
+                                                @Part("score") RequestBody score,
+                                                @Part("title") RequestBody title,
+                                                @Part("content") RequestBody content,
+                                                @Part MultipartBody.Part imageBody);
 
     @GET("/search/latest")
     Call<PostListResultData> getSearchLatestData();

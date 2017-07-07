@@ -31,11 +31,11 @@ public class HomeContentsViewPagerAdapter extends PagerAdapter {
         this.imageURLList = imageURLList;
         this.imageMockList = new ArrayList<>();
 
-        imageMockList.add(R.drawable.a);
-        imageMockList.add(R.drawable.b);
-        imageMockList.add(R.drawable.c);
-        imageMockList.add(R.drawable.d);
-        imageMockList.add(R.drawable.e);
+        imageMockList.add(R.drawable.image_1);
+        imageMockList.add(R.drawable.image_2);
+        imageMockList.add(R.drawable.image_3);
+        imageMockList.add(R.drawable.image_4);
+        imageMockList.add(R.drawable.image_5);
 
     }
 
@@ -48,10 +48,8 @@ public class HomeContentsViewPagerAdapter extends PagerAdapter {
 
         View viewItem = inflater.inflate(R.layout.fragment_home_contents, container, false);
         ImageView imageView = (ImageView) viewItem.findViewById(R.id.home_contents_image_view);
-        Glide.with(context).load(imageMockList.get(realPos)).override(360,196).centerCrop().thumbnail(0.1f).into(imageView);
-
-        ((ViewPager)container).addView(viewItem);
-
+        Glide.with(context).load(imageMockList.get(realPos)).into(imageView);
+        container.addView(viewItem);
         return viewItem;
     }
 

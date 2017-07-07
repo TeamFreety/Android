@@ -29,6 +29,7 @@ public class MyPageStyleRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
     private List<MyPageStyleHeaderData> myPageStyleHeaderDataList;
     private List<MyPageStyleBodyData> myPageStyleBodyDataList;
     private Context context;
+ 
 
     public MyPageStyleRecyclerAdapter(final String careerString,
                                       final List<MyPageStyleBodyData> myPageStyleBodyDataList,

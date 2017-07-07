@@ -107,6 +107,7 @@
                         app:srcCompat="@drawable/chat_list_elem" />
 
                     <ImageButton
+                        android:id="@+id/my_page_profile_change"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"

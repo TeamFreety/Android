@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
@@ -12,28 +13,45 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.application.AppController;
+import com.sopt.freety.freety.data.OnlyMsgResultData;
+import com.sopt.freety.freety.network.NetworkService;
 import com.sopt.freety.freety.util.Consts;
+import com.sopt.freety.freety.util.SharedAccessor;
+import com.sopt.freety.freety.util.util.DateParser;
 import com.sopt.freety.freety.view.my_page.data.MyPageReviewData;
+import com.sopt.freety.freety.view.my_page.data.network.MyPageReviewRequestData;
+import com.sopt.freety.freety.view.my_page.data.network.MyPageReviewResultData;
 import com.sopt.freety.freety.view.wirte.WriteActivity;
+import com.sopt.freety.freety.view.wirte.data.WritePostResultData;
+import com.sopt.freety.freety.view.wirte.data.WriteRequestData;
 import com.yongbeam.y_photopicker.util.photopicker.PhotoPickerActivity;
 import com.yongbeam.y_photopicker.util.photopicker.utils.YPhotoPickerIntent;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static java.security.AccessController.getContext;
 
 public class MyPageReviewPopupActivity extends AppCompatActivity {
 
@@ -88,6 +106,8 @@ public class MyPageReviewPopupActivity extends AppCompatActivity {
     EditText contentEdit;
 
     private MultipartBody.Part imageBody;
+    private String imagePath;
+    private int memberId;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,22 +116,17 @@ public class MyPageReviewPopupActivity extends AppCompatActivity {
         getWindow().getAttributes().width = (int)(0.9f * display.getWidth());
         getWindow().getAttributes().height = (int)(0.9f * display.getHeight());
         ButterKnife.bind(this);
+        memberId = getIntent().getIntExtra("memberId",0);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Consts.REVIEW_PICTURE_CODE && resultCode == RESULT_OK) {
             if (data != null) {
-                List<String> photos = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
-                String path = photos.get(0);
-                File file = new File(path);
-                RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);
-                imageBody = MultipartBody.Part.createFormData("image", file.getName(), fileBody);
-                Glide.with(MyPageReviewPopupActivity.this)
-                        .load(path)
-                        .override(100, 100)
-                        .thumbnail(0.3f)
-                        .placeholder(R.drawable.placeholder_photo)
+
+                imagePath = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS).get(0);
+                Glide.with(MyPageReviewPopupActivity.this).load(imagePath)
+                        .override(200, 200).thumbnail(0.3f)
                         .into(reviewImage);
             }
         }
@@ -130,4 +145,42 @@ public class MyPageReviewPopupActivity extends AppCompatActivity {
         public void onPermissionDenied(ArrayList<String> deniedPermissions) {
         }
     };
+
+    @OnClick(R.id.review_popup_register)
+    public void onClick(View view){
+        if(imagePath==null){
+            Toast.makeText(getApplicationContext(),"이미지 url이 null",Toast.LENGTH_SHORT).show();
+        }else
+        onRegister();
+    }
+
+    public void onRegister() {
+        final NetworkService networkService = AppController.getInstance().getNetworkService();
+        RequestBody memberIdBody = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(memberId));
+        RequestBody scoreBody = RequestBody.create(MediaType.parse("multipart/form-data"), scoreText.getText().toString());
+        RequestBody titleBody = RequestBody.create(MediaType.parse("multipart/form-data"), reviewTitleEdit.getText().toString());
+        RequestBody contentBody = RequestBody.create(MediaType.parse("multipart/form-data"), contentEdit.getText().toString());
+        File file = new File(imagePath);
+        RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);
+        MultipartBody.Part imageBody = MultipartBody.Part.createFormData("image", file.getName(), fileBody);
+        Call<MyPageReviewResultData> call = networkService.registerReview(SharedAccessor.getToken(MyPageReviewPopupActivity.this),
+                memberIdBody, scoreBody, titleBody, contentBody, imageBody);
+        call.enqueue(new Callback<MyPageReviewResultData>() {
+            @Override
+            public void onResponse(Call<MyPageReviewResultData> call, Response<MyPageReviewResultData> response) {
+                if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
+                    AppController.getInstance().popPageStack();
+                    setResult(RESULT_OK);
+                    finish();
+                } else {
+                    Toast.makeText(MyPageReviewPopupActivity.this, "만들기 실패", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MyPageReviewResultData> call, Throwable t) {
+
+            }
+        });
+    }
 }

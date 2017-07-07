@@ -27,14 +27,11 @@ import com.sopt.freety.freety.util.Consts;
 import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageModelRecyclerAdapter;
-import com.sopt.freety.freety.view.my_page.data.MyPageModelHeaderData;
-import com.sopt.freety.freety.view.my_page.data.MyPagePickData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageModelGetData;
 import com.yongbeam.y_photopicker.util.photopicker.utils.YPhotoPickerIntent;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -95,13 +92,6 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
 
         networkService = AppController.getInstance().getNetworkService();
         reload();
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                collapsingRelativeLayout.setAlpha(Math.max(1.0f - (OPACITIY_FACTOR * Math.abs(verticalOffset / (float)
-                        appBarLayout.getTotalScrollRange())), 0));
-            }
-        });
         recyclerView.setHasFixedSize(true);
         recyclerView.attachCallbacks(this);
         layoutManager = new GridLayoutManager(getContext(), 2);
@@ -210,6 +200,7 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
         MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), fileBody);
         switch (requestCode) {
             case Consts.MODEL_PROFILE_PHOTO_CODE:
+
                 Call<OnlyMsgResultData> photoCall = networkService.getOkMsgFromProfile(SharedAccessor.getToken(getActivity()),
                         body);
                 photoCall.enqueue(new Callback<OnlyMsgResultData>() {
@@ -221,14 +212,18 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
                                     .bitmapTransform(new CropCircleTransformation(getContext())).override(200, 200).thumbnail(0.2f)
                                     .into(profileImage);
                             Log.i("modelProfileUpload : ","success" );
+
                         } else {
                             Log.i("modelProfileUpload : ", "fail" );
                         }
+
                     }
 
                     @Override
                     public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
+
                         Log.i("modelProfileUpload : ", "on failure" );
+
                     }
                 });
 
