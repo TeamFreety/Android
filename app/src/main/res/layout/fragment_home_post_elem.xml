@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="@drawable/image_border"
-    android:gravity="center_horizontal">
+    android:gravity="center">
 
     <com.sopt.freety.freety.util.custom.ImageView34
         android:id="@+id/home_post_image"
         android:src="@drawable/freety_logo"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:scaleType="fitXY" />
 
@@ -19,17 +18,17 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="7dp"
         android:layout_marginRight="7dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="9dp"
+        android:layout_gravity="bottom"
         android:orientation="vertical"
         android:id="@+id/linearLayout">
 
         <TextView
             android:id="@+id/home_post_address"
             android:text="부천"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/postStyleColor"
             android:paddingBottom="4dp"
-            android:paddingTop="10dp"
+            android:paddingTop="4dp"
             android:textSize="12sp"
             android:textAlignment="center"
             android:background="#ffffff"
@@ -39,7 +38,7 @@
         <TextView
             android:id="@+id/home_post_style"
             android:text="스핀스왈로 펌"
-            android:textColor="@color/postStyleColor"
+            android:textColor="@color/colorBlack"
             android:paddingBottom="13dp"
             android:textSize="17sp"
             android:textAlignment="center"
@@ -49,5 +48,5 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+</FrameLayout>
 

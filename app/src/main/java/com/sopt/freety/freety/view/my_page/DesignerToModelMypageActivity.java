@@ -9,20 +9,15 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageModelRecyclerAdapter;
-import com.sopt.freety.freety.view.my_page.data.MyPageModelHeaderData;
-import com.sopt.freety.freety.view.my_page.data.MyPagePickData;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
+import static com.sopt.freety.freety.R.drawable.b;
+import static com.sopt.freety.freety.R.drawable.d;
 import static com.sopt.freety.freety.view.my_page.adapter.MyPageModelRecyclerAdapter.TYPE_HEADER;
 
 public class DesignerToModelMypageActivity extends AppCompatActivity implements ScrollFeedbackRecyclerView.Callbacks {
@@ -49,10 +44,6 @@ public class DesignerToModelMypageActivity extends AppCompatActivity implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_designer_to_model_mypage);
         ButterKnife.bind(this);
-        Glide.with(this).load(R.drawable.chat_list_elem)
-                .bitmapTransform(new CropCircleTransformation(getApplicationContext()))
-                .into(dToMMyPageModelProfile);
-
         dToMMyPageModelAppBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -60,10 +51,8 @@ public class DesignerToModelMypageActivity extends AppCompatActivity implements 
                         appBarLayout.getTotalScrollRange())), 0));
             }
         });
-
         dToMMyPageModelRecyclerView.setHasFixedSize(true);
         dToMMyPageModelRecyclerView.attachCallbacks(this);
-
         layoutManager = new GridLayoutManager(getApplicationContext(), 2);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup(){
             @Override
@@ -76,9 +65,6 @@ public class DesignerToModelMypageActivity extends AppCompatActivity implements 
             }
         });
         dToMMyPageModelRecyclerView.setLayoutManager(layoutManager);
-        //adapter = new MyPageModelRecyclerAdapter(mockDataList1, mockDataList2, getApplicationContext());
-        dToMMyPageModelRecyclerView.setAdapter(adapter);
-
     }
     @Override
     public boolean isAppBarCollapsed() {
@@ -88,8 +74,21 @@ public class DesignerToModelMypageActivity extends AppCompatActivity implements 
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        reload();
+    }
+
+    @Override
     public void setExpanded(boolean expanded) {
         dToMMyPageModelAppBar.setExpanded(expanded, true);
+    }
+
+    private void reload() {
+        // TODO implment network service
+        
+        adapter = new MyPageModelRecyclerAdapter();
+        dToMMyPageModelRecyclerView.setAdapter(adapter);
     }
 }
 

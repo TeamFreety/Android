@@ -15,7 +15,6 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.kakao.auth.AuthType;
 import com.kakao.auth.ErrorCode;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
@@ -27,16 +26,13 @@ import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
-
+import com.sopt.freety.freety.data.OnlyMsgResultData;
 import com.sopt.freety.freety.util.Consts;
+import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.util.HashKeyChecker;
 import com.sopt.freety.freety.view.login.data.SNSLoginRequestData;
 import com.sopt.freety.freety.view.login.data.SNSLoginResultData;
-
-import com.sopt.freety.freety.data.OnlyMsgResultData;
-import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.view.main.MainActivity;
-
 
 import java.util.Arrays;
 
@@ -62,7 +58,6 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_login);
         ButterKnife.bind(this);
-        SharedAccessor.reset(this);
         HashKeyChecker.checkHashKey(this);
         callbackManager = CallbackManager.Factory.create();
         kakaoCallback = new SessionCallback();
