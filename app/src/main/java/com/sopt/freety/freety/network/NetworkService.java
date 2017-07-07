@@ -13,7 +13,6 @@ import com.sopt.freety.freety.view.login.data.SignUpData;
 import com.sopt.freety.freety.view.login.data.SignUpResultData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageModelGetData;
-import com.sopt.freety.freety.view.my_page.data.network.MyPageReviewRequestData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageReviewResultData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageStatusUpdateRequestData;
 import com.sopt.freety.freety.view.recruit.data.PickRequestData;
@@ -116,8 +115,8 @@ public interface NetworkService {
     @GET("/postDetail/writer/{memberId}")
     Call<MyPageDesignerGetData> getOtherDesignerMyPage(@Header("member_token") String token, @Path("memberId") int memberId);
 
-    @GET("/letterDetail/mypage/{sent_mem_Id}")
-    Call<MyPageModelGetData> getOtherModelMyPage(@Header("member_token") String token, @Path("sent_mem_id") int memberId);
+    @GET("/letterDetail/mypage")
+    Call<MyPageModelGetData> getOtherModelMyPage(@Header("member_token") String token, @Query("sent_mem_id") int memberId);
 
     @Multipart
     @POST("/comment/writeComment")

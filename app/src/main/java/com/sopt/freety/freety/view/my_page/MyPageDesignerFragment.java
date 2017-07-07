@@ -295,6 +295,7 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
                             Glide.with(getContext()).load(path).
                                     override(200, 200).thumbnail(0.3f).bitmapTransform(new CropCircleTransformation(getContext()))
                                     .into(profileImage);
+                            SharedAccessor.registerURL(getContext(),path);
                         }
                     }
 
