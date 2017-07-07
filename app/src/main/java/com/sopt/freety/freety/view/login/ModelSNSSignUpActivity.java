@@ -7,7 +7,9 @@ import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -23,6 +25,7 @@ import com.sopt.freety.freety.util.util.FormatChecker;
 import com.sopt.freety.freety.view.login.data.SignUpData;
 import com.sopt.freety.freety.view.login.data.SignUpResultData;
 import com.sopt.freety.freety.view.main.MainActivity;
+import com.sopt.freety.freety.view.property.ScreenClickable;
 
 import java.util.List;
 
@@ -34,7 +37,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ModelSNSSignUpActivity extends AppCompatActivity {
+public class ModelSNSSignUpActivity extends AppCompatActivity implements ScreenClickable {
 
     @BindView(R.id.sign_up_sns_model_name_edit)
     EditText nameEditText;
@@ -160,5 +163,12 @@ public class ModelSNSSignUpActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void onScreenClick(View v) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(ageEditText.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(nameEditText.getWindowToken(), 0);
     }
 }

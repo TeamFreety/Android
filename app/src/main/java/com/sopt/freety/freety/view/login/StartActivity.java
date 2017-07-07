@@ -58,6 +58,9 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_login);
         ButterKnife.bind(this);
+
+        //SharedAccessor.reset(this);
+
         HashKeyChecker.checkHashKey(this);
         callbackManager = CallbackManager.Factory.create();
         kakaoCallback = new SessionCallback();
