@@ -49,18 +49,17 @@
 
                 <LinearLayout
                     android:layout_width="95dp"
-                    android:layout_height="30dp"
+                    android:layout_height="20dp"
                     android:orientation="horizontal"
+                    android:gravity="center"
                     android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="12dp"
-                    android:gravity="center">
+                    android:layout_centerHorizontal="true">
 
                     <ImageView
                         android:id="@+id/indicator1"
                         android:src="@drawable/fullcircle"
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
                         android:layout_marginLeft="1dp"
                         android:layout_marginRight="1dp"
                         />
@@ -68,8 +67,8 @@
                     <ImageView
                         android:id="@+id/indicator2"
                         android:src="@drawable/fullcircle"
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
                         android:layout_marginLeft="1dp"
                         android:layout_marginRight="1dp"
                         />
@@ -77,8 +76,8 @@
                     <ImageView
                         android:id="@+id/indicator3"
                         android:src="@drawable/fullcircle"
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
                         android:layout_marginLeft="1dp"
                         android:layout_marginRight="1dp"
                         />
@@ -86,8 +85,8 @@
                     <ImageView
                         android:id="@+id/indicator4"
                         android:src="@drawable/fullcircle"
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
                         android:layout_marginLeft="1dp"
                         android:layout_marginRight="1dp"
                         />
@@ -95,8 +94,8 @@
                     <ImageView
                         android:id="@+id/indicator5"
                         android:src="@drawable/fullcircle"
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
                         android:layout_marginLeft="1dp"
                         android:layout_marginRight="1dp"
                         />
