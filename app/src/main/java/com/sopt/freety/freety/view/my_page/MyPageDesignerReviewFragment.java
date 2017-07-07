@@ -130,7 +130,7 @@ public class MyPageDesignerReviewFragment extends Fragment {
         Toast.makeText(getApplicationContext(),"memberid : "+((ModelToDesignerMypageActivity) getActivity()).getMemberId(),Toast.LENGTH_SHORT).show();
         */
        Intent intent = new Intent(getApplicationContext(),MyPageReviewPopupActivity.class);
-        intent.putExtra("memberId", getActivity(ModelToDesignerMypageActivity);
+        //intent.putExtra("memberId",
         getActivity().startActivity(intent);
     }
 }
