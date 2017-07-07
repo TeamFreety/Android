@@ -75,12 +75,9 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
     private MyPageModelRecyclerAdapter adapter;
     private NetworkService networkService;
     private MyPageModelGetData myPageModelGetData;
-    private static final float OPACITIY_FACTOR = 1.8f;
     private int currRequestCode;
 
-    public MyPageModelFragment() {
-
-    }
+    public MyPageModelFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

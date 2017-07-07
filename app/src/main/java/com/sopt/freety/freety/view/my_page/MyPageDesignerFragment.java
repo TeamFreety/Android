@@ -143,6 +143,9 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
             public void onTabSelected(TabLayout.Tab tab) {
 
                 viewPager.setCurrentItem(tab.getPosition());
+                if (tab.getPosition() == 1 && myPageDesignerGetData.getMyStyleBodyDataList().size() == 0) {
+                    Toast.makeText(getContext(), "포트폴리오 사진 등록을 원하시면 관리자 이메일로 연락부탁드립니다.", Toast.LENGTH_SHORT).show();
+                }
             }
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
@@ -161,8 +164,6 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
                         appBarLayout.getTotalScrollRange())), 0));
             }
         });
-
-
         EditTextUtils.setUseableEditText(designerStatusTextView, false);
         return view;
     }
@@ -236,7 +237,6 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
                             .into(profileImage);
                     designerNameText.setText(response.body().getDesignerName());
                     designerStatusTextView.setText(response.body().getDesignerStatusMsg());
-
                     viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
                     PagerAdapter pagerAdapter = new MyPageViewPagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
                     viewPager.setAdapter(pagerAdapter);
