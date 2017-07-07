@@ -160,13 +160,7 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
             }
         });
 
-        if (SharedAccessor.isDesigner(getContext())) {
-            chatButton.setEnabled(false);
-            chatButton.setVisibility(View.INVISIBLE);
-        } else {
-            statusEditButton.setEnabled(false);
-            statusEditButton.setVisibility(View.INVISIBLE);
-        }
+
         EditTextUtils.setUseableEditText(designerStatusTextView, false);
         return view;
     }
@@ -220,6 +214,8 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
                 public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
                 }
             });
+
+
         }
     }
 

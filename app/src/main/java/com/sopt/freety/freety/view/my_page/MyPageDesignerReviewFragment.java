@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
@@ -93,14 +94,24 @@ public class MyPageDesignerReviewFragment extends Fragment {
         return view;
     }
 
+    // 자기마이페이지
     public void initByFragment() {
+        if (SharedAccessor.isDesigner(getContext())) {
+            reviewBtn.setEnabled(false);
+            reviewBtn.setVisibility(View.INVISIBLE);
+        }
         MyPageDesignerFragment myPageFragment = (MyPageDesignerFragment) getParentFragment();
         adapter = new MyPageReviewRecyclerAdapter(getContext(), myPageFragment.getMyPageReviewData());
         recyclerView.attachCallbacks(getParentFragment());
         recyclerView.setAdapter(adapter);
     }
 
+    // 남이 접근한 마이페이지
     public void initByActivity() {
+        if (SharedAccessor.isDesigner(getContext())) {
+            reviewBtn.setEnabled(false);
+            reviewBtn.setVisibility(View.INVISIBLE);
+        }
         ModelToDesignerMypageActivity parent = (ModelToDesignerMypageActivity) getActivity();
         adapter = new MyPageReviewRecyclerAdapter(getContext(), parent.getMyPageReviewData());
         recyclerView.attachCallbacks(getActivity());
@@ -112,8 +123,13 @@ public class MyPageDesignerReviewFragment extends Fragment {
     }
 
     @OnClick(R.id.fabtn_review_to_review)
-    public void onClick(){
-        Intent intent = new Intent(getApplicationContext(), MyPageReviewPopupActivity.class);
-        startActivity(intent);
+    public void onClickReviewBtn(){
+       /* Intent intent = new Intent(getActivity(), MyPageReviewPopupActivity.class);
+        intent.putExtra("memberId", ((ModelToDesignerMypageActivity) getActivity()).getMemberId());
+        Toast.makeText(getApplicationContext(),"memberid : "+((ModelToDesignerMypageActivity) getActivity()).getMemberId(),Toast.LENGTH_SHORT).show();
+        */
+       Intent intent = new Intent(getApplicationContext(),MyPageReviewPopupActivity.class);
+        intent.putExtra("memberId", ((ModelToDesignerMypageActivity) getActivity()).getMemberId());
+        getActivity().startActivity(intent);
     }
 }

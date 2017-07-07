@@ -147,14 +147,13 @@ public class ModelToDesignerMypageActivity extends AppCompatActivity implements 
     }
 
     private void reload() {
-
         Call<MyPageDesignerGetData> call = networkService.getOtherDesignerMyPage(SharedAccessor.getToken(getApplicationContext()), getIntent().getIntExtra("memberId", 0));
-
         call.enqueue(new Callback<MyPageDesignerGetData>() {
             @Override
             public void onResponse(Call<MyPageDesignerGetData> call, Response<MyPageDesignerGetData> response) {
+                Log.i(TAG, "onResponse: " + response.body().getDesignerImageURL());
                 if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
-                    Log.i(TAG, "onResponse: " + response.raw());
+                    Log.i(TAG, "onResponse: " + response.body().getDesignerImageURL());
                     myPageDesignerGetData = response.body();
                     Glide.with(getApplicationContext()).load(response.body().getDesignerImageURL())
                             .bitmapTransform(new CropCircleTransformation(ModelToDesignerMypageActivity.this)).into(imgMToDMypageDesignerProfile);
@@ -168,7 +167,9 @@ public class ModelToDesignerMypageActivity extends AppCompatActivity implements 
                 }
             }
             @Override
-            public void onFailure(Call<MyPageDesignerGetData> call, Throwable t) {}
+            public void onFailure(Call<MyPageDesignerGetData> call, Throwable t) {
+                Log.i(TAG, "onResponse: failure");
+            }
         });
     }
 
@@ -182,5 +183,9 @@ public class ModelToDesignerMypageActivity extends AppCompatActivity implements 
         } else {
             super.onBackPressed();
         }
+    }
+
+    public int getMemberId() {
+        return getIntent().getIntExtra("memberId", 0);
     }
 }

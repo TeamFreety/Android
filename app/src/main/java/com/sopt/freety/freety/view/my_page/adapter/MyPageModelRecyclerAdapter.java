@@ -80,7 +80,7 @@ public class MyPageModelRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
             MyPagePickHolder castedHolder = (MyPagePickHolder) holder;
             castedHolder.getTitleText().setText(myPagePickDataList.get(position - 1).getTitle());
             castedHolder.getAddressText().setText(myPagePickDataList.get(position - 1).getAddress());
-            Glide.with(context).load(myPageModelHeaderDataList.get(position -1 ).getImageURL()).override(200, 200).thumbnail(0.3f).into(castedHolder.getPostImage());
+            Glide.with(context).load(myPagePickDataList.get(position -1 ).getImageURL()).override(200, 200).thumbnail(0.3f).into(castedHolder.getPostImage());
         }
     }
 

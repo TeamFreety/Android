@@ -106,7 +106,7 @@ public class EmailLoginActivity extends AppCompatActivity implements ScreenClick
                                         startActivity(intent);
                                     } else if (response.body().getMessage().equals("no information about the account")) {
                                         Toast.makeText(EmailLoginActivity.this, "아이디나 비밀번호가 틀립니다.", Toast.LENGTH_SHORT).show();
-                                    } else {
+                                    } else if (response.body().getMessage().equals("login failure")){
                                         Toast.makeText(EmailLoginActivity.this, " 알 수 없는 로그인 실패.", Toast.LENGTH_SHORT).show();
                                     }
                                 }
