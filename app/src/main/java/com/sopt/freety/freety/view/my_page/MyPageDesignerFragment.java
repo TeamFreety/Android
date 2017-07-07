@@ -172,7 +172,7 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     onScreenClick(v);
                 }
-                return true;
+                return false;
             }
         });
         return view;

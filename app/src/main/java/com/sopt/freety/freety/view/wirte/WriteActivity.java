@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -28,14 +27,12 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.Request;
 import com.google.android.gms.maps.model.LatLng;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.data.OnlyMsgResultData;
-import com.sopt.freety.freety.network.NaverNetworkService;
 import com.sopt.freety.freety.network.NetworkService;
 import com.sopt.freety.freety.util.Consts;
 import com.sopt.freety.freety.util.SharedAccessor;
@@ -44,7 +41,6 @@ import com.sopt.freety.freety.util.util.FormatChecker;
 import com.sopt.freety.freety.view.property.ScreenClickable;
 import com.sopt.freety.freety.view.recruit.MapPopupActivity;
 import com.sopt.freety.freety.view.wirte.data.NaverResultData;
-import com.sopt.freety.freety.view.wirte.data.WritePhotoData;
 import com.sopt.freety.freety.view.wirte.data.WritePostResultData;
 import com.sopt.freety.freety.view.wirte.data.WriteRequestData;
 import com.yongbeam.y_photopicker.util.photopicker.PhotoPickerActivity;
@@ -374,7 +370,8 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
                                         progressDialog.setProgress(currentUploadedCount * (100 / imageBodyList.size()));
                                         if (currentUploadedCount == imageBodyList.size()) {
                                             progressDialog.dismiss();
-                                            onBackPressed();
+                                            setResult(RESULT_OK);
+                                            finish();
                                         }
                                     } else {
                                         Toast.makeText(WriteActivity.this, "사진 전송 오류", Toast.LENGTH_SHORT).show();
@@ -409,6 +406,7 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
         }  else if (result < 0) {
             ActivityCompat.finishAffinity(this);
         } else {
+            setResult(RESULT_CANCELED);
             super.onBackPressed();
         }
     }

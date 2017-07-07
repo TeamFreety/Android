@@ -7,7 +7,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,12 +27,15 @@ import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.util.util.EditTextUtils;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageStyleRecyclerAdapter;
+import com.sopt.freety.freety.view.my_page.adapter.holder.MyPageStyleHeaderHolder;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageStatusUpdateRequestData;
 import com.sopt.freety.freety.view.property.ScreenClickable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 import butterknife.OnClick;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,21 +64,8 @@ public class MyPageDesignerPortfolioFragment extends Fragment implements ScreenC
     @BindView(R.id.fabtn_designer_portfolio_to_top)
     FloatingActionButton topFabtn;
 
-    @BindView(R.id.edit_my_page_port_career)
-    EditText careerEdit;
 
-
-    @OnClick(R.id.my_page_style_career_edit_btn)
-    public void onEditBtn() {
-        EditTextUtils.setUseableEditText(careerEdit, true);
-        careerEdit.requestFocus();
-        careerEdit.setSelection(careerEdit.length());
-        InputMethodManager lManager = (InputMethodManager)getActivity().getSystemService(INPUT_METHOD_SERVICE);
-        lManager.showSoftInput(careerEdit, 0);
-    }
-
-    public MyPageDesignerPortfolioFragment() {
-    }
+    public MyPageDesignerPortfolioFragment() {}
 
     @Nullable
     @Override
@@ -138,20 +127,6 @@ public class MyPageDesignerPortfolioFragment extends Fragment implements ScreenC
         } else {
             initByActivity();
         }
-
-        if (!isMine) {
-            careerEdit.setVisibility(View.INVISIBLE);
-        }
-
-        careerEdit.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                   onRegisterPortfolioStatus();
-                }
-                return true;
-            }
-        });
         return view;
     }
 
@@ -159,7 +134,7 @@ public class MyPageDesignerPortfolioFragment extends Fragment implements ScreenC
     public void initByFragment() {
         MyPageDesignerFragment myPageFragment = (MyPageDesignerFragment) getParentFragment();
         adapter = new MyPageStyleRecyclerAdapter(myPageFragment.getMyPageStyleHeaderData().getCareerString(),
-                myPageFragment.getStyleBodyDataList(), getContext());
+                myPageFragment.getStyleBodyDataList(), getContext(), this);
         recyclerView.attachCallbacks(myPageFragment);
         recyclerView.setAdapter(adapter);
     }
@@ -182,6 +157,11 @@ public class MyPageDesignerPortfolioFragment extends Fragment implements ScreenC
     }
 
     public void onRegisterPortfolioStatus() {
+        EditText careerEdit = ((MyPageStyleHeaderHolder)recyclerView.findViewHolderForAdapterPosition(0)).getCareerText();
+        if (careerEdit == null) {
+            return;
+        }
+
         if (careerEdit.isFocused()) {
             InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(careerEdit.getWindowToken(), 0);
@@ -192,7 +172,7 @@ public class MyPageDesignerPortfolioFragment extends Fragment implements ScreenC
                 @Override
                 public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
                     if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
-                        Toast.makeText(getContext(), "상태 메세지가 수정되었습니다.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "경력사항이 수정되었습니다.", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getContext(), "네트워크 연결이 좋지 않아 적용이 되지 않습니다.", Toast.LENGTH_SHORT).show();
                     }
