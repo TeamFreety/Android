@@ -112,7 +112,7 @@ public class LetterListFragment extends Fragment implements SwipeRefreshLayout.O
                     Collections.sort(letterRoomDataList, new Comparator<LetterRoomData>() {
                         @Override
                         public int compare(LetterRoomData o1, LetterRoomData o2) {
-                            return o1.getDate().compareTo(o2.getDate());
+                            return o1.getDate().compareTo(o2.getDate()) * (-1);
                         }
                     });
                 }

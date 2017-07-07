@@ -71,12 +71,13 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
                 .setRationaleConfirmText("확인")
                 .setRationaleMessage("\"Freety\"의 다음 작업을 허용하시겠습니까? 이 기기의 위치에 액세스하기")
                 .setDeniedMessage("거부하시면 볼수 없는데...")
-                .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+                .setPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
                 .check();
     }
 
     @OnClick(R.id.btn_search_latest)
     public void onLatestBtn() {
+        googleApiClient.disconnect();
         updateLatestSortVersion();
     }
 
@@ -218,7 +219,6 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
 
     protected synchronized GoogleApiClient buildGoogleApiClient() {
         return new GoogleApiClient.Builder(getActivity())
-                .enableAutoManage(getActivity(), this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
@@ -242,12 +242,12 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Log.i(TAG, "onConnectionFailed: fail");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        googleApiClient.stopAutoManage(getActivity());
         googleApiClient.disconnect();
     }
 
