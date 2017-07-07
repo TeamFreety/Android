@@ -67,7 +67,7 @@
                     <RelativeLayout
                         android:id="@+id/rl1_mypage_m"
                         android:layout_width="match_parent"
-                        android:layout_height="113dp">
+                        android:layout_height="115dp">
 
                         <ImageView
                             android:layout_width="match_parent"
