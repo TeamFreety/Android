@@ -18,8 +18,8 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabtn_review_to_review"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:src="@drawable/mypage_writing"
             android:backgroundTint="#FFFFFF"
@@ -29,3 +29,5 @@
     </android.support.design.widget.CoordinatorLayout>
 
 </LinearLayout>
+
+

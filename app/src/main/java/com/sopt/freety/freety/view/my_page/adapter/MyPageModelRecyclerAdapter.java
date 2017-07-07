@@ -6,15 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+
 import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.util.Consts;
 import com.sopt.freety.freety.view.my_page.MyPageModelFragment;
+
 import com.sopt.freety.freety.view.my_page.adapter.holder.MyPageModelHeaderHolder;
 import com.sopt.freety.freety.view.my_page.adapter.holder.MyPagePickHolder;
 import com.sopt.freety.freety.view.my_page.data.MyPageModelHeaderData;
 import com.sopt.freety.freety.view.my_page.data.MyPagePickData;
-
 import java.util.List;
 
 /**
@@ -28,12 +29,14 @@ public class MyPageModelRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
     private List<MyPageModelHeaderData> myPageModelHeaderDataList;  //Header
     private List<MyPagePickData> myPagePickDataList;    //recyclerView
     private Context context;
+
     private MyPageModelFragment fragment;
 
     public MyPageModelRecyclerAdapter(final List<MyPageModelHeaderData> myPageModelHeaderDataList,
                                       final List<MyPagePickData> myPagePickDataList,
                                       final Context context,
                                       final MyPageModelFragment fragment) {
+
         this.context = context;
         this.fragment = fragment;
         this.myPagePickDataList = myPagePickDataList;
