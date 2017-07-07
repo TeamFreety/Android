@@ -1,5 +1,6 @@
 package com.sopt.freety.freety.view.my_page;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -21,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.network.NetworkService;
+import com.sopt.freety.freety.util.Consts;
 import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
@@ -187,5 +189,13 @@ public class ModelToDesignerMypageActivity extends AppCompatActivity implements 
 
     public int getMemberId() {
         return getIntent().getIntExtra("memberId", 0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Consts.REVIEW_WRITE_CODE && resultCode == RESULT_OK) {
+            reload();
+        }
     }
 }

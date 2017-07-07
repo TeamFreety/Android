@@ -119,8 +119,14 @@ public interface NetworkService {
     @GET("/letterDetail/mypage/{sent_mem_Id}")
     Call<MyPageModelGetData> getOtherModelMyPage(@Header("member_token") String token, @Path("sent_mem_id") int memberId);
 
+    @Multipart
     @POST("/comment/writeComment")
-    Call<MyPageReviewResultData> registerReview(@Header("member_token") String token, @Body MyPageReviewRequestData data, @Part MultipartBody.Part imageBody);
+    Call<MyPageReviewResultData> registerReview(@Header("member_token") String token,
+                                                @Part("memberId") RequestBody memberId,
+                                                @Part("score") RequestBody score,
+                                                @Part("title") RequestBody title,
+                                                @Part("content") RequestBody content,
+                                                @Part MultipartBody.Part imageBody);
 
     @GET("/search/latest")
     Call<PostListResultData> getSearchLatestData();
