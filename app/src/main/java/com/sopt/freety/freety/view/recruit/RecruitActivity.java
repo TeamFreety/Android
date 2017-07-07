@@ -58,6 +58,7 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
     public void onProfileClick(View view){
         Intent intent = new Intent(RecruitActivity.this, ModelToDesignerMypageActivity.class);
         intent.putExtra("memberId", memberId);
+        Toast.makeText(getApplicationContext(),"memberId : "+memberId, Toast.LENGTH_SHORT).show();
         startActivity(intent);
     }
 
