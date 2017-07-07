@@ -25,6 +25,7 @@ import com.sopt.freety.freety.view.letter.data.RPerson;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -103,9 +104,17 @@ public class LetterListFragment extends Fragment implements SwipeRefreshLayout.O
         call.enqueue(new Callback<LetterListResultData>() {
             @Override
             public void onResponse(Call<LetterListResultData> call, Response<LetterListResultData> response) {
+                Log.i(TAG, "onResponse: message : " + response.body().getMessage());
+                Log.i(TAG, "onResponse: " + response.raw());
+                Log.i(TAG, "onResponse: " + response.body().getRoomList().size());
                 if (response.isSuccessful() && response.body().getMessage().equals("success loading message list")) {
                     updateLetterList(letterRoomDataList, response.body().getRoomList());
-                    letterListAdapter.updateData(letterRoomDataList);
+                    Collections.sort(letterRoomDataList, new Comparator<LetterRoomData>() {
+                        @Override
+                        public int compare(LetterRoomData o1, LetterRoomData o2) {
+                            return o1.getDate().compareTo(o2.getDate());
+                        }
+                    });
                 }
                 refreshLayout.setRefreshing(false);
             }
@@ -113,6 +122,7 @@ public class LetterListFragment extends Fragment implements SwipeRefreshLayout.O
             public void onFailure(Call<LetterListResultData> call, Throwable t) {
                 Toast.makeText(getActivity(), "전송 실패", Toast.LENGTH_SHORT).show();
                 letterListAdapter.updateData(letterRoomDataList);
+
                 refreshLayout.setRefreshing(false);
             }
         });

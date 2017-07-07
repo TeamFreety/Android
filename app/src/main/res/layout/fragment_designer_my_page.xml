@@ -73,7 +73,7 @@
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@drawable/mypage_image" />
+                            android:src="@drawable/mypage_background_image" />
 
                         <ImageButton
                             android:id="@+id/btn_my_page_chat"
@@ -107,6 +107,7 @@
                         app:srcCompat="@drawable/chat_list_elem" />
 
                     <ImageButton
+                        android:id="@+id/my_page_profile_change"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"

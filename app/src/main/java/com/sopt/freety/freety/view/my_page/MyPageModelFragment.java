@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,20 +21,17 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.sopt.freety.freety.R;
-
 import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.data.OnlyMsgResultData;
 import com.sopt.freety.freety.network.NetworkService;
 import com.sopt.freety.freety.util.Consts;
 import com.sopt.freety.freety.util.SharedAccessor;
-
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.view.main.MainActivity;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageModelRecyclerAdapter;
 import com.sopt.freety.freety.view.my_page.data.MyPageModelHeaderData;
 import com.sopt.freety.freety.view.my_page.data.MyPagePickData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageModelGetData;
-import com.sopt.freety.freety.view.my_page.data.network.MyPhotoRequestData;
 import com.yongbeam.y_photopicker.util.photopicker.utils.YPhotoPickerIntent;
 
 import java.io.File;
@@ -80,7 +76,6 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
     @BindView(R.id.text_my_page_model_name)
     TextView modelNameText;
 
-
     private GridLayoutManager layoutManager;
     private MyPageModelRecyclerAdapter adapter;
     private NetworkService networkService;
@@ -109,7 +104,6 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
                         appBarLayout.getTotalScrollRange())), 0));
             }
         });
-
         recyclerView.setHasFixedSize(true);
         recyclerView.attachCallbacks(this);
         layoutManager = new GridLayoutManager(getContext(), 2);

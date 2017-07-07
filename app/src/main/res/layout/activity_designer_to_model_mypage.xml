@@ -25,12 +25,6 @@
             android:textSize="17sp" />
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/drop_shadow" />
-
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -72,7 +66,7 @@
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@drawable/mypage_image" />
+                            android:src="@drawable/mypage_background_image" />
 
                     </RelativeLayout>
 
@@ -82,17 +76,18 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginBottom="12dp"
                         android:layout_marginLeft="20dp"
-                        android:src="@drawable/circle_background" />
+                        android:src="@drawable/circle_background"
+                        android:id="@+id/imageView" />
 
                     <ImageView
                         android:id="@+id/d_to_m_my_page_model_profile"
                         android:layout_width="90dp"
                         android:layout_height="90dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="17dp"
-                        android:layout_marginLeft="25dp"
                         android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/chat_list_elem" />
+                        app:srcCompat="@drawable/chat_list_elem"
+                        android:layout_alignTop="@+id/imageView"
+                        android:layout_alignRight="@+id/imageView"
+                        android:layout_alignEnd="@+id/imageView" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -101,7 +96,7 @@
                         android:gravity="center_vertical">
 
                         <TextView
-                            android:id="@+id/d_to_m_text_my_page_designer_name"
+                            android:id="@+id/d_to_m_text_my_page_model_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="140dp"
@@ -125,4 +120,11 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     </android.support.design.widget.CoordinatorLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/drop_shadow" />
+
 </LinearLayout>

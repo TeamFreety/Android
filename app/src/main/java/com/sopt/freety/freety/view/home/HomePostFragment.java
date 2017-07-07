@@ -114,7 +114,7 @@ public class HomePostFragment extends Fragment {
     topFabtn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            recyclerView.smoothScrollToPosition( 0);
+            recyclerView.smoothScrollToPosition(0);
         }
     });
 

@@ -11,24 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sopt.freety.freety.R;
-import com.sopt.freety.freety.application.AppController;
-import com.sopt.freety.freety.network.NetworkService;
-import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageStyleRecyclerAdapter;
-import com.sopt.freety.freety.view.my_page.data.MyPageStyleBodyData;
-import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
-
-import java.util.Collections;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_DRAGGING;
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
@@ -38,7 +27,7 @@ import static com.sopt.freety.freety.view.my_page.adapter.MyPageStyleRecyclerAda
  * Created by cmslab on 6/26/17.
  */
 
-public class MyPageDesignerStyleFragment extends Fragment {
+public class MyPageDesignerPortfolioFragment extends Fragment {
 
     @BindView(R.id.my_page_style_recyeler_view)
     ScrollFeedbackRecyclerView recyclerView;
@@ -51,7 +40,7 @@ public class MyPageDesignerStyleFragment extends Fragment {
     @BindView(R.id.fabtn_designer_portfolio_to_top)
     FloatingActionButton topFabtn;
 
-    public MyPageDesignerStyleFragment() {
+    public MyPageDesignerPortfolioFragment() {
     }
 
     @Nullable
@@ -87,6 +76,13 @@ public class MyPageDesignerStyleFragment extends Fragment {
                     }
                 }
 
+        });
+
+        topFabtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.smoothScrollToPosition(0);
+            }
         });
 
         layoutManager = new GridLayoutManager(getContext(), 3);

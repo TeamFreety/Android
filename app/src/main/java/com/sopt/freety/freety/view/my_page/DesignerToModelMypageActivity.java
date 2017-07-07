@@ -1,5 +1,6 @@
 package com.sopt.freety.freety.view.my_page;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -11,17 +12,20 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.application.AppController;
+import com.sopt.freety.freety.network.NetworkService;
+import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageModelRecyclerAdapter;
-import com.sopt.freety.freety.view.my_page.data.MyPageModelHeaderData;
-import com.sopt.freety.freety.view.my_page.data.MyPagePickData;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.sopt.freety.freety.view.my_page.data.network.MyPageModelGetData;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.http.HEAD;
 
 import static com.sopt.freety.freety.view.my_page.adapter.MyPageModelRecyclerAdapter.TYPE_HEADER;
 
@@ -31,7 +35,7 @@ public class DesignerToModelMypageActivity extends AppCompatActivity implements 
     Toolbar dToMMyPageModelHideToolbar;
     @BindView(R.id.d_to_m_my_page_model_profile)
     ImageView dToMMyPageModelProfile;
-    @BindView(R.id.d_to_m_text_my_page_designer_name)
+    @BindView(R.id.d_to_m_text_my_page_model_name)
     TextView dToMTextMyPageDesignerName;
     @BindView(R.id.m_to_d_my_page_model_collaspsing_relative_layout)
     RelativeLayout mToDMyPageModelCollaspsingRelativeLayout;
@@ -43,16 +47,17 @@ public class DesignerToModelMypageActivity extends AppCompatActivity implements 
     private GridLayoutManager layoutManager;
     private MyPageModelRecyclerAdapter adapter;
     private static final float OPACITIY_FACTOR = 1.8f;
+    private MyPageModelGetData myPageModelGetData;
+    private String memberId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_designer_to_model_mypage);
         ButterKnife.bind(this);
-        Glide.with(this).load(R.drawable.chat_list_elem)
-                .bitmapTransform(new CropCircleTransformation(getApplicationContext()))
-                .into(dToMMyPageModelProfile);
 
+        Intent intent = getIntent();
+        memberId = intent.getStringExtra("memberId");
         dToMMyPageModelAppBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -60,10 +65,8 @@ public class DesignerToModelMypageActivity extends AppCompatActivity implements 
                         appBarLayout.getTotalScrollRange())), 0));
             }
         });
-
         dToMMyPageModelRecyclerView.setHasFixedSize(true);
         dToMMyPageModelRecyclerView.attachCallbacks(this);
-
         layoutManager = new GridLayoutManager(getApplicationContext(), 2);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup(){
             @Override
@@ -76,9 +79,6 @@ public class DesignerToModelMypageActivity extends AppCompatActivity implements 
             }
         });
         dToMMyPageModelRecyclerView.setLayoutManager(layoutManager);
-        //adapter = new MyPageModelRecyclerAdapter(mockDataList1, mockDataList2, getApplicationContext());
-        dToMMyPageModelRecyclerView.setAdapter(adapter);
-
     }
     @Override
     public boolean isAppBarCollapsed() {
@@ -88,8 +88,38 @@ public class DesignerToModelMypageActivity extends AppCompatActivity implements 
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        reload();
+    }
+
+    @Override
     public void setExpanded(boolean expanded) {
         dToMMyPageModelAppBar.setExpanded(expanded, true);
+    }
+
+
+    final NetworkService networkService = AppController.getInstance().getNetworkService();
+    private void reload() {
+
+        Call<MyPageModelGetData> call = networkService.getOtherModelMyPage(SharedAccessor.getToken(getApplicationContext()), getIntent().getIntExtra("memberId", 0));
+        call.enqueue(new Callback<MyPageModelGetData>() {
+            @Override
+            public void onResponse(Call<MyPageModelGetData> call, Response<MyPageModelGetData> response) {
+                if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
+                    myPageModelGetData = response.body();
+                    Glide.with(getApplicationContext()).load(response.body().getModelPhoto())
+                            .override(200, 200).thumbnail(0.2f).bitmapTransform(new CropCircleTransformation(getApplicationContext()))
+                            .into(dToMMyPageModelProfile);
+                    dToMTextMyPageDesignerName.setText(response.body().getModelName());
+                    adapter = new MyPageModelRecyclerAdapter(myPageModelGetData.getMyPageModelHeaderDataList(), myPageModelGetData.getModelPickList(), getApplicationContext());
+                    dToMMyPageModelRecyclerView.setAdapter(adapter);
+                }
+            }
+            @Override
+            public void onFailure(Call<MyPageModelGetData> call, Throwable t) {}
+        });
+
     }
 }
 

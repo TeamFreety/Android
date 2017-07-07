@@ -6,9 +6,9 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 
 import com.sopt.freety.freety.network.NetworkService;
+import com.sopt.freety.freety.view.my_page.MyPageDesignerPortfolioFragment;
 import com.sopt.freety.freety.view.my_page.MyPageDesignerPostFragment;
 import com.sopt.freety.freety.view.my_page.MyPageDesignerReviewFragment;
-import com.sopt.freety.freety.view.my_page.MyPageDesignerStyleFragment;
 
 /**
  * Created by cmslab on 6/26/17.
@@ -37,7 +37,7 @@ public class MyPageViewPagerAdapter extends FragmentStatePagerAdapter {
                 myPagePostFragment.setMine(true);
                 return myPagePostFragment;
             case INDEX_STYLE:
-                MyPageDesignerStyleFragment myPageStyleFragment = new MyPageDesignerStyleFragment();
+                MyPageDesignerPortfolioFragment myPageStyleFragment = new MyPageDesignerPortfolioFragment();
                 myPageStyleFragment.setMine(true);
                 return myPageStyleFragment;
             case INDEX_REVIEW:

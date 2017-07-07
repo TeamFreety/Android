@@ -2,7 +2,6 @@ package com.sopt.freety.freety.view.recruit;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -27,7 +26,6 @@ import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.helper.ImageSwicherHelper;
 import com.sopt.freety.freety.view.letter.LetterActivity;
 import com.sopt.freety.freety.view.my_page.ModelToDesignerMypageActivity;
-import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
 import com.sopt.freety.freety.view.recruit.adapter.RecruitViewPagerAdapter;
 import com.sopt.freety.freety.view.recruit.data.PickRequestData;
 import com.sopt.freety.freety.view.recruit.data.PickResultData;
@@ -240,14 +238,15 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
 
     @Override
     public void onBackPressed() {
-        int result = AppController.getInstance().popPageStack();
-        if (result == 0) {
-            Toast.makeText(this, "한 번 더 터치하시면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show();
-        }  else if (result < 0) {
-            ActivityCompat.finishAffinity(this);
-        } else {
-            super.onBackPressed();
-        }
+        super.onBackPressed();
+//        int result = AppController.getInstance().popPageStack();
+//        if (result == 0) {
+//            Toast.makeText(this, "한 번 더 터치하시면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show();
+//        }  else if (result < 0) {
+//            ActivityCompat.finishAffinity(this);
+//        } else {
+//            super.onBackPressed();
+//        }
     }
 
 

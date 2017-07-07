@@ -31,11 +31,11 @@ public class HomeContentsViewPagerAdapter extends PagerAdapter {
         this.imageURLList = imageURLList;
         this.imageMockList = new ArrayList<>();
 
-        imageMockList.add(R.drawable.a);
-        imageMockList.add(R.drawable.b);
-        imageMockList.add(R.drawable.c);
-        imageMockList.add(R.drawable.d);
-        imageMockList.add(R.drawable.e);
+        imageMockList.add(R.drawable.image_1);
+        imageMockList.add(R.drawable.image_2);
+        imageMockList.add(R.drawable.image_3);
+        imageMockList.add(R.drawable.image_4);
+        imageMockList.add(R.drawable.image_5);
 
     }
 

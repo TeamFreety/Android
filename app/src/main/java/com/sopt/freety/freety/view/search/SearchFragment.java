@@ -128,8 +128,6 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
         if (googleApiClient == null) {
             googleApiClient = buildGoogleApiClient();
         }
-        nearestBtn.setEnabled(false);
-
         updateLatestSortVersion();
         return view;
     }
@@ -206,13 +204,11 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
         });
     }
 
-    @SuppressWarnings("MissingPermission")
     private PermissionListener getPermissionListener() {
         return new PermissionListener() {
             @Override
             public void onPermissionGranted() {
-                Location currLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-                updateNearestSortVersion(currLocation.getLatitude(), currLocation.getLongitude());
+                googleApiClient.connect();
             }
 
             @Override
@@ -230,9 +226,12 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
                 .build();
     }
 
+    @SuppressWarnings("MissingPermission")
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        nearestBtn.setEnabled(true);
+        Location currLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+        Log.i("SearchFragment", "onPermissionGranted: " + currLocation);
+        updateNearestSortVersion(currLocation.getLatitude(), currLocation.getLongitude());
     }
 
     @Override
@@ -246,7 +245,6 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
     @Override
     public void onPause() {
         super.onPause();
-        nearestBtn.setEnabled(false);
         googleApiClient.stopAutoManage(getActivity());
         googleApiClient.disconnect();
     }
