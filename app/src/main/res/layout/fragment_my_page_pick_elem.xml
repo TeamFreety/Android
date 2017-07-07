@@ -13,7 +13,7 @@
 
     <com.sopt.freety.freety.util.custom.ImageView34
         android:id="@+id/my_page_pick_list_image"
-        android:src="@drawable/freety_logo"
+        android:src="@drawable/mypage_photo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"/>

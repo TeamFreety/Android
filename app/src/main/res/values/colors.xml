@@ -24,4 +24,6 @@
 
     <color name="emeraldColor">#B1F5E4</color>
 
+    <color name="seekBarHighlight">#7EEFD3</color>
+    <color name="seekBarBase">#95989A </color>
     </resources>
