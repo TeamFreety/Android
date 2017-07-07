@@ -34,9 +34,11 @@
             android:id="@+id/btn_to_model_mypage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/letter_model_btn"
+            android:background="@null"
             android:layout_centerVertical="true"
-            android:layout_marginRight="8dp"
-            android:layout_alignParentEnd="true"/>
+            android:layout_marginRight="8dp" />
 
         <View
             android:layout_width="match_parent"

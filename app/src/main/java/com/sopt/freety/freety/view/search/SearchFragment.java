@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -63,6 +64,12 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
     @BindView(fabtn_search_to_write)
     FloatingActionButton writeFloatingButton;
 
+    @BindView(R.id.btn_search_nearest)
+    Button nearestBtn;
+
+    @BindView(R.id.btn_search_latest)
+    Button latestBtn;
+
     @OnClick(R.id.btn_search_nearest)
     public void onDistanceBtn() {
         new TedPermission(getContext())
@@ -72,13 +79,24 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
                 .setDeniedMessage("거부하시면 볼수 없는데...")
                 .setPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
                 .check();
+
+        nearestBtn.setBackgroundResource(R.drawable.search_latest_btn);
+        nearestBtn.setTextColor(getResources().getColor(R.color.colorBtnClick));
+        latestBtn.setBackgroundResource(R.drawable.search_nearest_btn);
+        latestBtn.setTextColor(getResources().getColor(R.color.colorBtnUnClick));
     }
 
     @OnClick(R.id.btn_search_latest)
     public void onLatestBtn() {
         googleApiClient.disconnect();
         updateLatestSortVersion();
+
+        latestBtn.setBackgroundResource(R.drawable.search_latest_btn);
+        latestBtn.setTextColor(getResources().getColor(R.color.colorBtnClick));
+        nearestBtn.setBackgroundResource(R.drawable.search_nearest_btn);
+        nearestBtn.setTextColor(getResources().getColor(R.color.colorBtnUnClick));
     }
+
 
     @OnClick({R.id.img_search_filter, R.id.search_filter_btn2})
     public void onFilterBtn() {
@@ -100,6 +118,8 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         ButterKnife.bind(this, view);
         hideIfModelWindow();
+        latestBtn.setBackgroundResource(R.drawable.search_latest_btn);
+        latestBtn.setTextColor(getResources().getColor(R.color.colorBtnClick));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.search_image_offset));
         gridLayoutManager = new GridLayoutManager(getContext(), 2);

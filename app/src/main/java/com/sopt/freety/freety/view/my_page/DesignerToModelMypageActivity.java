@@ -6,6 +6,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,11 +22,11 @@ import com.sopt.freety.freety.view.my_page.data.network.MyPageModelGetData;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.HEAD;
 
 import static com.sopt.freety.freety.view.my_page.adapter.MyPageModelRecyclerAdapter.TYPE_HEADER;
 
@@ -93,31 +94,40 @@ public class DesignerToModelMypageActivity extends AppCompatActivity implements 
         reload();
     }
 
+    @OnClick(R.id.d_to_m_my_page_back_btn)
+    public void onBackBtn() {
+        onBackPressed();
+    }
+
     @Override
     public void setExpanded(boolean expanded) {
         dToMMyPageModelAppBar.setExpanded(expanded, true);
     }
-
+    private static final String TAG = "MyPageDesigner";
 
     final NetworkService networkService = AppController.getInstance().getNetworkService();
     private void reload() {
 
         Call<MyPageModelGetData> call = networkService.getOtherModelMyPage(SharedAccessor.getToken(getApplicationContext()), getIntent().getIntExtra("memberId", 0));
+        
         call.enqueue(new Callback<MyPageModelGetData>() {
             @Override
             public void onResponse(Call<MyPageModelGetData> call, Response<MyPageModelGetData> response) {
+                Log.i(TAG, "onResponse: " + response.raw());
                 if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
                     myPageModelGetData = response.body();
                     Glide.with(getApplicationContext()).load(response.body().getModelPhoto())
                             .override(200, 200).thumbnail(0.2f).bitmapTransform(new CropCircleTransformation(getApplicationContext()))
                             .into(dToMMyPageModelProfile);
                     dToMTextMyPageDesignerName.setText(response.body().getModelName());
-                    adapter = new MyPageModelRecyclerAdapter(myPageModelGetData.getMyPageModelHeaderDataList(), myPageModelGetData.getModelPickList(), getApplicationContext());
+                    adapter = new MyPageModelRecyclerAdapter(myPageModelGetData.getMyPageModelHeaderDataList(), myPageModelGetData.getModelPickList(), DesignerToModelMypageActivity.this);
                     dToMMyPageModelRecyclerView.setAdapter(adapter);
                 }
             }
             @Override
-            public void onFailure(Call<MyPageModelGetData> call, Throwable t) {}
+            public void onFailure(Call<MyPageModelGetData> call, Throwable t) {
+                Log.i(TAG, "onFailure: failure");
+            }
         });
 
     }

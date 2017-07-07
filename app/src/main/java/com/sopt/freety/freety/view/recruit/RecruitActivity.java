@@ -46,7 +46,6 @@ import retrofit2.Response;
 public class RecruitActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String TAG = "RecruitActivity";
-
     @BindView(R.id.recruit_image_view_pager)
     ViewPager imageViewPager;
 
@@ -93,7 +92,7 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
     TextView belongNameText;
 
     @OnClick(R.id.recruit_pick_btn)
-    public void onPickBtnClick(Button button) {
+    public void onPickBtnClick(final Button button) {
 
         if (isPicked) {
             int currPickNumber = Integer.parseInt(button.getText().toString());
@@ -108,25 +107,17 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
             button.setText(String.valueOf(currPickNumber + 1));
         }
 
+        button.setEnabled(false);
         int postId = getIntent().getIntExtra("postId", 0);
         Call<PickResultData> pickResultDataCall = networkService.pick(SharedAccessor.getToken(RecruitActivity.this), new PickRequestData(postId, isPicked));
         pickResultDataCall.enqueue(new Callback<PickResultData>() {
             @Override
             public void onResponse(Call<PickResultData> call, Response<PickResultData> response) {
                 if (response.isSuccessful()) {
-                    String resultMsg = response.body().getResult();
+                    String resultMsg = response.body().getMessage();
                     Log.i(TAG, "onResponse: " + resultMsg);
-                    if (isPicked) {
-                        if (!resultMsg.equals("unpick success")) {
-                            throw new RuntimeException("unexpected result");
-                        }
-                        isPicked = !isPicked;
-                    } else {
-                        if (!resultMsg.equals("pick success")) {
-                            throw new RuntimeException("unexpected result");
-                        }
-                        isPicked = !isPicked;
-                    }
+                    isPicked = !isPicked;
+                    button.setEnabled(true);
                 }
             }
             @Override
@@ -223,6 +214,7 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
                     }
                     latLng = result.getLatLng();
                     hairInfoText.setText(result.getContent());
+                    Log.i(TAG, "onResponse: " + result.getAddress());
                     addressText.setText(result.getAddress());
                     belongNameText.setText(result.getWriterBelongName());
 
@@ -236,6 +228,16 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
                 Toast.makeText(RecruitActivity.this, "데이터 로드 실패", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @OnClick(R.id.btn_slide_left)
+    public void onLeftBtn() {
+        imageViewPager.setCurrentItem(imageViewPager.getCurrentItem() - 1);
+    }
+
+    @OnClick(R.id.btn_slide_right)
+    public void onRightBtn() {
+        imageViewPager.setCurrentItem(imageViewPager.getCurrentItem() + 1);
     }
 
     @Override

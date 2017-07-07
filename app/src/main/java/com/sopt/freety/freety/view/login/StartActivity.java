@@ -48,6 +48,7 @@ import retrofit2.Response;
 
 public class StartActivity extends AppCompatActivity {
 
+    private static final String TAG = "StartActivity";
     private CallbackManager callbackManager;
     private SessionCallback kakaoCallback;
     @Override
@@ -58,13 +59,14 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_login);
         ButterKnife.bind(this);
-        //SharedAccessor.reset(this);
         HashKeyChecker.checkHashKey(this);
         callbackManager = CallbackManager.Factory.create();
         kakaoCallback = new SessionCallback();
         com.kakao.auth.Session.getCurrentSession().addCallback(kakaoCallback);
         tryAutoLogin();
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -86,23 +88,23 @@ public class StartActivity extends AppCompatActivity {
                 public void onFailure(ErrorResult errorResult) {
                     String message = "failed to get user info. msg=" + errorResult;
                     Logger.d(message);
-
-                    ErrorCode result = ErrorCode.valueOf(errorResult.getErrorCode());
-                    if (result == ErrorCode.CLIENT_ERROR_CODE) {
-                        finish();
-                    }
+                    Toast.makeText(StartActivity.this, "인터넷 연결을 확인하세요.", Toast.LENGTH_SHORT).show();
                 }
                 @Override
-                public void onSessionClosed(ErrorResult errorResult) {}
+                public void onSessionClosed(ErrorResult errorResult) {
+                    Log.i(TAG, "onSessionClosed: ");
+                }
                 @Override
-                public void onNotSignedUp() {}
+                public void onNotSignedUp() {
+                    Log.i(TAG, "onNotSignedUp: ");
+                }
                 @Override
                 public void onSuccess(UserProfile userProfile) {
                     //로그인에 성공하면 로그인한 사용자의 일련번호, 닉네임, 이미지url등을 리턴합니다.
                     //사용자 ID는 보안상의 문제로 제공하지 않고 일련번호는 제공합니다.
                     //userName = userProfile.getNickname();
                     final String kakaoId = String.valueOf(userProfile.getId());
-                    Log.i("Login", "onSuccess: " + kakaoId);
+                    Log.i(TAG, "onSuccess: ");
                     Call<SNSLoginResultData> call = AppController.getInstance().getNetworkService().snslogin(new SNSLoginRequestData(null, kakaoId));
                     call.enqueue(new Callback<SNSLoginResultData>() {
                         @Override
@@ -114,9 +116,7 @@ public class StartActivity extends AppCompatActivity {
                                     AppController.getInstance().pushPageStack();
                                     startActivity(intent);
                                 } else if (response.body().getMessage().equals("no information about SNS account")) {
-                                    Toast.makeText(StartActivity.this, "Freety에 아직 SNS 계정이 등록되지 않았습니다.", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(StartActivity.this, SelectMemberTypeActivity.class);
-
                                     intent.putExtra("login case","kakao");
                                     Log.i("Kakao", "onResponse: " + kakaoId);
                                     intent.putExtra("kUserId", kakaoId);
@@ -127,6 +127,7 @@ public class StartActivity extends AppCompatActivity {
                         }
                         @Override
                         public void onFailure(Call<SNSLoginResultData> call, Throwable t) {
+                            Log.i(TAG, "onFailure: ");
                         }
                     });
                     finish();
@@ -165,6 +166,7 @@ public class StartActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
+
 
     private void tryAutoLogin() {
         Call<OnlyMsgResultData> autoLoginCall = AppController.getInstance().getNetworkService().auto(SharedAccessor.getToken(StartActivity.this));

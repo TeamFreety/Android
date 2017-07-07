@@ -21,9 +21,6 @@ public class MyPageViewPagerAdapter extends FragmentStatePagerAdapter {
     private static final int INDEX_REVIEW = 2;
     private final int tabCount;
 
-    private int currType;
-    private NetworkService networkService;
-
     public MyPageViewPagerAdapter(final FragmentManager fm, final int tabCount) {
         super(fm);
         this.tabCount = tabCount;

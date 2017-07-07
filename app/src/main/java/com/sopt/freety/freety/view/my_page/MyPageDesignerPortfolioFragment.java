@@ -7,25 +7,40 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageButton;
+
+
+
+import android.widget.Toast;
 
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.application.AppController;
+import com.sopt.freety.freety.data.OnlyMsgResultData;
+
 import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.util.util.EditTextUtils;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageStyleRecyclerAdapter;
+import com.sopt.freety.freety.view.my_page.data.network.MyPageStatusUpdateRequestData;
+import com.sopt.freety.freety.view.property.ScreenClickable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_DRAGGING;
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 import static com.sopt.freety.freety.view.my_page.adapter.MyPageStyleRecyclerAdapter.TYPE_HEADER;
@@ -34,7 +49,7 @@ import static com.sopt.freety.freety.view.my_page.adapter.MyPageStyleRecyclerAda
  * Created by cmslab on 6/26/17.
  */
 
-public class MyPageDesignerPortfolioFragment extends Fragment {
+public class MyPageDesignerPortfolioFragment extends Fragment implements ScreenClickable {
 
     @BindView(R.id.my_page_style_recyeler_view)
     ScrollFeedbackRecyclerView recyclerView;
@@ -47,6 +62,18 @@ public class MyPageDesignerPortfolioFragment extends Fragment {
     @BindView(R.id.fabtn_designer_portfolio_to_top)
     FloatingActionButton topFabtn;
 
+    @BindView(R.id.edit_my_page_port_career)
+    EditText careerEdit;
+
+
+    @OnClick(R.id.my_page_style_career_edit_btn)
+    public void onEditBtn() {
+        EditTextUtils.setUseableEditText(careerEdit, true);
+        careerEdit.requestFocus();
+        careerEdit.setSelection(careerEdit.length());
+        InputMethodManager lManager = (InputMethodManager)getActivity().getSystemService(INPUT_METHOD_SERVICE);
+        lManager.showSoftInput(careerEdit, 0);
+    }
 
     public MyPageDesignerPortfolioFragment() {
     }
@@ -76,14 +103,13 @@ public class MyPageDesignerPortfolioFragment extends Fragment {
                     }
                 }
             }
-                @Override
-                public void onScrolled (RecyclerView recyclerView,int dx, int dy){
-                    super.onScrolled(recyclerView, dx, dy);
-                    if (dy > 0 || dy < 0 && topFabtn.isShown()) {
-                        topFabtn.hide();
-                    }
+            @Override
+            public void onScrolled (RecyclerView recyclerView,int dx, int dy){
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0 || dy < 0 && topFabtn.isShown()) {
+                    topFabtn.hide();
                 }
-
+            }
         });
 
         topFabtn.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +138,20 @@ public class MyPageDesignerPortfolioFragment extends Fragment {
         } else {
             initByActivity();
         }
+
+        if (!isMine) {
+            careerEdit.setVisibility(View.INVISIBLE);
+        }
+
+        careerEdit.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                   onRegisterPortfolioStatus();
+                }
+                return true;
+            }
+        });
         return view;
     }
 
@@ -141,8 +181,38 @@ public class MyPageDesignerPortfolioFragment extends Fragment {
         }
     }
 
+    public void onRegisterPortfolioStatus() {
+        if (careerEdit.isFocused()) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(careerEdit.getWindowToken(), 0);
+            EditTextUtils.setUseableEditText(careerEdit, false);
+            Call<OnlyMsgResultData> call = AppController.getInstance().getNetworkService().getOkMsg(SharedAccessor.getToken(getContext()),
+                    new MyPageStatusUpdateRequestData(careerEdit.getText().toString()));
+            call.enqueue(new Callback<OnlyMsgResultData>() {
+                @Override
+                public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
+                    if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
+                        Toast.makeText(getContext(), "상태 메세지가 수정되었습니다.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "네트워크 연결이 좋지 않아 적용이 되지 않습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                @Override
+                public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
+                    Toast.makeText(getContext(), "on failure", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
     public void setMine(boolean isMine) {
         this.isMine = isMine;
+    }
+
+
+    @Override
+    public void onScreenClick(View v) {
+        onRegisterPortfolioStatus();
     }
 
 }

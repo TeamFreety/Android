@@ -63,7 +63,49 @@ public class DateParser {
         TimeZone tz = TimeZone.getTimeZone("Asia/Seoul");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         df.setTimeZone(tz);
-       return df.format(new Date());
+        String formattedString = df.format(new Date());
+
+        Date korDate;
+        try {
+            korDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(formattedString);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        int year = korDate.getYear() + 1900;
+        int month = korDate.getMonth() + 1;
+        int day = korDate.getDate();
+        int hour = korDate.getHours();
+        int minute = korDate.getMinutes();
+        int seconds = korDate.getSeconds();
+
+        String monthString = String.valueOf(month);
+        if (month  < 10) {
+            monthString = "0" + monthString;
+        }
+
+        String dayString = String.valueOf(day);
+        if (day < 10) {
+            dayString = "0" + dayString;
+        }
+
+        String hourString = String.valueOf(hour);
+        if (hour < 10) {
+            hourString = "0" + hourString;
+        }
+
+        String minuteString = String.valueOf(minute);
+        if (minute < 10) {
+            minuteString = "0" + minuteString;
+        }
+
+        String secondString = String.valueOf(seconds);
+        if (seconds < 10) {
+            secondString = "0" + secondString;
+        }
+        Log.i(TAG, "to: " + String.format("%d-%s-%sT%s:%s:%s", year,
+                monthString, dayString, hourString, minuteString, secondString));
+        return String.format("%d-%s-%sT%s:%s:%s", year,
+                monthString, dayString, hourString, minuteString, secondString);
     }
 
     public static String toDateTimeFormat(String date) {

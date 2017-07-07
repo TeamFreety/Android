@@ -76,8 +76,8 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
-
         ButterKnife.bind(this, view);
+
         tabLayout.addTab(tabLayout.newTab().setText("전체"));
         tabLayout.addTab(tabLayout.newTab().setText("펌"));
         tabLayout.addTab(tabLayout.newTab().setText("염색"));
@@ -107,6 +107,7 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
                 new HomeContentsViewPagerAdapter(getActivity(),  Collections.<String>emptyList());
         bannerViewPager.setAdapter(homeContentsViewPagerAdapter);
         bannerViewPager.setCurrentItem(100);
+        indicators.get(0).setImageResource(R.drawable.donut);
         bannerViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -158,7 +159,7 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
             public void run() {
                 handler.post(Update);
             }
-        }, 4000, 4000);
+        }, 3000, 3000);
     }
 
     @Override

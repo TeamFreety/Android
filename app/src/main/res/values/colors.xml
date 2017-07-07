@@ -3,7 +3,8 @@
     <color name="colorPrimary">#676767</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#000000</color>
-
+    <color name="colorBtnClick">#FFFFFF</color>
+    <color name="colorBtnUnClick">#95989A</color>
     <color name="colorBlack">#000000</color>
     <color name="tabUnselectedColor">#969696</color>
     <color name="itemBorderColor">#C3C3C3</color>
