@@ -52,21 +52,15 @@
         android:id="@+id/letter_right_content"
         android:layout_alignParentRight="true"
         android:layout_width="233dp"
-        android:minHeight="42dp"
+        android:minHeight="20dp"
         android:text="민주야 시술 유형 버튼 안에 글씨 색 알려줄 수 있는 것 부탁해"
         android:textSize="11sp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/letter_right_name"
         android:layout_marginRight="67dp"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="7dp"
         android:lineSpacingMultiplier="1.3"/>
 
-    <View
-        android:layout_width="233dp"
-        android:layout_height="1dp"
-        android:layout_alignLeft="@+id/letter_right_content"
-        android:layout_marginTop="5dp"
-        android:background="#d9d9d9"
-        android:layout_below="@+id/letter_right_content"/>
+
 
 </RelativeLayout>

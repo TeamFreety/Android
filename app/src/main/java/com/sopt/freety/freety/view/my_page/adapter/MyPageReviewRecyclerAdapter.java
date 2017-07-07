@@ -10,11 +10,8 @@ import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.view.my_page.adapter.holder.MyPageReviewBodyHolder;
 import com.sopt.freety.freety.view.my_page.adapter.holder.MyPageReviewHeaderHolder;
-import com.sopt.freety.freety.view.my_page.data.MyPagePostData;
 import com.sopt.freety.freety.view.my_page.data.MyPageReviewData;
 import com.sopt.freety.freety.view.my_page.data.MyPageReviewElemData;
-
-import java.util.List;
 
 import static android.view.View.GONE;
 import static com.sopt.freety.freety.view.my_page.adapter.MyPageStyleRecyclerAdapter.TYPE_HEADER;
@@ -51,6 +48,7 @@ public class MyPageReviewRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
             MyPageReviewHeaderHolder castedHolder = (MyPageReviewHeaderHolder) holder;
             score = Math.round(score * 10) / 10f;
             castedHolder.getTotalTextView().setText(String.valueOf(score));
+            castedHolder.getReviewCountText().setText(String.valueOf(data.getElemDataList().size()));
             for (int index = 0; index < castedHolder.getScoreImageList().size(); index++) {
                 castedHolder.getScoreImageList().get(index).setImageResource(getStarType(index, score));
             }

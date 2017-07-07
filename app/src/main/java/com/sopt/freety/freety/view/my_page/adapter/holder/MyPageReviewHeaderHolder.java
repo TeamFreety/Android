@@ -37,6 +37,9 @@ public class MyPageReviewHeaderHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.my_page_review_header_score5)
     ImageView scoreView5;
 
+    @BindView(R.id.my_page_review_count_text)
+    TextView reviewCountText;
+
     public MyPageReviewHeaderHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
@@ -54,6 +57,10 @@ public class MyPageReviewHeaderHolder extends RecyclerView.ViewHolder {
         scoreImageList.add(scoreView4);
         scoreImageList.add(scoreView5);
         return scoreImageList;
+    }
+
+    public TextView getReviewCountText() {
+        return reviewCountText;
     }
 
 }
