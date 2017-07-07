@@ -17,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.sopt.freety.freety.R;
@@ -27,16 +26,12 @@ import com.sopt.freety.freety.network.NetworkService;
 import com.sopt.freety.freety.util.Consts;
 import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
-import com.sopt.freety.freety.view.main.MainActivity;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageModelRecyclerAdapter;
-import com.sopt.freety.freety.view.my_page.data.MyPageModelHeaderData;
-import com.sopt.freety.freety.view.my_page.data.MyPagePickData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageModelGetData;
 import com.yongbeam.y_photopicker.util.photopicker.utils.YPhotoPickerIntent;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -97,13 +92,6 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
 
         networkService = AppController.getInstance().getNetworkService();
         reload();
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                collapsingRelativeLayout.setAlpha(Math.max(1.0f - (OPACITIY_FACTOR * Math.abs(verticalOffset / (float)
-                        appBarLayout.getTotalScrollRange())), 0));
-            }
-        });
         recyclerView.setHasFixedSize(true);
         recyclerView.attachCallbacks(this);
         layoutManager = new GridLayoutManager(getContext(), 2);

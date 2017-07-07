@@ -37,7 +37,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchHolder> {
 
     @Override
     public void onBindViewHolder(SearchHolder holder, int position) {
-        Glide.with(context).load(postDataList.get(position).getImageURL()).override(164, 187).centerCrop().thumbnail(0.1f).into(holder.getSearchImage());
+        Glide.with(context).load(postDataList.get(position).getImageURL()).override(500, 500).thumbnail(0.1f).into(holder.getSearchImage());
         holder.getSearchAddress().setText(postDataList.get(position).getAddress());
         holder.getSearchStyle().setText(postDataList.get(position).getTitle());
     }
