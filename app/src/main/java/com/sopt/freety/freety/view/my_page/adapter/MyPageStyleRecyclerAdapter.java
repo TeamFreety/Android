@@ -55,7 +55,6 @@ public class MyPageStyleRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         if (holder instanceof MyPageStyleHeaderHolder) {
             MyPageStyleHeaderHolder castedHolder = (MyPageStyleHeaderHolder) holder;
             castedHolder.getCareerText().setText(careerString);
-            //TODO: implement pop up to edit text
         } else {
             MyPageStyleBodyHolder castedHolder = (MyPageStyleBodyHolder) holder;
             Glide.with(context).load(R.drawable.chat_list_elem).override(200, 200).centerCrop().fitCenter().into(castedHolder.getStyleImage());
