@@ -11,6 +11,7 @@ import com.sopt.freety.freety.view.login.data.SNSLoginRequestData;
 import com.sopt.freety.freety.view.login.data.SNSLoginResultData;
 import com.sopt.freety.freety.view.login.data.SignUpData;
 import com.sopt.freety.freety.view.login.data.SignUpResultData;
+import com.sopt.freety.freety.view.my_page.data.network.MyPageCareerRequestData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageModelGetData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageReviewResultData;
@@ -95,6 +96,9 @@ public interface NetworkService {
 
     @POST("/mypage/statusMsg")
     Call<OnlyMsgResultData> getOkMsg(@Header("member_token") String token, @Body MyPageStatusUpdateRequestData data);
+
+    @POST("/mypage/careerText")
+    Call<OnlyMsgResultData> getCareerMsg(@Header("member_token") String token, @Body MyPageCareerRequestData data);
 
     @Multipart
     @POST("/mypage/memberPhoto")
