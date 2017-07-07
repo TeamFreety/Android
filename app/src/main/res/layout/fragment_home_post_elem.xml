@@ -28,7 +28,7 @@
             android:text="부천"
             android:textColor="@color/postStyleColor"
             android:paddingBottom="4dp"
-            android:paddingTop="4dp"
+            android:paddingTop="8dp"
             android:textSize="12sp"
             android:textAlignment="center"
             android:background="#ffffff"
@@ -49,4 +49,6 @@
     </LinearLayout>
 
 </FrameLayout>
+
+
 

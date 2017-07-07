@@ -1,17 +1,16 @@
 package com.sopt.freety.freety.view.letter;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.sopt.freety.freety.R;
@@ -24,8 +23,9 @@ import com.sopt.freety.freety.view.letter.adapter.LetterRecyclerAdapter;
 import com.sopt.freety.freety.view.letter.data.LetterData;
 import com.sopt.freety.freety.view.letter.data.LetterListResultData;
 import com.sopt.freety.freety.view.letter.data.PushRequestData;
-import com.sopt.freety.freety.view.letter.data.RealmLetter;
 import com.sopt.freety.freety.view.letter.data.RPerson;
+import com.sopt.freety.freety.view.letter.data.RealmLetter;
+import com.sopt.freety.freety.view.my_page.DesignerToModelMypageActivity;
 import com.sopt.freety.freety.view.property.ScreenClickable;
 
 import java.util.ArrayList;
@@ -36,7 +36,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
-import io.realm.RealmList;
 import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,6 +44,14 @@ import retrofit2.Response;
 public class LetterActivity extends AppCompatActivity implements ScreenClickable, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "LetterActivity";
+
+    @OnClick(R.id.btn_to_model_mypage)
+    public void onMypageBtn() {
+        Intent intent = new Intent(getApplicationContext(), DesignerToModelMypageActivity.class);
+        intent.putExtra("memberId", memberId);
+        AppController.getInstance().pushPageStack();
+        startActivity(intent);
+    }
 
     @OnClick(R.id.btn_letter_back)
     public void onBackBtn() {
