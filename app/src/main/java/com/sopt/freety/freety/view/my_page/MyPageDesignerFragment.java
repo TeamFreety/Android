@@ -101,8 +101,7 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
     @BindView(R.id.my_page_hide_toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.btn_my_page_chat)
-    ImageButton chatButton;
+
 
     @BindView(R.id.btn_my_page_status_edit)
     ImageButton statusEditButton;
