@@ -16,6 +16,9 @@ import com.sopt.freety.freety.view.my_page.data.MyPageStyleHeaderData;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by cmslab on 6/26/17.
  */
@@ -29,7 +32,6 @@ public class MyPageStyleRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
     private List<MyPageStyleHeaderData> myPageStyleHeaderDataList;
     private List<MyPageStyleBodyData> myPageStyleBodyDataList;
     private Context context;
- 
 
     public MyPageStyleRecyclerAdapter(final String careerString,
                                       final List<MyPageStyleBodyData> myPageStyleBodyDataList,
@@ -44,6 +46,7 @@ public class MyPageStyleRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         final View inflatedView;
         if (viewType == TYPE_HEADER) {
             inflatedView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_designer_my_page_portfolio_header, parent, false);
+            ButterKnife.bind(this, inflatedView);
             return new MyPageStyleHeaderHolder(inflatedView);
         } else {
             inflatedView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_designer_my_page_portfolio_body, parent, false);

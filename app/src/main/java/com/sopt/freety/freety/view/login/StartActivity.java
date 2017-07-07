@@ -183,7 +183,7 @@ public class StartActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
-                Toast.makeText(StartActivity.this, "데이터 로드 실패", Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(StartActivity.this, "데이터 로드 실패", Toast.LENGTH_SHORT).show();
             }
         });
     }

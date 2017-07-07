@@ -1,5 +1,6 @@
 package com.sopt.freety.freety.view.my_page;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -9,15 +10,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
+import com.sopt.freety.freety.util.util.EditTextUtils;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageStyleRecyclerAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_DRAGGING;
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
@@ -108,6 +115,7 @@ public class MyPageDesignerPortfolioFragment extends Fragment {
         return view;
     }
 
+    //자기 마이페이지
     public void initByFragment() {
         MyPageDesignerFragment myPageFragment = (MyPageDesignerFragment) getParentFragment();
         adapter = new MyPageStyleRecyclerAdapter(myPageFragment.getMyPageStyleHeaderData().getCareerString(),
@@ -136,4 +144,5 @@ public class MyPageDesignerPortfolioFragment extends Fragment {
     public void setMine(boolean isMine) {
         this.isMine = isMine;
     }
+
 }
