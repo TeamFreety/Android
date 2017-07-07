@@ -72,8 +72,8 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
-
         ButterKnife.bind(this, view);
+
         tabLayout.addTab(tabLayout.newTab().setText("전체"));
         tabLayout.addTab(tabLayout.newTab().setText("펌"));
         tabLayout.addTab(tabLayout.newTab().setText("염색"));
@@ -154,7 +154,7 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
             public void run() {
                 handler.post(Update);
             }
-        }, 4000, 4000);
+        }, 3000, 3000);
     }
 
     @Override

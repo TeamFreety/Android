@@ -90,6 +90,10 @@ public class MyPageModelRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
                         fragment.registerPhoto(Consts.MODEL_PICTURE_3_CODE);
                     }
                 });
+            } else {
+                myPageModelHeaderHolder.getFrontBtn().setVisibility(View.INVISIBLE);
+                myPageModelHeaderHolder.getBackBtn().setVisibility(View.INVISIBLE);
+                myPageModelHeaderHolder.getSideBtn().setVisibility(View.INVISIBLE);
             }
         } else {
             MyPagePickHolder castedHolder = (MyPagePickHolder) holder;
