@@ -188,6 +188,9 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
     }
 
     public List<MyPageStyleBodyData> getStyleBodyDataList() {
+        if (myPageDesignerGetData.getMyStyleBodyDataList().size() == 0) {
+            Toast.makeText(getContext(), "포트폴리오 사진 등록을 원하시면 관리자 이메일로 연락부탁드립니다.", Toast.LENGTH_SHORT).show();
+        }
         return myPageDesignerGetData.getMyStyleBodyDataList();
     }
 
@@ -233,8 +236,6 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
                     myPageDesignerGetData = response.body();
                     Glide.with(getContext()).load(response.body().getDesignerImageURL()).into(profileImage);
                     designerNameText.setText(response.body().getDesignerName());
-                    //designerStatusTextView atusTextView.setText(response.body().getDesignerStatusMsg());
-
                     viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
                     PagerAdapter pagerAdapter = new MyPageViewPagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
                     viewPager.setAdapter(pagerAdapter);
