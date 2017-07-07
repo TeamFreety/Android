@@ -376,7 +376,9 @@
                     android:id="@+id/edit_write_title"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:hint="제목을 입력해주세요."
+                    android:hint="시술명을 입력해주세요 (8글자 제한)."
+                    android:singleLine="true"
+                    android:maxLength="8"
                     android:textColor="#000000"
                     android:background="#00000000"
                     android:textSize="13sp"/>

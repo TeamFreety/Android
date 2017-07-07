@@ -89,7 +89,6 @@ public class LetterActivity extends AppCompatActivity implements ScreenClickable
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         refreshLayout.setOnRefreshListener(this);
-        //scrollView.setEnabled(false);
         memberId = getIntent().getIntExtra("memberId", -1);
         String imageURL = getIntent().getStringExtra("memberURL");
         adapter = new LetterRecyclerAdapter(this, Collections.<LetterData>emptyList());
@@ -103,7 +102,7 @@ public class LetterActivity extends AppCompatActivity implements ScreenClickable
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
                 if (bottom < oldBottom) {
-                    recyclerView.smoothScrollToPosition(adapter.getItemCount() -1);
+                    recyclerView.smoothScrollToPosition(Math.max(adapter.getItemCount() -1, 0));
                 }
             }
         });
@@ -182,7 +181,6 @@ public class LetterActivity extends AppCompatActivity implements ScreenClickable
                 Log.i(TAG, "onResponse: 메세지 전송 실패 on failure");
             }
         });
-
         updateByMemberId(memberId);
     }
 
@@ -235,13 +233,8 @@ public class LetterActivity extends AppCompatActivity implements ScreenClickable
                     }
 
                     Log.i(TAG, "onResponse: letterRecyclerDatas size : " + letterRecyclerDatas.size());
-                    /*
-                    if (letterRecyclerDatas.size() > 3) {
-                        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-                    }
-                    */
                     adapter.updateLetterDataList(letterRecyclerDatas);
-                    recyclerView.smoothScrollToPosition(letterRecyclerDatas.size() - 1);
+                    recyclerView.smoothScrollToPosition(Math.max(letterRecyclerDatas.size() - 1, 0));
                     refreshLayout.setRefreshing(false);
                 }
             }
@@ -254,7 +247,7 @@ public class LetterActivity extends AppCompatActivity implements ScreenClickable
                 }
 
                 Log.i(TAG, "onResponse: failure : " + letterRecyclerDatas.size());
-                recyclerView.smoothScrollToPosition(letterRecyclerDatas.size() - 1);
+                recyclerView.smoothScrollToPosition(Math.max(letterRecyclerDatas.size() - 1, 0));
                 adapter.updateLetterDataList(letterRecyclerDatas);
                 refreshLayout.setRefreshing(false);
             }

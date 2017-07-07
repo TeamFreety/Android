@@ -211,14 +211,15 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
             call.enqueue(new Callback<OnlyMsgResultData>() {
                 @Override
                 public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
-                    if (!response.isSuccessful() && response.body().getMessage().equals("ok")) {
-                        Toast.makeText(getContext(), "네트워크 연결이 좋지 않아 적용이 되지 않습니다.", Toast.LENGTH_SHORT).show();
-                    } else {
+                    if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
                         Toast.makeText(getContext(), "적용완료", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "네트워크 연결이 좋지 않아 적용이 되지 않습니다.", Toast.LENGTH_SHORT).show();
                     }
                 }
                 @Override
                 public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
+                    Toast.makeText(getContext(), "on failure", Toast.LENGTH_SHORT).show();
                 }
             });
         }

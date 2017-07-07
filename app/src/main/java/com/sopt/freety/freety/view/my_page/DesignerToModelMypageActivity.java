@@ -25,6 +25,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.HEAD;
 
 import static com.sopt.freety.freety.view.my_page.adapter.MyPageModelRecyclerAdapter.TYPE_HEADER;
 
@@ -100,6 +101,7 @@ public class DesignerToModelMypageActivity extends AppCompatActivity implements 
 
     final NetworkService networkService = AppController.getInstance().getNetworkService();
     private void reload() {
+
         Call<MyPageModelGetData> call = networkService.getOtherModelMyPage(SharedAccessor.getToken(getApplicationContext()), getIntent().getIntExtra("memberId", 0));
         call.enqueue(new Callback<MyPageModelGetData>() {
             @Override
