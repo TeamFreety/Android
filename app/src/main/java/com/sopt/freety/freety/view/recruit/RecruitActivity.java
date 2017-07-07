@@ -93,7 +93,7 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
     TextView belongNameText;
 
     @OnClick(R.id.recruit_pick_btn)
-    public void onPickBtnClick(Button button) {
+    public void onPickBtnClick(final Button button) {
 
         if (isPicked) {
             int currPickNumber = Integer.parseInt(button.getText().toString());
@@ -108,25 +108,17 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
             button.setText(String.valueOf(currPickNumber + 1));
         }
 
+        button.setEnabled(false);
         int postId = getIntent().getIntExtra("postId", 0);
         Call<PickResultData> pickResultDataCall = networkService.pick(SharedAccessor.getToken(RecruitActivity.this), new PickRequestData(postId, isPicked));
         pickResultDataCall.enqueue(new Callback<PickResultData>() {
             @Override
             public void onResponse(Call<PickResultData> call, Response<PickResultData> response) {
                 if (response.isSuccessful()) {
-                    String resultMsg = response.body().getResult();
+                    String resultMsg = response.body().getMessage();
                     Log.i(TAG, "onResponse: " + resultMsg);
-                    if (isPicked) {
-                        if (!resultMsg.equals("unpick success")) {
-                            throw new RuntimeException("unexpected result");
-                        }
-                        isPicked = !isPicked;
-                    } else {
-                        if (!resultMsg.equals("pick success")) {
-                            throw new RuntimeException("unexpected result");
-                        }
-                        isPicked = !isPicked;
-                    }
+                    isPicked = !isPicked;
+                    button.setEnabled(true);
                 }
             }
             @Override

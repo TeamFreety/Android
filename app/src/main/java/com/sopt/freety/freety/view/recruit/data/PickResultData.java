@@ -12,4 +12,8 @@ public class PickResultData {
     public String getResult() {
         return result;
     }
+
+    public String getMessage() {
+        return message;
+    }
 }
