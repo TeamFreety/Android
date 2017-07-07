@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
@@ -53,8 +55,9 @@ import static com.sopt.freety.freety.R.id.fabtn_search_to_write;
  * Created by cmslab on 6/26/17.
  */
 
-public class SearchFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
+public class SearchFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, LocationListener {
 
+    private static final String TAG = "SearchFragment";
     @BindView(R.id.rv_search)
     RecyclerView mRecyclerView;
 
@@ -72,9 +75,6 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
                 .check();
     }
 
-    @BindView(R.id.btn_search_nearest)
-    Button nearestBtn;
-
     @OnClick(R.id.btn_search_latest)
     public void onLatestBtn() {
         updateLatestSortVersion();
@@ -87,8 +87,6 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
         getActivity().overridePendingTransition(R.anim.screen_slide_up, R.anim.screen_slide_stop);
         AppController.getInstance().pushPageStack();
     }
-
-
 
     private SearchRecyclerAdapter adapter;
     private GridLayoutManager gridLayoutManager;
@@ -208,6 +206,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
         return new PermissionListener() {
             @Override
             public void onPermissionGranted() {
+                Log.i(TAG, "onPermissionGranted: granted");
                 googleApiClient.connect();
             }
 
@@ -229,9 +228,12 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
     @SuppressWarnings("MissingPermission")
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        Location currLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-        Log.i("SearchFragment", "onPermissionGranted: " + currLocation);
-        updateNearestSortVersion(currLocation.getLatitude(), currLocation.getLongitude());
+        Log.i(TAG, "onConnected: onConnected");
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setInterval(120000);
+        locationRequest.setFastestInterval(30000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
     }
 
     @Override
@@ -281,5 +283,11 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
             writeFloatingButton.setLayoutParams(p);
             writeFloatingButton.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        Log.i(TAG, "onLocationChanged: " + location);
+        updateNearestSortVersion(location.getLatitude(), location.getLongitude());
     }
 }

@@ -21,6 +21,7 @@ import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.network.NetworkService;
 import com.sopt.freety.freety.util.Consts;
+import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.util.FormatChecker;
 import com.sopt.freety.freety.view.login.data.DuplicateData;
 import com.sopt.freety.freety.view.login.data.SignUpData;
@@ -131,12 +132,7 @@ public class ModelEmailSignUpActivity extends AppCompatActivity implements Scree
                     if (response.isSuccessful()) {
                         final SignUpResultData resultData = response.body();
                         if (resultData.getMessage().equals("signup success")) {
-                            SharedPreferences pref = getSharedPreferences(Consts.PREF_KEY, MODE_PRIVATE);
-                            SharedPreferences.Editor editor = pref.edit();
-                            editor.putString(Consts.PREF_TOKEN, resultData.getMemberToken());
-                            editor.putString(Consts.PREF_POSITION, resultData.getPosition());
-                            editor.apply();
-                            editor.commit();
+                            SharedAccessor.register(ModelEmailSignUpActivity.this, resultData.getMemberToken(), resultData.getPosition(), nameEditText.getText().toString());
                             AppController.getInstance().resetPageStack();
                             startActivity(new Intent(ModelEmailSignUpActivity.this, MainActivity.class));
                         } else {
