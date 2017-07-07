@@ -144,7 +144,7 @@ public class PostDetailResultData {
         for (int i = 0; i < types.length; i++) {
             if (types[i]) {
                 sb.append(HAIR_TYPES[i]);
-                if (i < 3) {
+                if (i < types.length - 1) {
                     sb.append(", ");
                 }
             }

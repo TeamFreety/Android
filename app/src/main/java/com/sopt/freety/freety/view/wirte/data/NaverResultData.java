@@ -35,6 +35,7 @@ public class NaverResultData {
     private class NaverAddressDetail {
         private String sigugun;
         private String sido;
+        private String address;
 
         public String getSigugun() {
             return sigugun;
@@ -42,6 +43,10 @@ public class NaverResultData {
 
         public String getSido() {
             return sido;
+        }
+
+        public String getFullAddress() {
+            return address;
         }
     }
 
@@ -51,5 +56,9 @@ public class NaverResultData {
 
     public String getSido() {
         return result.getItems().get(0).getAddrdetail().getSido();
+    }
+
+    public String getFullAddress() {
+        return result.getItems().get(0).getAddrdetail().getFullAddress();
     }
 }

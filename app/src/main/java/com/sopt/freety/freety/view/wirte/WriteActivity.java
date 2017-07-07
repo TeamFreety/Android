@@ -152,8 +152,6 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
     @BindView(R.id.btn_write_register)
     Button writeRegisterBtn;
 
-
-
     @BindView(R.id.write_content_counter_text)
     TextView contentCounterText;
 
@@ -181,16 +179,14 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
         isPopup = false;
         writeContentEdit.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 contentCounterText.setText(String.format("%d/300", s.length()));
             }
             @Override
-            public void afterTextChanged(Editable s) {
-            }
+            public void afterTextChanged(Editable s) {}
         });
 
         progressDialog = new ProgressDialog(WriteActivity.this);
@@ -243,11 +239,17 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
                 double lng = data.getDoubleExtra("lng", 0);
                 latLng = new LatLng(lat, lng);
                 int subIndex;
+
+                if (addressString == null) {
+                    return;
+                }
+
                 for (subIndex = 0; subIndex < addressString.length(); subIndex++) {
                     if (subIndex >= 8 && addressString.charAt(subIndex) == ' ') {
                         break;
                     }
                 }
+
                 placeTextList.get(0).setText(addressString.substring(0, subIndex));
                 placeTextList.get(1).setText(addressString.substring(subIndex));
 
@@ -259,6 +261,7 @@ public class WriteActivity extends AppCompatActivity implements ScreenClickable 
                         if (response.isSuccessful()) {
                             sido = response.body().getSido();
                             sigugun = response.body().getSigugun();
+                            fullAddress = response.body().getFullAddress();
                         } else {
                             Log.i(TAG, "onResponse: 포맷이 다름: " + sigugun);
                         }

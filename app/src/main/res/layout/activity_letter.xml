@@ -47,16 +47,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/letter_refresh_layout"
-            android:layout_alignParentBottom="true">
+            android:layout_above="@+id/letter_input_layout">
 
-        </android.support.v4.widget.SwipeRefreshLayout>
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/letter_recyclerview"
+                android:overScrollMode="never"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/letter_input_layout">
+                android:layout_height="match_parent">
             </android.support.v7.widget.RecyclerView>
 
+        </android.support.v4.widget.SwipeRefreshLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -97,7 +97,6 @@
                 android:layout_height="45dp" />
 
         </LinearLayout>
-
 
     </RelativeLayout>
 
