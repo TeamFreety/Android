@@ -17,7 +17,7 @@
     android:orientation="vertical">
     <TextView
         android:id="@+id/my_page_review_header_total"
-        android:text="4.2"
+        android:text="0.0"
         android:textSize="37sp"
         android:textColor="#000000"
         android:layout_width="wrap_content"
@@ -88,7 +88,7 @@
             android:id="@+id/my_page_review_count_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="16"
+            android:text="0"
             android:textSize="27sp"
             android:textColor="#95989A"/>
 

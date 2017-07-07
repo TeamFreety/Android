@@ -26,7 +26,6 @@ public class MyPageStyleRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
     public static int TYPE_HEADER = 0;
     private String careerString;
 
-    private List<MyPageStyleHeaderData> myPageStyleHeaderDataList;
     private List<MyPageStyleBodyData> myPageStyleBodyDataList;
     private Context context;
  
@@ -58,9 +57,15 @@ public class MyPageStyleRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
             castedHolder.getCareerText().setText(careerString);
         } else {
             MyPageStyleBodyHolder castedHolder = (MyPageStyleBodyHolder) holder;
-            Glide.with(context).load(R.drawable.chat_list_elem)
-                    .override(256, 256).centerCrop().fitCenter()
-                    .into(castedHolder.getStyleImage());
+            if (myPageStyleBodyDataList.size() == 0) {
+                Glide.with(context).load(R.drawable.placeholder_photo)
+                        .override(180, 180).centerCrop().fitCenter()
+                        .into(castedHolder.getStyleImage());
+            } else {
+                Glide.with(context).load(myPageStyleBodyDataList.get(position - 1))
+                        .override(256, 256).centerCrop().fitCenter()
+                        .into(castedHolder.getStyleImage());
+            }
         }
     }
 
@@ -85,6 +90,6 @@ public class MyPageStyleRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public int getItemCount() {
-        return myPageStyleBodyDataList.size() + 1;
+        return Math.min(myPageStyleBodyDataList.size() + 2, 2);
     }
 }

@@ -223,6 +223,7 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
                     }
                     latLng = result.getLatLng();
                     hairInfoText.setText(result.getContent());
+                    Log.i(TAG, "onResponse: " + result.getAddress());
                     addressText.setText(result.getAddress());
                     belongNameText.setText(result.getWriterBelongName());
 
