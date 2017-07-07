@@ -141,11 +141,19 @@ public class PostDetailResultData {
     public String getHairType() {
         StringBuilder sb = new StringBuilder();
         boolean[] types = postDetail.getTypes();
+        int commaCount = 0;
+        for (int i = 0; i < types.length; i++) {
+            if (types[i]) {
+                commaCount++;
+            }
+        }
+        commaCount = commaCount - 1;
         for (int i = 0; i < types.length; i++) {
             if (types[i]) {
                 sb.append(HAIR_TYPES[i]);
-                if (i < types.length - 1) {
-                    sb.append(", ");
+                if (commaCount > 0) {
+                    sb.append(",");
+                    commaCount--;
                 }
             }
         }
