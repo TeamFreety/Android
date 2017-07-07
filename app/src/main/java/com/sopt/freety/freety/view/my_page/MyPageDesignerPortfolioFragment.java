@@ -40,6 +40,7 @@ public class MyPageDesignerPortfolioFragment extends Fragment {
     @BindView(R.id.fabtn_designer_portfolio_to_top)
     FloatingActionButton topFabtn;
 
+
     public MyPageDesignerPortfolioFragment() {
     }
 
@@ -76,6 +77,13 @@ public class MyPageDesignerPortfolioFragment extends Fragment {
                     }
                 }
 
+        });
+
+        topFabtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.smoothScrollToPosition(0);
+            }
         });
 
         layoutManager = new GridLayoutManager(getContext(), 3);

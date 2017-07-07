@@ -117,7 +117,7 @@
 
         <TextView
             android:id="@+id/review_popup_score"
-            android:text="4.0"
+            android:text="0.0"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:textSize="20sp"

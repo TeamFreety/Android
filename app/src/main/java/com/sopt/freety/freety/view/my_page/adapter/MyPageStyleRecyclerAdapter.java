@@ -29,6 +29,7 @@ public class MyPageStyleRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
     private List<MyPageStyleHeaderData> myPageStyleHeaderDataList;
     private List<MyPageStyleBodyData> myPageStyleBodyDataList;
     private Context context;
+ 
 
     public MyPageStyleRecyclerAdapter(final String careerString,
                                       final List<MyPageStyleBodyData> myPageStyleBodyDataList,
@@ -55,7 +56,6 @@ public class MyPageStyleRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         if (holder instanceof MyPageStyleHeaderHolder) {
             MyPageStyleHeaderHolder castedHolder = (MyPageStyleHeaderHolder) holder;
             castedHolder.getCareerText().setText(careerString);
-            //TODO: implement pop up to edit text
         } else {
             MyPageStyleBodyHolder castedHolder = (MyPageStyleBodyHolder) holder;
             Glide.with(context).load(R.drawable.chat_list_elem)

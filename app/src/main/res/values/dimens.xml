@@ -3,7 +3,6 @@
     <dimen name="my_page_style_offset">2dp</dimen>
     <dimen name="search_image_offset">5dp</dimen>
     <dimen name="my_page_post_offset">6dp</dimen>
-
     <dimen name="home_post_offset">6dp</dimen>
 
     <dimen name="floating_btn_offset">18dp</dimen>

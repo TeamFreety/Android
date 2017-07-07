@@ -33,7 +33,7 @@ public class HomePostRecyclerAdapter extends RecyclerView.Adapter<HomePostHolder
 
     @Override
     public void onBindViewHolder(HomePostHolder holder, int position) {
-        Glide.with(context).load(postDataList.get(position).getImageURL()).override(164,187).centerCrop().thumbnail(0.001f).into(holder.getPostImage());
+        Glide.with(context).load(postDataList.get(position).getImageURL()).into(holder.getPostImage());
         holder.getAddressText().setText(postDataList.get(position).getAddress());
         holder.getTitleText().setText(postDataList.get(position).getTitle());
     }
