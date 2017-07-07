@@ -14,6 +14,7 @@ import com.sopt.freety.freety.view.login.data.SignUpResultData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageModelGetData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageReviewRequestData;
+import com.sopt.freety.freety.view.my_page.data.network.MyPageReviewResultData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageStatusUpdateRequestData;
 import com.sopt.freety.freety.view.recruit.data.PickRequestData;
 import com.sopt.freety.freety.view.recruit.data.PickResultData;
@@ -119,7 +120,7 @@ public interface NetworkService {
     Call<MyPageModelGetData> getOtherModelMyPage(@Header("member_token") String token, @Path("sent_mem_id") int memberId);
 
     @POST("/comment/writeComment")
-    Call<OnlyMsgResultData> registerReview(@Header("member_token") String token, @Body MyPageReviewRequestData data, @Part MultipartBody.Part imageBody);
+    Call<MyPageReviewResultData> registerReview(@Header("member_token") String token, @Body MyPageReviewRequestData data, @Part MultipartBody.Part imageBody);
 
     @GET("/search/latest")
     Call<PostListResultData> getSearchLatestData();

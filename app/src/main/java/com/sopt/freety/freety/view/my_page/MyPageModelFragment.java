@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.sopt.freety.freety.R;
@@ -26,6 +27,7 @@ import com.sopt.freety.freety.network.NetworkService;
 import com.sopt.freety.freety.util.Consts;
 import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
+import com.sopt.freety.freety.view.main.MainActivity;
 import com.sopt.freety.freety.view.my_page.adapter.MyPageModelRecyclerAdapter;
 import com.sopt.freety.freety.view.my_page.data.MyPageModelHeaderData;
 import com.sopt.freety.freety.view.my_page.data.MyPagePickData;
@@ -210,6 +212,7 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
         MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), fileBody);
         switch (requestCode) {
             case Consts.MODEL_PROFILE_PHOTO_CODE:
+
                 Call<OnlyMsgResultData> photoCall = networkService.getOkMsgFromProfile(SharedAccessor.getToken(getActivity()),
                         body);
                 photoCall.enqueue(new Callback<OnlyMsgResultData>() {
@@ -221,14 +224,18 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
                                     .bitmapTransform(new CropCircleTransformation(getContext())).override(200, 200).thumbnail(0.2f)
                                     .into(profileImage);
                             Log.i("modelProfileUpload : ","success" );
+
                         } else {
                             Log.i("modelProfileUpload : ", "fail" );
                         }
+
                     }
 
                     @Override
                     public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
+
                         Log.i("modelProfileUpload : ", "on failure" );
+
                     }
                 });
 
