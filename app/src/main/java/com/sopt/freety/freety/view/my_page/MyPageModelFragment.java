@@ -211,6 +211,7 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
                             Glide.with(getContext()).load(path)
                                     .bitmapTransform(new CropCircleTransformation(getContext())).override(200, 200).thumbnail(0.2f)
                                     .into(profileImage);
+                            SharedAccessor.registerURL(getContext(), path);
                             Log.i("modelProfileUpload : ","success" );
 
                         } else {

@@ -17,9 +17,8 @@ import android.widget.Toast;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.sopt.freety.freety.R;
-import com.sopt.freety.freety.util.Consts;
-import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.application.AppController;
+import com.sopt.freety.freety.util.Consts;
 import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.view.home.HomeFragment;
 import com.sopt.freety.freety.view.letter.LetterListFragment;
@@ -30,7 +29,6 @@ import com.yongbeam.y_photopicker.util.photopicker.PhotoPickerActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()) {
                     case R.id.action_home:
+
                         replaceFragment(new HomeFragment(), new Bundle(), "home");
                         break;
                     case R.id.action_search:
