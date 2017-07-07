@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.sopt.freety.freety.R;
@@ -43,6 +44,8 @@ import retrofit2.Response;
 
 public class LetterActivity extends AppCompatActivity implements ScreenClickable, SwipeRefreshLayout.OnRefreshListener {
 
+    private static final String TAG = "LetterActivity";
+
     @OnClick(R.id.btn_letter_back)
     public void onBackBtn() {
         onBackPressed();
@@ -57,8 +60,10 @@ public class LetterActivity extends AppCompatActivity implements ScreenClickable
     @BindView(R.id.letter_refresh_layout)
     SwipeRefreshLayout refreshLayout;
 
-    private static final String TAG = "LetterActivity";
-
+    /*
+    @BindView(R.id.letter_scroll)
+    ScrollView scrollView;
+    */
 
     private Realm realm;
     private LetterRecyclerAdapter adapter;
@@ -71,12 +76,13 @@ public class LetterActivity extends AppCompatActivity implements ScreenClickable
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_letter);
         ButterKnife.bind(this);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         realm = Realm.getDefaultInstance();
         networkService = AppController.getInstance().getNetworkService();
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
         refreshLayout.setOnRefreshListener(this);
+        //scrollView.setEnabled(false);
         memberId = getIntent().getIntExtra("memberId", -1);
         String imageURL = getIntent().getStringExtra("memberURL");
         adapter = new LetterRecyclerAdapter(this, Collections.<LetterData>emptyList());
@@ -86,6 +92,14 @@ public class LetterActivity extends AppCompatActivity implements ScreenClickable
         } else {
             Toast.makeText(this, "네트워크 오류", Toast.LENGTH_SHORT).show();
         }
+        recyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                if (bottom < oldBottom) {
+                    recyclerView.smoothScrollToPosition(adapter.getItemCount() -1);
+                }
+            }
+        });
     }
 
     @Override
@@ -111,31 +125,25 @@ public class LetterActivity extends AppCompatActivity implements ScreenClickable
         final String content = letterEditText.getText().toString();
 
         // check member is exist
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                RPerson checkPerson = realm.where(RPerson.class).equalTo("memberId", memberId).findFirst();
-                if (checkPerson == null) {
-                    Log.i(TAG, "onResponse: " + "person is null create new one");
-                    realm.executeTransaction(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
-                            RPerson newPerson = realm.createObject(RPerson.class);
-                            newPerson.setMemberId(memberId);
-                            newPerson.setMemberName(getIntent().getStringExtra("memberName"));
-                            newPerson.setImageURL(getIntent().getStringExtra("memberImageURL"));
-                        }
-                    });
+        RPerson checkPerson = realm.where(RPerson.class).equalTo("memberId", memberId).findFirst();
+        if (checkPerson == null) {
+            Log.i(TAG, "onResponse: " + "person is null create new one");
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    RPerson newPerson = realm.createObject(RPerson.class);
+                    newPerson.setMemberId(memberId);
+                    newPerson.setMemberName(getIntent().getStringExtra("memberName"));
+                    newPerson.setImageURL(getIntent().getStringExtra("memberImageURL"));
                 }
-            }
-        });
+            });
+        }
 
         if (memberId != -1) {
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
                     RPerson person = realm.where(RPerson.class).equalTo("memberId", memberId).findFirst();
-                    RealmLetter lastLetter = realm.where(RealmLetter.class).equalTo("otherId", memberId).findFirst();
                     RealmLetter realmLetter = realm.createObject(RealmLetter.class);
                     realmLetter.setOtherId(memberId);
                     realmLetter.setOtherName(person.getMemberName());
@@ -152,17 +160,23 @@ public class LetterActivity extends AppCompatActivity implements ScreenClickable
         call.enqueue(new Callback<OnlyMsgResultData>() {
             @Override
             public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
+                Log.i(TAG, "onResponse: message : " + response.body().getMessage());
                 if (response.isSuccessful() && response.body().getMessage().equals("Complete")) {
-
+                    Log.i(TAG, "onResponse: " + "메세지 전송 성공");
                 } else {
                     Toast.makeText(LetterActivity.this, "메세지 전송 실패", Toast.LENGTH_SHORT).show();
+                    Log.i(TAG, "onResponse: 메세지 전송 실패");
                 }
             }
 
             @Override
             public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
+                Toast.makeText(LetterActivity.this, "메세지 전송 실패, on failure", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "onResponse: 메세지 전송 실패 on failure");
             }
         });
+
+        updateByMemberId(memberId);
     }
 
     public void updateByMemberId(final int memberId) {
@@ -214,7 +228,13 @@ public class LetterActivity extends AppCompatActivity implements ScreenClickable
                     }
 
                     Log.i(TAG, "onResponse: letterRecyclerDatas size : " + letterRecyclerDatas.size());
+                    /*
+                    if (letterRecyclerDatas.size() > 3) {
+                        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+                    }
+                    */
                     adapter.updateLetterDataList(letterRecyclerDatas);
+                    recyclerView.smoothScrollToPosition(letterRecyclerDatas.size() - 1);
                     refreshLayout.setRefreshing(false);
                 }
             }
@@ -226,8 +246,10 @@ public class LetterActivity extends AppCompatActivity implements ScreenClickable
                     letterRecyclerDatas.add(realmLetter.getLetterData(getIntent().getStringExtra("memberURL")));
                 }
 
-                Log.i(TAG, "onResponse: letterRecyclerDatas size : " + letterRecyclerDatas.size());
+                Log.i(TAG, "onResponse: failure : " + letterRecyclerDatas.size());
+                recyclerView.smoothScrollToPosition(letterRecyclerDatas.size() - 1);
                 adapter.updateLetterDataList(letterRecyclerDatas);
+                refreshLayout.setRefreshing(false);
             }
         });
     }

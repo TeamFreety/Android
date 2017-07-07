@@ -78,7 +78,6 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
     @BindView(R.id.text_my_page_model_name)
     TextView modelNameText;
 
-
     private GridLayoutManager layoutManager;
     private MyPageModelRecyclerAdapter adapter;
     private NetworkService networkService;
@@ -107,7 +106,6 @@ public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyc
                         appBarLayout.getTotalScrollRange())), 0));
             }
         });
-
         recyclerView.setHasFixedSize(true);
         recyclerView.attachCallbacks(this);
         layoutManager = new GridLayoutManager(getContext(), 2);

@@ -47,7 +47,7 @@ public class LetterListAdapter extends RecyclerView.Adapter<LetterRoomViewHolder
     @Override
     public void onBindViewHolder(LetterRoomViewHolder holder, int position) {
         holder.getName().setText(roomDataList.get(position).getOtherName());
-        if (!roomDataList.get(position).getImageURL().equals("")) {
+        if (roomDataList.get(position).getImageURL() != null) {
             Glide.with(context).load(roomDataList.get(position).getImageURL())
                     .thumbnail(0.3f)
                     .bitmapTransform(new CropCircleTransformation(context))

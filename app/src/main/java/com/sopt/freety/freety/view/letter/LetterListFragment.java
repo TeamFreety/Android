@@ -103,6 +103,9 @@ public class LetterListFragment extends Fragment implements SwipeRefreshLayout.O
         call.enqueue(new Callback<LetterListResultData>() {
             @Override
             public void onResponse(Call<LetterListResultData> call, Response<LetterListResultData> response) {
+                Log.i(TAG, "onResponse: message : " + response.body().getMessage());
+                Log.i(TAG, "onResponse: " + response.raw());
+                Log.i(TAG, "onResponse: " + response.body().getRoomList().size());
                 if (response.isSuccessful() && response.body().getMessage().equals("success loading message list")) {
                     updateLetterList(letterRoomDataList, response.body().getRoomList());
                     letterListAdapter.updateData(letterRoomDataList);
