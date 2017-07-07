@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,8 +101,7 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
     @BindView(R.id.my_page_hide_toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.btn_my_page_chat)
-    ImageButton chatButton;
+
 
     @BindView(R.id.btn_my_page_status_edit)
     ImageButton statusEditButton;
@@ -165,6 +165,15 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
             }
         });
         EditTextUtils.setUseableEditText(designerStatusTextView, false);
+        designerStatusTextView.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    onScreenClick(v);
+                }
+                return false;
+            }
+        });
         return view;
     }
 
@@ -208,7 +217,7 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
                 @Override
                 public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
                     if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
-                        Toast.makeText(getContext(), "적용완료", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "상태 메세지가 수정되었습니다.", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getContext(), "네트워크 연결이 좋지 않아 적용이 되지 않습니다.", Toast.LENGTH_SHORT).show();
                     }
@@ -218,8 +227,6 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
                     Toast.makeText(getContext(), "on failure", Toast.LENGTH_SHORT).show();
                 }
             });
-
-
         }
     }
 
@@ -298,7 +305,6 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
                             SharedAccessor.registerURL(getContext(),path);
                         }
                     }
-
                     @Override
                     public void onFailure(Call<OnlyMsgResultData> call, Throwable t) {
                     }

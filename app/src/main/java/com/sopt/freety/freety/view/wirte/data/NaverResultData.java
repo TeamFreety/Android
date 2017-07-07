@@ -26,6 +26,10 @@ public class NaverResultData {
         private String address;
         private NaverAddressDetail addrdetail;
 
+        public String getAddress() {
+            return address;
+        }
+
         public NaverAddressDetail getAddrdetail() {
             return addrdetail;
         }
@@ -35,7 +39,6 @@ public class NaverResultData {
     private class NaverAddressDetail {
         private String sigugun;
         private String sido;
-        private String address;
 
         public String getSigugun() {
             return sigugun;
@@ -45,9 +48,6 @@ public class NaverResultData {
             return sido;
         }
 
-        public String getFullAddress() {
-            return address;
-        }
     }
 
     public String getSigugun() {
@@ -59,6 +59,6 @@ public class NaverResultData {
     }
 
     public String getFullAddress() {
-        return result.getItems().get(0).getAddrdetail().getFullAddress();
+        return result.getItems().get(0).getAddress();
     }
 }

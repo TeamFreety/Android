@@ -72,6 +72,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
 
     @OnClick(R.id.btn_search_nearest)
     public void onDistanceBtn() {
+        googleApiClient.disconnect();
         new TedPermission(getContext())
                 .setPermissionListener(getPermissionListener())
                 .setRationaleConfirmText("확인")
@@ -139,7 +140,6 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
 
             @Override
             public void onItemLongClick(View v, int position) {
-
             }
         }));
 
@@ -269,6 +269,11 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
         super.onPause();
         googleApiClient.disconnect();
     }
+    
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
 
     private void hideIfModelWindow() {
         if (SharedAccessor.isDesigner(getContext())) {
@@ -277,7 +282,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.OnConnec
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), WriteActivity.class);
                     AppController.getInstance().pushPageStack();
-                    getActivity().startActivity(intent);
+                    getActivity().startActivityForResult(intent, Consts.WRITE_REQUEST);
                 }
             });
             mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

@@ -1,6 +1,7 @@
 package com.sopt.freety.freety.view.home;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
@@ -28,6 +29,7 @@ import java.util.TimerTask;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by cmslab on 6/26/17.
@@ -58,6 +60,8 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
     Toolbar toolbar;
 
     @BindView(R.id.home_banner_view_pager) ViewPager bannerViewPager;
+
+    @BindView(R.id.click) ImageView bannerURL;
 
     @BindViews({R.id.indicator1, R.id.indicator2, R.id.indicator3, R.id.indicator4, R.id.indicator5})
     List<ImageView> indicators;
@@ -103,6 +107,7 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
                 new HomeContentsViewPagerAdapter(getActivity(),  Collections.<String>emptyList());
         bannerViewPager.setAdapter(homeContentsViewPagerAdapter);
         bannerViewPager.setCurrentItem(100);
+        indicators.get(0).setImageResource(R.drawable.donut);
         bannerViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -164,4 +169,11 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
         postViewPager.setAdapter(pagerAdapter);
     }
 
+ /*   bannerURL.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse( "http://m.post.naver.com/viewer/postView.nhn?volumeNo=7362139&memberNo=24056119&vType=VERTICAL"  ));
+            startActivity(intent);            }
+    });
+*/
 }

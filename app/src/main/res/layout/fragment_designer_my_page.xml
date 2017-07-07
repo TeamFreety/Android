@@ -19,7 +19,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:text="디자이너 정보"
+            android:text="마이페이지"
             android:textColor="#000000"
             android:textSize="17sp" />
     </RelativeLayout>
@@ -52,12 +52,6 @@
                 android:minHeight="40dp"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/my_page_hide_toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    app:layout_collapseMode="pin" />
-
                 <RelativeLayout
                     android:id="@+id/my_page_collaspsing_relative_layout"
                     android:layout_width="match_parent"
@@ -75,16 +69,6 @@
                             android:layout_height="match_parent"
                             android:src="@drawable/mypage_background_image" />
 
-                        <ImageButton
-                            android:id="@+id/btn_my_page_chat"
-                            android:layout_width="60dp"
-                            android:layout_height="30dp"
-                            android:layout_alignParentBottom="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginRight="14dp"
-                            android:background="@null"
-                            android:src="@drawable/mypage_letter_btn" />
 
                     </RelativeLayout>
 
@@ -131,14 +115,13 @@
                             android:textSize="14sp" />
 
 
-
                         <EditText
                             android:id="@+id/edit_my_page_designer_status"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
-                            android:hint="상태 메세지를 입력하세요."
                             android:layout_marginLeft="140dp"
+                            android:hint="상태 메세지를 입력하세요."
                             android:singleLine="true"
                             android:textColor="#95989A"
                             android:textSize="10sp" />
@@ -146,11 +129,10 @@
 
                         <ImageButton
                             android:id="@+id/btn_my_page_status_edit"
-                            android:layout_width="11.5dp"
-                            android:layout_height="11.5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
                             android:layout_marginBottom="13dp"
-                            android:layout_marginLeft="9dp"
                             android:layout_toRightOf="@+id/edit_my_page_designer_status"
                             android:background="@null"
                             android:src="@drawable/mypage_writing" />
@@ -171,6 +153,13 @@
                         android:background="#EFEFEF" />
                 </RelativeLayout>
 
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/my_page_hide_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    app:layout_collapseMode="pin" />
+
                 <android.support.design.widget.TabLayout
                     android:id="@+id/my_page_tab"
                     android:layout_width="match_parent"
@@ -179,6 +168,7 @@
                     android:background="#FFFFFF"
                     app:layout_collapseMode="pin"
                     app:tabTextAppearance="@style/TablayoutText" />
+
 
             </android.support.design.widget.CollapsingToolbarLayout>
 

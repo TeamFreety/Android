@@ -57,6 +57,7 @@
             android:textColor="#95989A"
             android:textSize="15sp" />
 
+
         <Button
             android:id="@+id/btn_search_latest"
             android:layout_width="58dp"

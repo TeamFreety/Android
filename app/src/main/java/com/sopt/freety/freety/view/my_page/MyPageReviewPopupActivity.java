@@ -149,7 +149,7 @@ public class MyPageReviewPopupActivity extends AppCompatActivity {
     @OnClick(R.id.review_popup_register)
     public void onClick(View view){
         if(imagePath==null){
-            Toast.makeText(getApplicationContext(),"이미지 url이 null",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"이미지 url을 확인해주세요!",Toast.LENGTH_SHORT).show();
         }else
         onRegister();
     }

@@ -77,16 +77,7 @@
                             android:layout_height="match_parent"
                             android:src="@drawable/mypage_background_image" />
 
-                        <ImageButton
-                            android:id="@+id/btn_m_to_d_my_page_chat"
-                            android:layout_width="60dp"
-                            android:layout_height="30dp"
-                            android:layout_alignParentBottom="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginRight="14dp"
-                            android:background="@null"
-                            android:src="@drawable/mypage_letter_btn" />
+
 
                     </RelativeLayout>
 
