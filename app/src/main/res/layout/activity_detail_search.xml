@@ -569,6 +569,8 @@
                     android:layout_below="@+id/img_search_cost"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="15dp"
+                    app:bar_color="@color/seekBarBase"
+                    app:bar_highlight_color="@color/seekBarHighlight"
                     app:corner_radius="10"
                     app:left_thumb_image="@drawable/search_slider"
                     app:max_value="300000"
