@@ -67,6 +67,7 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 
 public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRecyclerView.Callbacks, ScreenClickable{
 
+    private static final String TAG = "MyPageDesigner";
     @BindView(R.id.my_page_profile)
     ImageView profileImage;
 
@@ -232,8 +233,11 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
             public void onResponse(Call<MyPageDesignerGetData> call, Response<MyPageDesignerGetData> response) {
 
                 if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
+                    Log.i(TAG, "onResponse: " + response.body().getDesignerName());
                     myPageDesignerGetData = response.body();
-                    Glide.with(getContext()).load(response.body().getDesignerImageURL()).into(profileImage);
+                    Glide.with(getContext()).load(response.body().getDesignerImageURL())
+                            .override(200, 200).thumbnail(0.3f).bitmapTransform(new CropCircleTransformation(getContext()))
+                            .into(profileImage);
                     designerNameText.setText(response.body().getDesignerName());
                     designerStatusTextView.setText(response.body().getDesignerStatusMsg());
 
@@ -258,7 +262,7 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
             intent.setMaxSelectCount(1);
             intent.setSelectCheckBox(true);
             intent.setMaxGrideItemCount(3);
-            startActivityForResult(intent, Consts.DESIGNER_PROFILE_PHOTO_CODE);
+            getActivity().startActivityForResult(intent, Consts.DESIGNER_PROFILE_PHOTO_CODE);
         }
         @Override
         public void onPermissionDenied(ArrayList<String> deniedPermissions) {

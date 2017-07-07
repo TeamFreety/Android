@@ -2,12 +2,10 @@ package com.sopt.freety.freety.view.my_page;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,21 +13,14 @@ import android.view.ViewGroup;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.network.NetworkService;
-import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.view.my_page.adapter.MyPagePostRecyclerAdapter;
-import com.sopt.freety.freety.view.my_page.data.MyPagePostData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageDesignerGetData;
-
-import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_DRAGGING;
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
@@ -91,6 +82,13 @@ public class MyPageDesignerPostFragment extends Fragment {
                     topFabtn.hide();
                 }
 
+            }
+        });
+
+        topFabtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.smoothScrollToPosition(0);
             }
         });
 

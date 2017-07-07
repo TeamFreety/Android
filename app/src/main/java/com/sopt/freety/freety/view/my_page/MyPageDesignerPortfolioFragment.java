@@ -78,6 +78,13 @@ public class MyPageDesignerPortfolioFragment extends Fragment {
 
         });
 
+        topFabtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.smoothScrollToPosition(0);
+            }
+        });
+
         layoutManager = new GridLayoutManager(getContext(), 3);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup(){
             @Override
