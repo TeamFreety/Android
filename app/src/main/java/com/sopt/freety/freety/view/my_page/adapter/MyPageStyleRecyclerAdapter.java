@@ -18,7 +18,12 @@ import com.sopt.freety.freety.view.my_page.data.MyPageStyleBodyData;
 
 import java.util.List;
 
+
 import static android.content.Context.INPUT_METHOD_SERVICE;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 /**
  * Created by cmslab on 6/26/17.
@@ -31,8 +36,10 @@ public class MyPageStyleRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
 
     private List<MyPageStyleBodyData> myPageStyleBodyDataList;
     private Context context;
+
     private MyPageDesignerPortfolioFragment parentFragment;
  
+
 
     public MyPageStyleRecyclerAdapter(final String careerString, final List<MyPageStyleBodyData> myPageStyleBodyDataList,
                                       final Context context, final MyPageDesignerPortfolioFragment parentFragment) {
@@ -53,6 +60,7 @@ public class MyPageStyleRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         final View inflatedView;
         if (viewType == TYPE_HEADER) {
             inflatedView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_designer_my_page_portfolio_header, parent, false);
+            ButterKnife.bind(this, inflatedView);
             return new MyPageStyleHeaderHolder(inflatedView);
         } else {
             inflatedView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_designer_my_page_portfolio_body, parent, false);

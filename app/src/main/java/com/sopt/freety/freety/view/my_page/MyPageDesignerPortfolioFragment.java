@@ -1,5 +1,6 @@
 package com.sopt.freety.freety.view.my_page;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -11,11 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+
+
+
 import android.widget.Toast;
 
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.data.OnlyMsgResultData;
+
 import com.sopt.freety.freety.util.SharedAccessor;
 import com.sopt.freety.freety.util.custom.ItemOffsetDecoration;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
@@ -28,9 +33,14 @@ import com.sopt.freety.freety.view.property.ScreenClickable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import butterknife.OnClick;
+
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_DRAGGING;
@@ -120,6 +130,7 @@ public class MyPageDesignerPortfolioFragment extends Fragment implements ScreenC
         return view;
     }
 
+    //자기 마이페이지
     public void initByFragment() {
         MyPageDesignerFragment myPageFragment = (MyPageDesignerFragment) getParentFragment();
         adapter = new MyPageStyleRecyclerAdapter(myPageFragment.getMyPageStyleHeaderData().getCareerString(),
@@ -178,8 +189,10 @@ public class MyPageDesignerPortfolioFragment extends Fragment implements ScreenC
         this.isMine = isMine;
     }
 
+
     @Override
     public void onScreenClick(View v) {
         onRegisterPortfolioStatus();
     }
+
 }

@@ -20,6 +20,7 @@ import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.util.util.Triple;
 
+import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -137,12 +138,13 @@ public class FilteredSearchActivity extends AppCompatActivity {
         final TextView tvMin = (TextView) findViewById(R.id.textMin1);
         final TextView tvMax = (TextView) findViewById(R.id.textMax1);
 
+
         // set listener
         rangeSeekbar.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
             @Override
             public void valueChanged(Number minValue, Number maxValue) {
-                tvMin.setText(String.valueOf(minValue));
-                tvMax.setText(String.valueOf(maxValue));
+                tvMin.setText((NumberFormat.getInstance().format(minValue)).toString()+"원");
+                tvMax.setText((NumberFormat.getInstance().format(maxValue)).toString()+"원");
             }
         });
 

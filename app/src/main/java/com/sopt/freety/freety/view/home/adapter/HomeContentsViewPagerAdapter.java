@@ -2,6 +2,8 @@ package com.sopt.freety.freety.view.home.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -11,9 +13,12 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.sopt.freety.freety.R;
+import com.sopt.freety.freety.view.main.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.security.AccessController.getContext;
 
 /**
  * Created by KYJ on 2017-06-28.
@@ -28,7 +33,7 @@ public class HomeContentsViewPagerAdapter extends PagerAdapter {
 
     public HomeContentsViewPagerAdapter(Context context, List<String> imageURLList) {
         this.context = context;
-        this.imageURLList = imageURLList;
+        this.imageURLList = new ArrayList<>();
         this.imageMockList = new ArrayList<>();
 
         imageMockList.add(R.drawable.image_1);
@@ -50,6 +55,7 @@ public class HomeContentsViewPagerAdapter extends PagerAdapter {
         ImageView imageView = (ImageView) viewItem.findViewById(R.id.home_contents_image_view);
         Glide.with(context).load(imageMockList.get(realPos)).into(imageView);
         container.addView(viewItem);
+
         return viewItem;
     }
 
