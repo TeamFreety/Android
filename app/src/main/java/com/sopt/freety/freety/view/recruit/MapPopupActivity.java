@@ -151,7 +151,6 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
                 return true;
             }
         });
-
         getDevicePermission();
     }
 

@@ -46,7 +46,6 @@ import retrofit2.Response;
 public class RecruitActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String TAG = "RecruitActivity";
-
     @BindView(R.id.recruit_image_view_pager)
     ViewPager imageViewPager;
 
@@ -237,6 +236,16 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
                 Toast.makeText(RecruitActivity.this, "데이터 로드 실패", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @OnClick(R.id.btn_slide_left)
+    public void onLeftBtn() {
+        imageViewPager.setCurrentItem(imageViewPager.getCurrentItem() - 1);
+    }
+
+    @OnClick(R.id.btn_slide_right)
+    public void onRightBtn() {
+        imageViewPager.setCurrentItem(imageViewPager.getCurrentItem() + 1);
     }
 
     @Override

@@ -103,6 +103,7 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
                 new HomeContentsViewPagerAdapter(getActivity(),  Collections.<String>emptyList());
         bannerViewPager.setAdapter(homeContentsViewPagerAdapter);
         bannerViewPager.setCurrentItem(100);
+        indicators.get(0).setImageResource(R.drawable.donut);
         bannerViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

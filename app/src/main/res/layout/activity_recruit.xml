@@ -42,13 +42,34 @@
             android:id="@+id/recruit_top_layout"
             android:layout_width="match_parent"
             android:layout_height="410dp">
+m
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="360dp">
 
         <android.support.v4.view.ViewPager
                 android:id="@+id/recruit_image_view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="360dp">
-
             </android.support.v4.view.ViewPager>
+
+         <Button
+             android:id="@+id/btn_slide_left"
+             android:layout_centerVertical="true"
+             android:layout_width="40dp"
+             android:layout_height="43dp"
+             android:background="@drawable/recruit_left_btn"/>
+
+        <Button
+            android:id="@+id/btn_slide_right"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="40dp"
+            android:layout_height="43dp"
+            android:background="@drawable/recruit_right_btn"/>
+
+
+        </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/recruit_top_sub_layout"

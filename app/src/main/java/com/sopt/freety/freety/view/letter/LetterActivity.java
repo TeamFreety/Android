@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.sopt.freety.freety.R;
@@ -44,6 +45,9 @@ import retrofit2.Response;
 public class LetterActivity extends AppCompatActivity implements ScreenClickable, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "LetterActivity";
+
+    @BindView(R.id.btn_to_model_mypage)
+    ImageButton myPageBtn;
 
     @OnClick(R.id.btn_to_model_mypage)
     public void onMypageBtn() {
@@ -101,6 +105,10 @@ public class LetterActivity extends AppCompatActivity implements ScreenClickable
                 }
             }
         });
+
+        if (!SharedAccessor.isDesigner(this)) {
+            myPageBtn.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
