@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:background="@drawable/image_border"
-    android:layout_height="wrap_content" >
+    android:gravity="center">
 
     <com.sopt.freety.freety.util.custom.ImageView34
         android:id="@+id/search_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="fitXY"/>
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginBottom="9dp"
+        android:layout_gravity="bottom"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/search_address"
-            android:textColor="#111111"
+            android:textColor="@color/postStyleColor"
             android:paddingBottom="4dp"
-            android:paddingTop="10dp"
+            android:paddingTop="8dp"
             android:textSize="12sp"
             android:textAlignment="center"
             android:background="#ffffff"
@@ -30,9 +34,9 @@
 
         <TextView
             android:id="@+id/search_style"
-            android:textColor="#676767"
-            android:paddingBottom="12dp"
-            android:textSize="16sp"
+            android:textColor="@color/colorBlack"
+            android:paddingBottom="8dp"
+            android:textSize="17sp"
             android:textAlignment="center"
             android:background="#ffffff"
             android:layout_width="match_parent"
@@ -40,5 +44,5 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+</FrameLayout>
 

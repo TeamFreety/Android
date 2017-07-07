@@ -4,20 +4,24 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -52,9 +56,6 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
         GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks,
         LocationListener {
-
-    public static final int RESULT_SUCCESS = 200;
-    public static final int RESULT_FAIL = 500;
 
     private static final String CAMERA_POSITION = "camera_position";
     private static final String LOCATION = "location";
@@ -102,7 +103,7 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
 
     @OnClick(R.id.recruit_popup_exit)
     public void onExit() {
-        setResult(RESULT_FAIL);
+        setResult(RESULT_CANCELED);
         finish();
     }
 
@@ -142,13 +143,13 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
 
-        searchEditText.setOnKeyListener(new View.OnKeyListener() {
+        searchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                   onSearch();
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    onSearch();
                 }
-                return true;
+                return false;
             }
         });
         getDevicePermission();
@@ -272,7 +273,14 @@ public class MapPopupActivity extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     public void onBackPressed() {
-        return;
+        int result = AppController.getInstance().popPageStack();
+        if (result == 0) {
+            Toast.makeText(this, "한 번 더 터치하시면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show();
+        }  else if (result < 0) {
+            ActivityCompat.finishAffinity(this);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
