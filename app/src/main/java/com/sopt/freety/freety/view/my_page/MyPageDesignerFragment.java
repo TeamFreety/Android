@@ -15,6 +15,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -101,9 +102,6 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
     @BindView(R.id.my_page_hide_toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.btn_my_page_chat)
-    ImageButton chatButton;
-
     @BindView(R.id.btn_my_page_status_edit)
     ImageButton statusEditButton;
 
@@ -166,10 +164,10 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
             }
         });
         EditTextUtils.setUseableEditText(designerStatusTextView, false);
-        designerStatusTextView.setOnKeyListener(new View.OnKeyListener() {
+        designerStatusTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
                     onScreenClick(v);
                 }
                 return false;
