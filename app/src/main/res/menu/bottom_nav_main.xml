@@ -4,24 +4,24 @@
 
     <item
         android:id="@+id/action_home"
-        android:icon="@drawable/tab_home_line"
+        android:icon="@drawable/home_btn_selector"
         android:title="home" />
 
     <item
         android:id="@+id/action_search"
-        android:icon="@drawable/tab_search_line"
+        android:icon="@drawable/search_btn_selector"
         android:title="search"
         android:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/action_recruit"
-        android:icon="@drawable/tab_letter_line"
+        android:icon="@drawable/letter_btn_selector"
         android:title="recruit"
         android:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/action_my_page"
-        android:icon="@drawable/tab_mypage_line"
+        android:icon="@drawable/mypage_btn_selector"
         android:title="my_page"
         android:showAsAction="ifRoom"/>
 

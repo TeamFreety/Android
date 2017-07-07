@@ -4,6 +4,7 @@
     title="?android:attr/spinnerDropDownItemStyle"
     android:layout_width="match_parent"
     android:textSize="12sp"
-    android:layout_height="50dp"
+    android:layout_height="40dp"
+    android:layout_gravity="center"
     android:background="#ffffff"
     android:ellipsize="marquee"/>

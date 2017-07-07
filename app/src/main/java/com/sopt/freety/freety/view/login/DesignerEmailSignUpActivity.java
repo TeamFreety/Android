@@ -140,7 +140,7 @@ public class DesignerEmailSignUpActivity extends AppCompatActivity implements Sc
 
     private void initSpinner(final Spinner spinner, int resources, final boolean isBelong) {
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this, resources,
-                android.R.layout.simple_spinner_item);
+                R.layout.spiner_layout);
         adapter.setDropDownViewResource(R.layout.spiner_layout);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

@@ -71,6 +71,7 @@
             android:text=""
             android:textSize="13sp"
             android:inputType="text"
+            android:singleLine="true"
             android:hint="@string/emaiL_address_hint"
             android:layout_toLeftOf="@+id/sign_up_email_designer_address_rep_btn"
             android:layout_centerInParent="true"/>
@@ -116,6 +117,7 @@
             android:layout_height="40dp"
             android:layout_marginRight="22dp"
             android:layout_marginLeft="22dp"
+            android:singleLine="true"
             android:background="@android:color/transparent"
             android:text=""
             android:textSize="13sp"
@@ -143,6 +145,7 @@
             android:layout_height="40dp"
             android:layout_marginRight="22dp"
             android:layout_marginLeft="22dp"
+            android:singleLine="true"
             android:background="@android:color/transparent"
             android:text=""
             android:textSize="13sp"
@@ -182,6 +185,7 @@
             android:background="@android:color/transparent"
             android:textSize="13sp"
             android:inputType="text"
+            android:singleLine="true"
             android:hint="이름을 입력해주세요"
             android:layout_centerInParent="true"
             android:layout_toRightOf="@+id/sign_up_email_designer_name_text" />
@@ -214,6 +218,7 @@
             android:layout_height="40dp"
             android:layout_marginRight="22dp"
             android:layout_marginLeft="26dp"
+            android:singleLine="true"
             android:background="@android:color/transparent"
             android:textSize="13sp"
             android:inputType="number"
@@ -313,6 +318,7 @@
             android:background="@android:color/transparent"
             android:textSize="13sp"
             android:inputType="text"
+            android:singleLine="true"
             android:hint="본인 소속 학원이나 미용실 이름을 입력하세요."
             android:layout_centerInParent="true"
             android:layout_toRightOf="@+id/sign_up_email_designer_belong_name_text" />
