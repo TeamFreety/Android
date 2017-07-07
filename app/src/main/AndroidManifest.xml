@@ -78,7 +78,8 @@
             android:name="com.yongbeam.y_photopicker.util.photopicker.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".view.letter.LetterActivity" />
+        <activity android:name=".view.letter.LetterActivity"
+            android:windowSoftInputMode="adjustResize"></activity>
         <activity android:name=".view.my_page.ModelToDesignerMypageActivity"></activity>
         <activity
             android:name=".view.my_page.MyPageReviewPopupActivity"

@@ -51,7 +51,7 @@ public class LetterRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof LetterViewLeftHolder) {
             LetterViewLeftHolder castedHolder = (LetterViewLeftHolder) holder;
-            if (!letterDataList.get(position).getImageURL().equals("")) {
+            if (letterDataList.get(position).getImageURL() != null) {
                 Glide.with(context).load(letterDataList.get(position).getImageURL()).thumbnail(0.3f)
                         .bitmapTransform(new CropCircleTransformation(context)).into(castedHolder.getImage());
             } else {
@@ -63,7 +63,7 @@ public class LetterRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             castedHolder.getContentText().setText(letterDataList.get(position).getContent());
         } else {
             LetterViewRightHolder castedHolder = (LetterViewRightHolder) holder;
-            if (!letterDataList.get(position).getImageURL().equals("")) {
+            if (letterDataList.get(position).getImageURL() != null) {
                 Glide.with(context).load(letterDataList.get(position).getImageURL()).thumbnail(0.3f)
                         .bitmapTransform(new CropCircleTransformation(context)).into(castedHolder.getImage());
             } else {
