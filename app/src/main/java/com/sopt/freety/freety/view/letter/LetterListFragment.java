@@ -116,6 +116,7 @@ public class LetterListFragment extends Fragment implements SwipeRefreshLayout.O
                         }
                     });
                 }
+                letterListAdapter.updateData(letterRoomDataList);
                 refreshLayout.setRefreshing(false);
             }
             @Override
