@@ -37,7 +37,12 @@
         android:layout_marginLeft="25dp"
         android:layout_height="wrap_content"
         android:lineSpacingMultiplier="1.3"
-        android:text="퍼스널 펌, 컬러 전문(5년)">
+        android:text="퍼스널 펌, 컬러 전문(5년)"/>
 
-    </EditText>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/drop_shadow" />
+
 </RelativeLayout>

@@ -55,8 +55,6 @@ import static java.security.AccessController.getContext;
 
 public class MyPageReviewPopupActivity extends AppCompatActivity {
 
-    Intent intent = new Intent(this.getIntent());
-    private int memberId = intent.getIntExtra("memberId",0);
     @BindView(R.id.review_popup_title_edit)
     EditText reviewTitleEdit;
 
@@ -109,6 +107,7 @@ public class MyPageReviewPopupActivity extends AppCompatActivity {
 
     private MultipartBody.Part imageBody;
     private String imagePath;
+    private int memberId;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,6 +116,7 @@ public class MyPageReviewPopupActivity extends AppCompatActivity {
         getWindow().getAttributes().width = (int)(0.9f * display.getWidth());
         getWindow().getAttributes().height = (int)(0.9f * display.getHeight());
         ButterKnife.bind(this);
+        memberId = getIntent().getIntExtra("memberId",0);
     }
 
     @Override
@@ -125,8 +125,9 @@ public class MyPageReviewPopupActivity extends AppCompatActivity {
             if (data != null) {
 
                 imagePath = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS).get(0);
-                onRegister(imagePath);
-
+                Glide.with(MyPageReviewPopupActivity.this).load(imagePath)
+                        .override(200, 200).thumbnail(0.3f)
+                        .into(reviewImage);
             }
         }
     }
@@ -150,52 +151,27 @@ public class MyPageReviewPopupActivity extends AppCompatActivity {
         if(imagePath==null){
             Toast.makeText(getApplicationContext(),"이미지 url이 null",Toast.LENGTH_SHORT).show();
         }else
-        onRegister(imagePath);
+        onRegister();
     }
 
-    public void onRegister(final String path) {
-        final MyPageReviewRequestData myPageReviewRequestData =
-                new MyPageReviewRequestData.Builder(memberId,
-                        Integer.parseInt(scoreText.getText().toString()),
-                        reviewTitleEdit.getText().toString(),
-                        contentEdit.getText().toString()).build();
-
+    public void onRegister() {
         final NetworkService networkService = AppController.getInstance().getNetworkService();
-
-        Call<MyPageReviewResultData> call = networkService.registerReview(SharedAccessor.getToken(MyPageReviewPopupActivity.this), myPageReviewRequestData, imageBody);
+        RequestBody memberIdBody = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(memberId));
+        RequestBody scoreBody = RequestBody.create(MediaType.parse("multipart/form-data"), scoreText.getText().toString());
+        RequestBody titleBody = RequestBody.create(MediaType.parse("multipart/form-data"), reviewTitleEdit.getText().toString());
+        RequestBody contentBody = RequestBody.create(MediaType.parse("multipart/form-data"), contentEdit.getText().toString());
+        File file = new File(imagePath);
+        RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);
+        MultipartBody.Part imageBody = MultipartBody.Part.createFormData("image", file.getName(), fileBody);
+        Call<MyPageReviewResultData> call = networkService.registerReview(SharedAccessor.getToken(MyPageReviewPopupActivity.this),
+                memberIdBody, scoreBody, titleBody, contentBody, imageBody);
         call.enqueue(new Callback<MyPageReviewResultData>() {
             @Override
             public void onResponse(Call<MyPageReviewResultData> call, Response<MyPageReviewResultData> response) {
                 if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
-                    final int postId = response.body().getPostId();
-                    File file = new File(path);
-                    RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);
-                    MultipartBody.Part imageBody = MultipartBody.Part.createFormData("image", file.getName(), fileBody);
-
-                    //RequestBody postBody = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(postId));
-
-                    Call<MyPageReviewResultData> photoCall = networkService.registerReview(SharedAccessor.getToken(MyPageReviewPopupActivity.this),
-                            myPageReviewRequestData, imageBody);
-                    photoCall.enqueue(new Callback<MyPageReviewResultData>() {
-                        @Override
-                        public void onResponse(Call<MyPageReviewResultData> call, Response<MyPageReviewResultData> response) {
-                            if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
-                                Glide.with(MyPageReviewPopupActivity.this)
-                                        .load(path)
-                                        .override(100, 100)
-                                        .thumbnail(0.3f)
-                                        .placeholder(R.drawable.placeholder_photo)
-                                        .into(reviewImage);
-                            } else {
-                                Toast.makeText(MyPageReviewPopupActivity.this, "사진 전송 오류", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<MyPageReviewResultData> call, Throwable t) {
-                            Toast.makeText(MyPageReviewPopupActivity.this, "사진 전송 오류 failure", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    AppController.getInstance().popPageStack();
+                    setResult(RESULT_OK);
+                    finish();
                 } else {
                     Toast.makeText(MyPageReviewPopupActivity.this, "만들기 실패", Toast.LENGTH_SHORT).show();
                 }

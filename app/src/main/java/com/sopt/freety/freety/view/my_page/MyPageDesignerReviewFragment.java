@@ -95,6 +95,7 @@ public class MyPageDesignerReviewFragment extends Fragment {
             initByActivity();
         }
 
+
         return view;
     }
 
@@ -120,9 +121,7 @@ public class MyPageDesignerReviewFragment extends Fragment {
         adapter = new MyPageReviewRecyclerAdapter(getContext(), parent.getMyPageReviewData());
         recyclerView.attachCallbacks(getActivity());
         recyclerView.setAdapter(adapter);
-        Toast.makeText(getApplicationContext(),"memberid : "+((ModelToDesignerMypageActivity) getActivity()).getMemberId(),Toast.LENGTH_SHORT).show();
-        Log.i("hhoh", "onClickReviewBtn: " + ((ModelToDesignerMypageActivity) getActivity()).getMemberId());
-    }
+         }
 
     public void setMine(boolean isMine) {
         this.isMine = isMine;
@@ -130,13 +129,8 @@ public class MyPageDesignerReviewFragment extends Fragment {
 
     @OnClick(R.id.fabtn_review_to_review)
     public void onClickReviewBtn(){
-       /* Intent intent = new Intent(getActivity(), MyPageReviewPopupActivity.class);
-        intent.putExtra("memberId", ((ModelToDesignerMypageActivity) getActivity()).getMemberId());
-        Toast.makeText(getApplicationContext(),"memberid : "+((ModelToDesignerMypageActivity) getActivity()).getMemberId(),Toast.LENGTH_SHORT).show();
-        */
-        Intent intent = new Intent(getApplicationContext(),MyPageReviewPopupActivity.class);
+       Intent intent = new Intent(getContext(), MyPageReviewPopupActivity.class);
         intent.putExtra("memberId",  ((ModelToDesignerMypageActivity) getActivity()).getMemberId());
-        Log.i("hhoh", "onClickReviewBtn: " + ((ModelToDesignerMypageActivity) getActivity()).getMemberId());
         getActivity().startActivityForResult(intent, Consts.REVIEW_WRITE_CODE);
     }
 }

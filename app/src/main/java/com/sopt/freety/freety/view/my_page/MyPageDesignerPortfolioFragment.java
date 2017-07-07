@@ -40,6 +40,7 @@ public class MyPageDesignerPortfolioFragment extends Fragment {
     @BindView(R.id.fabtn_designer_portfolio_to_top)
     FloatingActionButton topFabtn;
 
+
     public MyPageDesignerPortfolioFragment() {
     }
 
