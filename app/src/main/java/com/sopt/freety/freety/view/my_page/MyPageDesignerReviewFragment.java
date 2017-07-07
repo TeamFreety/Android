@@ -1,5 +1,6 @@
 package com.sopt.freety.freety.view.my_page;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -129,7 +130,7 @@ public class MyPageDesignerReviewFragment extends Fragment {
         Toast.makeText(getApplicationContext(),"memberid : "+((ModelToDesignerMypageActivity) getActivity()).getMemberId(),Toast.LENGTH_SHORT).show();
         */
        Intent intent = new Intent(getApplicationContext(),MyPageReviewPopupActivity.class);
-        intent.putExtra("memberId", ((ModelToDesignerMypageActivity) getActivity()).getMemberId());
+        //intent.putExtra("memberId",
         getActivity().startActivity(intent);
     }
 }
