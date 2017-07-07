@@ -2,6 +2,7 @@ package com.sopt.freety.freety.view.recruit;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -57,6 +58,7 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
         Intent intent = new Intent(RecruitActivity.this, ModelToDesignerMypageActivity.class);
         intent.putExtra("memberId", memberId);
         Toast.makeText(getApplicationContext(),"memberId : "+memberId, Toast.LENGTH_SHORT).show();
+        AppController.getInstance().pushPageStack();
         startActivity(intent);
     }
 
@@ -238,15 +240,14 @@ public class RecruitActivity extends AppCompatActivity implements OnMapReadyCall
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-//        int result = AppController.getInstance().popPageStack();
-//        if (result == 0) {
-//            Toast.makeText(this, "한 번 더 터치하시면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show();
-//        }  else if (result < 0) {
-//            ActivityCompat.finishAffinity(this);
-//        } else {
-//            super.onBackPressed();
-//        }
+        int result = AppController.getInstance().popPageStack();
+        if (result == 0) {
+            Toast.makeText(this, "한 번 더 터치하시면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show();
+        }  else if (result < 0) {
+            ActivityCompat.finishAffinity(this);
+        } else {
+            super.onBackPressed();
+        }
     }
 
 

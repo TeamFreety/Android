@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -14,10 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.sopt.freety.freety.R;
-import com.sopt.freety.freety.application.AppController;
 import com.sopt.freety.freety.util.custom.ScrollFeedbackRecyclerView;
 import com.sopt.freety.freety.util.custom.ViewPagerEx;
 import com.sopt.freety.freety.view.home.adapter.HomeContentsViewPagerAdapter;
@@ -165,18 +162,6 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
         super.onResume();
         PagerAdapter pagerAdapter = new HomeViewPagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
         postViewPager.setAdapter(pagerAdapter);
-    }
-
-
-    public void onBackPressed() {
-        int result = AppController.getInstance().popPageStack();
-        if (result == 0) {
-            Toast.makeText(getContext(), "한번 더 누르시면 어플이 종료됩니다.", Toast.LENGTH_SHORT).show();
-        }  else if (result < 0) {
-            ActivityCompat.finishAffinity(getActivity());
-        } else {
-            super.getActivity().onBackPressed();
-        }
     }
 
 }
