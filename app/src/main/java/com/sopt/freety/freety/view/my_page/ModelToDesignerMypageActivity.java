@@ -57,6 +57,7 @@ public class ModelToDesignerMypageActivity extends AppCompatActivity implements 
 
     @BindView(R.id.my_page_m_to_d_tab)
     TabLayout myPageMToDTab;
+
     @BindView(R.id.m_to_d_my_page_app_bar)
     AppBarLayout mToDMyPageAppBar;
 
@@ -66,9 +67,6 @@ public class ModelToDesignerMypageActivity extends AppCompatActivity implements 
     @BindView(R.id.m_to_d_mypage_designer_collapsing_bar)
     CollapsingToolbarLayout collapsingToolbarLayout;
 
-    @BindView(R.id.m_to_d_my_page_hide_toolbar)
-    Toolbar mToDMyPageHideToolbar;
-
     private NetworkService networkService;
     private MyPageDesignerGetData myPageDesignerGetData;
 
@@ -77,9 +75,6 @@ public class ModelToDesignerMypageActivity extends AppCompatActivity implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_model_to_designer_mypage);
         ButterKnife.bind(this);
-        Glide.with(this).load(R.drawable.chat_list_elem)
-                .bitmapTransform(new CropCircleTransformation(getApplicationContext()))
-                .into(imgMToDMypageDesignerProfile);
         networkService = AppController.getInstance().getNetworkService();
         myPageMToDTab.addTab(myPageMToDTab.newTab().setText("글목록"));
         myPageMToDTab.addTab(myPageMToDTab.newTab().setText("포트폴리오"));
@@ -104,8 +99,6 @@ public class ModelToDesignerMypageActivity extends AppCompatActivity implements 
                         appBarLayout.getTotalScrollRange())), 0));
             }
         });
-
-
         EditTextUtils.setUseableEditText(editMToDMyPageDesignerStatus, false);
         reload();
     }
@@ -113,7 +106,7 @@ public class ModelToDesignerMypageActivity extends AppCompatActivity implements 
     @Override
     public boolean isAppBarCollapsed() {
         final int appBarVisibleHeight = (int) (mToDMyPageAppBar.getY() + mToDMyPageAppBar.getHeight());
-        final int toolbarHeight = mToDMyPageHideToolbar.getHeight();
+        final int toolbarHeight = 45;
         return (appBarVisibleHeight >= toolbarHeight && appBarVisibleHeight <= toolbarHeight + 25);
     }
 

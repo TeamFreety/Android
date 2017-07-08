@@ -2,6 +2,7 @@ package com.sopt.freety.freety.view.home;
 
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
@@ -127,6 +128,14 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
             }
         });
 
+        bannerURL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse( "http://m.post.naver.com/viewer/postView.nhn?volumeNo=7362139&memberNo=24056119&vType=VERTICAL"  ));
+                getActivity().startActivity(intent);
+            }
+        });
+
         return view;
     }
 
@@ -169,11 +178,4 @@ public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView
         postViewPager.setAdapter(pagerAdapter);
     }
 
- /*   bannerURL.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse( "http://m.post.naver.com/viewer/postView.nhn?volumeNo=7362139&memberNo=24056119&vType=VERTICAL"  ));
-            startActivity(intent);            }
-    });
-*/
 }

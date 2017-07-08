@@ -103,7 +103,7 @@ public class MyPageStyleRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
                         .override(180, 180).centerCrop().fitCenter()
                         .into(castedHolder.getStyleImage());
             } else {
-                Glide.with(context).load(myPageStyleBodyDataList.get(position - 1))
+                Glide.with(context).load(myPageStyleBodyDataList.get(position - 1).getImageURL())
                         .override(256, 256).centerCrop().fitCenter()
                         .into(castedHolder.getStyleImage());
             }
@@ -117,6 +117,6 @@ public class MyPageStyleRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public int getItemCount() {
-        return Math.min(myPageStyleBodyDataList.size() + 2, 2);
+        return Math.max(myPageStyleBodyDataList.size() + 1, 2);
     }
 }
