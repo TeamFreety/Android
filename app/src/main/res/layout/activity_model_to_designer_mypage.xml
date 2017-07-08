@@ -45,20 +45,13 @@
             android:clipChildren="false"
             android:fitsSystemWindows="true">
 
-
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/m_to_d_mypage_designer_collapsing_bar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipChildren="false"
-                android:minHeight="40dp"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/m_to_d_my_page_hide_toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    app:layout_collapseMode="pin" />
 
                 <RelativeLayout
                     android:id="@+id/m_to_d_my_page_collaspsing_relative_layout"
@@ -77,8 +70,6 @@
                             android:layout_height="match_parent"
                             android:src="@drawable/mypage_background_image" />
 
-
-
                     </RelativeLayout>
 
                     <ImageView
@@ -96,8 +87,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginBottom="82dp"
                         android:layout_marginLeft="25dp"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/chat_list_elem" />
+                        android:scaleType="centerCrop" />
 
 
                     <RelativeLayout
@@ -131,7 +121,6 @@
                             android:textColor="#95989A"
                             android:textSize="10sp" />
 
-
                     </RelativeLayout>
 
                     <View
@@ -150,16 +139,16 @@
 
                 </RelativeLayout>
 
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/my_page_m_to_d_tab"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:background="#FFFFFF"
-                    app:layout_collapseMode="pin"
-                    app:tabTextAppearance="@style/TablayoutText" />
-
             </android.support.design.widget.CollapsingToolbarLayout>
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/my_page_m_to_d_tab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="#FFFFFF"
+                app:layout_collapseMode="pin"
+                app:tabTextAppearance="@style/TablayoutText" />
 
         </android.support.design.widget.AppBarLayout>
 

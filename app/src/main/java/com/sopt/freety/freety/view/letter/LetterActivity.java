@@ -199,7 +199,6 @@ public class LetterActivity extends AppCompatActivity implements ScreenClickable
                         final List<LetterData> letterDataList = response.body().getLetterDataList();
                         RPerson checkPerson = realm.where(RPerson.class).equalTo("memberId", response.body().getOtherId()).findFirst();
                         if (checkPerson == null) {
-                            Log.i(TAG, "onResponse: " + "person is null create new one");
                             realm.executeTransaction(new Realm.Transaction() {
                                 @Override
                                 public void execute(Realm realm) {
@@ -235,7 +234,6 @@ public class LetterActivity extends AppCompatActivity implements ScreenClickable
                         letterRecyclerDatas.add(realmLetter.getLetterData(memberURL));
                     }
 
-                    Log.i(TAG, "onResponse: letterRecyclerDatas size : " + letterRecyclerDatas.size());
                     adapter.updateLetterDataList(letterRecyclerDatas);
                     recyclerView.smoothScrollToPosition(Math.max(letterRecyclerDatas.size() - 1, 0));
                     refreshLayout.setRefreshing(false);
@@ -249,7 +247,6 @@ public class LetterActivity extends AppCompatActivity implements ScreenClickable
                     letterRecyclerDatas.add(realmLetter.getLetterData(getIntent().getStringExtra("memberURL")));
                 }
 
-                Log.i(TAG, "onResponse: failure : " + letterRecyclerDatas.size());
                 recyclerView.smoothScrollToPosition(Math.max(letterRecyclerDatas.size() - 1, 0));
                 adapter.updateLetterDataList(letterRecyclerDatas);
                 refreshLayout.setRefreshing(false);
