@@ -1,5 +1,7 @@
 package com.sopt.freety.freety.view.letter.data;
 
+import android.util.Log;
+
 import com.sopt.freety.freety.util.util.DateParser;
 
 import java.text.ParseException;
@@ -85,6 +87,7 @@ public class LetterListResultData {
             String imageURL = roomList.get(0).getSenderInfo().getSenderPhoto();
             String content = roomList.get(0).getMessageList().get(i).getContent();
             String date = roomList.get(0).getMessageList().get(i).getDate();
+            Log.i("Letter", "getLetterDataList: " + date);
             boolean isMine = false;
             result.add(new LetterData(name, imageURL, content, date, isMine));
         }

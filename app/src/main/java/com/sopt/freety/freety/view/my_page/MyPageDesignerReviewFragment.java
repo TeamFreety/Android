@@ -60,7 +60,6 @@ public class MyPageDesignerReviewFragment extends Fragment {
     private int memberId;
 
 
-
     public MyPageDesignerReviewFragment() {
     }
 
@@ -107,6 +106,7 @@ public class MyPageDesignerReviewFragment extends Fragment {
         }
         MyPageDesignerFragment myPageFragment = (MyPageDesignerFragment) getParentFragment();
         adapter = new MyPageReviewRecyclerAdapter(getContext(), myPageFragment.getMyPageReviewData());
+        Log.i("MyPageDesigner", "initByFragment: " + myPageFragment.getMyPageReviewData().getTotalScore());
         recyclerView.attachCallbacks(getParentFragment());
         recyclerView.setAdapter(adapter);
     }

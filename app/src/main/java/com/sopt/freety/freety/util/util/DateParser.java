@@ -50,6 +50,7 @@ public class DateParser {
 
     public static String toPrettyFormat(String date) {
         try {
+            Log.i("Letter", "toPrettyFormat: " + date);
             DateParser timeStampFormatter = new DateParser();
             Date parsedDate = DateParser.from(date);
             String formatted = timeStampFormatter.format(parsedDate);

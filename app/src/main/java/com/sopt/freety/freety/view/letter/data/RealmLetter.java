@@ -61,6 +61,6 @@ public class RealmLetter extends RealmObject {
 
     @Override
     public String toString() {
-        return "otherId : " + otherId + ", content : " + content + ", isMyMsg " + String.valueOf(isMyMsg);
+        return "otherId : " + otherId + ", content : " + content + ", isMyMsg " + String.valueOf(isMyMsg) + ", date" + date;
     }
 }

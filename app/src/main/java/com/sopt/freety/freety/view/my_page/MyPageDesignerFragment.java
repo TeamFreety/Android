@@ -15,6 +15,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -101,8 +102,6 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
     @BindView(R.id.my_page_hide_toolbar)
     Toolbar toolbar;
 
-
-
     @BindView(R.id.btn_my_page_status_edit)
     ImageButton statusEditButton;
 
@@ -165,10 +164,10 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
             }
         });
         EditTextUtils.setUseableEditText(designerStatusTextView, false);
-        designerStatusTextView.setOnKeyListener(new View.OnKeyListener() {
+        designerStatusTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
                     onScreenClick(v);
                 }
                 return false;
@@ -239,6 +238,7 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
                 if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
                     Log.i(TAG, "onResponse: " + response.body().getDesignerName());
                     myPageDesignerGetData = response.body();
+                    Log.i("GetSize", "onResponse: " + myPageDesignerGetData.getMyPageReviewData().getElemDataList().size());
                     Glide.with(getContext()).load(response.body().getDesignerImageURL())
                             .override(200, 200).thumbnail(0.3f).bitmapTransform(new CropCircleTransformation(getContext()))
                             .into(profileImage);
@@ -296,8 +296,6 @@ public class MyPageDesignerFragment extends Fragment implements ScrollFeedbackRe
                 photoCall.enqueue(new Callback<OnlyMsgResultData>() {
                     @Override
                     public void onResponse(Call<OnlyMsgResultData> call, Response<OnlyMsgResultData> response) {
-                        Log.i("MyPage", "onResponse: " + response.raw());
-                        Log.i("MyPage", "onResponse: " + response.body().getMessage());
                         if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
                             Glide.with(getContext()).load(path).
                                     override(200, 200).thumbnail(0.3f).bitmapTransform(new CropCircleTransformation(getContext()))

@@ -2,6 +2,7 @@ package com.sopt.freety.freety.view.letter.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,8 @@ public class LetterRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 Glide.with(context).load(R.drawable.placeholder_photo).thumbnail(0.3f)
                         .bitmapTransform(new CropCircleTransformation(context)).into(castedHolder.getImage());
             }
+            String date = letterDataList.get(position).getDate();
+            Log.i("Letter", "onBindViewHolder: " + date);
             castedHolder.getNameText().setText(letterDataList.get(position).getName());
             castedHolder.getDateText().setText(DateParser.toPrettyFormat(letterDataList.get(position).getDate()));
             castedHolder.getContentText().setText(letterDataList.get(position).getContent());
@@ -73,7 +76,8 @@ public class LetterRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         .bitmapTransform(new CropCircleTransformation(context)).into(castedHolder.getImage());
             }
             castedHolder.getNameText().setText(SharedAccessor.getName(context));
-            castedHolder.getDateText().setText(DateParser.toPrettyFormat(letterDataList.get(position).getDate()));
+            String date = letterDataList.get(position).getDate();
+            castedHolder.getDateText().setText(DateParser.toPrettyFormat(date));
             castedHolder.getContentText().setText(letterDataList.get(position).getContent());
         }
     }
