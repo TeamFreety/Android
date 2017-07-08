@@ -3,12 +3,13 @@ package com.sopt.freety.freety.view.my_page;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -20,30 +21,22 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.sopt.freety.freety.R;
 import com.sopt.freety.freety.application.AppController;
-import com.sopt.freety.freety.data.OnlyMsgResultData;
 import com.sopt.freety.freety.network.NetworkService;
 import com.sopt.freety.freety.util.Consts;
 import com.sopt.freety.freety.util.SharedAccessor;
-import com.sopt.freety.freety.util.util.DateParser;
-import com.sopt.freety.freety.view.my_page.data.MyPageReviewData;
-import com.sopt.freety.freety.view.my_page.data.network.MyPageReviewRequestData;
 import com.sopt.freety.freety.view.my_page.data.network.MyPageReviewResultData;
-import com.sopt.freety.freety.view.wirte.WriteActivity;
-import com.sopt.freety.freety.view.wirte.data.WritePostResultData;
-import com.sopt.freety.freety.view.wirte.data.WriteRequestData;
+import com.sopt.freety.freety.view.property.ScreenClickable;
 import com.yongbeam.y_photopicker.util.photopicker.PhotoPickerActivity;
 import com.yongbeam.y_photopicker.util.photopicker.utils.YPhotoPickerIntent;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -51,9 +44,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static java.security.AccessController.getContext;
-
-public class MyPageReviewPopupActivity extends AppCompatActivity {
+public class MyPageReviewPopupActivity extends AppCompatActivity implements ScreenClickable {
 
     @BindView(R.id.review_popup_title_edit)
     EditText reviewTitleEdit;
@@ -150,8 +141,7 @@ public class MyPageReviewPopupActivity extends AppCompatActivity {
     public void onClick(View view){
         if(imagePath==null){
             Toast.makeText(getApplicationContext(),"이미지 url을 확인해주세요!",Toast.LENGTH_SHORT).show();
-        }else
-        onRegister();
+        }else onRegister();
     }
 
     public void onRegister() {
@@ -168,19 +158,28 @@ public class MyPageReviewPopupActivity extends AppCompatActivity {
         call.enqueue(new Callback<MyPageReviewResultData>() {
             @Override
             public void onResponse(Call<MyPageReviewResultData> call, Response<MyPageReviewResultData> response) {
-                if (response.isSuccessful() && response.body().getMessage().equals("ok")) {
+                if (response.isSuccessful()) {
                     AppController.getInstance().popPageStack();
                     setResult(RESULT_OK);
+                    Log.i("Review", "onResponse: success");
                     finish();
                 } else {
                     Toast.makeText(MyPageReviewPopupActivity.this, "만들기 실패", Toast.LENGTH_SHORT).show();
+                    Log.i("Review", "onResponse: fail");
                 }
             }
 
             @Override
             public void onFailure(Call<MyPageReviewResultData> call, Throwable t) {
-
+                Toast.makeText(MyPageReviewPopupActivity.this, "on failure", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onScreenClick(View v) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(contentEdit.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(reviewTitleEdit.getWindowToken(), 0);
     }
 }
