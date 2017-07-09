@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#ffffff"
+    android:onClick="onScreenClick"
     tools:context="com.sopt.freety.freety.view.my_page.MyPageReviewPopupActivity">
 
     <EditText
