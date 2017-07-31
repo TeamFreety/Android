@@ -87,6 +87,10 @@ public class LetterRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return letterDataList.size();
     }
 
+
+    /**
+     * Get the layout type of view item.
+     */
     @Override
     public int getItemViewType(int position) {
         if (letterDataList.get(position).isMine()) {

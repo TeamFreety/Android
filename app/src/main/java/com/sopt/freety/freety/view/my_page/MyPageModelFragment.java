@@ -51,7 +51,7 @@ import static com.sopt.freety.freety.view.my_page.adapter.MyPageModelRecyclerAda
  * Created by cmslab on 6/26/17.
  */
 
-public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyclerView.Callbacks{
+public class MyPageModelFragment extends Fragment implements ScrollFeedbackRecyclerView.ScrollCallbacks {
 
     @BindView(R.id.my_page_model_profile)
     ImageView profileImage;

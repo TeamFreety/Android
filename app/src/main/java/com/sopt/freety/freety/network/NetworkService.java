@@ -42,7 +42,7 @@ import retrofit2.http.Query;
 
 public interface NetworkService {
 
-    public static final String BASE_URL = "http://52.79.172.131:3000";
+    public static final String BASE_URL = "http://13.124.149.231:3000";
 
     @POST("/signup/designer/email")
     Call<SignUpResultData> registerDesignerData(@Body SignUpData signUpData);

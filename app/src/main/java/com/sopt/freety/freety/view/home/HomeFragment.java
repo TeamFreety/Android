@@ -30,13 +30,12 @@ import java.util.TimerTask;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by cmslab on 6/26/17.
  */
 
-public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView.Callbacks{
+public class HomeFragment extends Fragment implements ScrollFeedbackRecyclerView.ScrollCallbacks {
 
     public static class PostType {
         public static final int NEW = 0;

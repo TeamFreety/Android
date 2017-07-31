@@ -8,7 +8,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -40,7 +39,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ModelToDesignerMypageActivity extends AppCompatActivity implements ScrollFeedbackRecyclerView.Callbacks{
+public class ModelToDesignerMypageActivity extends AppCompatActivity implements ScrollFeedbackRecyclerView.ScrollCallbacks {
 
 
     private static final String TAG = "OtherMyPageActivity";

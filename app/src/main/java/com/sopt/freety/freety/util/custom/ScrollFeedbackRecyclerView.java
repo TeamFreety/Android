@@ -1,15 +1,21 @@
 package com.sopt.freety.freety.util.custom;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
+
+import com.google.gson.Gson;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.RequestBody;
 
 /**
  * Created by cmslab on 6/28/17.
@@ -17,7 +23,7 @@ import java.lang.ref.WeakReference;
 
 public class ScrollFeedbackRecyclerView extends RecyclerView{
 
-    private WeakReference<Callbacks> mCallbacks;
+    private WeakReference<ScrollCallbacks> mCallbacks;
 
     public ScrollFeedbackRecyclerView(Context context) {
         super(context);
@@ -66,26 +72,28 @@ public class ScrollFeedbackRecyclerView extends RecyclerView{
     public void attachCallbacks(Context context) {
 
         try {
-            mCallbacks = new WeakReference<>((Callbacks)context);
+            mCallbacks = new WeakReference<>((ScrollCallbacks)context);
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement " +
-                    "ScrollFeedbackRecyclerView.Callbacks");
+                    "ScrollFeedbackRecyclerView.ScrollCallbacks");
         }
 
     }
 
     public void attachCallbacks(Fragment fragment) {
         try {
-            mCallbacks = new WeakReference<>((Callbacks)fragment);
+            mCallbacks = new WeakReference<>((ScrollCallbacks)fragment);
         } catch (ClassCastException e) {
             throw new ClassCastException(fragment.toString() + " must implement " +
-                    "ScrollFeedbackRecyclerView.Callbacks");
+                    "ScrollFeedbackRecyclerView.ScrollCallbacks");
         }
     }
 
-    /* Necessary to interact with the AppBarLayout in the hosting Activity
-    */
-    public interface Callbacks {
+
+    /**
+     * Necessary to interact with the AppBarLayout in the hosting Activity or Fragment
+     */
+    public interface ScrollCallbacks {
         boolean isAppBarCollapsed();
         void setExpanded(boolean expanded);
     }

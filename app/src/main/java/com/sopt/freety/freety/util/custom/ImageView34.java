@@ -24,6 +24,10 @@ public class ImageView34 extends android.support.v7.widget.AppCompatImageView {
         super(context, attrs, defStyleAttr);
     }
 
+
+    /**
+     * Fix the aspect ratio of the {@link ImageView} to 3:4.
+     */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 

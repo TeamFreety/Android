@@ -1,23 +1,36 @@
 package com.sopt.freety.freety.view.letter.data;
 
-import java.text.ParseException;
-
-import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmObject;
-import io.realm.RealmResults;
-import io.realm.annotations.Required;
 
 /**
- * Created by cmslab on 7/4/17.
+ * This is a person model class for use in letter service of this app.
+ * The person in this user's DB will be created if there is at least one contact with the user.
+ * Note that it must be used to only Realm DB service.
  */
 
 public class RPerson extends RealmObject {
 
+    /**
+     * An identifier of the member.
+     */
     private int memberId;
+
+    /**
+     * A name of the member.
+     */
     private String memberName;
+
+    /**
+     * Image URL of the member profile.
+     */
     private String imageURL;
 
+    /**
+     * List of {@link RealmLetter} about this person.
+     * Both the letter sent by the user and the letter received by the user
+     * can be added to this list.
+     */
     private RealmList<RealmLetter> letterList;
 
     public int getMemberId() {
@@ -46,6 +59,10 @@ public class RPerson extends RealmObject {
 
     public RealmList<RealmLetter> getLetterList() {
         return letterList;
+    }
+
+    public void setLetterList(RealmList<RealmLetter> letterList) {
+        this.letterList = letterList;
     }
 
     public LetterRoomData getLetterRoomData() {

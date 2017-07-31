@@ -1,19 +1,39 @@
 package com.sopt.freety.freety.view.letter.data;
 
-import com.sopt.freety.freety.util.util.DateParser;
-
 import io.realm.RealmObject;
 
 /**
- * Created by cmslab on 7/4/17.
+ * This is a letter model class for use in letter service of this app.
+ * Note that it must be used to only Realm DB service.
  */
 public class RealmLetter extends RealmObject {
 
+    /**
+     * An identifier of the recipient of the letter.
+     */
     private int otherId;
+
+    /**
+     * A content of the letter.
+     */
     private String content;
+
+    /**
+     * A time of the letter was delivered.
+     */
     private String date;
+
+    /**
+     * The name of the recipient of the letter.
+     */
     private String otherName;
+
+    /**
+     * Whether the owner of {@link RealmLetter} is user himself or not.
+     */
     private boolean isMyMsg;
+
+
 
     public int getOtherId() {
         return otherId;

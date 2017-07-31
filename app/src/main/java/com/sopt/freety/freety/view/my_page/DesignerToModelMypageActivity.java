@@ -30,7 +30,7 @@ import retrofit2.Response;
 
 import static com.sopt.freety.freety.view.my_page.adapter.MyPageModelRecyclerAdapter.TYPE_HEADER;
 
-public class DesignerToModelMypageActivity extends AppCompatActivity implements ScrollFeedbackRecyclerView.Callbacks {
+public class DesignerToModelMypageActivity extends AppCompatActivity implements ScrollFeedbackRecyclerView.ScrollCallbacks {
 
     @BindView(R.id.d_to_m_my_page_model_hide_toolbar)
     Toolbar dToMMyPageModelHideToolbar;
